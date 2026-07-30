@@ -7,10 +7,12 @@ export default function MotionReveal({
   children,
   className,
   delay = 0,
+  depth = 20,
 }: {
   children: ReactNode;
   className?: string;
   delay?: number;
+  depth?: number;
 }) {
   const reduceMotion = useReducedMotion();
 
@@ -20,18 +22,32 @@ export default function MotionReveal({
       initial={
         reduceMotion
           ? false
-          : { filter: "blur(6px)", opacity: 0, transform: "translateY(14px)" }
+          : {
+              filter: "blur(12px)",
+              opacity: 0,
+              rotateX: 4,
+              scale: 0.975,
+              y: depth,
+            }
       }
       transition={{
         delay,
-        duration: 0.7,
-        ease: [0.215, 0.61, 0.355, 1],
+        damping: 22,
+        mass: 0.7,
+        stiffness: 115,
+        type: "spring",
       }}
       viewport={{ amount: 0.16, once: true }}
       whileInView={
         reduceMotion
           ? undefined
-          : { filter: "blur(0px)", opacity: 1, transform: "translateY(0px)" }
+          : {
+              filter: "blur(0px)",
+              opacity: 1,
+              rotateX: 0,
+              scale: 1,
+              y: 0,
+            }
       }
     >
       {children}

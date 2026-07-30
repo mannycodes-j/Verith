@@ -30,32 +30,33 @@ export default function WhatsAppPage() {
       <section className="relative grid grid-cols-[1.2fr_0.5fr] gap-16 overflow-hidden py-[clamp(5rem,9vw,9rem)] before:pointer-events-none before:absolute before:left-0 before:top-8 before:size-80 before:rounded-full before:bg-emerald-500/10 before:blur-[110px] max-[700px]:grid-cols-1">
         <div>
           <span className="relative inline-flex rounded-full bg-emerald-400/10 px-3 py-1.5 text-xs font-semibold text-emerald-300">
-            Check messages where you receive them
+            Verification at the point of sharing
           </span>
           <h1 className="relative mt-6 text-[clamp(3.5rem,8vw,7rem)] leading-[0.96] font-semibold tracking-[-0.06em]">
-            Investigate forwarded content.
+            Bring evidence into the conversations where misinformation moves.
           </h1>
         </div>
         <p className="self-end leading-[1.65] text-muted-foreground">
-          Link your account with a short-lived code, then send supported
-          forwarded material to the configured Verith WhatsApp service.
+          Connect your account securely, forward supported content, and turn a
+          fast-moving message into an explainable investigation without leaving
+          the channel your community already uses.
         </p>
       </section>
       <section className="grid grid-cols-3 gap-5 max-[700px]:grid-cols-1">
         <div className="min-h-62.5 rounded-3xl bg-gradient-to-br from-violet-500/15 to-indigo-500/5 p-8">
           <span className="grid size-9 place-items-center rounded-full bg-violet-500 text-sm font-bold">1</span>
-          <h2 className="mt-6 text-2xl font-semibold">Create a code</h2>
-          <p className="self-end leading-[1.65] text-muted-foreground">Create a one-time code from your authenticated settings.</p>
+          <h2 className="mt-6 text-2xl font-semibold">Create a secure connection</h2>
+          <p className="self-end leading-[1.65] text-muted-foreground">Generate a short-lived, single-use link code from your private Verith settings.</p>
         </div>
         <div className="min-h-62.5 rounded-3xl bg-gradient-to-br from-cyan-500/15 to-sky-500/5 p-8">
           <span className="grid size-9 place-items-center rounded-full bg-cyan-500 text-sm font-bold">2</span>
-          <h2 className="mt-6 text-2xl font-semibold">Link WhatsApp</h2>
-          <p className="self-end leading-[1.65] text-muted-foreground">Send the exact link instruction before the code expires.</p>
+          <h2 className="mt-6 text-2xl font-semibold">Connect your conversation channel</h2>
+          <p className="self-end leading-[1.65] text-muted-foreground">Complete the signed linking flow before the code expires.</p>
         </div>
         <div className="min-h-62.5 rounded-3xl bg-gradient-to-br from-emerald-500/15 to-teal-500/5 p-8">
           <span className="grid size-9 place-items-center rounded-full bg-emerald-500 text-sm font-bold">3</span>
-          <h2 className="mt-6 text-2xl font-semibold">Forward the message</h2>
-          <p className="self-end leading-[1.65] text-muted-foreground">Forward supported content after the signed webhook links you.</p>
+          <h2 className="mt-6 text-2xl font-semibold">Investigate in context</h2>
+          <p className="self-end leading-[1.65] text-muted-foreground">Forward supported content and let Verith begin an evidence-led investigation from the conversation.</p>
         </div>
       </section>
       <section className="mt-20 grid grid-cols-[1fr_0.7fr] gap-16 rounded-[2rem] bg-surface p-[clamp(2rem,6vw,6rem)] max-[700px]:grid-cols-1">

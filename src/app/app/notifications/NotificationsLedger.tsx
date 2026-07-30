@@ -50,12 +50,12 @@ export default function NotificationsLedger() {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <span>Activity ledger</span>
-        <h1>Notifications.</h1>
+        <span>Your Verith activity</span>
+        <h1>Stay connected to every investigation that matters.</h1>
         <div>
           <p>
-            Persisted account, investigation, learning, and security events from
-            the Verith notification service.
+            Follow investigation milestones, evidence updates, learning
+            progress, and security events from one focused activity stream.
           </p>
           <button
             disabled={readAll.isPending || unread === 0}

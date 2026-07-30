@@ -3,7 +3,10 @@ import {
   BookOpen,
   Check,
   FileSearch,
+  GraduationCap,
+  Globe2,
   ImageIcon,
+  Layers3,
   Link2,
   MessageCircle,
   Mic2,
@@ -24,22 +27,22 @@ const inputTypes = [
 const benefits = [
   {
     icon: FileSearch,
-    title: "Understand the claim",
-    text: "Verith separates checkable statements from opinions so you know exactly what is being investigated.",
+    title: "Claim-level intelligence",
+    text: "Verith decomposes complex media into verifiable claims, separating fact, opinion, framing, and rhetoric before analysis begins.",
     color: "from-violet-500/20 to-indigo-500/5",
     iconColor: "text-violet-300",
   },
   {
     icon: Search,
-    title: "Follow the evidence",
-    text: "Relevant sources stay attached to the claims they support, challenge, or place in context.",
+    title: "Traceable evidence",
+    text: "Every conclusion remains connected to the source material that supports, challenges, or contextualises it—ready for human inspection.",
     color: "from-cyan-500/20 to-sky-500/5",
     iconColor: "text-cyan-300",
   },
   {
     icon: ShieldCheck,
-    title: "See what is uncertain",
-    text: "Missing information and limitations remain visible instead of being hidden behind a confident answer.",
+    title: "Calibrated uncertainty",
+    text: "Verith exposes evidence gaps, analytical limitations, and unresolved questions instead of manufacturing certainty where none exists.",
     color: "from-emerald-500/20 to-teal-500/5",
     iconColor: "text-emerald-300",
   },
@@ -47,16 +50,39 @@ const benefits = [
 
 const steps = [
   {
-    title: "Share what you saw",
-    text: "Paste the text or link, or upload the image or voice note you want to understand.",
+    title: "Capture the source",
+    text: "Submit text, a link, image, screenshot, or voice note while preserving the original material and its context.",
   },
   {
-    title: "Verith investigates",
-    text: "The system identifies claims, looks for useful evidence, and checks for missing context.",
+    title: "Build the evidence map",
+    text: "Verith extracts factual claims, retrieves relevant sources, compares competing evidence, and surfaces missing context.",
   },
   {
-    title: "Review the explanation",
-    text: "Read a clear summary, open the sources, and decide what you want to do next.",
+    title: "Act with confidence",
+    text: "Explore an explainable report, inspect every source, understand uncertainty, and make a more informed sharing decision.",
+  },
+] as const;
+
+const productPillars = [
+  {
+    icon: Layers3,
+    title: "Multimodal by default",
+    text: "One investigation model supports the formats misinformation actually travels in: text, links, screenshots, images, and voice notes.",
+  },
+  {
+    icon: Search,
+    title: "Evidence before verdict",
+    text: "Claim extraction, retrieval, comparison, source review, and context analysis form an inspectable chain—not an unexplained AI answer.",
+  },
+  {
+    icon: Globe2,
+    title: "Built for everyday reach",
+    text: "A focused web workspace and WhatsApp entry point bring verification closer to the conversations where questionable content is shared.",
+  },
+  {
+    icon: GraduationCap,
+    title: "A learning loop, not a dead end",
+    text: "Courses, quizzes, and challenges help users carry stronger evaluation habits into their next information decision.",
   },
 ] as const;
 
@@ -91,6 +117,9 @@ export default function LandingPage() {
             <a className="transition-colors hover:text-white" href="#why-verith">
               Why Verith
             </a>
+            <a className="transition-colors hover:text-white" href="#product-vision">
+              Product
+            </a>
             <Link className="transition-colors hover:text-white" href="/learning">
               Learn
             </Link>
@@ -106,7 +135,7 @@ export default function LandingPage() {
               className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_30px_-14px_rgba(139,92,246,0.95)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
               href="/verify"
             >
-              Check something
+              Try now
               <ArrowRight size={15} />
             </Link>
           </div>
@@ -125,24 +154,24 @@ export default function LandingPage() {
             <MotionReveal>
               <span className="inline-flex items-center gap-2 rounded-full border border-violet-300/15 bg-violet-400/[0.08] px-4 py-2 text-xs font-semibold text-violet-200">
                 <Sparkles size={14} />
-                A clearer way to make sense of what you see online
+                Evidence infrastructure for a more resilient information ecosystem
               </span>
               <h1 className="mx-auto mt-7 max-w-[13ch] text-[clamp(3.4rem,8vw,7rem)] leading-[0.98] font-semibold tracking-normal">
-                Pause. Check. Share with confidence.
+                Turn information overload into informed action.
               </h1>
               <p className="mx-auto mt-7 max-w-2xl text-base leading-7 text-muted-foreground md:text-xl md:leading-8">
-                Verith helps you investigate claims, articles, screenshots, images, and voice notes without burying you in technical language.
+                Verith is an explainable, multimodal verification platform that transforms claims, articles, screenshots, images, and voice notes into transparent evidence maps people can understand and trust.
               </p>
               <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <Link
                   className="inline-flex min-h-12 items-center gap-2 rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 px-7 text-sm font-semibold text-white shadow-[0_18px_45px_-18px_rgba(139,92,246,0.95)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
                   href="/verify"
                 >
-                  Start checking
+                  Try Verith now
                   <ArrowRight size={16} />
                 </Link>
                 <a className="inline-flex min-h-12 items-center rounded-full bg-white/[0.055] px-7 text-sm font-semibold transition-colors hover:bg-white/[0.09]" href="#how-it-works">
-                  See how it works
+                  Explore the product
                 </a>
               </div>
             </MotionReveal>
@@ -154,8 +183,8 @@ export default function LandingPage() {
                 <div className="rounded-[1.5rem] bg-[#0d1015] p-6 md:p-8">
                   <div className="flex flex-wrap items-center justify-between gap-4">
                     <div>
-                      <p className="text-sm font-semibold">What would you like to check?</p>
-                      <p className="mt-1 text-xs text-muted-foreground">Choose what you have and Verith will guide you.</p>
+                      <p className="text-sm font-semibold">Start an evidence-led investigation</p>
+                      <p className="mt-1 text-xs text-muted-foreground">Bring the content. Verith orchestrates the verification workflow.</p>
                     </div>
                     <span className="rounded-full bg-emerald-400/10 px-3 py-1.5 text-xs font-medium text-emerald-300">Private by default</span>
                   </div>
@@ -174,11 +203,11 @@ export default function LandingPage() {
                   </div>
                   <div className="mt-5 min-h-48 rounded-2xl bg-white/[0.035] p-5 text-left">
                     <p className="text-sm leading-7 text-muted-foreground">
-                      Paste a claim, headline, message, or article excerpt here. You can add a question if there is something specific you want to understand.
+                      Submit the claim, headline, forwarded message, or article excerpt you need to assess. Add a focused question to shape the investigation around the decision you need to make.
                     </p>
                   </div>
                   <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-                    <p className="text-xs text-muted">Your original content stays attached to the investigation.</p>
+                    <p className="text-xs text-muted">Source provenance is preserved throughout the investigation.</p>
                     <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 px-5 py-3 text-xs font-semibold text-white">
                       Investigate
                       <ArrowRight size={14} />
@@ -191,18 +220,18 @@ export default function LandingPage() {
                     <span className="grid size-10 place-items-center rounded-xl bg-violet-400/15 text-violet-300">
                       <FileSearch size={19} />
                     </span>
-                    <h2 className="mt-5 text-xl font-semibold">A simple explanation</h2>
+                    <h2 className="mt-5 text-xl font-semibold">Explainable by design</h2>
                     <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                      Findings are organised around what Verith found, why it matters, and what you can do next.
+                      Findings translate complex analysis into what was discovered, why it matters, and which action the evidence supports.
                     </p>
                   </div>
                   <div className="rounded-[1.5rem] bg-gradient-to-br from-cyan-500/15 to-sky-500/5 p-6">
                     <span className="grid size-10 place-items-center rounded-xl bg-cyan-400/15 text-cyan-300">
                       <Search size={19} />
                     </span>
-                    <h2 className="mt-5 text-xl font-semibold">Sources you can open</h2>
+                    <h2 className="mt-5 text-xl font-semibold">Evidence you can audit</h2>
                     <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                      Evidence remains inspectable, with uncertainty and missing context shown in plain language.
+                      Sources, contradictions, limitations, and missing context remain visible—never hidden behind a single confidence score.
                     </p>
                   </div>
                 </div>
@@ -215,10 +244,10 @@ export default function LandingPage() {
           <div className="mx-auto max-w-[1180px]">
             <MotionReveal>
               <div className="max-w-3xl">
-                <span className="inline-flex rounded-full bg-cyan-400/10 px-3 py-1.5 text-xs font-semibold text-cyan-300">Designed for clarity</span>
-                <h2 className="mt-5 text-4xl font-semibold tracking-normal md:text-6xl">Useful answers without the complexity.</h2>
+                <span className="inline-flex rounded-full bg-cyan-400/10 px-3 py-1.5 text-xs font-semibold text-cyan-300">Human-centred verification</span>
+                <h2 className="mt-5 text-4xl font-semibold tracking-normal md:text-6xl">Powerful enough for investigation. Clear enough for everyone.</h2>
                 <p className="mt-5 text-base leading-7 text-muted-foreground">
-                  Every part of the experience is designed to help you understand the investigation, not learn how the system works.
+                  Verith brings evidence retrieval, source comparison, manipulation analysis, and media literacy into one coherent experience—without asking people to become professional fact-checkers.
                 </p>
               </div>
             </MotionReveal>
@@ -244,10 +273,10 @@ export default function LandingPage() {
               <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
                 <div>
                   <span className="inline-flex rounded-full bg-violet-400/10 px-3 py-1.5 text-xs font-semibold text-violet-300">How it works</span>
-                  <h2 className="mt-5 text-4xl font-semibold tracking-normal md:text-5xl">From confusion to clarity.</h2>
+                  <h2 className="mt-5 text-4xl font-semibold tracking-normal md:text-5xl">One input. A complete chain of reasoning.</h2>
                 </div>
                 <p className="max-w-xl text-base leading-7 text-muted-foreground lg:justify-self-end">
-                  You do not need to know what kind of analysis to request. Start with what you saw and Verith guides the rest.
+                  The product turns an ambiguous piece of content into a structured investigation: claims, evidence relationships, source quality, context, limitations, and practical next steps.
                 </p>
               </div>
             </MotionReveal>
@@ -274,7 +303,7 @@ export default function LandingPage() {
                 <span className="grid size-11 place-items-center rounded-2xl bg-emerald-400/15 text-emerald-300">
                   <ShieldCheck size={22} />
                 </span>
-                <h2 className="mt-7 text-3xl font-semibold tracking-normal">Honest about what is unknown.</h2>
+                <h2 className="mt-7 text-3xl font-semibold tracking-normal">Trust is a product requirement, not a confidence score.</h2>
                 <div className="mt-6 grid gap-3 text-sm text-muted-foreground">
                   {["No invented citations", "No hidden uncertainty", "No claim that AI detection is proof", "No guess presented as evidence"].map((item) => (
                     <p className="flex items-center gap-3" key={item}>
@@ -291,9 +320,9 @@ export default function LandingPage() {
                   <span className="grid size-11 place-items-center rounded-2xl bg-violet-400/15 text-violet-300">
                     <BookOpen size={22} />
                   </span>
-                  <h2 className="mt-7 text-3xl font-semibold tracking-normal">Build your confidence.</h2>
+                  <h2 className="mt-7 text-3xl font-semibold tracking-normal">Verification that builds lasting media literacy.</h2>
                   <p className="mt-4 text-sm leading-6 text-muted-foreground">
-                    Learn how to recognise weak evidence, missing context, and emotional manipulation.
+                    Lessons, quizzes, and evidence challenges turn each investigation into practical skills people can reuse across platforms and communities.
                   </p>
                 </div>
                 <div className="flex flex-col justify-end gap-3">
@@ -308,6 +337,44 @@ export default function LandingPage() {
             </MotionReveal>
           </div>
         </section>
+
+        <section className="px-5 py-24" id="product-vision">
+          <div className="mx-auto max-w-[1180px] rounded-[2rem] bg-gradient-to-br from-violet-500/10 via-surface/80 to-cyan-500/[0.07] p-7 md:p-12">
+            <MotionReveal>
+              <div className="grid gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-end">
+                <div>
+                  <span className="inline-flex rounded-full bg-violet-400/10 px-3 py-1.5 text-xs font-semibold text-violet-300">
+                    The Verith product thesis
+                  </span>
+                  <h2 className="mt-5 text-4xl font-semibold tracking-normal md:text-6xl">
+                    Verification should create informed people, not dependent users.
+                  </h2>
+                </div>
+                <p className="text-base leading-7 text-muted-foreground lg:justify-self-end">
+                  Verith combines explainable AI, inspectable evidence, accessible
+                  distribution, and practical media literacy into one continuous
+                  intervention against misinformation.
+                </p>
+              </div>
+            </MotionReveal>
+
+            <div className="mt-12 grid gap-4 md:grid-cols-2">
+              {productPillars.map(({ icon: Icon, text, title }, index) => (
+                <MotionReveal delay={index * 0.065} depth={30} key={title}>
+                  <article className="group h-full rounded-3xl border border-white/[0.06] bg-white/[0.035] p-7 transition-all duration-500 hover:-translate-y-1 hover:bg-white/[0.06] hover:shadow-[0_28px_70px_-36px_rgba(139,92,246,0.8)]">
+                    <span className="grid size-11 place-items-center rounded-2xl bg-gradient-to-br from-violet-500/20 to-cyan-500/10 text-violet-200 transition-transform duration-500 group-hover:rotate-[-6deg] group-hover:scale-110">
+                      <Icon size={21} />
+                    </span>
+                    <h3 className="mt-6 text-xl font-semibold">{title}</h3>
+                    <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                      {text}
+                    </p>
+                  </article>
+                </MotionReveal>
+              ))}
+            </div>
+          </div>
+        </section>
       </main>
 
       <footer className="px-5 pb-8">
@@ -315,7 +382,7 @@ export default function LandingPage() {
           <div className="grid gap-10 md:grid-cols-[1.2fr_1fr]">
             <div>
               <Brand />
-              <p className="mt-4 max-w-sm text-sm leading-6 text-muted-foreground">A friendlier way to understand what the evidence actually says.</p>
+              <p className="mt-4 max-w-sm text-sm leading-6 text-muted-foreground">Explainable verification and media literacy infrastructure for healthier digital communities.</p>
             </div>
             <div className="grid grid-cols-2 gap-8 text-sm">
               <div className="grid content-start gap-3">
@@ -332,7 +399,7 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
-          <p className="mt-10 text-xs text-muted">© {new Date().getFullYear()} Verith. Evidence-led media verification.</p>
+          <p className="mt-10 text-xs text-muted">© {new Date().getFullYear()} Verith. Building resilience against misinformation through evidence, transparency, and education.</p>
         </div>
       </footer>
     </div>

@@ -22,10 +22,11 @@ export default function ChallengesList() {
     <div className={styles.page}>
       <header className={styles.header}>
         <span>Daily evidence practice</span>
-        <h1>Challenges.</h1>
+        <h1>Train your instincts against real-world misinformation patterns.</h1>
         <p>
-          Published, time-bounded exercises for practicing claim and source
-          evaluation. Scores and rewards are issued only by the backend.
+          Time-bound evidence scenarios transform media literacy from passive
+          reading into repeatable decision-making practice. Every score and
+          reward reflects persisted performance.
         </p>
       </header>
       {challenges.isPending && (

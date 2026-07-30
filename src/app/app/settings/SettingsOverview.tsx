@@ -81,11 +81,11 @@ export default function SettingsOverview() {
   return (
     <div className={styles.page}>
       <header className={styles.pageHeader}>
-        <span>Account: Preferences</span>
-        <h1>Settings.</h1>
+        <span>Your Verith experience</span>
+        <h1>Shape the workspace around how you investigate and learn.</h1>
         <p>
-          Manage the identity, delivery preferences, privacy, and security
-          attached to your Verith account.
+          Control your identity, preferred experience, notification channels,
+          privacy posture, and account security from one place.
         </p>
       </header>
 

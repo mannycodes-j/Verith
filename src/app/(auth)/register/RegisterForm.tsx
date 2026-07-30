@@ -102,9 +102,12 @@ export default function RegisterForm() {
   return (
     <>
       <header className={styles.formHeader}>
-        <span>Create identity</span>
-        <h2>Begin with evidence.</h2>
-        <p>Create a secure account for saved investigations and reports.</p>
+        <span>Create your Verith workspace</span>
+        <h2>Build a personal record of evidence-informed decisions.</h2>
+        <p>
+          Save investigations, revisit transparent reports, and turn every
+          verification into media-literacy progress.
+        </p>
       </header>
       <form className={styles.form} onSubmit={onSubmit} noValidate>
         <div className={styles.field}>

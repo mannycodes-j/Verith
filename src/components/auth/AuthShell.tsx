@@ -19,27 +19,28 @@ export default function AuthShell({ children }: { children: ReactNode }) {
           <span className="ml-2">Verith</span>
         </Link>
         <div className={`${styles.contextBody} animate-entrance`}>
-          <p className={styles.eyebrow}>A private space to check what you see</p>
+          <p className={styles.eyebrow}>Your private evidence workspace</p>
           <h1 id="auth-context-title">
-            Investigate the claim. Inspect the evidence.
+            Move from information exposure to evidence-informed action.
           </h1>
           <p className={styles.contextCopy}>
-            Verith keeps factual claims, retrieved evidence, inference, and
-            uncertainty visibly separate throughout every investigation.
+            Verith gives every investigation a transparent chain of reasoning:
+            the claims identified, the evidence retrieved, the inferences made,
+            and the uncertainty that still remains.
           </p>
         </div>
         <ol className={styles.workflow}>
           <li>
             <span>1</span>
-            Submit source material
+            Preserve the original source
           </li>
           <li>
             <span>2</span>
-            Review claim-level evidence
+            Explore claim-level evidence
           </li>
           <li>
             <span>3</span>
-            Understand limits before sharing
+            Decide with context and confidence
           </li>
         </ol>
       </section>
@@ -52,7 +53,8 @@ export default function AuthShell({ children }: { children: ReactNode }) {
           {children}
         </div>
         <p className={styles.formFooter}>
-          Verith presents evidence-led analysis, not absolute truth.
+          Verith strengthens human judgement with inspectable evidence—it never
+          replaces it.
         </p>
       </section>
     </main>

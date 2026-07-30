@@ -20,10 +20,11 @@ export default function LearningCatalog({
     <div className={styles.catalog}>
       <header className={styles.hero}>
         <span>Grow your media literacy</span>
-        <h1>Learn how evidence holds up.</h1>
+        <h1>Build the judgement misinformation is designed to bypass.</h1>
         <p>
-          Structured lessons on claims, sources, context, and the techniques
-          used to make weak information feel convincing.
+          Progress from recognising persuasive tactics to evaluating claims,
+          interrogating sources, recovering missing context, and making
+          confident evidence-based decisions.
         </p>
       </header>
 

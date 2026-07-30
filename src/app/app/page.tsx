@@ -8,20 +8,20 @@ export default function WorkspaceOverviewPage() {
     <div className={styles.page}>
       <header className={styles.pageHeader}>
         <span>Investigation desk</span>
-        <h1>What would you like to verify?</h1>
+        <h1>Turn a questionable claim into an evidence-backed decision.</h1>
         <p>
-          Begin with a claim, article, link, image, screenshot, or voice note.
-          Verith will preserve the source material and keep conclusions tied to
-          inspectable evidence.
+          Start with the content in front of you. Verith preserves the original
+          material, identifies its factual claims, and builds an inspectable
+          evidence trail around every conclusion.
         </p>
       </header>
       <section className={styles.composerEntry}>
         <div>
           <span>New investigation</span>
-          <h2>Start with the source material.</h2>
+          <h2>Launch a multimodal investigation.</h2>
         </div>
         <Link href="/app/verify">
-          Open investigation desk <span aria-hidden="true">→</span>
+          Try now <span aria-hidden="true">→</span>
         </Link>
       </section>
       <div className={styles.overviewGrid}>
@@ -34,7 +34,7 @@ export default function WorkspaceOverviewPage() {
         </section>
         <aside>
           <div className={styles.sectionHeader}>
-            <span>Investigation principles</span>
+            <span>Trust architecture</span>
           </div>
           <ul className={styles.principles}>
             <li>

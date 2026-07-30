@@ -180,10 +180,11 @@ export default function VerificationComposer() {
           <span>New investigation</span>
           <span>Case: Created after submission</span>
         </div>
-        <h1>Inspect the source material.</h1>
+        <h1>Build an evidence map around what you have seen.</h1>
         <p>
-          Verith separates checkable claims, retrieved evidence, inference, and
-          uncertainty. Submit only material you are permitted to process.
+          Verith transforms source material into a structured, explainable
+          investigation—connecting every claim to supporting, contradicting, or
+          contextual evidence while keeping uncertainty visible.
         </p>
       </header>
 
@@ -249,7 +250,7 @@ export default function VerificationComposer() {
             {mediaSelected && (
               <div className={styles.mediaState}>
                 <span>{sourceType}: Owner-bound signed upload</span>
-                <h2>Select the original media file.</h2>
+                <h2>Preserve and investigate the original media.</h2>
                 <p>
                   Verith requests a short-lived upload policy, transfers the
                   file directly to the media provider, verifies the provider
@@ -384,24 +385,24 @@ export default function VerificationComposer() {
         <aside className={styles.guidance}>
           <div>
             <span>Evidence behavior</span>
-            <h2>What to expect.</h2>
+            <h2>A transparent investigation from start to finish.</h2>
           </div>
           <dl>
             <div>
               <dt>Claims</dt>
-              <dd>Checkable statements are extracted individually.</dd>
+              <dd>Each checkable statement becomes its own evidence question.</dd>
             </div>
             <div>
               <dt>Sources</dt>
-              <dd>Evidence stays linked to the claim it relates to.</dd>
+              <dd>Every source stays mapped to the claim it informs.</dd>
             </div>
             <div>
               <dt>Uncertainty</dt>
-              <dd>Incomplete analysis remains visibly incomplete.</dd>
+              <dd>Evidence gaps and unresolved questions remain explicit.</dd>
             </div>
             <div>
               <dt>Privacy</dt>
-              <dd>New investigations default to private.</dd>
+              <dd>Your investigation begins private and remains under your control.</dd>
             </div>
           </dl>
           <div className={styles.limit}>

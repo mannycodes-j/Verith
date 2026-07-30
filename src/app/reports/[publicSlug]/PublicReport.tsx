@@ -19,7 +19,7 @@ export default function PublicReport({ slug }: { slug: string }) {
           Verith
         </Link>
         <span className="font-sans text-[0.58rem] tracking-normal text-muted normal-case max-[650px]:hidden">Shared evidence report</span>
-        <Link className="justify-self-end rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 px-4 py-2 text-xs font-semibold text-white" href="/verify">Check something</Link>
+        <Link className="justify-self-end rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 px-4 py-2 text-xs font-semibold text-white" href="/verify">Try now</Link>
       </header>
 
       {report.isPending && (

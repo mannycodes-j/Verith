@@ -41,10 +41,11 @@ export default function Achievements() {
     <div className={styles.page}>
       <header className={styles.header}>
         <span>Knowledge record</span>
-        <h1>Achievements.</h1>
+        <h1>See evidence literacy become a measurable capability.</h1>
         <p>
-          A factual ledger of learning and investigation rewards issued by the
-          backend. Progress is never estimated from frontend activity.
+          Track the skills, consistency, and milestones earned through real
+          investigations and learning experiences. Progress reflects verified
+          platform activity—not decorative frontend estimates.
         </p>
       </header>
       {(profile.isPending || transactions.isPending || badges.isPending) && (

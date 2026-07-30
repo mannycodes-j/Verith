@@ -38,10 +38,10 @@ export default function VerificationHistory() {
     <div className={styles.page}>
       <header className={styles.header}>
         <span>Investigation archive</span>
-        <h1>Verification history.</h1>
+        <h1>Your evidence intelligence, organised over time.</h1>
         <p>
-          Review saved cases, current processing state, and the evidence
-          available for each investigation.
+          Revisit every investigation, monitor live processing, and compare the
+          evidence records that informed your previous decisions.
         </p>
       </header>
 

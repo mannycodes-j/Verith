@@ -188,6 +188,48 @@
   animation: friendly-float 8s ease-in-out infinite;
 }
 
+.page-motion main :is(article, section, aside),
+.page-motion main :is(a, button) {
+  transform-style: preserve-3d;
+}
+
+.page-motion main :is(article, section, aside) {
+  animation: surface-arrival both;
+  animation-range: entry 5% cover 28%;
+  animation-timeline: view();
+}
+
+.page-motion :is(a, button) {
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 260ms ease,
+    transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.page-motion :is(a, button):not(:disabled):hover {
+  transform: translateY(-2px);
+}
+
+.page-motion :is(a, button):not(:disabled):active {
+  transform: translateY(0) scale(0.975);
+}
+
+@keyframes surface-arrival {
+  from {
+    filter: blur(8px);
+    opacity: 0;
+    transform: translateY(28px) scale(0.985);
+  }
+
+  to {
+    filter: blur(0);
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     @apply scroll-auto;
@@ -200,6 +242,10 @@
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .page-motion main :is(article, section, aside) {
+    animation: none;
   }
 }
 

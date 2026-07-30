@@ -40,7 +40,7 @@ const navigation = [
     label: "Workspace",
     items: [
       { href: "/app", icon: Home, label: "Home" },
-      { href: "/app/verify", icon: PlusCircle, label: "Check something" },
+      { href: "/app/verify", icon: PlusCircle, label: "Try now" },
       {
         href: "/app/verifications",
         icon: History,

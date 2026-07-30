@@ -21,11 +21,11 @@ export default function Leaderboards() {
     <div className={styles.page}>
       <header className={styles.header}>
         <span>Public ranking</span>
-        <h1>Leaderboards.</h1>
+        <h1>Celebrate the people building stronger information communities.</h1>
         <p>
-          Rankings include only active users who permit leaderboard
-          participation. Scores come from persisted reward transactions for the
-          selected period.
+          A privacy-respecting view of sustained media-literacy practice,
+          featuring only participants who choose to be visible and scores
+          backed by persisted learning activity.
         </p>
       </header>
       <div className={styles.filters}>

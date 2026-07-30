@@ -63,8 +63,11 @@ export default function LoginForm({
     <>
       <header className={styles.formHeader}>
         <span>Workspace access</span>
-        <h2>Welcome back.</h2>
-        <p>Continue your investigations and inspect saved evidence reports.</p>
+        <h2>Return to your evidence workspace.</h2>
+        <p>
+          Continue active investigations, revisit source-backed reports, and
+          keep building your media-literacy practice.
+        </p>
       </header>
       <form className={styles.form} onSubmit={onSubmit} noValidate>
         {sessionExpired && (
