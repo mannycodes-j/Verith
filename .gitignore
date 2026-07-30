@@ -12,8 +12,28 @@
 
 # testing
 /coverage
+/test/
+/tests/
+/__tests__/
 /playwright-report/
 /test-results/
+/test-reports/
+/coverage-reports/
+/reports/
+/results/
+/.nyc_output/
+*.test.js
+*.test.jsx
+*.test.ts
+*.test.tsx
+*.spec.js
+*.spec.jsx
+*.spec.ts
+*.spec.tsx
+*.e2e-spec.js
+*.e2e-spec.ts
+*.lcov
+junit*.xml
 
 # next.js
 /.next/
