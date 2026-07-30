@@ -1,71 +1,74 @@
 export const landingStyles = {
-  page: "min-h-screen overflow-x-hidden bg-background text-foreground",
+  page: "min-h-screen overflow-x-hidden bg-background font-sans text-foreground selection:bg-accent/20",
   header:
-    "sticky top-0 z-50 grid h-17.5 grid-cols-[auto_1fr_auto] items-center border-b border-border bg-background/95 px-(--page-gutter) backdrop-blur max-[900px]:grid-cols-[1fr_auto]",
-  wordmark: "font-editorial text-[1.65rem] font-medium tracking-[-0.05em]",
+    "fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-black/70 backdrop-blur-md h-16 flex items-center justify-between px-6 transition-all duration-200",
+  wordmark: "font-sans text-[17px] font-semibold tracking-tight text-foreground flex items-center gap-2.5 hover:opacity-90 transition-opacity",
   desktopNav:
-    "flex justify-center gap-[clamp(1rem,2.5vw,2.5rem)] font-mono text-[0.58rem] tracking-[0.06em] text-muted-foreground uppercase max-[900px]:hidden [&_a]:transition-colors [&_a:hover]:text-foreground",
+    "hidden md:flex items-center gap-7 text-sm text-zinc-400 [&_a]:cursor-pointer [&_a]:transition-colors [&_a]:duration-200 [&_a:hover]:text-foreground",
   headerActions: "flex items-center gap-4",
-  textAction: "font-mono text-[0.58rem] tracking-[0.06em] uppercase max-[550px]:hidden",
+  textAction: "cursor-pointer text-sm text-zinc-400 transition-colors hover:text-foreground hidden sm:block",
   primaryAction:
-    "inline-flex items-center gap-4 bg-foreground px-5 py-3 font-mono text-[0.58rem] tracking-[0.05em] text-background uppercase transition-colors hover:bg-accent hover:text-accent-foreground [&_svg]:h-4 [&_svg]:w-4 [&_svg]:fill-none [&_svg]:stroke-current",
+    "inline-flex cursor-pointer items-center gap-2 rounded-full bg-gradient-to-r from-[#ffebb1] to-[#ffc438] px-5 py-2 text-sm font-medium text-[#18130a] shadow-[0_10px_30px_-14px_rgba(245,158,11,0.8)] transition-all duration-200 ease-out hover:scale-[1.02] active:scale-[0.98] [&_svg]:h-4 [&_svg]:w-4 [&_svg]:fill-none [&_svg]:stroke-current",
   mobileMenu:
-    "hidden max-[900px]:block [&_summary]:cursor-pointer [&_summary]:font-mono [&_summary]:text-[0.58rem] [&_summary]:uppercase [&_nav]:absolute [&_nav]:top-full [&_nav]:right-0 [&_nav]:grid [&_nav]:w-[min(22rem,100vw)] [&_nav]:border [&_nav]:border-border-strong [&_nav]:bg-background [&_nav]:p-6 [&_nav_a]:border-b [&_nav_a]:border-border [&_nav_a]:py-3 [&_nav_a]:font-mono [&_nav_a]:text-[0.65rem] [&_nav_a]:uppercase",
-  hero: "px-(--page-gutter) pt-[clamp(4rem,9vw,9rem)]",
-  heroCopy:
-    "mx-auto max-w-[1500px] [&_h1]:my-6 [&_h1]:max-w-[12ch] [&_h1]:font-editorial [&_h1]:text-[clamp(4rem,9vw,9rem)] [&_h1]:leading-[0.86] [&_h1]:font-normal [&_h1]:tracking-[-0.07em]",
-  eyebrow: "font-mono text-[0.58rem] tracking-[0.075em] text-muted uppercase",
-  heroDescription: "mt-8 max-w-170 text-[clamp(1rem,1.4vw,1.25rem)] leading-[1.65] text-muted-foreground",
-  heroActions: "mt-10 flex flex-wrap items-center gap-5",
-  secondaryAction: "border-b border-foreground pb-1 font-mono text-[0.58rem] tracking-[0.05em] uppercase",
-  preview: "mx-auto mt-[clamp(4rem,8vw,8rem)] max-w-[1500px] border border-border-strong bg-surface",
+    "relative md:hidden [&_summary]:list-none [&_summary]:cursor-pointer [&_summary]:text-sm [&_summary]:text-zinc-400 [&_nav]:absolute [&_nav]:top-full [&_nav]:right-0 [&_nav]:mt-2 [&_nav]:grid [&_nav]:w-48 [&_nav]:rounded-lg [&_nav]:border [&_nav]:border-white/10 [&_nav]:bg-zinc-950/90 [&_nav]:p-2 [&_nav]:backdrop-blur-md [&_nav_a]:rounded-md [&_nav_a]:px-3 [&_nav_a]:py-2 [&_nav_a]:text-sm [&_nav_a]:text-zinc-400 [&_nav_a:hover]:bg-white/5 [&_nav_a:hover]:text-foreground",
+  hero: "relative isolate mx-auto max-w-[1400px] overflow-hidden px-6 pt-40 pb-16 md:pt-44",
+  heroCopy: "flex max-w-5xl flex-col items-start",
+  eyebrow: "inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-400/80 mb-4",
+  heroDescription: "mt-6 max-w-2xl text-left text-base md:text-lg leading-relaxed text-zinc-400",
+  heroActions: "mt-10 flex flex-wrap items-center gap-4",
+  secondaryAction:
+    "group cursor-pointer inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-2.5 text-sm font-medium text-foreground transition-all duration-200 ease-out hover:border-white/15 hover:bg-white/[0.08] active:scale-[0.98]",
+  preview:
+    "relative mx-auto mt-16 max-w-[1300px] overflow-hidden rounded-xl border border-white/10 bg-[#0F1012] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.06)] transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] [perspective:2000px] [transform-style:preserve-3d] [transform:rotateX(15deg)_rotateY(10deg)_rotateZ(-2deg)_translateY(2rem)] hover:[transform:rotateX(0deg)_rotateY(0deg)_rotateZ(0deg)_translateY(0)] hover:shadow-2xl hover:border-white/20",
   previewTopbar:
-    "flex items-center justify-between border-b border-border-strong px-5 py-4 [&>div]:grid [&>div]:gap-1 [&_strong]:font-mono [&_strong]:text-[0.68rem] [&_strong]:font-normal [&_strong]:uppercase",
-  previewState: "font-mono text-[0.58rem] text-success uppercase",
-  previewBody: "grid min-h-110 grid-cols-[4rem_minmax(0,1.2fr)_minmax(18rem,0.45fr)] max-[800px]:grid-cols-[3rem_1fr] max-[800px]:[&_aside]:col-span-2",
-  previewRail:
-    "flex flex-col items-center gap-8 border-r border-border-strong py-5 font-mono text-[0.58rem] text-muted",
-  railBrand: "mb-4 font-editorial !text-xl !text-foreground",
+    "flex h-14 items-center justify-between border-b border-white/[0.05] px-4 bg-[#0F1012] [&_strong]:font-sans [&_strong]:text-[13px] [&_strong]:font-medium [&_strong]:text-foreground/90",
+  previewState:
+    "rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.16em] text-emerald-400",
+  previewBody:
+    "grid h-[520px] grid-cols-[200px_minmax(0,1.2fr)_minmax(240px,0.6fr)] divide-x divide-white/[0.05] max-[900px]:grid-cols-1 max-[900px]:divide-x-0 max-[900px]:h-auto max-[900px]:[&_aside]:border-t max-[900px]:[&_aside]:border-white/[0.05]",
+  previewRail: "flex flex-col items-center gap-6 py-5 font-mono text-[11px] text-zinc-500 bg-[#0F1012] h-full max-[900px]:hidden",
+  railBrand: "font-semibold text-foreground text-sm tracking-tight mb-4",
   railActive: "!text-accent",
-  previewContent: "flex min-w-0 flex-col justify-between p-[clamp(2rem,5vw,5rem)]",
-  caseMeta: "flex justify-between gap-4 font-mono text-[0.58rem] text-muted uppercase",
-  sampleClaim: "max-w-[18ch] font-editorial text-[clamp(2.5rem,5vw,5rem)] leading-[0.98] tracking-[-0.05em]",
-  stageLine:
-    "grid grid-cols-3 border-t border-border pt-4 font-mono text-[0.55rem] text-muted uppercase max-[550px]:grid-cols-1 max-[550px]:gap-2",
+  previewContent: "flex min-w-0 flex-col justify-between p-8 bg-[#0B0C0E] h-full",
+  caseMeta: "flex justify-between gap-4 font-mono text-[11px] text-zinc-500 uppercase",
+  sampleClaim: "max-w-[20ch] text-left text-2xl md:text-3xl font-medium tracking-tight text-foreground my-8 leading-snug",
+  stageLine: "grid grid-cols-3 gap-4 border-t border-white/[0.05] pt-4 font-mono text-[10px] text-zinc-500 uppercase",
   previewInspector:
-    "border-l border-border-strong p-[clamp(1.5rem,3vw,3rem)] max-[800px]:border-l-0 max-[800px]:border-t [&>p]:font-editorial [&>p]:text-[clamp(1.8rem,3vw,3rem)] [&>p]:leading-[1.05] [&>p]:tracking-[-0.04em] [&_dl]:mt-12 [&_dl_div]:grid [&_dl_div]:grid-cols-2 [&_dl_div]:gap-3 [&_dl_div]:border-t [&_dl_div]:border-border [&_dl_div]:py-3 [&_dt]:font-mono [&_dt]:text-[0.55rem] [&_dt]:text-muted [&_dt]:uppercase [&_dd]:m-0 [&_dd]:text-right [&_dd]:text-[0.68rem]",
-  statusStrip:
-    "mx-auto grid max-w-[1500px] grid-cols-3 border-x border-b border-border-strong max-[600px]:grid-cols-1 [&_span]:border-r [&_span]:border-border [&_span]:p-4 [&_span]:text-center [&_span]:font-mono [&_span]:text-[0.58rem] [&_span]:tracking-[0.075em] [&_span]:text-muted [&_span]:uppercase max-[600px]:[&_span]:border-r-0 max-[600px]:[&_span]:border-b",
-  editorialSection: "px-(--page-gutter) py-[clamp(5rem,10vw,10rem)]",
-  sectionMarker:
-    "mx-auto flex max-w-[1500px] gap-6 border-t border-border-strong pt-4 font-mono text-[0.58rem] tracking-[0.075em] text-muted uppercase",
+    "p-6 bg-[#0B0C0E] h-full overflow-y-auto flex flex-col justify-between [&>p]:text-[13px] [&>p]:leading-relaxed [&>p]:text-zinc-400 [&_dl]:mt-6 [&_dl_div]:flex [&_dl_div]:justify-between [&_dl_div]:border-t [&_dl_div]:border-white/[0.05] [&_dl_div]:py-2.5 [&_dt]:font-mono [&_dt]:text-[10px] [&_dt]:text-zinc-500 [&_dt]:uppercase [&_dd]:m-0 [&_dd]:text-[12px] [&_dd]:text-foreground/90",
+  statusStrip: "hidden",
+  editorialSection: "relative mx-auto max-w-[1100px] overflow-hidden border-t border-white/[0.05] px-6 py-20 md:py-28",
+  sectionMarker: "flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-500 mb-6",
   sectionLead:
-    "mx-auto mt-[clamp(3rem,7vw,7rem)] grid max-w-[1500px] grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.45fr)] items-end gap-[clamp(2rem,7vw,7rem)] max-[750px]:grid-cols-1 [&_h2]:m-0 [&_h2]:max-w-[12ch] [&_h2]:font-editorial [&_h2]:text-[clamp(3.5rem,7vw,7rem)] [&_h2]:leading-[0.92] [&_h2]:font-normal [&_h2]:tracking-[-0.06em] [&_p]:m-0 [&_p]:leading-[1.65] [&_p]:text-muted-foreground",
-  investigationGrid: "mx-auto mt-[clamp(3rem,7vw,7rem)] grid max-w-[1500px] grid-cols-[1.1fr_0.9fr] border border-border-strong max-[800px]:grid-cols-1",
-  documentPanel: "p-[clamp(2rem,5vw,5rem)]",
-  panelLabel: "flex justify-between gap-4 font-mono text-[0.58rem] text-muted uppercase",
+    "grid grid-cols-[1.2fr_0.8fr] gap-8 md:gap-16 items-start max-[750px]:grid-cols-1 [&_h2]:text-3xl md:text-4xl [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:text-foreground [&_p]:text-base [&_p]:leading-relaxed [&_p]:text-zinc-400 [&_p]:mt-2",
+  investigationGrid:
+    "mt-12 grid grid-cols-1 md:grid-cols-2 rounded-xl border border-white/[0.08] bg-zinc-900/20 backdrop-blur-sm overflow-hidden divide-y md:divide-y-0 md:divide-x divide-white/[0.08]",
+  documentPanel: "p-6 md:p-8 [&_blockquote]:text-lg [&_blockquote]:leading-relaxed [&_blockquote]:text-foreground/90 [&_blockquote]:italic [&_blockquote]:mb-6",
+  panelLabel: "flex justify-between items-center font-mono text-[11px] text-zinc-500 uppercase mb-6",
   annotation:
-    "mt-6 grid grid-cols-[8rem_1fr] gap-5 border-t border-border py-4 max-[550px]:grid-cols-1 [&_span]:font-mono [&_span]:text-[0.58rem] [&_span]:text-accent [&_span]:uppercase [&_p]:m-0 [&_p]:text-sm [&_p]:text-muted-foreground",
-  evidencePanel: "border-l border-border-strong p-[clamp(2rem,5vw,5rem)] max-[800px]:border-l-0 max-[800px]:border-t",
+    "mt-6 border-t border-white/[0.05] pt-4 grid grid-cols-[80px_1fr] gap-4 [&_span]:font-mono [&_span]:text-[10px] [&_span]:text-accent [&_span]:uppercase [&_p]:m-0 [&_p]:text-[13px] [&_p]:leading-relaxed [&_p]:text-zinc-400",
+  evidencePanel: "p-6 md:p-8 bg-black/20",
   evidenceRecord:
-    "grid grid-cols-[3rem_1fr] gap-4 border-t border-border py-6 [&_strong]:font-editorial [&_strong]:text-2xl [&_strong]:font-normal [&_p]:mb-0 [&_p]:text-sm [&_p]:leading-[1.6] [&_p]:text-muted-foreground",
-  evidenceIndex: "font-mono text-[0.58rem] text-accent",
-  workflowList:
-    "mx-auto mt-[clamp(3rem,7vw,7rem)] max-w-[1500px] list-none border-t border-border-strong p-0 [&_li]:grid [&_li]:grid-cols-[3rem_minmax(10rem,0.5fr)_1fr] [&_li]:items-baseline [&_li]:gap-6 [&_li]:border-b [&_li]:border-border-strong [&_li]:py-6 max-[650px]:[&_li]:grid-cols-[2rem_1fr] [&_li>span]:font-mono [&_li>span]:text-[0.58rem] [&_li>span]:text-muted [&_h3]:m-0 [&_h3]:font-editorial [&_h3]:text-[clamp(2rem,4vw,4rem)] [&_h3]:font-normal [&_p]:m-0 [&_p]:leading-[1.6] [&_p]:text-muted-foreground max-[650px]:[&_p]:col-start-2",
-  darkSection: "bg-foreground text-background",
+    "flex gap-4 border-t border-white/[0.05] first:border-t-0 py-5 [&_strong]:text-base [&_strong]:font-medium [&_strong]:text-foreground [&_p]:mt-1 [&_p]:text-[13px] [&_p]:leading-relaxed [&_p]:text-zinc-400",
+  evidenceIndex: "font-mono text-[11px] text-accent shrink-0",
+  workflowList: "mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 list-none p-0",
+  darkSection: "bg-[#0F1012]/30 border-y border-white/[0.05]",
   policyLayout:
-    "mx-auto mt-[clamp(3rem,7vw,7rem)] grid max-w-[1500px] grid-cols-[1fr_0.8fr] gap-[clamp(2rem,7vw,7rem)] max-[750px]:grid-cols-1 [&_h2]:m-0 [&_h2]:mb-8 [&_h2]:font-editorial [&_h2]:text-[clamp(3.5rem,7vw,7rem)] [&_h2]:leading-[0.92] [&_h2]:font-normal [&_h2]:tracking-[-0.06em]",
-  policyList: "[&_p]:m-0 [&_p]:border-t [&_p]:border-background/20 [&_p]:py-4 [&_p]:text-background/75",
+    "grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-8 md:gap-16 items-start [&_h2]:text-3xl md:text-4xl [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:text-foreground",
+  policyList:
+    "grid grid-cols-1 gap-3 [&_p]:m-0 [&_p]:rounded-lg [&_p]:border [&_p]:border-white/5 [&_p]:bg-white/[0.02] [&_p]:px-4 [&_p]:py-3.5 [&_p]:text-sm [&_p]:text-zinc-400 [&_p]:flex [&_p]:items-center [&_p]:gap-2.5",
   systemGrid:
-    "mx-auto mt-[clamp(3rem,7vw,7rem)] grid max-w-[1500px] grid-cols-[1fr_0.8fr] gap-[clamp(2rem,7vw,7rem)] max-[750px]:grid-cols-1 [&_h2]:m-0 [&_h2]:mb-8 [&_h2]:font-editorial [&_h2]:text-[clamp(3.5rem,7vw,7rem)] [&_h2]:leading-[0.92] [&_h2]:font-normal [&_h2]:tracking-[-0.06em]",
-  sectionDescription: "max-w-150 leading-[1.65] text-muted-foreground",
+    "grid grid-cols-1 md:grid-cols-[1fr_1.1fr] gap-8 md:gap-16 items-start [&_h2]:text-3xl md:text-4xl [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:text-foreground",
+  sectionDescription: "text-base leading-relaxed text-zinc-400",
   systemList:
-    "m-0 list-none border-t border-border-strong p-0 [&_li]:grid [&_li]:grid-cols-[3rem_1fr] [&_li]:gap-4 [&_li]:border-b [&_li]:border-border-strong [&_li]:py-4 [&_span]:font-mono [&_span]:text-[0.58rem] [&_span]:text-muted [&_strong]:font-normal",
+    "m-0 list-none border-t border-white/[0.05] p-0 [&_li]:grid [&_li]:grid-cols-[40px_1fr] [&_li]:items-center [&_li]:gap-4 [&_li]:border-b [&_li]:border-white/[0.05] [&_li]:py-3.5 [&_span]:font-mono [&_span]:text-[11px] [&_span]:text-zinc-500 [&_strong]:text-[14px] [&_strong]:font-normal [&_strong]:text-foreground/90",
   splitSection:
-    "grid grid-cols-2 border-y border-border-strong max-[750px]:grid-cols-1 [&_article]:p-[clamp(3rem,7vw,7rem)] [&_article+article]:border-l [&_article+article]:border-border-strong max-[750px]:[&_article+article]:border-l-0 max-[750px]:[&_article+article]:border-t [&_h2]:font-editorial [&_h2]:text-[clamp(3rem,6vw,6rem)] [&_h2]:leading-[0.92] [&_h2]:font-normal [&_h2]:tracking-[-0.055em] [&_p]:max-w-150 [&_p]:leading-[1.65] [&_p]:text-muted-foreground",
-  inlineLink: "mt-8 inline-flex items-center gap-4 border-b border-foreground pb-2 font-mono text-[0.58rem] uppercase [&_svg]:h-4 [&_svg]:w-4 [&_svg]:fill-none [&_svg]:stroke-current",
-  footer: "px-(--page-gutter) pt-[clamp(4rem,8vw,8rem)]",
-  footerIdentity: "mx-auto max-w-[1500px] border-t border-border-strong pt-8 [&_p]:text-muted-foreground",
-  footerLinks: "mx-auto my-16 grid max-w-[1500px] grid-cols-3 gap-8 max-[600px]:grid-cols-1 [&>div]:grid [&>div]:gap-3 [&_span]:mb-2 [&_span]:font-mono [&_span]:text-[0.58rem] [&_span]:text-muted [&_span]:uppercase [&_a]:text-sm",
-  footerBase: "mx-auto flex max-w-[1500px] justify-between gap-4 border-t border-border-strong py-5 font-mono text-[0.55rem] text-muted uppercase",
+    "grid grid-cols-1 md:grid-cols-2 border-y border-white/[0.05] divide-y md:divide-y-0 md:divide-x divide-white/[0.05] [&_article]:p-8 md:p-12 [&_h2]:text-2xl md:text-3xl [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:text-foreground [&_p]:text-[14px] [&_p]:leading-relaxed [&_p]:text-zinc-400 [&_p]:mt-3",
+  inlineLink:
+    "mt-6 inline-flex items-center gap-2 text-sm font-medium text-accent transition-colors hover:text-accent/80 [&_svg]:h-4 [&_svg]:w-4 [&_svg]:fill-none [&_svg]:stroke-current [&_svg]:transition-transform [&_svg]:group-hover:translate-x-1",
+  footer: "mx-auto max-w-[1400px] border-t border-white/[0.05] px-6 py-16 md:py-20",
+  footerIdentity: "flex flex-col gap-2 [&_p]:text-sm [&_p]:text-zinc-500",
+  footerLinks:
+    "grid grid-cols-2 sm:grid-cols-3 gap-8 mt-12 md:mt-0 [&>div]:flex [&>div]:flex-col [&>div]:gap-2.5 [&_span]:font-mono [&_span]:text-[11px] [&_span]:text-zinc-500 [&_span]:uppercase [&_span]:tracking-wider [&_a]:text-[13px] [&_a]:text-zinc-400 [&_a:hover]:text-foreground [&_a]:transition-colors",
+  footerBase:
+    "flex flex-col sm:flex-row justify-between items-center gap-4 border-t border-white/[0.05] mt-12 pt-6 font-mono text-[10px] text-zinc-500 uppercase tracking-wider",
 } as const;

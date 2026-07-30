@@ -13,9 +13,12 @@ export default function AuthShell({ children }: { children: ReactNode }) {
       </a>
       <section className={styles.context} aria-labelledby="auth-context-title">
         <Link className={styles.wordmark} href="/">
-          Verith
+          <span className="inline-flex size-8 items-center justify-center rounded-lg bg-accent text-sm font-bold text-accent-foreground">
+            V
+          </span>
+          <span className="ml-2">Verith</span>
         </Link>
-        <div className={styles.contextBody}>
+        <div className={`${styles.contextBody} animate-entrance`}>
           <p className={styles.eyebrow}>Evidence workspace / Secure access</p>
           <h1 id="auth-context-title">
             Investigate the claim. Inspect the evidence.
@@ -45,7 +48,9 @@ export default function AuthShell({ children }: { children: ReactNode }) {
           <Link href="/">Return home</Link>
           <span>Encrypted session</span>
         </div>
-        <div className={styles.formContainer}>{children}</div>
+        <div className={`${styles.formContainer} animate-entrance animation-delay-150`}>
+          {children}
+        </div>
         <p className={styles.formFooter}>
           Verith presents evidence-led analysis, not absolute truth.
         </p>

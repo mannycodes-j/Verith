@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
@@ -210,6 +211,7 @@ function SessionExpired({ login }: { login: () => void }) {
 export default function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
+  const reduceMotion = useReducedMotion();
   const [notificationDrawer, setNotificationDrawer] = useState(false);
   const [logoutDialog, setLogoutDialog] = useState(false);
   const profileQuery = useQuery<AuthenticatedUser>({
@@ -326,7 +328,8 @@ export default function AppShell({ children }: { children: ReactNode }) {
       <aside className={styles.sidebar}>
         <div className={styles.sidebarHeader}>
           <Link className={styles.wordmark} href="/app">
-            Verith
+            <span>V</span>
+            <strong>Verith</strong>
           </Link>
           <span>Evidence system</span>
         </div>
@@ -377,9 +380,16 @@ export default function AppShell({ children }: { children: ReactNode }) {
             </details>
           </div>
         </header>
-        <main className={styles.content} id="workspace-content">
+        <motion.main
+          animate={{ opacity: 1, y: 0 }}
+          className={styles.content}
+          id="workspace-content"
+          initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+          key={pathname}
+          transition={{ duration: 0.35, ease: [0.4, 0, 0.1, 1] }}
+        >
           {children}
-        </main>
+        </motion.main>
       </div>
       {notificationDrawer && (
         <NotificationDrawer close={() => setNotificationDrawer(false)} />
