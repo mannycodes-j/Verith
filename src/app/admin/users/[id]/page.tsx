@@ -1,0 +1,10 @@
+import AdminUserDetail from "./AdminUserDetail";
+
+export default async function AdminUserPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  return <AdminUserDetail id={id} />;
+}

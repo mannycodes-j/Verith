@@ -1,29 +1,92 @@
-import { apiClient, ApiClientError } from './apiClient';
+import type { components } from "@/generated/api-schema";
+import { apiClient, sessionToken } from "./apiClient";
 
-export interface UserProfile {
-  id: string;
-  name: string;
+export type LoginInput = components["schemas"]["LoginDto"];
+export type RegisterInput = components["schemas"]["RegisterDto"];
+export type ResetPasswordInput = components["schemas"]["ResetPasswordDto"];
+
+export interface AuthenticatedUser {
+  id?: string;
+  userId?: string;
   email?: string;
-  isGuest: boolean;
-  joinedAt: string;
+  username?: string;
+  displayName?: string;
+  role?: string;
+  status?: string;
+  [key: string]: unknown;
+}
+
+interface AuthenticationResult {
+  accessToken: string;
+  accessTokenExpiresIn: string;
+  user: AuthenticatedUser;
+}
+
+interface RegistrationResult {
+  user: AuthenticatedUser;
+  emailDelivery: {
+    state: "OPERATIONAL" | "NOT_CONFIGURED" | "UNAVAILABLE";
+    messageId?: string;
+    failureCode?: string;
+  };
 }
 
 export const authService = {
-  loginAsGuest: async (): Promise<UserProfile | null> => {
+  async forgotPassword(email: string): Promise<void> {
+    await apiClient.post<void>("/auth/forgot-password", { email });
+  },
+
+  getCurrentUser(): Promise<AuthenticatedUser> {
+    return apiClient.get<AuthenticatedUser>("/auth/me");
+  },
+
+  getProfile(): Promise<AuthenticatedUser> {
+    return apiClient.get<AuthenticatedUser>("/users/me");
+  },
+
+  async login(input: LoginInput): Promise<AuthenticationResult> {
+    const result = await apiClient.post<AuthenticationResult>(
+      "/auth/login",
+      input,
+      { retryAuthentication: false },
+    );
+    sessionToken.set(result.accessToken);
+    return result;
+  },
+
+  async logout(): Promise<void> {
     try {
-      return await apiClient.post<UserProfile>('/auth/guest', {});
-    } catch (error) {
-      if (error instanceof ApiClientError && error.isUnavailable) return null;
-      throw error;
+      await apiClient.post<void>("/auth/logout");
+    } finally {
+      sessionToken.clear();
     }
   },
-  
-  getProfile: async (): Promise<UserProfile | null> => {
-    try {
-      return await apiClient.get<UserProfile>('/auth/me');
-    } catch (error) {
-      if (error instanceof ApiClientError && error.isUnavailable) return null;
-      throw error;
-    }
-  }
+
+  register(input: RegisterInput): Promise<RegistrationResult> {
+    return apiClient.post<RegistrationResult>("/auth/register", input, {
+      retryAuthentication: false,
+    });
+  },
+
+  resendVerification(email: string): Promise<void> {
+    return apiClient.post<void>(
+      "/auth/resend-verification",
+      { email },
+      { retryAuthentication: false },
+    );
+  },
+
+  resetPassword(input: ResetPasswordInput): Promise<void> {
+    return apiClient.post<void>("/auth/reset-password", input, {
+      retryAuthentication: false,
+    });
+  },
+
+  verifyEmail(token: string): Promise<void> {
+    return apiClient.post<void>(
+      "/auth/verify-email",
+      { token },
+      { retryAuthentication: false },
+    );
+  },
 };

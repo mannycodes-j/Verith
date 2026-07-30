@@ -1,49 +1,175 @@
-import { apiClient, ApiClientError } from './apiClient';
+import type { components } from "@/generated/api-schema";
+import { apiClient } from "./apiClient";
 
-export interface VerificationReport {
+export type CreateVerificationInput =
+  components["schemas"]["CreateVerificationDto"];
+
+export type VerificationStatus =
+  | "DRAFT"
+  | "QUEUED"
+  | "PROCESSING"
+  | "PARTIALLY_COMPLETED"
+  | "COMPLETED"
+  | "FAILED"
+  | "CANCEL_REQUESTED"
+  | "CANCELLED"
+  | "DELETED";
+
+export interface VerificationRecord {
   id: string;
-  credibilityScore: number;
-  claims: string[];
-  biasDetected: string[];
-  emotionalManipulation: string[];
-  missingContext: string[];
-  aiGeneratedIndicators: string[];
-  sources: { title: string; url: string; credibility: 'high' | 'medium' | 'low' }[];
-  summary: string;
+  sourceType: CreateVerificationInput["sourceType"];
+  status: VerificationStatus;
+  currentStage: string;
+  progress: number;
+  visibility: CreateVerificationInput["visibility"];
+  title?: string;
+  question?: string;
+  requestedLanguage?: string;
+  detectedLanguage?: string;
+  claimsCount: number;
+  evidenceCount: number;
+  retryCount: number;
+  failureCode?: string;
+  failureSummary?: string;
+  createdAt: string;
+  updatedAt: string;
+  streamUrl: string;
 }
 
-export interface VerificationRequest {
-  type: 'text' | 'url' | 'image' | 'audio';
-  content: string | File;
+export interface VerificationPage {
+  items: VerificationRecord[];
+  pagination: {
+    nextCursor: string | null;
+    previousCursor: string | null;
+    hasNextPage: boolean;
+    limit: number;
+  };
+}
+
+export interface VerificationEvent {
+  id: string;
+  verificationId: string;
+  sequence: number;
+  stage: string;
+  status: string;
+  progress: number;
+  messageCode?: string;
+  safeMessage?: string;
+  metrics?: Record<string, number>;
+  occurredAt: string;
 }
 
 export const verificationService = {
-  submitForVerification: async (req: VerificationRequest): Promise<VerificationReport | null> => {
-    try {
-      if (req.content instanceof File) {
-        const formData = new FormData();
-        formData.append('file', req.content);
-        formData.append('type', req.type);
-        return await apiClient.post<VerificationReport>('/verify/media', formData);
+  cancel(id: string): Promise<VerificationRecord> {
+    return apiClient.post<VerificationRecord>(`/verifications/${id}/cancel`);
+  },
+
+  create(
+    input: CreateVerificationInput,
+    idempotencyKey: string,
+  ): Promise<VerificationRecord> {
+    return apiClient.post<VerificationRecord>("/verifications", input, {
+      headers: { "Idempotency-Key": idempotencyKey },
+    });
+  },
+
+  get(id: string): Promise<VerificationRecord> {
+    return apiClient.get<VerificationRecord>(`/verifications/${id}`);
+  },
+
+  list({
+    cursor,
+    limit = 20,
+    status,
+  }: {
+    cursor?: string;
+    limit?: number;
+    status?: VerificationStatus;
+  } = {}): Promise<VerificationPage> {
+    const query = new URLSearchParams({ limit: String(limit) });
+    if (cursor) query.set("cursor", cursor);
+    if (status) query.set("status", status);
+    return apiClient.get<VerificationPage>(`/verifications?${query}`);
+  },
+
+  listEvents(id: string, after = 0): Promise<VerificationEvent[]> {
+    return apiClient.get<VerificationEvent[]>(
+      `/verifications/${id}/events?after=${after}`,
+    );
+  },
+
+  remove(id: string): Promise<void> {
+    return apiClient.delete<void>(`/verifications/${id}`);
+  },
+
+  async streamEvents({
+    after = 0,
+    id,
+    onEvent,
+    onOpen,
+    signal,
+  }: {
+    after?: number;
+    id: string;
+    onEvent: (event: VerificationEvent) => void;
+    onOpen?: () => void;
+    signal: AbortSignal;
+  }): Promise<void> {
+    const response = await apiClient.stream(
+      `/verifications/${id}/stream?after=${after}`,
+      signal,
+    );
+    onOpen?.();
+    const reader = response.body!.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true }).replaceAll("\r\n", "\n");
+
+      let boundary = buffer.indexOf("\n\n");
+      while (boundary >= 0) {
+        const block = buffer.slice(0, boundary);
+        buffer = buffer.slice(boundary + 2);
+        boundary = buffer.indexOf("\n\n");
+
+        let eventType = "message";
+        const dataLines: string[] = [];
+        for (const line of block.split("\n")) {
+          if (line.startsWith("event:")) {
+            eventType = line.slice(6).trim();
+          } else if (line.startsWith("data:")) {
+            dataLines.push(line.slice(5).trimStart());
+          }
+        }
+        if (eventType !== "verification.event" || dataLines.length === 0) {
+          continue;
+        }
+
+        const parsed: unknown = JSON.parse(dataLines.join("\n"));
+        if (
+          typeof parsed === "object" &&
+          parsed !== null &&
+          "sequence" in parsed &&
+          typeof parsed.sequence === "number" &&
+          "stage" in parsed &&
+          typeof parsed.stage === "string"
+        ) {
+          onEvent(parsed as VerificationEvent);
+        }
       }
-      return await apiClient.post<VerificationReport>('/verify/text', { type: req.type, content: req.content });
-    } catch (error) {
-      if (error instanceof ApiClientError && error.isUnavailable) {
-        // Return null to allow the UI to handle the empty/unavailable state gracefully
-        return null;
-      }
-      throw error;
     }
   },
 
-  getRecentVerifications: async (): Promise<VerificationReport[] | null> => {
-    try {
-      return await apiClient.get<VerificationReport[]>('/verify/recent');
-    } catch (error) {
-      if (error instanceof ApiClientError && error.isUnavailable) {
-        return null; // Handle unavailable gracefully
-      }
-      throw error;
-    }
-  }
+  retry(id: string): Promise<VerificationRecord> {
+    return apiClient.post<VerificationRecord>(`/verifications/${id}/retry`);
+  },
+
+  reprocess(id: string): Promise<VerificationRecord> {
+    return apiClient.post<VerificationRecord>(
+      `/verifications/${id}/reprocess`,
+    );
+  },
 };

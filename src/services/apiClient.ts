@@ -1,73 +1,394 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+const API_ORIGIN = (
+  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000"
+).replace(/\/$/, "");
+const API_PREFIX = "/api/v1";
 
-export interface ApiError {
-  status: number;
+interface ResponseMeta {
+  requestId: string;
+  timestamp: string;
+}
+
+interface SuccessEnvelope<T> {
+  success: true;
   message: string;
-  isUnavailable?: boolean;
+  data: T;
+  meta: ResponseMeta;
+}
+
+interface ErrorEnvelope {
+  success: false;
+  message: string;
+  error: {
+    code: string;
+    details: unknown;
+  };
+  meta: ResponseMeta;
 }
 
 export class ApiClientError extends Error {
-  status: number;
-  isUnavailable: boolean;
+  readonly status: number;
+  readonly code: string;
+  readonly details: unknown;
+  readonly requestId?: string;
+  readonly isUnavailable: boolean;
 
-  constructor(message: string, status: number) {
+  constructor({
+    message,
+    status,
+    code = "REQUEST_FAILED",
+    details = null,
+    requestId,
+  }: {
+    message: string;
+    status: number;
+    code?: string;
+    details?: unknown;
+    requestId?: string;
+  }) {
     super(message);
+    this.name = "ApiClientError";
     this.status = status;
-    this.isUnavailable = status === 404 || status === 501;
-    this.name = 'ApiClientError';
+    this.code = code;
+    this.details = details;
+    this.requestId = requestId;
+    this.isUnavailable = status === 502 || status === 503 || status === 504;
   }
 }
 
-async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-  const url = `${API_BASE}${endpoint}`;
-  
-  // Setup headers
-  const headers = new Headers(options.headers);
-  if (!headers.has('Content-Type') && !(options.body instanceof FormData)) {
-    headers.set('Content-Type', 'application/json');
-  }
+interface AuthenticationPayload {
+  accessToken: string;
+  accessTokenExpiresIn: string;
+  user: Record<string, unknown>;
+}
 
-  // Get token if auth is implemented later
-  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
-  if (token) {
-    headers.set('Authorization', `Bearer ${token}`);
-  }
+let accessToken: string | null = null;
+let refreshRequest: Promise<boolean> | null = null;
 
-  try {
-    const response = await fetch(url, { ...options, headers });
+function getCookie(name: string): string | undefined {
+  if (typeof document === "undefined") return undefined;
 
-    if (!response.ok) {
-      const errorMsg = `API Error: ${response.status} ${response.statusText}`;
-      throw new ApiClientError(errorMsg, response.status);
+  const prefix = `${encodeURIComponent(name)}=`;
+  const cookie = document.cookie
+    .split("; ")
+    .find((entry) => entry.startsWith(prefix));
+
+  return cookie ? decodeURIComponent(cookie.slice(prefix.length)) : undefined;
+}
+
+function isErrorEnvelope(value: unknown): value is ErrorEnvelope {
+  if (!value || typeof value !== "object") return false;
+  return "success" in value && value.success === false;
+}
+
+function isSuccessEnvelope<T>(value: unknown): value is SuccessEnvelope<T> {
+  if (!value || typeof value !== "object") return false;
+  return "success" in value && value.success === true && "data" in value;
+}
+
+async function parseResponseBody(response: Response): Promise<unknown> {
+  if (response.status === 204) return undefined;
+
+  const contentType = response.headers.get("content-type");
+  if (!contentType?.includes("application/json")) return undefined;
+
+  return response.json();
+}
+
+async function refreshBrowserSession(): Promise<boolean> {
+  if (typeof window === "undefined") return false;
+  if (refreshRequest) return refreshRequest;
+
+  refreshRequest = (async () => {
+    const csrfToken = getCookie("verith_csrf");
+    if (!csrfToken) return false;
+
+    try {
+      const response = await fetch(`${API_ORIGIN}${API_PREFIX}/auth/refresh`, {
+        body: "{}",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "x-csrf-token": csrfToken,
+        },
+        method: "POST",
+      });
+      const body: unknown = await parseResponseBody(response);
+
+      if (!response.ok || !isSuccessEnvelope<AuthenticationPayload>(body)) {
+        accessToken = null;
+        return false;
+      }
+
+      accessToken = body.data.accessToken;
+      return true;
+    } catch {
+      accessToken = null;
+      return false;
+    } finally {
+      refreshRequest = null;
     }
-    
-    // For 204 No Content
-    if (response.status === 204) return {} as T;
-    
-    const data = await response.json();
-    return data as T;
+  })();
+
+  return refreshRequest;
+}
+
+interface RequestOptions extends RequestInit {
+  retryAuthentication?: boolean;
+}
+
+async function request<T>(
+  endpoint: string,
+  options: RequestOptions = {},
+): Promise<T> {
+  const {
+    retryAuthentication = true,
+    headers: providedHeaders,
+    ...fetchOptions
+  } = options;
+  const headers = new Headers(providedHeaders);
+
+  if (
+    !headers.has("Content-Type") &&
+    fetchOptions.body !== undefined &&
+    !(fetchOptions.body instanceof FormData)
+  ) {
+    headers.set("Content-Type", "application/json");
+  }
+  if (accessToken) {
+    headers.set("Authorization", `Bearer ${accessToken}`);
+  }
+
+  let response: Response;
+  try {
+    response = await fetch(`${API_ORIGIN}${API_PREFIX}${endpoint}`, {
+      ...fetchOptions,
+      credentials: "include",
+      headers,
+    });
+  } catch {
+    throw new ApiClientError({
+      code: "NETWORK_UNAVAILABLE",
+      message:
+        "Verith could not reach the service. Check your connection and try again.",
+      status: 503,
+    });
+  }
+
+  if (response.status === 401 && retryAuthentication) {
+    const refreshed = await refreshBrowserSession();
+    if (refreshed) {
+      return request<T>(endpoint, {
+        ...options,
+        retryAuthentication: false,
+      });
+    }
+  }
+
+  const body: unknown = await parseResponseBody(response);
+
+  if (!response.ok) {
+    if (isErrorEnvelope(body)) {
+      throw new ApiClientError({
+        code: body.error.code,
+        details: body.error.details,
+        message: body.message,
+        requestId: body.meta.requestId,
+        status: response.status,
+      });
+    }
+
+    throw new ApiClientError({
+      message: `The request failed with status ${response.status}.`,
+      status: response.status,
+    });
+  }
+
+  if (response.status === 204) return undefined as T;
+  if (isSuccessEnvelope<T>(body)) return body.data;
+
+  throw new ApiClientError({
+    code: "INVALID_API_RESPONSE",
+    message: "Verith received an unexpected response from the service.",
+    status: 502,
+  });
+}
+
+async function streamRequest(
+  endpoint: string,
+  signal: AbortSignal,
+  retryAuthentication = true,
+): Promise<Response> {
+  const headers = new Headers({ Accept: "text/event-stream" });
+  if (accessToken) {
+    headers.set("Authorization", `Bearer ${accessToken}`);
+  }
+
+  let response: Response;
+  try {
+    response = await fetch(`${API_ORIGIN}${API_PREFIX}${endpoint}`, {
+      cache: "no-store",
+      credentials: "include",
+      headers,
+      signal,
+    });
   } catch (error) {
-    if (error instanceof ApiClientError) {
+    if (error instanceof DOMException && error.name === "AbortError") {
       throw error;
     }
-    // Network or other fetch errors (e.g. backend completely down)
-    throw new ApiClientError('Service unavailable or network error', 503);
+    throw new ApiClientError({
+      code: "STREAM_UNAVAILABLE",
+      message: "The live update stream could not be reached.",
+      status: 503,
+    });
   }
+
+  if (response.status === 401 && retryAuthentication) {
+    const refreshed = await refreshBrowserSession();
+    if (refreshed) return streamRequest(endpoint, signal, false);
+  }
+
+  if (!response.ok) {
+    const body: unknown = await parseResponseBody(response);
+    if (isErrorEnvelope(body)) {
+      throw new ApiClientError({
+        code: body.error.code,
+        details: body.error.details,
+        message: body.message,
+        requestId: body.meta.requestId,
+        status: response.status,
+      });
+    }
+    throw new ApiClientError({
+      code: "STREAM_REQUEST_FAILED",
+      message: `The live update stream failed with status ${response.status}.`,
+      status: response.status,
+    });
+  }
+
+  if (!response.body) {
+    throw new ApiClientError({
+      code: "STREAM_BODY_UNAVAILABLE",
+      message: "The service did not return a readable update stream.",
+      status: 502,
+    });
+  }
+  return response;
 }
 
+async function downloadRequest(
+  endpoint: string,
+  providedHeaders?: HeadersInit,
+  retryAuthentication = true,
+): Promise<{ blob: Blob; filename?: string }> {
+  const headers = new Headers(providedHeaders);
+  if (accessToken) headers.set("Authorization", `Bearer ${accessToken}`);
+
+  let response: Response;
+  try {
+    response = await fetch(`${API_ORIGIN}${API_PREFIX}${endpoint}`, {
+      credentials: "include",
+      headers,
+    });
+  } catch {
+    throw new ApiClientError({
+      code: "DOWNLOAD_UNAVAILABLE",
+      message: "The report download service could not be reached.",
+      status: 503,
+    });
+  }
+
+  if (response.status === 401 && retryAuthentication) {
+    const refreshed = await refreshBrowserSession();
+    if (refreshed) return downloadRequest(endpoint, providedHeaders, false);
+  }
+
+  if (!response.ok) {
+    const body: unknown = await parseResponseBody(response);
+    if (isErrorEnvelope(body)) {
+      throw new ApiClientError({
+        code: body.error.code,
+        details: body.error.details,
+        message: body.message,
+        requestId: body.meta.requestId,
+        status: response.status,
+      });
+    }
+    throw new ApiClientError({
+      code: "REPORT_EXPORT_FAILED",
+      message: `The report export failed with status ${response.status}.`,
+      status: response.status,
+    });
+  }
+
+  const disposition = response.headers.get("content-disposition");
+  const encodedFilename = disposition?.match(/filename\*=UTF-8''([^;]+)/i)?.[1];
+  const quotedFilename = disposition?.match(/filename="([^"]+)"/i)?.[1];
+  const filename = encodedFilename
+    ? decodeURIComponent(encodedFilename)
+    : quotedFilename;
+  return { blob: await response.blob(), filename };
+}
+
+function serializeBody(body: unknown): BodyInit | undefined {
+  if (body === undefined) return undefined;
+  if (body instanceof FormData) return body;
+  return JSON.stringify(body);
+}
+
+export const sessionToken = {
+  clear() {
+    accessToken = null;
+  },
+  set(token: string) {
+    accessToken = token;
+  },
+};
+
 export const apiClient = {
-  get: <T>(endpoint: string, options?: RequestInit) => request<T>(endpoint, { ...options, method: 'GET' }),
-  post: <T>(endpoint: string, body: any, options?: RequestInit) => 
-    request<T>(endpoint, { 
-      ...options, 
-      method: 'POST', 
-      body: body instanceof FormData ? body : JSON.stringify(body) 
+  delete: <T>(
+    endpoint: string,
+    body?: unknown,
+    options?: RequestOptions,
+  ) =>
+    request<T>(endpoint, {
+      ...options,
+      body: serializeBody(body),
+      method: "DELETE",
     }),
-  put: <T>(endpoint: string, body: any, options?: RequestInit) => 
-    request<T>(endpoint, { 
-      ...options, 
-      method: 'PUT', 
-      body: body instanceof FormData ? body : JSON.stringify(body) 
+  download: (endpoint: string, headers?: HeadersInit) =>
+    downloadRequest(endpoint, headers),
+  get: <T>(endpoint: string, options?: RequestOptions) =>
+    request<T>(endpoint, { ...options, method: "GET" }),
+  patch: <T>(
+    endpoint: string,
+    body?: unknown,
+    options?: RequestOptions,
+  ) =>
+    request<T>(endpoint, {
+      ...options,
+      body: serializeBody(body),
+      method: "PATCH",
     }),
-  delete: <T>(endpoint: string, options?: RequestInit) => request<T>(endpoint, { ...options, method: 'DELETE' })
+  post: <T>(
+    endpoint: string,
+    body?: unknown,
+    options?: RequestOptions,
+  ) =>
+    request<T>(endpoint, {
+      ...options,
+      body: serializeBody(body),
+      method: "POST",
+    }),
+  put: <T>(
+    endpoint: string,
+    body?: unknown,
+    options?: RequestOptions,
+  ) =>
+    request<T>(endpoint, {
+      ...options,
+      body: serializeBody(body),
+      method: "PUT",
+    }),
+  stream: (endpoint: string, signal: AbortSignal) =>
+    streamRequest(endpoint, signal),
 };
