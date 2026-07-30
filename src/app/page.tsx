@@ -12,7 +12,6 @@ import {
   Mic2,
   Search,
   ShieldCheck,
-  Sparkles,
 } from "lucide-react";
 import Link from "next/link";
 import MotionReveal from "@/components/public/MotionReveal";
@@ -89,10 +88,10 @@ const productPillars = [
 function Brand() {
   return (
     <Link className="flex items-center gap-2.5" href="/" aria-label="Verith home">
-      <span className="grid size-9 place-items-center rounded-xl bg-gradient-to-br from-violet-400 to-indigo-600 text-sm font-bold text-white shadow-[0_12px_32px_-14px_rgba(139,92,246,0.95)]">
+      <span className="grid size-8 place-items-center rounded-lg bg-[#24183f] text-sm font-semibold text-violet-300">
         V
       </span>
-      <span className="text-[17px] font-semibold tracking-normal">Verith</span>
+      <span className="text-[15px] font-medium tracking-tight">Verith</span>
     </Link>
   );
 }
@@ -107,8 +106,8 @@ export default function LandingPage() {
         Skip to content
       </a>
 
-      <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4">
-        <div className="mx-auto flex h-16 max-w-[1320px] items-center justify-between rounded-2xl border border-white/[0.07] bg-[#0d1015]/85 px-5 shadow-[0_20px_60px_rgba(0,0,0,0.25)] backdrop-blur-xl">
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-black/70 backdrop-blur-md">
+        <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6">
           <Brand />
           <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex" aria-label="Primary navigation">
             <a className="transition-colors hover:text-white" href="#how-it-works">
@@ -128,11 +127,26 @@ export default function LandingPage() {
             </Link>
           </nav>
           <div className="flex items-center gap-2">
+            <details className="relative md:hidden">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center rounded-full border border-white/10 bg-white/[0.04] px-4 text-xs font-medium text-white/70">
+                Menu
+              </summary>
+              <nav
+                aria-label="Mobile navigation"
+                className="absolute top-[calc(100%+0.75rem)] right-0 grid min-w-52 gap-1 rounded-2xl border border-white/10 bg-[#0F1012] p-2 shadow-2xl [&_a]:rounded-xl [&_a]:px-4 [&_a]:py-3 [&_a]:text-sm [&_a]:text-white/65 [&_a:hover]:bg-white/[0.05] [&_a:hover]:text-white"
+              >
+                <a href="#how-it-works">How it works</a>
+                <a href="#why-verith">Why Verith</a>
+                <a href="#product-vision">Product</a>
+                <Link href="/learning">Learning</Link>
+                <Link href="/whatsapp">WhatsApp</Link>
+              </nav>
+            </details>
             <Link className="hidden rounded-full px-4 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-white/5 hover:text-white sm:block" href="/login">
               Log in
             </Link>
             <Link
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_30px_-14px_rgba(139,92,246,0.95)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
+              className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-black transition-all hover:bg-foreground/90 active:scale-[0.98]"
               href="/verify"
             >
               Try now
@@ -142,45 +156,63 @@ export default function LandingPage() {
         </div>
       </header>
 
-      <main id="main-content">
-        <section className="relative isolate px-5 pt-40 pb-24 md:pt-48">
+      <main id="main-content" tabIndex={-1}>
+        <section className="relative isolate overflow-hidden px-6 pt-40 pb-24 md:pt-44">
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-            <div className="animate-friendly-float absolute top-24 left-[8%] size-80 rounded-full bg-violet-500/20 blur-[110px]" />
-            <div className="animate-friendly-float absolute top-36 right-[6%] size-72 rounded-full bg-cyan-500/15 blur-[100px] [animation-delay:-3s]" />
-            <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-background to-transparent" />
+            <div className="hero-dot-grid absolute inset-0 opacity-[0.08]" />
+            <div
+              className="animate-sweep absolute top-1/2 left-1/2 h-[140%] w-[140%]"
+              style={{
+                background:
+                  "conic-gradient(from 0deg, transparent 0%, rgba(139,92,246,0.18) 8%, transparent 18%)",
+              }}
+            />
+            <div className="animate-float-1 absolute -top-[10%] -left-[5%] size-[600px] rounded-full bg-violet-500/30 blur-[100px]" />
+            <div className="animate-float-2 absolute top-[10%] -right-[5%] size-[500px] rounded-full bg-cyan-500/20 blur-[90px]" />
+            <div className="animate-float-3 absolute bottom-[-5%] left-[25%] size-[550px] rounded-full bg-indigo-500/25 blur-[100px]" />
+            <div className="animate-float-4 absolute top-[8%] right-[20%] hidden size-[350px] rounded-full bg-fuchsia-400/20 blur-[80px] md:block" />
+            <div className="animate-float-5 absolute bottom-[10%] left-[8%] hidden size-[300px] rounded-full bg-emerald-500/15 blur-[80px] md:block" />
+            <div className="animate-light-streak absolute top-[40%] left-0 h-px w-full bg-gradient-to-r from-transparent via-violet-400/30 to-transparent" />
+            <div className="absolute inset-0 [background-image:radial-gradient(ellipse_at_center,transparent_30%,#08090A_90%)]" />
           </div>
 
-          <div className="mx-auto max-w-5xl text-center">
+          <div className="mx-auto max-w-5xl text-left">
             <MotionReveal>
-              <span className="inline-flex items-center gap-2 rounded-full border border-violet-300/15 bg-violet-400/[0.08] px-4 py-2 text-xs font-semibold text-violet-200">
-                <Sparkles size={14} />
+              <span className="inline-flex items-center gap-2 font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-white/60">
+                <span className="relative inline-flex size-1.5 rounded-full bg-violet-400">
+                  <span className="absolute inset-0 animate-ping rounded-full bg-violet-400 opacity-50" />
+                </span>
                 Evidence infrastructure for a more resilient information ecosystem
               </span>
-              <h1 className="mx-auto mt-7 max-w-[13ch] text-[clamp(3.4rem,8vw,7rem)] leading-[0.98] font-semibold tracking-normal">
-                Turn information overload into informed action.
+              <h1 className="mt-7 max-w-[14ch] text-5xl leading-[1.05] font-semibold tracking-tighter md:text-7xl">
+                Turn information overload
+                <br />
+                <span className="bg-gradient-to-b from-foreground to-foreground/40 bg-clip-text text-transparent">
+                  into informed action.
+                </span>
               </h1>
-              <p className="mx-auto mt-7 max-w-2xl text-base leading-7 text-muted-foreground md:text-xl md:leading-8">
+              <p className="mt-8 max-w-2xl text-base leading-relaxed text-white/50 md:text-xl">
                 Verith is an explainable, multimodal verification platform that transforms claims, articles, screenshots, images, and voice notes into transparent evidence maps people can understand and trust.
               </p>
-              <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
                 <Link
-                  className="inline-flex min-h-12 items-center gap-2 rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 px-7 text-sm font-semibold text-white shadow-[0_18px_45px_-18px_rgba(139,92,246,0.95)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
+                  className="inline-flex min-h-12 items-center gap-2 rounded-full bg-gradient-to-r from-[#C084FC] to-[#6366F1] px-7 text-sm font-medium text-white shadow-[0_0_45px_rgba(139,92,246,0.28)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
                   href="/verify"
                 >
                   Try Verith now
                   <ArrowRight size={16} />
                 </Link>
-                <a className="inline-flex min-h-12 items-center rounded-full bg-white/[0.055] px-7 text-sm font-semibold transition-colors hover:bg-white/[0.09]" href="#how-it-works">
+                <a className="inline-flex min-h-12 items-center rounded-full border border-white/10 bg-white/[0.04] px-7 text-sm font-medium transition-colors hover:border-white/15 hover:bg-white/[0.08]" href="#how-it-works">
                   Explore the product
                 </a>
               </div>
             </MotionReveal>
           </div>
 
-          <MotionReveal className="mx-auto mt-20 max-w-[1180px]" delay={0.15}>
-            <div className="relative rounded-[2rem] border border-white/[0.08] bg-surface/75 p-3 shadow-[0_45px_120px_-45px_rgba(67,56,202,0.55)] backdrop-blur">
+          <MotionReveal className="group relative mx-auto mt-20 max-w-[1200px] md:[perspective:2000px]" delay={0.15}>
+            <div className="landing-product-preview relative overflow-hidden rounded-3xl border border-white/10 bg-[#0F1012] p-3 shadow-2xl transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] [transform-style:preserve-3d] md:[transform:rotateX(15deg)_rotateY(20deg)_rotateZ(-10deg)] md:group-hover:[transform:rotateX(0deg)_rotateY(0deg)_rotateZ(0deg)]">
               <div className="grid gap-3 lg:grid-cols-[1.2fr_0.8fr]">
-                <div className="rounded-[1.5rem] bg-[#0d1015] p-6 md:p-8">
+                <div className="rounded-[1.25rem] border border-white/[0.04] bg-[#0B0C0E] p-6 md:p-8">
                   <div className="flex flex-wrap items-center justify-between gap-4">
                     <div>
                       <p className="text-sm font-semibold">Start an evidence-led investigation</p>
@@ -208,7 +240,7 @@ export default function LandingPage() {
                   </div>
                   <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
                     <p className="text-xs text-muted">Source provenance is preserved throughout the investigation.</p>
-                    <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 px-5 py-3 text-xs font-semibold text-white">
+                    <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#C084FC] to-[#6366F1] px-5 py-3 text-xs font-semibold text-white">
                       Investigate
                       <ArrowRight size={14} />
                     </span>
@@ -216,7 +248,7 @@ export default function LandingPage() {
                 </div>
 
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-                  <div className="rounded-[1.5rem] bg-gradient-to-br from-violet-500/15 to-indigo-500/5 p-6">
+                  <div className="rounded-[1.25rem] border border-white/[0.05] bg-card/60 p-6">
                     <span className="grid size-10 place-items-center rounded-xl bg-violet-400/15 text-violet-300">
                       <FileSearch size={19} />
                     </span>
@@ -225,7 +257,7 @@ export default function LandingPage() {
                       Findings translate complex analysis into what was discovered, why it matters, and which action the evidence supports.
                     </p>
                   </div>
-                  <div className="rounded-[1.5rem] bg-gradient-to-br from-cyan-500/15 to-sky-500/5 p-6">
+                  <div className="rounded-[1.25rem] border border-white/[0.05] bg-card/60 p-6">
                     <span className="grid size-10 place-items-center rounded-xl bg-cyan-400/15 text-cyan-300">
                       <Search size={19} />
                     </span>
@@ -240,8 +272,8 @@ export default function LandingPage() {
           </MotionReveal>
         </section>
 
-        <section className="px-5 py-24" id="why-verith">
-          <div className="mx-auto max-w-[1180px]">
+        <section className="bg-[#0B0C0E]/30 px-6 py-24" id="why-verith">
+          <div className="mx-auto max-w-[1300px]">
             <MotionReveal>
               <div className="max-w-3xl">
                 <span className="inline-flex rounded-full bg-cyan-400/10 px-3 py-1.5 text-xs font-semibold text-cyan-300">Human-centred verification</span>
@@ -254,7 +286,7 @@ export default function LandingPage() {
             <div className="mt-12 grid gap-5 md:grid-cols-3">
               {benefits.map(({ color, icon: Icon, iconColor, text, title }, index) => (
                 <MotionReveal className="h-full" delay={index * 0.06} key={title}>
-                  <article className={`h-full rounded-3xl bg-gradient-to-br ${color} p-7 transition-transform duration-300 hover:-translate-y-1`}>
+                  <article className={`h-full rounded-3xl border border-white/[0.06] bg-gradient-to-br ${color} p-7 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-300 hover:-translate-y-1 hover:border-white/15`}>
                     <span className={`grid size-11 place-items-center rounded-2xl bg-white/[0.06] ${iconColor}`}>
                       <Icon size={21} />
                     </span>
@@ -267,8 +299,8 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="px-5 py-24" id="how-it-works">
-          <div className="mx-auto max-w-[1180px] rounded-[2rem] bg-surface/70 p-7 md:p-12">
+        <section className="px-6 py-24" id="how-it-works">
+          <div className="mx-auto max-w-[1300px] rounded-3xl border border-white/[0.06] bg-card/60 p-7 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] md:p-12">
             <MotionReveal>
               <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
                 <div>
@@ -283,8 +315,8 @@ export default function LandingPage() {
             <div className="mt-10 grid gap-4 md:grid-cols-3">
               {steps.map((step, index) => (
                 <MotionReveal className="h-full" delay={index * 0.07} key={step.title}>
-                  <article className="h-full rounded-3xl bg-white/[0.035] p-6">
-                    <span className="grid size-9 place-items-center rounded-full bg-gradient-to-br from-violet-500 to-indigo-500 text-sm font-bold text-white">
+                  <article className="h-full rounded-2xl border border-white/[0.04] bg-white/[0.02] p-6 transition-all duration-300 hover:-translate-y-1 hover:bg-white/[0.04]">
+                    <span className="grid size-9 place-items-center rounded-full bg-gradient-to-br from-[#C084FC] to-[#6366F1] text-sm font-bold text-white">
                       {index + 1}
                     </span>
                     <h3 className="mt-6 text-lg font-semibold">{step.title}</h3>
@@ -296,10 +328,10 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="px-5 py-24">
-          <div className="mx-auto grid max-w-[1180px] gap-5 lg:grid-cols-2">
+        <section className="bg-[#0B0C0E]/30 px-6 py-24">
+          <div className="mx-auto grid max-w-[1300px] gap-5 lg:grid-cols-2">
             <MotionReveal>
-              <article className="h-full rounded-[2rem] bg-gradient-to-br from-emerald-500/15 to-teal-500/5 p-8 md:p-10">
+              <article className="h-full rounded-3xl border border-emerald-500/10 bg-card/60 p-8 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] md:p-10">
                 <span className="grid size-11 place-items-center rounded-2xl bg-emerald-400/15 text-emerald-300">
                   <ShieldCheck size={22} />
                 </span>
@@ -315,7 +347,7 @@ export default function LandingPage() {
               </article>
             </MotionReveal>
             <MotionReveal delay={0.06}>
-              <article className="grid h-full gap-5 rounded-[2rem] bg-gradient-to-br from-violet-500/15 to-indigo-500/5 p-8 md:grid-cols-2 md:p-10">
+              <article className="grid h-full gap-5 rounded-3xl border border-violet-500/10 bg-card/60 p-8 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] md:grid-cols-2 md:p-10">
                 <div>
                   <span className="grid size-11 place-items-center rounded-2xl bg-violet-400/15 text-violet-300">
                     <BookOpen size={22} />
@@ -338,8 +370,8 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="px-5 py-24" id="product-vision">
-          <div className="mx-auto max-w-[1180px] rounded-[2rem] bg-gradient-to-br from-violet-500/10 via-surface/80 to-cyan-500/[0.07] p-7 md:p-12">
+        <section className="px-6 py-24" id="product-vision">
+          <div className="mx-auto max-w-[1300px] rounded-3xl border border-white/[0.06] bg-card/60 p-7 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] md:p-12">
             <MotionReveal>
               <div className="grid gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-end">
                 <div>
@@ -377,8 +409,8 @@ export default function LandingPage() {
         </section>
       </main>
 
-      <footer className="px-5 pb-8">
-        <div className="mx-auto max-w-[1320px] rounded-[2rem] bg-surface/80 p-8 md:p-10">
+      <footer className="border-t border-white/[0.06] px-6 py-8">
+        <div className="mx-auto max-w-[1300px] p-4 md:p-8">
           <div className="grid gap-10 md:grid-cols-[1.2fr_1fr]">
             <div>
               <Brand />

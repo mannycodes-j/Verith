@@ -44,7 +44,7 @@ export default function AuthShell({ children }: { children: ReactNode }) {
           </li>
         </ol>
       </section>
-      <section className={styles.formRegion} id="auth-form">
+      <section className={styles.formRegion} id="auth-form" tabIndex={-1}>
         <div className={styles.formTopbar}>
           <Link href="/">Return home</Link>
           <span>Encrypted session</span>

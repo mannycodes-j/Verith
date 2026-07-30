@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 @import "tailwindcss" source("../");
 
 
@@ -6,15 +6,19 @@
   color-scheme: dark;
   --background: #08090a;
   --foreground: #f8fafc;
-  --canvas-subtle: #0d0f13;
-  --surface: #11141a;
-  --surface-elevated: #181c24;
-  --surface-muted: #0d1015;
-  --border: rgba(255, 255, 255, 0.07);
-  --border-strong: rgba(255, 255, 255, 0.12);
-  --muted: #73798a;
-  --muted-foreground: #a7adbb;
+  --canvas-subtle: #0b0c0e;
+  --surface: #0f1012;
+  --surface-elevated: #16181d;
+  --surface-muted: #0b0c0e;
+  --card: #070708;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.1);
+  --muted: rgba(255, 255, 255, 0.58);
+  --muted-foreground: rgba(255, 255, 255, 0.68);
   --accent: #8b5cf6;
+  --accent-light: #c084fc;
+  --accent-indigo: #6366f1;
+  --cyan: #06b6d4;
   --accent-foreground: #ffffff;
   --focus: #a78bfa;
   --success: #10b981;
@@ -30,9 +34,9 @@
   --insufficient: #737373;
   --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-editorial: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-  --radius-sm: 10px;
-  --radius-md: 16px;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  --radius-sm: 8px;
+  --radius-md: 12px;
   --radius-lg: 24px;
   --page-gutter: clamp(1rem, 3vw, 3rem);
   --content-width: 1400px;
@@ -43,14 +47,15 @@
     color-scheme: dark;
     --background: #08090a;
     --foreground: #f8fafc;
-    --canvas-subtle: #0d0f13;
-    --surface: #11141a;
-    --surface-elevated: #181c24;
-    --surface-muted: #0d1015;
-    --border: rgba(255, 255, 255, 0.08);
-    --border-strong: rgba(255, 255, 255, 0.15);
-    --muted: #73798a;
-    --muted-foreground: #a7adbb;
+    --canvas-subtle: #0b0c0e;
+    --surface: #0f1012;
+    --surface-elevated: #16181d;
+    --surface-muted: #0b0c0e;
+    --card: #070708;
+    --border: rgba(255, 255, 255, 0.06);
+    --border-strong: rgba(255, 255, 255, 0.1);
+    --muted: rgba(255, 255, 255, 0.58);
+    --muted-foreground: rgba(255, 255, 255, 0.68);
     --accent: #8b5cf6;
     --accent-foreground: #ffffff;
     --focus: #a78bfa;
@@ -65,14 +70,15 @@
   color-scheme: dark;
   --background: #08090a;
   --foreground: #f8fafc;
-  --canvas-subtle: #0d0f13;
-  --surface: #11141a;
-  --surface-elevated: #181c24;
-  --surface-muted: #0d1015;
-  --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.15);
-  --muted: #73798a;
-  --muted-foreground: #a7adbb;
+  --canvas-subtle: #0b0c0e;
+  --surface: #0f1012;
+  --surface-elevated: #16181d;
+  --surface-muted: #0b0c0e;
+  --card: #070708;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.1);
+  --muted: rgba(255, 255, 255, 0.58);
+  --muted-foreground: rgba(255, 255, 255, 0.68);
   --accent: #8b5cf6;
   --accent-foreground: #ffffff;
   --focus: #a78bfa;
@@ -88,11 +94,15 @@
   --color-surface: var(--surface);
   --color-surface-elevated: var(--surface-elevated);
   --color-surface-muted: var(--surface-muted);
+  --color-card: var(--card);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-accent-indigo: var(--accent-indigo);
+  --color-cyan: var(--cyan);
   --color-accent-foreground: var(--accent-foreground);
   --color-focus: var(--focus);
   --color-success: var(--success);
@@ -126,11 +136,11 @@
   body {
     @apply m-0 min-h-full bg-background font-sans text-foreground antialiased;
     background-image:
-      radial-gradient(circle at 8% 5%, rgb(139 92 246 / 0.14), transparent 28rem),
-      radial-gradient(circle at 92% 14%, rgb(6 182 212 / 0.1), transparent 24rem),
-      radial-gradient(circle at 50% 100%, rgb(99 102 241 / 0.08), transparent 34rem);
+      radial-gradient(circle at 8% 4%, rgb(139 92 246 / 0.12), transparent 30rem),
+      radial-gradient(circle at 92% 12%, rgb(6 182 212 / 0.07), transparent 28rem),
+      radial-gradient(circle, rgb(255 255 255 / 0.035) 1px, transparent 1px);
     background-position: center top;
-    background-size: auto;
+    background-size: auto, auto, 64px 64px;
     background-attachment: fixed;
     text-rendering: optimizeLegibility;
   }
@@ -175,6 +185,60 @@
   }
 }
 
+@keyframes float-orb-1 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(50px, -70px, 0) scale(1.12); }
+  66% { transform: translate3d(-30px, -40px, 0) scale(0.95); }
+}
+
+@keyframes float-orb-2 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(-60px, 40px, 0) scale(0.9); }
+  66% { transform: translate3d(40px, 60px, 0) scale(1.08); }
+}
+
+@keyframes float-orb-3 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  25% { transform: translate3d(30px, 50px, 0) scale(1.1); }
+  50% { transform: translate3d(-50px, 20px, 0) scale(0.92); }
+  75% { transform: translate3d(-20px, -40px, 0) scale(1.05); }
+}
+
+@keyframes float-orb-4 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(40px, -30px, 0) scale(1.18); }
+}
+
+@keyframes float-orb-5 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  40% { transform: translate3d(-40px, -50px, 0) scale(0.88); }
+  80% { transform: translate3d(20px, 30px, 0) scale(1.06); }
+}
+
+@keyframes sweep-rotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes light-streak {
+  0% { opacity: 0; transform: translateX(-100%); }
+  50% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(100%); }
+}
+
+.hero-dot-grid {
+  background-image: radial-gradient(circle, rgb(255 255 255 / 0.5) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.animate-float-1 { animation: float-orb-1 18s ease-in-out infinite; }
+.animate-float-2 { animation: float-orb-2 22s ease-in-out infinite; }
+.animate-float-3 { animation: float-orb-3 26s ease-in-out infinite; }
+.animate-float-4 { animation: float-orb-4 14s ease-in-out infinite; }
+.animate-float-5 { animation: float-orb-5 20s ease-in-out infinite; }
+.animate-sweep { animation: sweep-rotate 40s linear infinite; }
+.animate-light-streak { animation: light-streak 8s ease-in-out infinite; }
+
 @keyframes friendly-float {
   0%, 100% {
     transform: translate3d(0, 0, 0);
@@ -188,46 +252,16 @@
   animation: friendly-float 8s ease-in-out infinite;
 }
 
-.page-motion main :is(article, section, aside),
-.page-motion main :is(a, button) {
-  transform-style: preserve-3d;
-}
-
-.page-motion main :is(article, section, aside) {
-  animation: surface-arrival both;
-  animation-range: entry 5% cover 28%;
-  animation-timeline: view();
-}
-
 .page-motion :is(a, button) {
   transition:
     color 180ms ease,
     background-color 180ms ease,
     border-color 180ms ease,
-    box-shadow 260ms ease,
-    transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.page-motion :is(a, button):not(:disabled):hover {
-  transform: translateY(-2px);
-}
-
-.page-motion :is(a, button):not(:disabled):active {
-  transform: translateY(0) scale(0.975);
-}
-
-@keyframes surface-arrival {
-  from {
-    filter: blur(8px);
-    opacity: 0;
-    transform: translateY(28px) scale(0.985);
-  }
-
-  to {
-    filter: blur(0);
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+    box-shadow 200ms ease,
+    transform 200ms ease-out,
+    scale 200ms ease-out,
+    translate 200ms ease-out,
+    rotate 200ms ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -244,8 +278,14 @@
     transition-duration: 0.01ms !important;
   }
 
-  .page-motion main :is(article, section, aside) {
-    animation: none;
+  .landing-product-preview {
+    transform: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  body {
+    background-attachment: scroll;
   }
 }
 

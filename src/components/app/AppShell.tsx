@@ -142,6 +142,14 @@ const pageTitles: Record<string, string> = {
   "/app/verify": "New investigation",
 };
 
+const mobileNavigation = [
+  { href: "/app", icon: Home, label: "Home" },
+  { href: "/app/verify", icon: PlusCircle, label: "Try now" },
+  { href: "/app/verifications", icon: History, label: "History" },
+  { href: "/app/learning", icon: BookOpen, label: "Learn" },
+  { href: "/app/settings", icon: Settings, label: "Settings" },
+] as const;
+
 function isActive(pathname: string, href: string) {
   return href === "/app"
     ? pathname === href
@@ -175,13 +183,15 @@ function Navigation({
           <span className={styles.navLabel}>{group.label}</span>
           {group.items.map((item) => {
             const Icon = item.icon;
+            const active = isActive(pathname, item.href);
             return (
               <Link
                 className={
-                  isActive(pathname, item.href)
+                  active
                     ? `${styles.navItem} ${styles.navItemActive}`
                     : styles.navItem
                 }
+                aria-current={active ? "page" : undefined}
                 href={item.href}
                 key={item.href}
               >
@@ -358,6 +368,17 @@ export default function AppShell({ children }: { children: ReactNode }) {
           </Link>
           <span>Your verification space</span>
         </div>
+        <div className={styles.sidebarWidget}>
+          <span>
+            <ShieldCheck aria-hidden="true" size={13} />
+            Evidence first
+          </span>
+          <strong>Explainable by design</strong>
+          <p>
+            Sources, limitations, and uncertainty remain visible throughout
+            every investigation.
+          </p>
+        </div>
         <Navigation
           admin={isAdmin}
           editorial={isEditorial}
@@ -406,16 +427,42 @@ export default function AppShell({ children }: { children: ReactNode }) {
           </div>
         </header>
         <motion.main
-          animate={{ opacity: 1, y: 0 }}
+          animate={{
+            opacity: 1,
+            transitionEnd: { transform: "none" },
+            y: 0,
+          }}
           className={styles.content}
           id="workspace-content"
           initial={reduceMotion ? false : { opacity: 0, y: 8 }}
           key={pathname}
+          tabIndex={-1}
           transition={{ duration: 0.35, ease: [0.4, 0, 0.1, 1] }}
         >
           {children}
         </motion.main>
       </div>
+      <nav className={styles.mobileBottomNavigation} aria-label="Quick navigation">
+        {mobileNavigation.map((item) => {
+          const Icon = item.icon;
+          const active = isActive(pathname, item.href);
+          return (
+            <Link
+              className={
+                active
+                  ? `${styles.mobileBottomItem} ${styles.mobileBottomItemActive}`
+                  : styles.mobileBottomItem
+              }
+              aria-current={active ? "page" : undefined}
+              href={item.href}
+              key={item.href}
+            >
+              <Icon aria-hidden="true" size={16} />
+              <span>{item.label}</span>
+            </Link>
+          );
+        })}
+      </nav>
       {notificationDrawer && (
         <NotificationDrawer close={() => setNotificationDrawer(false)} />
       )}

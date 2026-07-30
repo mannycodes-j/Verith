@@ -276,6 +276,7 @@ export default function VerificationDetail({ id }: { id: string }) {
         <div className={styles.actions}>
           {canCancel && (
             <button
+              data-variant="danger"
               type="button"
               disabled={cancel.isPending}
               onClick={() => setActionDialog("cancel")}
@@ -285,6 +286,7 @@ export default function VerificationDetail({ id }: { id: string }) {
           )}
           {canRetry && (
             <button
+              data-variant="primary"
               type="button"
               disabled={retry.isPending}
               onClick={() => setActionDialog("retry")}
@@ -294,6 +296,7 @@ export default function VerificationDetail({ id }: { id: string }) {
           )}
           {canReprocess && (
             <button
+              data-variant="primary"
               disabled={reprocess.isPending}
               onClick={() => setActionDialog("reprocess")}
               type="button"
@@ -302,7 +305,11 @@ export default function VerificationDetail({ id }: { id: string }) {
             </button>
           )}
           {canDelete && (
-            <button type="button" onClick={() => setActionDialog("delete")}>
+            <button
+              data-variant="danger"
+              type="button"
+              onClick={() => setActionDialog("delete")}
+            >
               Delete
             </button>
           )}
