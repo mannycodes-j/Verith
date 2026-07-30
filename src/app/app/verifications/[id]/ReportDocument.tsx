@@ -45,7 +45,7 @@ function EvidenceDetail({ evidence }: { evidence?: ReportEvidence }) {
   return (
     <div className={styles.evidenceDetail}>
       <div className={styles.inspectorLabel}>
-        <span>Evidence / {evidence.evidenceId}</span>
+        <span>Evidence source {evidence.evidenceId}</span>
         <span data-relationship={evidence.relationship}>
           {humanize(evidence.relationship)}
         </span>
@@ -141,7 +141,7 @@ export function ReportReader({
     <article className={styles.report}>
       <header className={styles.reportHeader}>
         <div>
-          <span>Verification report / V{report.version}</span>
+          <span>Report version {report.version}</span>
           <h2>{humanize(report.overallVerdict)}</h2>
           <p>{report.summary}</p>
         </div>
@@ -205,7 +205,7 @@ export function ReportReader({
       <div className={styles.claimWorkspace}>
         <section className={styles.claims}>
           <div className={styles.sectionHeading}>
-            <span>01 / Claim analysis</span>
+            <span>Claim analysis</span>
             <span>{report.claims.length} records</span>
           </div>
           {report.claims.length === 0 ? (
@@ -272,7 +272,7 @@ export function ReportReader({
       <section className={styles.analysisGrid}>
         <div className={styles.analysisSection}>
           <div className={styles.sectionHeading}>
-            <span>02 / Missing context</span>
+            <span>Missing context</span>
             <span>{report.missingContext.length} findings</span>
           </div>
           {report.missingContext.length ? (
@@ -307,7 +307,7 @@ export function ReportReader({
 
         <div className={styles.analysisSection}>
           <div className={styles.sectionHeading}>
-            <span>03 / Manipulation</span>
+            <span>Manipulation</span>
             <span>{report.manipulationAnalysis.length} findings</span>
           </div>
           {report.manipulationAnalysis.length ? (
@@ -330,7 +330,7 @@ export function ReportReader({
 
         <div className={styles.analysisSection}>
           <div className={styles.sectionHeading}>
-            <span>04 / Bias signals</span>
+            <span>Bias signals</span>
             <span>{report.biasAnalysis.length} metrics</span>
           </div>
           {report.biasAnalysis.length ? (
@@ -359,7 +359,7 @@ export function ReportReader({
 
         <div className={styles.analysisSection}>
           <div className={styles.sectionHeading}>
-            <span>05 / Source transparency</span>
+            <span>Source transparency</span>
             <span>{report.sourceCredibility.length} sources</span>
           </div>
           {report.sourceCredibility.length ? (
@@ -388,7 +388,7 @@ export function ReportReader({
         report.aiIndicators) && (
         <section className={styles.media}>
           <div className={styles.sectionHeading}>
-            <span>06 / Media inspection</span>
+            <span>Media inspection</span>
             <span>Indicators are not proof</span>
           </div>
           {report.mediaAnalysis && (
@@ -439,7 +439,7 @@ export function ReportReader({
 
       <section className={styles.limitations}>
         <div>
-          <span>07 / Limitations</span>
+          <span>Limitations</span>
           <h2>What this report cannot establish.</h2>
         </div>
         {report.limitations.length ? (
@@ -521,7 +521,7 @@ export default function ReportDocument({
               onClick={() => setSelectedReportId(undefined)}
               type="button"
             >
-              Latest / V{report.data.version}
+              Latest: V{report.data.version}
             </button>
             {versions.data
               .filter((version) => version.id !== report.data.id)
@@ -532,7 +532,7 @@ export default function ReportDocument({
                   onClick={() => setSelectedReportId(version.id)}
                   type="button"
                 >
-                  V{version.version} / {humanize(version.status)}
+                  V{version.version}: {humanize(version.status)}
                 </button>
               ))}
           </div>

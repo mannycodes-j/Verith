@@ -1,543 +1,338 @@
+import {
+  ArrowRight,
+  BookOpen,
+  Check,
+  FileSearch,
+  ImageIcon,
+  Link2,
+  MessageCircle,
+  Mic2,
+  Search,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
 import Link from "next/link";
 import MotionReveal from "@/components/public/MotionReveal";
-import { landingStyles as styles } from "./page.styles";
 
-const workflow = [
-  ["01", "Receive", "Accept the material and preserve its original context."],
-  ["02", "Extract", "Separate checkable claims from opinion and rhetoric."],
-  ["03", "Retrieve", "Find relevant sources and evidence for each claim."],
-  ["04", "Compare", "Map support, contradiction, and missing context."],
-  ["05", "Explain", "Present findings, uncertainty, and useful next steps."],
+const inputTypes = [
+  { icon: MessageCircle, label: "Text" },
+  { icon: Link2, label: "Link" },
+  { icon: ImageIcon, label: "Image" },
+  { icon: Mic2, label: "Voice note" },
 ] as const;
 
-const systemSteps = [
-  "Claim extraction",
-  "Evidence search",
-  "Source retrieval",
-  "Claim comparison",
-  "Context review",
-  "Report synthesis",
+const benefits = [
+  {
+    icon: FileSearch,
+    title: "Understand the claim",
+    text: "Verith separates checkable statements from opinions so you know exactly what is being investigated.",
+    color: "from-violet-500/20 to-indigo-500/5",
+    iconColor: "text-violet-300",
+  },
+  {
+    icon: Search,
+    title: "Follow the evidence",
+    text: "Relevant sources stay attached to the claims they support, challenge, or place in context.",
+    color: "from-cyan-500/20 to-sky-500/5",
+    iconColor: "text-cyan-300",
+  },
+  {
+    icon: ShieldCheck,
+    title: "See what is uncertain",
+    text: "Missing information and limitations remain visible instead of being hidden behind a confident answer.",
+    color: "from-emerald-500/20 to-teal-500/5",
+    iconColor: "text-emerald-300",
+  },
 ] as const;
 
-function ArrowIcon() {
+const steps = [
+  {
+    title: "Share what you saw",
+    text: "Paste the text or link, or upload the image or voice note you want to understand.",
+  },
+  {
+    title: "Verith investigates",
+    text: "The system identifies claims, looks for useful evidence, and checks for missing context.",
+  },
+  {
+    title: "Review the explanation",
+    text: "Read a clear summary, open the sources, and decide what you want to do next.",
+  },
+] as const;
+
+function Brand() {
   return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 18 18"
-      className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-0.5"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      fill="none"
-    >
-      <path d="M3 9h11M10 4l5 5-5 5" />
-    </svg>
-  );
-}
-
-function SiteHeader() {
-  return (
-    <header className={styles.header}>
-      <div className="mx-auto flex w-full max-w-[1400px] items-center justify-between">
-        <Link className={styles.wordmark} href="/" aria-label="Verith home">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-accent-foreground font-bold font-sans text-lg shadow-[0_0_15px_-3px_rgba(255,196,56,0.5)]">
-            V
-          </div>
-          <span className="font-semibold text-[17px] tracking-tight">Verith</span>
-          <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.18em] text-zinc-400">
-            Engine
-          </span>
-        </Link>
-        <nav className={styles.desktopNav} aria-label="Primary navigation">
-          <a href="#investigation">Product</a>
-          <a href="#workflow">How it works</a>
-          <Link href="/learning">Learning</Link>
-          <a href="#whatsapp">WhatsApp</a>
-          <a href="#evidence-policy">Evidence policy</a>
-        </nav>
-        <div className={styles.headerActions}>
-          <Link className={styles.textAction} href="/login">
-            Log in
-          </Link>
-          <Link className={styles.primaryAction} href="/verify">
-            Start an investigation
-            <ArrowIcon />
-          </Link>
-          <details className={styles.mobileMenu}>
-            <summary className="cursor-pointer font-mono text-[11px] uppercase tracking-wider text-zinc-400">Menu</summary>
-            <nav className="absolute top-full right-0 mt-2 grid w-48 rounded-lg border border-white/10 bg-zinc-950/90 p-2 backdrop-blur-md" aria-label="Mobile navigation">
-              <a href="#investigation">Product</a>
-              <a href="#workflow">How it works</a>
-              <Link href="/learning">Learning</Link>
-              <a href="#whatsapp">WhatsApp</a>
-              <a href="#evidence-policy">Evidence policy</a>
-              <Link href="/login">Log in</Link>
-              <Link href="/verify" className="text-accent hover:text-accent/80">Start investigation</Link>
-            </nav>
-          </details>
-        </div>
-      </div>
-    </header>
-  );
-}
-
-function InvestigationPreview() {
-  return (
-    <div className={`${styles.preview} animate-entrance animation-delay-300`} aria-label="Illustration of the Verith investigation workflow">
-      {/* Top Header / Bar */}
-      <div className={styles.previewTopbar}>
-        <div className="flex items-center gap-2">
-          <div className="flex h-5 w-5 items-center justify-center rounded-md bg-accent text-accent-foreground font-bold font-sans text-xs">
-            V
-          </div>
-          <strong>Verification Feed</strong>
-        </div>
-        <span className={styles.previewState}>Interface preview</span>
-      </div>
-
-      {/* Main Body Grid */}
-      <div className={styles.previewBody}>
-        {/* Left Rail (Sidebar tabs) */}
-        <div className={styles.previewRail}>
-          <span className={styles.railBrand}>Verith Engine</span>
-          <div className="flex flex-col gap-2 w-full px-3">
-            <button className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-[12px] bg-white/[0.06] text-foreground font-medium transition-colors">
-              <span>Overview</span>
-            </button>
-            <button className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-[12px] text-zinc-400 hover:bg-white/[0.04] hover:text-foreground transition-colors">
-              <span>Factual Claims</span>
-            </button>
-            <button className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-[12px] text-zinc-400 hover:bg-white/[0.04] hover:text-foreground transition-colors">
-              <span>Source Map</span>
-            </button>
-            <button className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-[12px] text-zinc-400 hover:bg-white/[0.04] hover:text-foreground transition-colors">
-              <span>Reports</span>
-            </button>
-          </div>
-
-          <div className="mt-auto px-4 py-3 border-t border-white/[0.05] w-full">
-            <div className="flex items-center gap-2">
-              <span className="relative flex h-1.5 w-1.5 rounded-full bg-emerald-400">
-                <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400 opacity-60"></span>
-              </span>
-              <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-wider">engine online</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Middle: Investigation Feed */}
-        <div className="flex flex-col bg-[#0B0C0E]">
-          <div className="flex h-14 items-center justify-between border-b border-white/[0.05] px-5 shrink-0">
-            <span className="text-[12px] font-medium text-foreground/80">Active claims</span>
-            <span className="text-[10px] text-zinc-500 uppercase tracking-wider font-mono">Real-time</span>
-          </div>
-          <ul className="flex-1 overflow-hidden list-none p-0 m-0">
-            <li className="flex flex-col gap-1 border-b border-white/[0.05] p-4 border-l-2 border-l-accent bg-[#16181D]">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="font-mono text-[10px] text-accent font-semibold">CLAIM INPUT</span>
-                <span className="h-1 w-1 rounded-full bg-zinc-600"></span>
-                <span className="text-[10px] text-zinc-400">English</span>
-              </div>
-              <span className="text-[13px] leading-snug font-medium text-foreground">Paste a claim, headline, article excerpt...</span>
-              <div className="mt-2 flex items-center gap-2">
-                <span className="text-[10px] text-emerald-400 bg-emerald-400/10 px-1.5 py-0.5 rounded border border-emerald-400/20 uppercase tracking-wider font-mono font-medium">Ready</span>
-                <span className="ml-auto flex h-4 w-4 items-center justify-center rounded-full border border-white/10 bg-zinc-900 font-mono text-[8px] text-zinc-400">01</span>
-              </div>
-            </li>
-            <li className="flex flex-col gap-1 border-b border-white/[0.05] p-4 hover:bg-[#131416]/50 transition-colors">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="font-mono text-[10px] text-zinc-500 font-semibold">SOURCE REVIEW</span>
-                <span className="h-1 w-1 rounded-full bg-zinc-600"></span>
-                <span className="text-[10px] text-zinc-400">English</span>
-              </div>
-              <span className="text-[13px] leading-snug text-zinc-400">CIRCULATING: circulation post makes claims...</span>
-              <div className="mt-2 flex items-center gap-2">
-                <span className="text-[10px] text-accent bg-accent/10 px-1.5 py-0.5 rounded border border-accent/20 uppercase tracking-wider font-mono font-medium">Analyzing</span>
-                <span className="ml-auto flex h-4 w-4 items-center justify-center rounded-full border border-white/10 bg-zinc-800 font-mono text-[8px] text-zinc-500">02</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        {/* Right: Details / Code panel */}
-        <div className="relative flex flex-col bg-[#0B0C0E] h-full">
-          <div className="flex h-14 items-center justify-between border-b border-white/[0.05] px-6 shrink-0">
-            <div className="flex items-center gap-2 text-zinc-400">
-              <span className="font-mono text-[10px]">Verith</span>
-              <span className="text-[10px]">/</span>
-              <span className="font-mono text-[10px] text-foreground/80">inspector</span>
-            </div>
-            <div className="text-[10px] text-zinc-500 font-mono">active</div>
-          </div>
-          <div className="overflow-y-auto p-6 flex-1 flex flex-col justify-between">
-            <div>
-              <h2 className="mb-4 text-lg font-medium tracking-tight text-foreground">Factual Claim Inspector</h2>
-              <div className="mb-6 flex items-center gap-4 border-b border-white/[0.05] pb-4">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-[11px] text-zinc-500">Verified by</span>
-                  <span className="text-[11px] text-accent font-semibold">Verith Engine</span>
-                </div>
-                <span className="text-zinc-600">·</span>
-                <span className="text-[11px] text-zinc-400">Factual context mapped</span>
-              </div>
-              <div className="space-y-4 text-[13px] leading-relaxed text-zinc-400">
-                <p>Every conclusion stays connected to inspectable, primary sources so you can review evidence relationships directly.</p>
-
-                {/* Code Block */}
-                <div className="my-4 overflow-hidden rounded-lg border border-white/10 bg-[#090A0B] shadow-2xl">
-                  <div className="flex items-center justify-between border-b border-white/[0.05] bg-[#131416] px-4 py-2">
-                    <span className="font-mono text-[10px] text-zinc-400">verith-pipeline.ts</span>
-                    <span className="font-mono text-[9px] text-zinc-500">TypeScript</span>
-                  </div>
-                  <div className="overflow-x-auto p-4 font-mono text-[11px] leading-relaxed text-left">
-                    <div className="text-zinc-500">{"// extract and compare claims"}</div>
-                    <div className="mt-1 flex flex-wrap gap-x-1">
-                      <span className="text-purple-400">const</span>
-                      <span className="text-blue-300">sources</span>
-                      <span className="text-foreground/60">=</span>
-                      <span className="text-yellow-300">await</span>
-                      <span className="text-blue-400">engine.retrieve</span>
-                      <span className="text-zinc-500">(claimId)</span>
-                    </div>
-                    <div className="mt-1 flex flex-wrap gap-x-1">
-                      <span className="text-purple-400">const</span>
-                      <span className="text-blue-300">report</span>
-                      <span className="text-foreground/60">=</span>
-                      <span className="text-blue-400">compare</span>
-                      <span className="text-zinc-500">(claim, sources)</span>
-                    </div>
-                    <div className="mt-2 text-emerald-400/80">✓ evidence relationships remain inspectable</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Inspector logs */}
-            <div className="mt-6 border-t border-white/[0.05] pt-4">
-              <div className="flex gap-3">
-                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-amber-500/20 bg-amber-500/10 font-mono text-[9px] font-medium text-accent">
-                  EV
-                </div>
-                <div className="flex-1">
-                  <div className="mb-0.5 flex items-center gap-1.5">
-                    <span className="font-mono text-[12px] font-medium text-foreground">verith.agent</span>
-                    <span className="text-[9px] text-zinc-500">just now</span>
-                  </div>
-                  <p className="text-[12px] leading-normal text-zinc-400">Claims isolated for retrieval. 3 references mapped to sources.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function CapabilityMarquee() {
-  const capabilities = [
-    "Claim-level analysis",
-    "Inspectable sources",
-    "Explicit uncertainty",
-    "Missing-context review",
-    "Evidence relationships",
-    "Visible limitations",
-  ];
-  const items = [...capabilities, ...capabilities];
-
-  return (
-    <div className="group relative mt-16 overflow-hidden border-y border-white/[0.06] bg-black/40 py-3.5 backdrop-blur-sm">
-      <div className="flex w-max gap-12 whitespace-nowrap font-mono text-[11px] animate-marquee group-hover:[animation-play-state:paused]">
-        {items.map((item, idx) => (
-          <div key={idx} className="flex items-center gap-3 text-zinc-400">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent"></span>
-            <span className="uppercase tracking-[0.14em] text-foreground/75">{item}</span>
-          </div>
-        ))}
-      </div>
-    </div>
+    <Link className="flex items-center gap-2.5" href="/" aria-label="Verith home">
+      <span className="grid size-9 place-items-center rounded-xl bg-gradient-to-br from-violet-400 to-indigo-600 text-sm font-bold text-white shadow-[0_12px_32px_-14px_rgba(139,92,246,0.95)]">
+        V
+      </span>
+      <span className="text-[17px] font-semibold tracking-normal">Verith</span>
+    </Link>
   );
 }
 
 export default function LandingPage() {
   return (
-    <div className={styles.page}>
+    <div className="min-h-screen overflow-hidden bg-background text-foreground">
       <a
-        className="fixed top-4 left-4 z-1000 -translate-y-[160%] bg-foreground px-4 py-3 text-background transition-transform duration-150 focus:translate-y-0"
+        className="fixed top-4 left-4 z-1000 -translate-y-[160%] rounded-full bg-white px-4 py-3 text-black transition-transform focus:translate-y-0"
         href="#main-content"
       >
         Skip to content
       </a>
-      <SiteHeader />
+
+      <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4">
+        <div className="mx-auto flex h-16 max-w-[1320px] items-center justify-between rounded-2xl border border-white/[0.07] bg-[#0d1015]/85 px-5 shadow-[0_20px_60px_rgba(0,0,0,0.25)] backdrop-blur-xl">
+          <Brand />
+          <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex" aria-label="Primary navigation">
+            <a className="transition-colors hover:text-white" href="#how-it-works">
+              How it works
+            </a>
+            <a className="transition-colors hover:text-white" href="#why-verith">
+              Why Verith
+            </a>
+            <Link className="transition-colors hover:text-white" href="/learning">
+              Learn
+            </Link>
+            <Link className="transition-colors hover:text-white" href="/whatsapp">
+              WhatsApp
+            </Link>
+          </nav>
+          <div className="flex items-center gap-2">
+            <Link className="hidden rounded-full px-4 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-white/5 hover:text-white sm:block" href="/login">
+              Log in
+            </Link>
+            <Link
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_30px_-14px_rgba(139,92,246,0.95)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
+              href="/verify"
+            >
+              Check something
+              <ArrowRight size={15} />
+            </Link>
+          </div>
+        </div>
+      </header>
 
       <main id="main-content">
-        <section className={styles.hero}>
-          {/* Ambient light glow backdrop */}
-          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[640px] overflow-hidden" style={{ maskImage: 'linear-gradient(180deg, transparent 0%, black 0%, black 80%, transparent 100%)', WebkitMaskImage: 'linear-gradient(180deg, transparent 0%, black 0%, black 80%, transparent 100%)' }}>
-            <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-gradient-to-tr from-amber-500/20 to-amber-600/5 rounded-full blur-[120px]"></div>
+        <section className="relative isolate px-5 pt-40 pb-24 md:pt-48">
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+            <div className="animate-friendly-float absolute top-24 left-[8%] size-80 rounded-full bg-violet-500/20 blur-[110px]" />
+            <div className="animate-friendly-float absolute top-36 right-[6%] size-72 rounded-full bg-cyan-500/15 blur-[100px] [animation-delay:-3s]" />
+            <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-background to-transparent" />
           </div>
 
-          <div className={`${styles.heroCopy} animate-entrance`}>
-            <p className={styles.eyebrow}>
-              <span className="relative inline-flex h-1.5 w-1.5 bg-accent rounded-full animate-pulse mr-1"></span>
-              Evidence before certainty
-            </p>
-            <h1 className="mt-7 text-left text-5xl font-semibold leading-[1.05] tracking-[-0.045em] text-foreground md:text-[72px]">
-              See what the evidence actually says.<br />
-              <span className="bg-gradient-to-b from-foreground to-foreground/40 bg-clip-text text-transparent">Investigate without guesswork.</span>
-            </h1>
-            <p className={styles.heroDescription}>
-              Submit a claim, article, screenshot, image, or voice note. Verith
-              identifies factual claims, retrieves relevant evidence, exposes
-              missing context, and keeps conclusions tied to inspectable
-              sources.
-            </p>
-            <div className={styles.heroActions}>
-              <span className="relative inline-flex group">
-                <span aria-hidden="true" className="pointer-events-none absolute -inset-1 rounded-full bg-gradient-to-b from-amber-400 to-amber-600 opacity-40 blur transition duration-500 group-hover:opacity-75 group-hover:blur-md"></span>
-                <Link className="relative inline-flex cursor-pointer items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#FFEBB1] to-[#FFC438] px-7 py-3.5 text-sm font-medium text-[#18130a] shadow-[rgba(255,162,42,0.55)_0px_12px_28px_-10px] transition-all duration-200 ease-out hover:scale-[1.02] active:scale-[0.98]" href="/verify">
-                  Start an investigation
-                  <ArrowIcon />
-                </Link>
+          <div className="mx-auto max-w-5xl text-center">
+            <MotionReveal>
+              <span className="inline-flex items-center gap-2 rounded-full border border-violet-300/15 bg-violet-400/[0.08] px-4 py-2 text-xs font-semibold text-violet-200">
+                <Sparkles size={14} />
+                A clearer way to make sense of what you see online
               </span>
-              <a className={styles.secondaryAction} href="#investigation">
-                Explore Verith
-              </a>
-            </div>
-
-            {/* Product principles, not usage statistics. */}
-            <div className="mt-16 flex flex-wrap items-center gap-8 font-mono text-[11px] text-zinc-400">
-              <div>
-                <div className="text-base font-medium text-foreground">Sources</div>
-                <div className="mt-0.5 uppercase tracking-[0.14em]">Remain inspectable</div>
+              <h1 className="mx-auto mt-7 max-w-[13ch] text-[clamp(3.4rem,8vw,7rem)] leading-[0.98] font-semibold tracking-normal">
+                Pause. Check. Share with confidence.
+              </h1>
+              <p className="mx-auto mt-7 max-w-2xl text-base leading-7 text-muted-foreground md:text-xl md:leading-8">
+                Verith helps you investigate claims, articles, screenshots, images, and voice notes without burying you in technical language.
+              </p>
+              <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <Link
+                  className="inline-flex min-h-12 items-center gap-2 rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 px-7 text-sm font-semibold text-white shadow-[0_18px_45px_-18px_rgba(139,92,246,0.95)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
+                  href="/verify"
+                >
+                  Start checking
+                  <ArrowRight size={16} />
+                </Link>
+                <a className="inline-flex min-h-12 items-center rounded-full bg-white/[0.055] px-7 text-sm font-semibold transition-colors hover:bg-white/[0.09]" href="#how-it-works">
+                  See how it works
+                </a>
               </div>
-              <div>
-                <div className="text-base font-medium text-foreground">Uncertainty</div>
-                <div className="mt-0.5 uppercase tracking-[0.14em]">Stays explicit</div>
-              </div>
-              <div>
-                <div className="text-base font-medium text-foreground">Multimodal</div>
-                <div className="mt-0.5 uppercase tracking-[0.14em]">Supported inputs</div>
-              </div>
-              <div>
-                <div className="text-base font-medium text-foreground">Evidence first</div>
-                <div className="mt-0.5 uppercase tracking-[0.14em]">No absolute truth claims</div>
-              </div>
-            </div>
+            </MotionReveal>
           </div>
 
-          <InvestigationPreview />
-          <CapabilityMarquee />
-        </section>
+          <MotionReveal className="mx-auto mt-20 max-w-[1180px]" delay={0.15}>
+            <div className="relative rounded-[2rem] border border-white/[0.08] bg-surface/75 p-3 shadow-[0_45px_120px_-45px_rgba(67,56,202,0.55)] backdrop-blur">
+              <div className="grid gap-3 lg:grid-cols-[1.2fr_0.8fr]">
+                <div className="rounded-[1.5rem] bg-[#0d1015] p-6 md:p-8">
+                  <div className="flex flex-wrap items-center justify-between gap-4">
+                    <div>
+                      <p className="text-sm font-semibold">What would you like to check?</p>
+                      <p className="mt-1 text-xs text-muted-foreground">Choose what you have and Verith will guide you.</p>
+                    </div>
+                    <span className="rounded-full bg-emerald-400/10 px-3 py-1.5 text-xs font-medium text-emerald-300">Private by default</span>
+                  </div>
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {inputTypes.map(({ icon: Icon, label }, index) => (
+                      <span
+                        className={`inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-xs font-medium ${
+                          index === 0 ? "bg-violet-500 text-white" : "bg-white/[0.045] text-muted-foreground"
+                        }`}
+                        key={label}
+                      >
+                        <Icon size={14} />
+                        {label}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="mt-5 min-h-48 rounded-2xl bg-white/[0.035] p-5 text-left">
+                    <p className="text-sm leading-7 text-muted-foreground">
+                      Paste a claim, headline, message, or article excerpt here. You can add a question if there is something specific you want to understand.
+                    </p>
+                  </div>
+                  <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+                    <p className="text-xs text-muted">Your original content stays attached to the investigation.</p>
+                    <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 px-5 py-3 text-xs font-semibold text-white">
+                      Investigate
+                      <ArrowRight size={14} />
+                    </span>
+                  </div>
+                </div>
 
-        <section className={styles.editorialSection} id="investigation">
-          {/* Ambient Glow */}
-          <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px] pointer-events-none"></div>
-
-          <MotionReveal>
-            <div className={styles.sectionMarker}>
-              <span>01</span>
-              <span>Investigation</span>
-            </div>
-            <div className={styles.sectionLead}>
-              <h2>Evidence-locked verification.</h2>
-              <p>
-                Verith turns submitted media into a structured investigation.
-                Claims, evidence, context, source details, and limitations remain
-                distinct so you can inspect how a conclusion was reached.
-              </p>
-            </div>
-          </MotionReveal>
-          <div className={styles.investigationGrid}>
-            <article className={styles.documentPanel}>
-              <div className={styles.panelLabel}>
-                <span>Submitted material</span>
-                <span>Original preserved</span>
-              </div>
-              <blockquote>
-                “A circulating post makes several checkable claims but provides
-                no publication date or primary source.”
-              </blockquote>
-              <div className={styles.annotation}>
-                <span>Claim 01</span>
-                <p>Checkable statement isolated for evidence retrieval.</p>
-              </div>
-              <div className={styles.annotation}>
-                <span>Context flag</span>
-                <p>Publication timing and source attribution are missing.</p>
-              </div>
-            </article>
-            <aside className={styles.evidencePanel}>
-              <div className={styles.panelLabel}>
-                <span>Evidence inspector</span>
-                <span>Source relationship</span>
-              </div>
-              <div className={styles.evidenceRecord}>
-                <span className={styles.evidenceIndex}>E—01</span>
-                <div>
-                  <strong>Primary and reputable sources</strong>
-                  <p>
-                    Relevant excerpts are mapped to the exact claim they
-                    support, contradict, or contextualize.
-                  </p>
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+                  <div className="rounded-[1.5rem] bg-gradient-to-br from-violet-500/15 to-indigo-500/5 p-6">
+                    <span className="grid size-10 place-items-center rounded-xl bg-violet-400/15 text-violet-300">
+                      <FileSearch size={19} />
+                    </span>
+                    <h2 className="mt-5 text-xl font-semibold">A simple explanation</h2>
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                      Findings are organised around what Verith found, why it matters, and what you can do next.
+                    </p>
+                  </div>
+                  <div className="rounded-[1.5rem] bg-gradient-to-br from-cyan-500/15 to-sky-500/5 p-6">
+                    <span className="grid size-10 place-items-center rounded-xl bg-cyan-400/15 text-cyan-300">
+                      <Search size={19} />
+                    </span>
+                    <h2 className="mt-5 text-xl font-semibold">Sources you can open</h2>
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                      Evidence remains inspectable, with uncertainty and missing context shown in plain language.
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className={styles.evidenceRecord}>
-                <span className={styles.evidenceIndex}>E—02</span>
-                <div>
-                  <strong>Uncertainty remains visible</strong>
-                  <p>
-                    Incomplete evidence is reported as a limitation, not turned
-                    into false confidence.
-                  </p>
-                </div>
-              </div>
-            </aside>
-          </div>
-        </section>
-
-        <section className={styles.editorialSection} id="workflow">
-          {/* Ambient Glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-accent/3 rounded-full blur-[100px] pointer-events-none"></div>
-
-          <MotionReveal>
-            <div className={styles.sectionMarker}>
-              <span>02</span>
-              <span>Workflow</span>
-            </div>
-            <div className={styles.sectionLead}>
-              <h2>From submission to an inspectable report.</h2>
             </div>
           </MotionReveal>
-          <ol className={styles.workflowList}>
-            {workflow.map(([number, title, description]) => (
-              <li key={number} className="relative overflow-hidden rounded-xl border border-white/5 bg-white/[0.02] p-6 hover:border-white/10 hover:bg-white/[0.04] transition-all duration-300">
-                <span className="font-mono text-xs text-accent">{number}</span>
-                <h3 className="text-lg font-medium text-foreground mt-4 mb-2">{title}</h3>
-                <p className="text-sm text-zinc-400 leading-relaxed">{description}</p>
-              </li>
-            ))}
-          </ol>
         </section>
 
-        <section
-          className={`${styles.editorialSection} ${styles.darkSection}`}
-          id="evidence-policy"
-        >
-          {/* Ambient Glow */}
-          <div className="absolute right-10 bottom-10 w-[300px] h-[300px] bg-accent/5 rounded-full blur-[80px] pointer-events-none"></div>
-
-          <div className={styles.sectionMarker}>
-            <span>03</span>
-            <span>Evidence policy</span>
-          </div>
-          <div className={styles.policyLayout}>
-            <h2>What Verith does not pretend to know.</h2>
-            <div className={styles.policyList}>
-              <p><span className="text-red-400 mr-2">✗</span> No fabricated citations.</p>
-              <p><span className="text-red-400 mr-2">✗</span> Unsupported claims remain unsupported.</p>
-              <p><span className="text-red-400 mr-2">✗</span> Unknown source credibility remains unknown.</p>
-              <p><span className="text-red-400 mr-2">✗</span> Unavailable analysis remains unavailable.</p>
-              <p><span className="text-red-400 mr-2">✗</span> AI-generation indicators are not proof.</p>
-              <p><span className="text-emerald-400 mr-2">✓</span> Evidence and inference are labelled separately.</p>
-            </div>
-          </div>
-        </section>
-
-        <section className={styles.editorialSection}>
-          <div className={styles.sectionMarker}>
-            <span>04</span>
-            <span>System</span>
-          </div>
-          <div className={styles.systemGrid}>
-            <div>
-              <h2>A connected investigation pipeline.</h2>
-              <p className={styles.sectionDescription}>
-                Each stage contributes a specific kind of analysis. Provider or
-                evidence gaps stay visible rather than being silently filled.
-              </p>
-            </div>
-            <ol className={styles.systemList}>
-              {systemSteps.map((step, index) => (
-                <li key={step} className="hover:bg-white/[0.02] transition-colors px-2.5 py-1 rounded-md">
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <strong>{step}</strong>
-                </li>
+        <section className="px-5 py-24" id="why-verith">
+          <div className="mx-auto max-w-[1180px]">
+            <MotionReveal>
+              <div className="max-w-3xl">
+                <span className="inline-flex rounded-full bg-cyan-400/10 px-3 py-1.5 text-xs font-semibold text-cyan-300">Designed for clarity</span>
+                <h2 className="mt-5 text-4xl font-semibold tracking-normal md:text-6xl">Useful answers without the complexity.</h2>
+                <p className="mt-5 text-base leading-7 text-muted-foreground">
+                  Every part of the experience is designed to help you understand the investigation, not learn how the system works.
+                </p>
+              </div>
+            </MotionReveal>
+            <div className="mt-12 grid gap-5 md:grid-cols-3">
+              {benefits.map(({ color, icon: Icon, iconColor, text, title }, index) => (
+                <MotionReveal className="h-full" delay={index * 0.06} key={title}>
+                  <article className={`h-full rounded-3xl bg-gradient-to-br ${color} p-7 transition-transform duration-300 hover:-translate-y-1`}>
+                    <span className={`grid size-11 place-items-center rounded-2xl bg-white/[0.06] ${iconColor}`}>
+                      <Icon size={21} />
+                    </span>
+                    <h3 className="mt-7 text-xl font-semibold">{title}</h3>
+                    <p className="mt-3 text-sm leading-6 text-muted-foreground">{text}</p>
+                  </article>
+                </MotionReveal>
               ))}
-            </ol>
+            </div>
           </div>
         </section>
 
-        <section className={styles.splitSection}>
-          <article className="relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-r from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-            <div className={styles.sectionMarker}>
-              <span>05</span>
-              <span>Learning</span>
+        <section className="px-5 py-24" id="how-it-works">
+          <div className="mx-auto max-w-[1180px] rounded-[2rem] bg-surface/70 p-7 md:p-12">
+            <MotionReveal>
+              <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+                <div>
+                  <span className="inline-flex rounded-full bg-violet-400/10 px-3 py-1.5 text-xs font-semibold text-violet-300">How it works</span>
+                  <h2 className="mt-5 text-4xl font-semibold tracking-normal md:text-5xl">From confusion to clarity.</h2>
+                </div>
+                <p className="max-w-xl text-base leading-7 text-muted-foreground lg:justify-self-end">
+                  You do not need to know what kind of analysis to request. Start with what you saw and Verith guides the rest.
+                </p>
+              </div>
+            </MotionReveal>
+            <div className="mt-10 grid gap-4 md:grid-cols-3">
+              {steps.map((step, index) => (
+                <MotionReveal className="h-full" delay={index * 0.07} key={step.title}>
+                  <article className="h-full rounded-3xl bg-white/[0.035] p-6">
+                    <span className="grid size-9 place-items-center rounded-full bg-gradient-to-br from-violet-500 to-indigo-500 text-sm font-bold text-white">
+                      {index + 1}
+                    </span>
+                    <h3 className="mt-6 text-lg font-semibold">{step.title}</h3>
+                    <p className="mt-3 text-sm leading-6 text-muted-foreground">{step.text}</p>
+                  </article>
+                </MotionReveal>
+              ))}
             </div>
-            <h2>Build durable media literacy.</h2>
-            <p>
-              Follow structured lessons, test your reasoning with quizzes, and
-              practise evidence assessment through daily challenges.
-            </p>
-            <Link className={`${styles.inlineLink} group`} href="/learning">
-              Explore learning <ArrowIcon />
-            </Link>
-          </article>
-          <article id="whatsapp" className="relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-r from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-            <div className={styles.sectionMarker}>
-              <span>06</span>
-              <span>WhatsApp</span>
-            </div>
-            <h2>Investigate where information finds you.</h2>
-            <p>
-              Forward supported text, links, screenshots, images, and voice
-              notes to Verith, then inspect the resulting evidence report.
-            </p>
-            <Link className={`${styles.inlineLink} group`} href="/whatsapp">
-              See how WhatsApp works <ArrowIcon />
-            </Link>
-          </article>
+          </div>
+        </section>
+
+        <section className="px-5 py-24">
+          <div className="mx-auto grid max-w-[1180px] gap-5 lg:grid-cols-2">
+            <MotionReveal>
+              <article className="h-full rounded-[2rem] bg-gradient-to-br from-emerald-500/15 to-teal-500/5 p-8 md:p-10">
+                <span className="grid size-11 place-items-center rounded-2xl bg-emerald-400/15 text-emerald-300">
+                  <ShieldCheck size={22} />
+                </span>
+                <h2 className="mt-7 text-3xl font-semibold tracking-normal">Honest about what is unknown.</h2>
+                <div className="mt-6 grid gap-3 text-sm text-muted-foreground">
+                  {["No invented citations", "No hidden uncertainty", "No claim that AI detection is proof", "No guess presented as evidence"].map((item) => (
+                    <p className="flex items-center gap-3" key={item}>
+                      <Check className="text-emerald-300" size={16} />
+                      {item}
+                    </p>
+                  ))}
+                </div>
+              </article>
+            </MotionReveal>
+            <MotionReveal delay={0.06}>
+              <article className="grid h-full gap-5 rounded-[2rem] bg-gradient-to-br from-violet-500/15 to-indigo-500/5 p-8 md:grid-cols-2 md:p-10">
+                <div>
+                  <span className="grid size-11 place-items-center rounded-2xl bg-violet-400/15 text-violet-300">
+                    <BookOpen size={22} />
+                  </span>
+                  <h2 className="mt-7 text-3xl font-semibold tracking-normal">Build your confidence.</h2>
+                  <p className="mt-4 text-sm leading-6 text-muted-foreground">
+                    Learn how to recognise weak evidence, missing context, and emotional manipulation.
+                  </p>
+                </div>
+                <div className="flex flex-col justify-end gap-3">
+                  <Link className="inline-flex items-center justify-between rounded-full bg-white/[0.065] px-5 py-3 text-sm font-semibold hover:bg-white/10" href="/learning">
+                    Explore learning <ArrowRight size={15} />
+                  </Link>
+                  <Link className="inline-flex items-center justify-between rounded-full bg-white/[0.065] px-5 py-3 text-sm font-semibold hover:bg-white/10" href="/whatsapp">
+                    Use WhatsApp <ArrowRight size={15} />
+                  </Link>
+                </div>
+              </article>
+            </MotionReveal>
+          </div>
         </section>
       </main>
 
-      <footer className={styles.footer}>
-        <div className="grid grid-cols-1 md:grid-cols-[1.5fr_1fr] gap-12 max-w-5xl mx-auto items-start">
-          <div className={styles.footerIdentity}>
-            <Link className="font-sans text-[20px] font-semibold text-foreground flex items-center gap-2 mb-4 hover:opacity-90 transition-opacity" href="/">
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-accent text-accent-foreground font-bold font-sans text-sm">
-                V
+      <footer className="px-5 pb-8">
+        <div className="mx-auto max-w-[1320px] rounded-[2rem] bg-surface/80 p-8 md:p-10">
+          <div className="grid gap-10 md:grid-cols-[1.2fr_1fr]">
+            <div>
+              <Brand />
+              <p className="mt-4 max-w-sm text-sm leading-6 text-muted-foreground">A friendlier way to understand what the evidence actually says.</p>
+            </div>
+            <div className="grid grid-cols-2 gap-8 text-sm">
+              <div className="grid content-start gap-3">
+                <strong>Explore</strong>
+                <Link className="text-muted-foreground hover:text-white" href="/how-it-works">How it works</Link>
+                <Link className="text-muted-foreground hover:text-white" href="/learning">Learning</Link>
+                <Link className="text-muted-foreground hover:text-white" href="/about">About</Link>
               </div>
-              Verith
-            </Link>
-            <p className="text-zinc-500">Understand what is true before you share.</p>
-          </div>
-          <div className={styles.footerLinks}>
-            <div>
-              <span>Product</span>
-              <Link href="/verify">Investigate</Link>
-              <Link href="/how-it-works">How it works</Link>
-              <Link href="/learning">Learning</Link>
-            </div>
-            <div>
-              <span>Principles</span>
-              <a href="#evidence-policy">Evidence policy</a>
-              <Link href="/privacy">Privacy</Link>
-              <Link href="/terms">Terms</Link>
-            </div>
-            <div>
-              <span>Access</span>
-              <Link href="/login">Log in</Link>
-              <Link href="/register">Create account</Link>
-              <Link href="/whatsapp">WhatsApp</Link>
+              <div className="grid content-start gap-3">
+                <strong>Support</strong>
+                <Link className="text-muted-foreground hover:text-white" href="/privacy">Privacy</Link>
+                <Link className="text-muted-foreground hover:text-white" href="/terms">Terms</Link>
+                <Link className="text-muted-foreground hover:text-white" href="/login">Log in</Link>
+              </div>
             </div>
           </div>
-        </div>
-        <div className={styles.footerBase}>
-          <span>© {new Date().getFullYear()} Verith</span>
-          <span>Evidence-led media verification</span>
+          <p className="mt-10 text-xs text-muted">© {new Date().getFullYear()} Verith. Evidence-led media verification.</p>
         </div>
       </footer>
     </div>

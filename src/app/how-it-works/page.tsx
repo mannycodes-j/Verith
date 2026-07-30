@@ -8,11 +8,11 @@ export const metadata: Metadata = {
 export default function HowItWorksPage() {
   return (
     <PublicEditorial
-      eyebrow="01 / Verification workflow"
+      eyebrow="Verification workflow"
       introduction="Verith processes submitted material through persisted stages. A stage describes completed work; it is not converted into a fabricated percentage when the backend supplies no finer measurement."
       sections={[
         {
-          label: "01 / Receive",
+          label: "Receive",
           title: "Preserve the submitted material.",
           content: (
             <p>
@@ -23,7 +23,7 @@ export default function HowItWorksPage() {
           ),
         },
         {
-          label: "02 / Extract",
+          label: "Extract",
           title: "Identify claims and searchable questions.",
           content: (
             <p>
@@ -34,7 +34,7 @@ export default function HowItWorksPage() {
           ),
         },
         {
-          label: "03 / Compare",
+          label: "Compare",
           title: "Retrieve and relate evidence.",
           content: (
             <p>
@@ -45,7 +45,7 @@ export default function HowItWorksPage() {
           ),
         },
         {
-          label: "04 / Explain",
+          label: "Explain",
           title: "Assemble an inspectable report.",
           content: (
             <p>

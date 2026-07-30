@@ -6,11 +6,11 @@ export const metadata: Metadata = { title: "About | Verith" };
 export default function AboutPage() {
   return (
     <PublicEditorial
-      eyebrow="About / Verith"
+      eyebrow="About: Verith"
       introduction="Verith is an evidence investigation and media-literacy system designed to make verification outputs inspectable, qualified, and useful before information is shared."
       sections={[
         {
-          label: "01 / Purpose",
+          label: "Purpose",
           title: "Support better information decisions.",
           content: (
             <p>
@@ -21,7 +21,7 @@ export default function AboutPage() {
           ),
         },
         {
-          label: "02 / Method",
+          label: "Method",
           title: "Evidence before confidence.",
           content: (
             <p>
@@ -32,7 +32,7 @@ export default function AboutPage() {
           ),
         },
         {
-          label: "03 / Learning",
+          label: "Learning",
           title: "Build verification skill, not dependence.",
           content: (
             <p>

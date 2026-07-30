@@ -26,7 +26,7 @@ export default function AdminOverview() {
   if (overview.isPending) {
     return (
       <div className={styles.loading} aria-busy="true">
-        <span>Operational record / 30 days</span>
+        <span>Operational record: 30 days</span>
         <h1>Loading verified aggregates…</h1>
         <div />
         <div />
@@ -53,7 +53,7 @@ export default function AdminOverview() {
     <div className={styles.page}>
       <header className={styles.hero}>
         <div>
-          <span>Operations / Last {record.period.days} days</span>
+          <span>A look at the last {record.period.days} days</span>
           <h1>System evidence, not decorative metrics.</h1>
         </div>
         <p>
@@ -93,7 +93,7 @@ export default function AdminOverview() {
       <div className={styles.grid}>
         <section className={styles.record}>
           <header>
-            <span>01 Verification lifecycle</span>
+            <span>Verification activity</span>
             <small>Persisted status groups</small>
           </header>
           {record.verifications.byStatus.length === 0 ? (
@@ -117,7 +117,7 @@ export default function AdminOverview() {
 
         <section className={styles.record}>
           <header>
-            <span>02 Provider execution</span>
+            <span>Provider activity</span>
             <small>Persisted provider runs</small>
           </header>
           {record.providers.length === 0 ? (

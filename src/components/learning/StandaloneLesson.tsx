@@ -61,7 +61,7 @@ export default function StandaloneLesson({
     <div className={styles.course}>
       <header className={styles.courseHeader}>
         <div>
-          <span>Course / {record.course.slug}</span>
+          <span>Part of {record.course.slug}</span>
           <h1>{record.course.title}</h1>
           <p>{record.course.description}</p>
         </div>

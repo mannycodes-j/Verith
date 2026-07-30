@@ -49,7 +49,7 @@ export default function ProfilePage() {
   return (
     <div className={styles.page}>
       <header>
-        <span>Account / Profile</span>
+        <span>Account: Profile</span>
         <div
           aria-label={record.avatar ? `${name}'s avatar` : undefined}
           className={styles.avatar}

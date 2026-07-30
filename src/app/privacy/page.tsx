@@ -6,11 +6,11 @@ export const metadata: Metadata = { title: "Privacy | Verith" };
 export default function PrivacyPage() {
   return (
     <PublicEditorial
-      eyebrow="Policy / Privacy"
+      eyebrow="Policy: Privacy"
       introduction="This page describes privacy behavior visible in the implemented Verith system. Deployment-specific legal notices, operator identity, and configured retention durations must be supplied before production launch."
       sections={[
         {
-          label: "01 / Account data",
+          label: "Account data",
           title: "Data used to operate your account.",
           content: (
             <p>
@@ -21,7 +21,7 @@ export default function PrivacyPage() {
           ),
         },
         {
-          label: "02 / Submitted media",
+          label: "Submitted media",
           title: "Owner-bound uploads and deletion.",
           content: (
             <p>
@@ -33,7 +33,7 @@ export default function PrivacyPage() {
           ),
         },
         {
-          label: "03 / Your controls",
+          label: "Your controls",
           title: "Visibility, export, and deletion.",
           content: (
             <p>
@@ -44,7 +44,7 @@ export default function PrivacyPage() {
           ),
         },
         {
-          label: "04 / WhatsApp",
+          label: "WhatsApp",
           title: "Encrypted linkage with explicit consent.",
           content: (
             <p>

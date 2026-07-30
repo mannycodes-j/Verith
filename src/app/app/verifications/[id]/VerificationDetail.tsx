@@ -217,7 +217,7 @@ export default function VerificationDetail({ id }: { id: string }) {
   if (verification.isPending) {
     return (
       <div className={styles.loading} aria-busy="true">
-        <span>Case / {id}</span>
+        <span>Case: {id}</span>
         <h1>Opening investigation…</h1>
         <div />
         <div />
@@ -267,7 +267,7 @@ export default function VerificationDetail({ id }: { id: string }) {
       <header className={styles.header}>
         <div className={styles.caseIdentity}>
           <span>Investigation</span>
-          <strong>Case / {record.id}</strong>
+          <strong>Case: {record.id}</strong>
         </div>
         <div className={styles.status} data-status={record.status}>
           <span>{record.status}</span>
@@ -437,7 +437,7 @@ export default function VerificationDetail({ id }: { id: string }) {
         >
           <section className={styles.dialog}>
             <header>
-              <span>Case / {record.id}</span>
+              <span>Case: {record.id}</span>
               <button
                 aria-label="Close dialog"
                 disabled={actionPending}

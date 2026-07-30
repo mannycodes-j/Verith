@@ -57,7 +57,7 @@ export default function AdminVerifications() {
   return (
     <div className={styles.page}>
       <header className={styles.listHero}>
-        <span>Operations / Verification lifecycle</span>
+        <span>Verification management</span>
         <h1>Inspect processing state without opening private input.</h1>
         <p>
           The administrative projection excludes submitted content. Retry is
@@ -132,7 +132,7 @@ export default function AdminVerifications() {
             <thead>
               <tr>
                 <th>Verification</th>
-                <th>Status / stage</th>
+                <th>Status: stage</th>
                 <th>Evidence</th>
                 <th>Retry state</th>
                 <th>Created</th>
@@ -144,8 +144,8 @@ export default function AdminVerifications() {
                 <tr key={record.id}>
                   <td>
                     <strong>{record.sourceType.replaceAll("_", " ")}</strong>
-                    <small>ID / {record.id}</small>
-                    <small>User / {record.userId}</small>
+                    <small>ID: {record.id}</small>
+                    <small>User: {record.userId}</small>
                   </td>
                   <td>
                     <span data-status={record.status}>{record.status}</span>
@@ -234,7 +234,7 @@ export default function AdminVerifications() {
             }}
             role="dialog"
           >
-            <span>Pipeline intervention / Audited retry</span>
+            <span>Pipeline intervention: Audited retry</span>
             <h2 id="retry-title">
               Requeue verification {retryRecord.id}?
             </h2>

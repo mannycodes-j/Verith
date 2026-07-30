@@ -63,7 +63,7 @@ export default function RecentInvestigations() {
         <li key={record.id}>
           <Link href={`/app/verifications/${record.id}`}>
             <div>
-              <span>Case / {record.id}</span>
+              <span>Case: {record.id}</span>
               <strong>{record.title || "Untitled investigation"}</strong>
             </div>
             <dl>

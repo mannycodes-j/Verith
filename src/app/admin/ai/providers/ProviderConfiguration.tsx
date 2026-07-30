@@ -46,7 +46,7 @@ export default function ProviderConfiguration() {
     <div className={styles.page}>
       <header className={styles.listHero}>
         <div>
-          <span>AI governance / Runtime</span>
+          <span>AI provider settings</span>
           <h1>Provider configuration.</h1>
         </div>
         <p>

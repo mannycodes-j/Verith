@@ -47,7 +47,7 @@ export default function WhatsAppSettings() {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <span>Account / WhatsApp</span>
+        <span>Account: WhatsApp</span>
         <h1>WhatsApp linking.</h1>
         <p>
           Connect a WhatsApp number without exposing it in this interface.
@@ -125,16 +125,16 @@ export default function WhatsAppSettings() {
         <span>How it works</span>
         <ol>
           <li>
-            <strong>01</strong>
+            <strong>First</strong>
             Generate a code that expires after ten minutes.
           </li>
           <li>
-            <strong>02</strong>
+            <strong>Next</strong>
             Send the exact instruction to the configured Verith WhatsApp
             account.
           </li>
           <li>
-            <strong>03</strong>
+            <strong>Done</strong>
             The signed webhook consumes the code and records your consent.
           </li>
         </ol>

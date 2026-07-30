@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Check } from "lucide-react";
 import RecentInvestigations from "./RecentInvestigations";
 import { workspaceStyles as styles } from "./workspace.styles";
 
@@ -35,20 +36,20 @@ export default function WorkspaceOverviewPage() {
           <div className={styles.sectionHeader}>
             <span>Investigation principles</span>
           </div>
-          <ol className={styles.principles}>
+          <ul className={styles.principles}>
             <li>
-              <span>01</span>
+              <Check aria-hidden="true" size={17} />
               Evidence and inference remain separate.
             </li>
             <li>
-              <span>02</span>
+              <Check aria-hidden="true" size={17} />
               Missing evidence remains a limitation.
             </li>
             <li>
-              <span>03</span>
+              <Check aria-hidden="true" size={17} />
               Unknown credibility is never shown as low credibility.
             </li>
-          </ol>
+          </ul>
         </aside>
       </div>
     </div>

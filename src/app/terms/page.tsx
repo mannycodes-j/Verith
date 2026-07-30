@@ -6,11 +6,11 @@ export const metadata: Metadata = { title: "Terms | Verith" };
 export default function TermsPage() {
   return (
     <PublicEditorial
-      eyebrow="Policy / Terms"
+      eyebrow="Policy: Terms"
       introduction="These product-use principles are not a substitute for deployment-specific legal terms. The operator must add jurisdiction, effective date, contact details, and legally reviewed provisions before public production use."
       sections={[
         {
-          label: "01 / Use",
+          label: "Use",
           title: "Use reports as qualified analysis.",
           content: (
             <p>
@@ -21,7 +21,7 @@ export default function TermsPage() {
           ),
         },
         {
-          label: "02 / Responsibility",
+          label: "Responsibility",
           title: "Do not treat indicators as proof.",
           content: (
             <p>
@@ -32,7 +32,7 @@ export default function TermsPage() {
           ),
         },
         {
-          label: "03 / Content",
+          label: "Content",
           title: "Submit material you may lawfully process.",
           content: (
             <p>
@@ -44,7 +44,7 @@ export default function TermsPage() {
           ),
         },
         {
-          label: "04 / Availability",
+          label: "Availability",
           title: "Providers and processing can fail.",
           content: (
             <p>

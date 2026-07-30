@@ -19,7 +19,6 @@ export default function RootLayout({
   return (
     <html data-scroll-behavior="smooth" lang="en" className="dark" data-theme="dark">
       <head>
-        <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>

@@ -110,7 +110,7 @@ export default function PrivacySettings() {
   return (
     <div className={styles.page}>
       <header className={styles.pageHeader}>
-        <span>Account / Privacy</span>
+        <span>Account: Privacy</span>
         <h1>Privacy and data.</h1>
         <p>
           Control public visibility, prepare an encrypted account export, or
@@ -126,7 +126,7 @@ export default function PrivacySettings() {
 
       <form className={styles.formSection} onSubmit={submitPrivacy}>
         <header>
-          <span>01 / Visibility</span>
+          <span>Visibility</span>
           <h2>Public participation.</h2>
         </header>
         <div className={styles.preferenceList}>
@@ -283,7 +283,7 @@ export default function PrivacySettings() {
         >
           <section className={styles.dialog}>
             <header>
-              <span>Account / {record.email}</span>
+              <span>Account: {record.email}</span>
               <button
                 aria-label="Close dialog"
                 disabled={requestDeletion.isPending}

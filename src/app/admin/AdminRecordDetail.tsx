@@ -110,7 +110,7 @@ export default function AdminRecordDetail({
     <div className={styles.page}>
       <header className={styles.detailHero}>
         <div>
-          <span>{kind.replaceAll("_", " ")} / Detail</span>
+          <span>{kind.replaceAll("_", " ")}: Detail</span>
           <h1>{heading}</h1>
         </div>
         <Link href={`/admin/${kind}`}>Back to records</Link>
@@ -154,7 +154,7 @@ export default function AdminRecordDetail({
               onClick={() => action.mutate("REVIEWED")}
               type="button"
             >
-              Mark reviewed / unknown
+              Mark reviewed: unknown
             </button>
           )}
           {kind === "feedback" &&

@@ -178,7 +178,7 @@ export default function VerificationComposer() {
       <header className={styles.header}>
         <div>
           <span>New investigation</span>
-          <span>Case / Created after submission</span>
+          <span>Case: Created after submission</span>
         </div>
         <h1>Inspect the source material.</h1>
         <p>
@@ -248,7 +248,7 @@ export default function VerificationComposer() {
 
             {mediaSelected && (
               <div className={styles.mediaState}>
-                <span>{sourceType} / Owner-bound signed upload</span>
+                <span>{sourceType}: Owner-bound signed upload</span>
                 <h2>Select the original media file.</h2>
                 <p>
                   Verith requests a short-lived upload policy, transfers the

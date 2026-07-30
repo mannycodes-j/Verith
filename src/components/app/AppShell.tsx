@@ -2,6 +2,28 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { motion, useReducedMotion } from "framer-motion";
+import {
+  Award,
+  Bell,
+  BookOpen,
+  BrainCircuit,
+  ClipboardCheck,
+  FileCheck2,
+  Gauge,
+  GraduationCap,
+  HeartHandshake,
+  History,
+  Home,
+  Library,
+  MessageSquareText,
+  PlusCircle,
+  Settings,
+  ShieldCheck,
+  Sparkles,
+  Trophy,
+  UserRound,
+  Users,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
@@ -17,49 +39,49 @@ const navigation = [
   {
     label: "Workspace",
     items: [
-      { href: "/app", index: "01", label: "Overview" },
-      { href: "/app/verify", index: "02", label: "New investigation" },
+      { href: "/app", icon: Home, label: "Home" },
+      { href: "/app/verify", icon: PlusCircle, label: "Check something" },
       {
         href: "/app/verifications",
-        index: "03",
-        label: "Verification history",
+        icon: History,
+        label: "My investigations",
       },
     ],
   },
   {
-    label: "Knowledge",
+    label: "Learn and grow",
     items: [
-      { href: "/app/learning", index: "04", label: "Learning" },
-      { href: "/app/challenges", index: "05", label: "Daily challenges" },
-      { href: "/app/achievements", index: "06", label: "Achievements" },
-      { href: "/app/leaderboards", index: "07", label: "Leaderboards" },
+      { href: "/app/learning", icon: BookOpen, label: "Learning" },
+      { href: "/app/challenges", icon: ClipboardCheck, label: "Daily practice" },
+      { href: "/app/achievements", icon: Award, label: "Achievements" },
+      { href: "/app/leaderboards", icon: Trophy, label: "Community" },
     ],
   },
   {
     label: "Account",
     items: [
-      { href: "/app/notifications", index: "08", label: "Notifications" },
-      { href: "/app/profile", index: "09", label: "Profile" },
-      { href: "/app/settings", index: "10", label: "Settings" },
+      { href: "/app/notifications", icon: Bell, label: "Notifications" },
+      { href: "/app/profile", icon: UserRound, label: "Profile" },
+      { href: "/app/settings", icon: Settings, label: "Settings" },
     ],
   },
 ] as const;
 
 const adminNavigation = [
   {
-    label: "Operations",
+    label: "Manage Verith",
     items: [
-      { href: "/admin", index: "A1", label: "Admin overview" },
-      { href: "/admin/users", index: "A2", label: "Users" },
+      { href: "/admin", icon: Gauge, label: "Overview" },
+      { href: "/admin/users", icon: Users, label: "People" },
       {
         href: "/admin/verifications",
-        index: "A3",
+        icon: FileCheck2,
         label: "Verifications",
       },
-      { href: "/admin/feedback", index: "A4", label: "Feedback" },
-      { href: "/admin/publishers", index: "A5", label: "Publishers" },
-      { href: "/admin/system-health", index: "A6", label: "System health" },
-      { href: "/admin/badges", index: "A7", label: "Badges" },
+      { href: "/admin/feedback", icon: MessageSquareText, label: "Feedback" },
+      { href: "/admin/publishers", icon: HeartHandshake, label: "Publishers" },
+      { href: "/admin/system-health", icon: ShieldCheck, label: "System health" },
+      { href: "/admin/badges", icon: Award, label: "Badges" },
     ],
   },
 ] as const;
@@ -68,10 +90,10 @@ const editorialNavigation = [
   {
     label: "Editorial",
     items: [
-      { href: "/admin/courses", index: "E1", label: "Courses" },
-      { href: "/admin/lessons", index: "E2", label: "Lessons" },
-      { href: "/admin/quizzes", index: "E3", label: "Quizzes" },
-      { href: "/admin/challenges", index: "E4", label: "Challenges" },
+      { href: "/admin/courses", icon: Library, label: "Courses" },
+      { href: "/admin/lessons", icon: GraduationCap, label: "Lessons" },
+      { href: "/admin/quizzes", icon: ClipboardCheck, label: "Quizzes" },
+      { href: "/admin/challenges", icon: Sparkles, label: "Challenges" },
     ],
   },
 ] as const;
@@ -79,17 +101,17 @@ const editorialNavigation = [
 const moderationNavigation = [
   {
     label: "Moderation",
-    items: [{ href: "/admin/feedback", index: "M1", label: "Feedback" }],
+    items: [{ href: "/admin/feedback", icon: MessageSquareText, label: "Feedback" }],
   },
 ] as const;
 
 const superAdminNavigation = [
   {
-    label: "Governance",
+    label: "Advanced",
     items: [
-      { href: "/admin/audit-logs", index: "G1", label: "Audit logs" },
-      { href: "/admin/ai/providers", index: "G2", label: "AI providers" },
-      { href: "/admin/ai/prompts", index: "G3", label: "AI prompts" },
+      { href: "/admin/audit-logs", icon: History, label: "Activity log" },
+      { href: "/admin/ai/providers", icon: BrainCircuit, label: "AI providers" },
+      { href: "/admin/ai/prompts", icon: Sparkles, label: "AI guidance" },
     ],
   },
 ] as const;
@@ -151,20 +173,23 @@ function Navigation({
       {groups.map((group) => (
         <div className={styles.navGroup} key={group.label}>
           <span className={styles.navLabel}>{group.label}</span>
-          {group.items.map((item) => (
-            <Link
-              className={
-                isActive(pathname, item.href)
-                  ? `${styles.navItem} ${styles.navItemActive}`
-                  : styles.navItem
-              }
-              href={item.href}
-              key={item.href}
-            >
-              <span>{item.index}</span>
-              {item.label}
-            </Link>
-          ))}
+          {group.items.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link
+                className={
+                  isActive(pathname, item.href)
+                    ? `${styles.navItem} ${styles.navItemActive}`
+                    : styles.navItem
+                }
+                href={item.href}
+                key={item.href}
+              >
+                <Icon aria-hidden="true" size={17} strokeWidth={1.8} />
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
       ))}
     </nav>
@@ -180,7 +205,7 @@ function WorkspaceUnavailable({
 }) {
   return (
     <main className={styles.gate}>
-      <span>Connection state / Unavailable</span>
+      <span>We could not connect</span>
       <h1>The workspace could not be opened.</h1>
       <p>{message}</p>
       <button type="button" onClick={retry}>
@@ -194,7 +219,7 @@ function WorkspaceUnavailable({
 function SessionExpired({ login }: { login: () => void }) {
   return (
     <main className={styles.gate}>
-      <span>Session state / Expired</span>
+      <span>Your session has ended</span>
       <h1>Your secure session has ended.</h1>
       <p>
         Verith could not rotate the refresh session. Sign in again to continue;
@@ -301,8 +326,8 @@ export default function AppShell({ children }: { children: ReactNode }) {
   if (pathname.startsWith("/admin") && !permittedAdminPath) {
     return (
       <main className={styles.gate}>
-        <span>Permission state / Forbidden</span>
-        <h1>This workspace requires an administrator role.</h1>
+        <span>You do not have access</span>
+        <h1>This space is only available to Verith administrators.</h1>
         <p>
           Navigation visibility is not authorization. Verith also enforces
           this role on every administrative API request.
@@ -331,7 +356,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
             <span>V</span>
             <strong>Verith</strong>
           </Link>
-          <span>Evidence system</span>
+          <span>Your verification space</span>
         </div>
         <Navigation
           admin={isAdmin}
@@ -356,7 +381,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
       <div className={styles.workspace}>
         <header className={styles.topbar}>
           <div>
-            <span>Workspace / {title}</span>
+            <span>Here is what is happening</span>
             <strong>{title}</strong>
           </div>
           <div className={styles.topbarActions}>

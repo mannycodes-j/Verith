@@ -70,7 +70,7 @@ export default function SecuritySettings() {
   return (
     <div className={styles.page}>
       <header className={styles.pageHeader}>
-        <span>Account / Security</span>
+        <span>Account: Security</span>
         <h1>Password and sessions.</h1>
         <p>
           Change your password, inspect active backend sessions, and revoke
@@ -86,7 +86,7 @@ export default function SecuritySettings() {
 
       <form className={styles.formSection} onSubmit={submitPassword}>
         <header>
-          <span>01 / Password</span>
+          <span>Password</span>
           <h2>Change credentials.</h2>
         </header>
         <div className={styles.formGrid}>
@@ -168,7 +168,7 @@ export default function SecuritySettings() {
                     <dd>
                       {[session.browser, session.platform]
                         .filter(Boolean)
-                        .join(" / ") || "Unavailable"}
+                        .join(": ") || "Unavailable"}
                     </dd>
                   </div>
                   <div>

@@ -50,7 +50,7 @@ export default function AdminUsers() {
   return (
     <div className={styles.page}>
       <header className={styles.listHero}>
-        <span>Operations / User directory</span>
+        <span>People and access</span>
         <h1>Account inspection and access control.</h1>
         <p>
           Credential material is excluded by the backend. Status and role
@@ -152,7 +152,7 @@ export default function AdminUsers() {
                   <td>
                     <strong>{user.displayName || user.username}</strong>
                     <small>{user.email}</small>
-                    <small>ID / {user.id}</small>
+                    <small>ID: {user.id}</small>
                   </td>
                   <td>{user.role.replaceAll("_", " ")}</td>
                   <td>

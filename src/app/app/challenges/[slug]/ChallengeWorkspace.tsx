@@ -76,7 +76,7 @@ export default function ChallengeWorkspace({ slug }: { slug: string }) {
   return (
     <div className={styles.workspace}>
       <header>
-        <span>Challenge / {record.slug}</span>
+        <span>Challenge: {record.slug}</span>
         <h1>{record.title}</h1>
         <p>{record.scenario}</p>
         <dl>

@@ -76,7 +76,7 @@ export default function RegisterForm() {
     return (
       <>
         <header className={styles.formHeader}>
-          <span>02 / Verify identity</span>
+          <span>Verify identity</span>
           <h2>Check your email.</h2>
           <p>Your account was created for {registeredEmail}.</p>
         </header>
@@ -102,7 +102,7 @@ export default function RegisterForm() {
   return (
     <>
       <header className={styles.formHeader}>
-        <span>01 / Create identity</span>
+        <span>Create identity</span>
         <h2>Begin with evidence.</h2>
         <p>Create a secure account for saved investigations and reports.</p>
       </header>

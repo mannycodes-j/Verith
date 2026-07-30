@@ -67,7 +67,7 @@ export default function ResetPasswordForm({ token }: { token: string }) {
     return (
       <>
         <header className={styles.formHeader}>
-          <span>03 / Recovery complete</span>
+          <span>Recovery complete</span>
           <h2>Password updated.</h2>
           <p>Your existing sessions have been revoked for account safety.</p>
         </header>
@@ -107,7 +107,7 @@ export default function ResetPasswordForm({ token }: { token: string }) {
   return (
     <>
       <header className={styles.formHeader}>
-        <span>02 / Choose credentials</span>
+        <span>Choose credentials</span>
         <h2>Choose a new password.</h2>
         <p>
           The reset link is single-use. Completing this action revokes existing

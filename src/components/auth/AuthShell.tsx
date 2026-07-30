@@ -19,7 +19,7 @@ export default function AuthShell({ children }: { children: ReactNode }) {
           <span className="ml-2">Verith</span>
         </Link>
         <div className={`${styles.contextBody} animate-entrance`}>
-          <p className={styles.eyebrow}>Evidence workspace / Secure access</p>
+          <p className={styles.eyebrow}>A private space to check what you see</p>
           <h1 id="auth-context-title">
             Investigate the claim. Inspect the evidence.
           </h1>
@@ -30,15 +30,15 @@ export default function AuthShell({ children }: { children: ReactNode }) {
         </div>
         <ol className={styles.workflow}>
           <li>
-            <span>01</span>
+            <span>1</span>
             Submit source material
           </li>
           <li>
-            <span>02</span>
+            <span>2</span>
             Review claim-level evidence
           </li>
           <li>
-            <span>03</span>
+            <span>3</span>
             Understand limits before sharing
           </li>
         </ol>

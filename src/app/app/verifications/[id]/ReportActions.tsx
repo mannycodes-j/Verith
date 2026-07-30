@@ -161,7 +161,7 @@ export default function ReportActions({
         >
           <section className={styles.dialog}>
             <header>
-              <span>Report / {report.id}</span>
+              <span>Report: {report.id}</span>
               <button
                 aria-label="Close dialog"
                 disabled={busy}
@@ -329,7 +329,7 @@ export default function ReportActions({
                     rows={5}
                     value={comment}
                   />
-                  <small>{comment.length} / 2000</small>
+                  <small>{comment.length}: 2000</small>
                 </label>
                 {mutationError && (
                   <p className={styles.error} role="alert">

@@ -29,7 +29,7 @@ export default function AuditLogLedger() {
   return (
     <div className={styles.page}>
       <header className={styles.listHero}>
-        <span>Governance / Append-only audit record</span>
+        <span>Governance: Append-only audit record</span>
         <h1>Every privileged intervention remains inspectable.</h1>
         <p>
           This super-administrator view contains safe before-and-after
@@ -98,7 +98,7 @@ export default function AuditLogLedger() {
                 <div>
                   <span>{record.action.replaceAll("_", " ")}</span>
                   <strong>
-                    {record.resourceType} / {record.resourceId}
+                    {record.resourceType}: {record.resourceId}
                   </strong>
                 </div>
                 <time dateTime={record.createdAt}>
@@ -109,7 +109,7 @@ export default function AuditLogLedger() {
                 <div>
                   <dt>Actor</dt>
                   <dd>
-                    {record.actorRole} / {record.actorId}
+                    {record.actorRole}: {record.actorId}
                   </dd>
                 </div>
                 <div>

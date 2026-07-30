@@ -62,7 +62,7 @@ export default function LoginForm({
   return (
     <>
       <header className={styles.formHeader}>
-        <span>01 / Workspace access</span>
+        <span>Workspace access</span>
         <h2>Welcome back.</h2>
         <p>Continue your investigations and inspect saved evidence reports.</p>
       </header>

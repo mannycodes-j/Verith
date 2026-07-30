@@ -69,7 +69,7 @@ export default function QuizWorkspace({ id }: { id: string }) {
   return (
     <div className={styles.page}>
       <header>
-        <span>Quiz / {record.id}</span>
+        <span>Quiz: {record.id}</span>
         <h1>{record.title}</h1>
         <p>{record.description}</p>
         <dl>

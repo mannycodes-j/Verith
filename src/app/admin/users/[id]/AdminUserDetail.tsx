@@ -81,7 +81,7 @@ export default function AdminUserDetail({ id }: { id: string }) {
     <div className={styles.page}>
       <header className={styles.detailHero}>
         <div>
-          <span>User / {record.id}</span>
+          <span>User: {record.id}</span>
           <h1>{record.displayName || record.username}</h1>
           <p>{record.email}</p>
         </div>
@@ -153,7 +153,7 @@ export default function AdminUserDetail({ id }: { id: string }) {
       {superAdmin && (
         <section className={styles.actionSection}>
           <header>
-            <span>Role assignment / Super admin</span>
+            <span>Role assignment: Super admin</span>
             <p>
               Changing a role revokes every active session and takes effect on
               the next authentication.

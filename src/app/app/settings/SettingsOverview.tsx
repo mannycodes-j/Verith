@@ -81,7 +81,7 @@ export default function SettingsOverview() {
   return (
     <div className={styles.page}>
       <header className={styles.pageHeader}>
-        <span>Account / Preferences</span>
+        <span>Account: Preferences</span>
         <h1>Settings.</h1>
         <p>
           Manage the identity, delivery preferences, privacy, and security
@@ -98,7 +98,7 @@ export default function SettingsOverview() {
 
       <form className={styles.formSection} onSubmit={submitProfile}>
         <header>
-          <span>01 / Profile</span>
+          <span>Profile</span>
           <h2>Account identity.</h2>
         </header>
         <div className={styles.formGrid}>
@@ -166,7 +166,7 @@ export default function SettingsOverview() {
 
       <form className={styles.formSection} onSubmit={submitNotifications}>
         <header>
-          <span>02 / Notifications</span>
+          <span>Notifications</span>
           <h2>Delivery preferences.</h2>
         </header>
         <div className={styles.preferenceList}>

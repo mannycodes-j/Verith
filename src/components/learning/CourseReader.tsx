@@ -176,7 +176,7 @@ export default function CourseReader({
     <div className={styles.course}>
       <header className={styles.courseHeader}>
         <div>
-          <span>Course / {record.slug}</span>
+          <span>You&apos;re learning {record.slug}</span>
           <h1>{record.title}</h1>
           <p>{record.description}</p>
         </div>

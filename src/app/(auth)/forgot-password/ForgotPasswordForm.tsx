@@ -45,7 +45,7 @@ export default function ForgotPasswordForm() {
     return (
       <>
         <header className={styles.formHeader}>
-          <span>02 / Recovery requested</span>
+          <span>Recovery requested</span>
           <h2>Check your inbox.</h2>
           <p>
             If an account exists for {submittedEmail}, Verith will send a
@@ -69,7 +69,7 @@ export default function ForgotPasswordForm() {
   return (
     <>
       <header className={styles.formHeader}>
-        <span>01 / Account recovery</span>
+        <span>Account recovery</span>
         <h2>Reset your password.</h2>
         <p>
           Enter your account email. If it is registered, a single-use reset

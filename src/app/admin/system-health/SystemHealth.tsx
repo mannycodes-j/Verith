@@ -66,7 +66,7 @@ export default function SystemHealth() {
   return (
     <div className={styles.page}>
       <header className={styles.listHero}>
-        <span>Operations / Dependency and provider health</span>
+        <span>Service and provider health</span>
         <h1>Configuration is not the same as availability.</h1>
         <p>
           These are live backend health projections. A missing configuration

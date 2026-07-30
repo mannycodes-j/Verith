@@ -19,7 +19,7 @@ export default function LearningCatalog({
   return (
     <div className={styles.catalog}>
       <header className={styles.hero}>
-        <span>Media literacy / Course catalog</span>
+        <span>Grow your media literacy</span>
         <h1>Learn how evidence holds up.</h1>
         <p>
           Structured lessons on claims, sources, context, and the techniques

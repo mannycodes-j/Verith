@@ -49,7 +49,7 @@ export default function AdminVerificationDetail({ id }: { id: string }) {
     <div className={styles.page}>
       <header className={styles.detailHero}>
         <div>
-          <span>Verification / {verification.id}</span>
+          <span>Verification: {verification.id}</span>
           <h1>{verification.sourceType.replaceAll("_", " ")}</h1>
           <p>
             Safe lifecycle metadata only. Submitted text, media, and extracted

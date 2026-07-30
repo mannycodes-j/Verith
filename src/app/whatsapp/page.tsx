@@ -9,30 +9,30 @@ export const metadata: Metadata = {
 
 export default function WhatsAppPage() {
   return (
-    <main className="mx-auto max-w-[1500px] px-(--page-gutter) pb-20">
-      <header className="grid min-h-18 grid-cols-[1fr_auto_1fr] items-center border-b border-border">
+    <main className="mx-auto max-w-[1320px] px-5 pb-20">
+      <header className="mt-4 grid min-h-16 grid-cols-[1fr_auto_1fr] items-center rounded-2xl bg-surface/80 px-5 backdrop-blur-xl">
         <Link
           href="/"
-          className="font-editorial text-2xl"
+          className="text-lg font-semibold"
         >
           Verith
         </Link>
-        <span className="font-mono text-[0.58rem] tracking-[0.07em] text-muted uppercase">
+        <span className="text-xs text-muted">
           WhatsApp verification
         </span>
         <Link
-          className="justify-self-end font-mono text-[0.58rem] tracking-[0.07em] text-muted uppercase"
+          className="justify-self-end rounded-full bg-white/[0.05] px-4 py-2 text-xs text-muted-foreground"
           href="/login"
         >
           Log in
         </Link>
       </header>
-      <section className="grid grid-cols-[1.2fr_0.5fr] gap-16 py-[clamp(4rem,9vw,9rem)] max-[700px]:grid-cols-1">
+      <section className="relative grid grid-cols-[1.2fr_0.5fr] gap-16 overflow-hidden py-[clamp(5rem,9vw,9rem)] before:pointer-events-none before:absolute before:left-0 before:top-8 before:size-80 before:rounded-full before:bg-emerald-500/10 before:blur-[110px] max-[700px]:grid-cols-1">
         <div>
-          <span className="font-mono text-[0.58rem] tracking-[0.07em] text-muted uppercase">
-            06 / WhatsApp
+          <span className="relative inline-flex rounded-full bg-emerald-400/10 px-3 py-1.5 text-xs font-semibold text-emerald-300">
+            Check messages where you receive them
           </span>
-          <h1 className="mt-6 font-editorial text-[clamp(4rem,9vw,9rem)] leading-[0.85] font-normal tracking-[-0.07em]">
+          <h1 className="relative mt-6 text-[clamp(3.5rem,8vw,7rem)] leading-[0.96] font-semibold tracking-[-0.06em]">
             Investigate forwarded content.
           </h1>
         </div>
@@ -41,35 +41,35 @@ export default function WhatsAppPage() {
           forwarded material to the configured Verith WhatsApp service.
         </p>
       </section>
-      <section className="grid grid-cols-3 border border-border-strong max-[700px]:grid-cols-1">
-        <div className="min-h-62.5 p-8">
-          <span className="font-mono text-[0.58rem] tracking-[0.07em] text-muted uppercase">01</span>
-          <h2 className="font-editorial text-[clamp(2rem,4vw,4rem)] font-normal tracking-[-0.05em]">Generate</h2>
+      <section className="grid grid-cols-3 gap-5 max-[700px]:grid-cols-1">
+        <div className="min-h-62.5 rounded-3xl bg-gradient-to-br from-violet-500/15 to-indigo-500/5 p-8">
+          <span className="grid size-9 place-items-center rounded-full bg-violet-500 text-sm font-bold">1</span>
+          <h2 className="mt-6 text-2xl font-semibold">Create a code</h2>
           <p className="self-end leading-[1.65] text-muted-foreground">Create a one-time code from your authenticated settings.</p>
         </div>
-        <div className="min-h-62.5 border-l border-border-strong p-8 max-[700px]:border-t max-[700px]:border-l-0">
-          <span className="font-mono text-[0.58rem] tracking-[0.07em] text-muted uppercase">02</span>
-          <h2 className="font-editorial text-[clamp(2rem,4vw,4rem)] font-normal tracking-[-0.05em]">Link</h2>
+        <div className="min-h-62.5 rounded-3xl bg-gradient-to-br from-cyan-500/15 to-sky-500/5 p-8">
+          <span className="grid size-9 place-items-center rounded-full bg-cyan-500 text-sm font-bold">2</span>
+          <h2 className="mt-6 text-2xl font-semibold">Link WhatsApp</h2>
           <p className="self-end leading-[1.65] text-muted-foreground">Send the exact link instruction before the code expires.</p>
         </div>
-        <div className="min-h-62.5 border-l border-border-strong p-8 max-[700px]:border-t max-[700px]:border-l-0">
-          <span className="font-mono text-[0.58rem] tracking-[0.07em] text-muted uppercase">03</span>
-          <h2 className="font-editorial text-[clamp(2rem,4vw,4rem)] font-normal tracking-[-0.05em]">Submit</h2>
+        <div className="min-h-62.5 rounded-3xl bg-gradient-to-br from-emerald-500/15 to-teal-500/5 p-8">
+          <span className="grid size-9 place-items-center rounded-full bg-emerald-500 text-sm font-bold">3</span>
+          <h2 className="mt-6 text-2xl font-semibold">Forward the message</h2>
           <p className="self-end leading-[1.65] text-muted-foreground">Forward supported content after the signed webhook links you.</p>
         </div>
       </section>
-      <section className="mt-20 grid grid-cols-[1fr_0.7fr] gap-16 bg-foreground p-[clamp(2rem,6vw,6rem)] text-background max-[700px]:grid-cols-1">
+      <section className="mt-20 grid grid-cols-[1fr_0.7fr] gap-16 rounded-[2rem] bg-surface p-[clamp(2rem,6vw,6rem)] max-[700px]:grid-cols-1">
         <div>
-          <span className="font-mono text-[0.58rem] tracking-[0.07em] text-[color-mix(in_srgb,var(--background)_72%,transparent)] uppercase">Privacy model</span>
-          <h2 className="font-editorial text-[clamp(2rem,4vw,4rem)] font-normal tracking-[-0.05em]">Your number is not displayed in Verith.</h2>
+          <span className="inline-flex rounded-full bg-emerald-400/10 px-3 py-1.5 text-xs font-semibold text-emerald-300">Your privacy</span>
+          <h2 className="mt-5 text-[clamp(2rem,4vw,4rem)] font-semibold tracking-[-0.04em]">Your number is not displayed in Verith.</h2>
         </div>
-        <p className="self-end leading-[1.65] text-[color-mix(in_srgb,var(--background)_72%,transparent)]">
+        <p className="self-end leading-[1.65] text-muted-foreground">
           The backend encrypts the linked number, stores a separate keyed hash
           for lookup, verifies Meta webhook signatures, records consent, and
           removes the encrypted number when you unlink.
         </p>
         <Link
-          className="col-start-2 justify-self-start border border-[color-mix(in_srgb,var(--background)_35%,transparent)] p-3 font-mono text-[0.58rem] uppercase max-[700px]:col-start-1"
+          className="col-start-2 justify-self-start rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 px-5 py-3 text-sm font-semibold text-white max-[700px]:col-start-1"
           href="/app/settings/whatsapp"
         >
           Open WhatsApp settings

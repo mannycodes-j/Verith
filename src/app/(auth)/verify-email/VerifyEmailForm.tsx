@@ -60,7 +60,7 @@ export default function VerifyEmailForm({ token }: { token: string }) {
     return (
       <>
         <header className={styles.formHeader}>
-          <span>02 / Verifying identity</span>
+          <span>Verifying identity</span>
           <h2>Checking your link.</h2>
           <p role="status">
             Verith is validating this single-use verification token.
@@ -74,7 +74,7 @@ export default function VerifyEmailForm({ token }: { token: string }) {
     return (
       <>
         <header className={styles.formHeader}>
-          <span>03 / Identity verified</span>
+          <span>Identity verified</span>
           <h2>Email confirmed.</h2>
           <p>Your account can now access the Verith workspace.</p>
         </header>
