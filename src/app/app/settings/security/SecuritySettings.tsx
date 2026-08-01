@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { accountService, type AccountSession } from "@/services/account";
 import { authService } from "@/services/authService";
+import { describeSessionClient } from "@/utils/user-agent";
 import { settingsStyles as styles } from "../settings.styles";
 import SettingsNav from "../SettingsNav";
 
@@ -188,14 +189,7 @@ export default function SecuritySettings() {
           <ul className={styles.sessionGrid}>
             {sessions.data.map((session) => {
               const isCurrent = session.id === current.data?.sessionId;
-              const device =
-                session.deviceName ||
-                session.userAgentSummary ||
-                "Unknown device";
-              const environment =
-                [session.browser, session.platform]
-                  .filter(Boolean)
-                  .join(" · ") || "Browser details unavailable";
+              const { device, environment } = describeSessionClient(session);
 
               return (
                 <li

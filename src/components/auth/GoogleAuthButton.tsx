@@ -29,9 +29,17 @@ interface GoogleIdentityApi {
 	): void;
 }
 
+interface GoogleIdentityState {
+	api: GoogleIdentityApi;
+	clientId: string;
+	handleCredential?: (response: GoogleCredentialResponse) => void;
+	owner?: symbol;
+}
+
 declare global {
 	interface Window {
 		google?: { accounts: { id: GoogleIdentityApi } };
+		__verithGoogleIdentity?: GoogleIdentityState;
 	}
 }
 
@@ -44,6 +52,36 @@ const googleErrors: Record<string, string> = {
 	GOOGLE_IDENTITY_INCOMPLETE: "Google did not provide a verified email identity for this account.",
 	USE_PASSWORD_SIGN_IN: "This account was created with email and password. Use the password login form.",
 };
+
+function activateGoogleIdentity(
+	api: GoogleIdentityApi,
+	clientId: string,
+	handleCredential: (response: GoogleCredentialResponse) => void,
+) {
+	const owner = Symbol("verith-google-auth-button");
+	let state = window.__verithGoogleIdentity;
+
+	if (!state || state.api !== api || state.clientId !== clientId) {
+		state = { api, clientId };
+		window.__verithGoogleIdentity = state;
+		api.initialize({
+			client_id: clientId,
+			callback: (response) => {
+				window.__verithGoogleIdentity?.handleCredential?.(response);
+			},
+		});
+	}
+
+	state.handleCredential = handleCredential;
+	state.owner = owner;
+
+	return () => {
+		const activeState = window.__verithGoogleIdentity;
+		if (activeState?.owner !== owner) return;
+		delete activeState.handleCredential;
+		delete activeState.owner;
+	};
+}
 
 export default function GoogleAuthButton({ intent }: { intent: GoogleAuthIntent }) {
 	const router = useRouter();
@@ -86,7 +124,9 @@ export default function GoogleAuthButton({ intent }: { intent: GoogleAuthIntent 
 		if (!scriptReady || !clientId || !google || !target) return;
 
 		target.replaceChildren();
-		google.initialize({ client_id: clientId, callback: authenticate });
+		const deactivate = activateGoogleIdentity(google, clientId, (response) => {
+			void authenticate(response);
+		});
 		google.renderButton(target, {
 			type: "standard",
 			shape: "pill",
@@ -97,6 +137,8 @@ export default function GoogleAuthButton({ intent }: { intent: GoogleAuthIntent 
 			width: Math.min(400, Math.max(120, Math.floor(target.getBoundingClientRect().width || 400))),
 			locale: "en",
 		});
+
+		return deactivate;
 	}, [authenticate, configuration.data?.clientId, intent, scriptReady]);
 
 	const unavailable = configuration.isError || (configuration.data && !configuration.data.enabled);
