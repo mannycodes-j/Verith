@@ -107,13 +107,7 @@ function ClaimEvidence({
   );
 }
 
-export function ReportReader({
-  report,
-  showActions = true,
-}: {
-  report: VerificationReport;
-  showActions?: boolean;
-}) {
+export function ClaimWorkspace({ report }: { report: VerificationReport }) {
   const evidenceById = useMemo(
     () =>
       new Map(
@@ -122,15 +116,137 @@ export function ReportReader({
     [report.evidence],
   );
   const [selectedEvidenceId, setSelectedEvidenceId] = useState<string>();
+  const selectedEvidence = selectedEvidenceId
+    ? evidenceById.get(selectedEvidenceId)
+    : undefined;
+
+  return (
+    <div className={styles.claimWorkspace}>
+      <section className={styles.claims}>
+        <div className={styles.sectionHeading}>
+          <span>Claim analysis</span>
+          <span>{report.claims.length} records</span>
+        </div>
+        {report.claims.length === 0 ? (
+          <div className={styles.emptySection}>
+            No verifiable claims were included in this report.
+          </div>
+        ) : (
+          report.claims.map((claim, index) => (
+            <section className={styles.claim} key={claim.claimId}>
+              <header>
+                <span>Claim {String(index + 1).padStart(2, "0")}</span>
+                <span data-verdict={claim.verdict}>
+                  {friendlyVerdict(claim.verdict)}
+                </span>
+              </header>
+              <h3>{claim.text}</h3>
+              <p>{friendlyReportText(claim.explanation)}</p>
+              <details className={styles.claimDetails}>
+                <summary>See confidence and technical details</summary>
+                <div className={styles.claimMeta}>
+                  <span>{friendlyConfidence(claim.confidence)}</span>
+                  <span>{humanize(claim.importance)} importance</span>
+                  <span>{humanize(claim.verifiability)}</span>
+                </div>
+              </details>
+              <ClaimEvidence
+                evidence={evidenceById}
+                ids={claim.supportingEvidenceIds ?? []}
+                label="Supporting evidence"
+                onSelect={setSelectedEvidenceId}
+              />
+              <ClaimEvidence
+                evidence={evidenceById}
+                ids={claim.contradictingEvidenceIds ?? []}
+                label="Contradicting evidence"
+                onSelect={setSelectedEvidenceId}
+              />
+              <ClaimEvidence
+                evidence={evidenceById}
+                ids={claim.contextEvidenceIds ?? []}
+                label="Context evidence"
+                onSelect={setSelectedEvidenceId}
+              />
+              {(claim.uncertainties?.length > 0 ||
+                claim.limitations?.length > 0) && (
+                <div className={styles.claimCaveats}>
+                  <span>Uncertainty and limitations</span>
+                  <ul>
+                    {[
+                      ...(claim.uncertainties ?? []),
+                      ...(claim.limitations ?? []),
+                    ].map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </section>
+          ))
+        )}
+      </section>
+
+      <aside className={styles.inspector}>
+        <EvidenceDetail evidence={selectedEvidence} />
+      </aside>
+    </div>
+  );
+}
+
+export function ReportClaimWorkspace({
+  verificationId,
+}: {
+  verificationId: string;
+}) {
+  const report = useQuery({
+    queryFn: () => reportService.latest(verificationId),
+    queryKey: ["report", verificationId, "latest"],
+    retry: 1,
+  });
+
+  if (report.isPending) {
+    return (
+      <section className={styles.reportLoading} aria-busy="true">
+        <span>Claim analysis</span>
+        <h2>Opening claims and evidence…</h2>
+        <div />
+        <div />
+      </section>
+    );
+  }
+
+  if (report.isError) {
+    return (
+      <section className={styles.reportError} role="alert">
+        <span>Claim analysis unavailable</span>
+        <h2>The claims and evidence could not be loaded.</h2>
+        <p>{report.error.message}</p>
+        <button type="button" onClick={() => void report.refetch()}>
+          Retry claim analysis
+        </button>
+      </section>
+    );
+  }
+
+  return <ClaimWorkspace report={report.data} />;
+}
+
+export function ReportReader({
+  report,
+  showActions = true,
+  showClaimWorkspace = true,
+}: {
+  report: VerificationReport;
+  showActions?: boolean;
+  showClaimWorkspace?: boolean;
+}) {
   const learning = useQuery({
     enabled: showActions && Boolean(report.id),
     queryFn: () => learningService.recommendationsForReport(report.id!),
     queryKey: ["learning-recommendations", report.id],
     retry: false,
   });
-  const selectedEvidence = selectedEvidenceId
-    ? evidenceById.get(selectedEvidenceId)
-    : undefined;
   const unavailableEvidence = report.evidence.filter((item) =>
     !["AVAILABLE", "PARTIALLY_AVAILABLE"].includes(item.accessStatus),
   );
@@ -219,68 +335,7 @@ export function ReportReader({
         </section>
       )}
 
-      <div className={styles.claimWorkspace}>
-        <section className={styles.claims}>
-          <div className={styles.sectionHeading}>
-            <span>Claim analysis</span>
-            <span>{report.claims.length} records</span>
-          </div>
-          {report.claims.length === 0 ? (
-            <div className={styles.emptySection}>
-              No verifiable claims were included in this report.
-            </div>
-          ) : (
-            report.claims.map((claim, index) => (
-              <section className={styles.claim} key={claim.claimId}>
-                <header>
-                  <span>Claim {String(index + 1).padStart(2, "0")}</span>
-                  <span data-verdict={claim.verdict}>
-                    {friendlyVerdict(claim.verdict)}
-                  </span>
-                </header>
-                <h3>{claim.text}</h3>
-                <p>{friendlyReportText(claim.explanation)}</p>
-                <details className={styles.claimDetails}><summary>See confidence and technical details</summary><div className={styles.claimMeta}><span>{friendlyConfidence(claim.confidence)}</span><span>{humanize(claim.importance)} importance</span><span>{humanize(claim.verifiability)}</span></div></details>
-                <ClaimEvidence
-                  evidence={evidenceById}
-                  ids={claim.supportingEvidenceIds ?? []}
-                  label="Supporting evidence"
-                  onSelect={setSelectedEvidenceId}
-                />
-                <ClaimEvidence
-                  evidence={evidenceById}
-                  ids={claim.contradictingEvidenceIds ?? []}
-                  label="Contradicting evidence"
-                  onSelect={setSelectedEvidenceId}
-                />
-                <ClaimEvidence
-                  evidence={evidenceById}
-                  ids={claim.contextEvidenceIds ?? []}
-                  label="Context evidence"
-                  onSelect={setSelectedEvidenceId}
-                />
-                {(claim.uncertainties?.length > 0 ||
-                  claim.limitations?.length > 0) && (
-                  <div className={styles.claimCaveats}>
-                    <span>Uncertainty and limitations</span>
-                    <ul>
-                      {[...(claim.uncertainties ?? []), ...(claim.limitations ?? [])].map(
-                        (item) => (
-                          <li key={item}>{item}</li>
-                        ),
-                      )}
-                    </ul>
-                  </div>
-                )}
-              </section>
-            ))
-          )}
-        </section>
-
-        <aside className={styles.inspector}>
-          <EvidenceDetail evidence={selectedEvidence} />
-        </aside>
-      </div>
+      {showClaimWorkspace && <ClaimWorkspace report={report} />}
 
       <section className={styles.analysisGrid}>
         <div className={styles.analysisSection}>
@@ -607,7 +662,9 @@ export default function ReportDocument({
           </button>
         </section>
       )}
-      {displayed && <ReportReader report={displayed} />}
+      {displayed && (
+        <ReportReader report={displayed} showClaimWorkspace={false} />
+      )}
     </>
   );
 }
