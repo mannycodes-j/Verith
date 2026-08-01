@@ -1,13 +1,13 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import {
   accountService,
   type PrivacyExportRequest,
 } from "@/services/account";
 import { settingsStyles as styles } from "../settings.styles";
+import SettingsNav from "../SettingsNav";
 
 function formatDate(value?: string | null) {
   if (!value) return "Unavailable";
@@ -117,12 +117,7 @@ export default function PrivacySettings() {
           begin the backend’s deletion-grace process.
         </p>
       </header>
-      <nav className={styles.settingsNav} aria-label="Settings sections">
-        <Link href="/app/settings">Profile</Link>
-        <span>Privacy and data</span>
-        <Link href="/app/settings/security">Password and sessions</Link>
-        <Link href="/app/settings/whatsapp">WhatsApp</Link>
-      </nav>
+      <SettingsNav active="privacy" />
 
       <form className={styles.formSection} onSubmit={submitPrivacy}>
         <header>
@@ -138,6 +133,7 @@ export default function PrivacySettings() {
             <input
               defaultChecked={record.privacyPreferences.publicProfile === true}
               name="publicProfile"
+              role="switch"
               type="checkbox"
             />
           </label>
@@ -149,6 +145,7 @@ export default function PrivacySettings() {
             <input
               defaultChecked={record.privacyPreferences.leaderboard !== false}
               name="leaderboard"
+              role="switch"
               type="checkbox"
             />
           </label>

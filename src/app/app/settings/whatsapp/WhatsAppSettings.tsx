@@ -1,13 +1,13 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Link from "next/link";
 import { useState } from "react";
 import {
   whatsappService,
   type WhatsAppLinkCode,
 } from "@/services/whatsapp";
 import { whatsappSettingsStyles as styles } from "./whatsapp-settings.styles";
+import SettingsNav from "../SettingsNav";
 
 function formatDate(value: string) {
   const date = new Date(value);
@@ -54,12 +54,7 @@ export default function WhatsAppSettings() {
           Verith stores the number encrypted and uses a hashed lookup.
         </p>
       </header>
-      <nav className={styles.settingsNav} aria-label="Settings sections">
-        <Link href="/app/settings">Profile</Link>
-        <Link href="/app/settings/privacy">Privacy and data</Link>
-        <Link href="/app/settings/security">Password and sessions</Link>
-        <span>WhatsApp</span>
-      </nav>
+      <SettingsNav active="whatsapp" />
 
       {status.isPending && <p>Checking WhatsApp link status…</p>}
       {status.isError && (

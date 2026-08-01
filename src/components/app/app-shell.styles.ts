@@ -21,7 +21,7 @@ export const appShellStyles = {
   account:
     "mt-4 grid grid-cols-[36px_minmax(0,1fr)_auto] items-center gap-2.5 border-t border-white/[0.05] px-2 pt-4 [&>div:nth-child(2)]:grid [&>div:nth-child(2)]:min-w-0 [&>div:nth-child(2)]:gap-0.5 [&_strong]:truncate [&_strong]:text-xs [&_span]:text-[10px] [&_span]:text-white/55 [&>button]:min-h-10 [&>button]:rounded-lg [&>button]:border-0 [&>button]:bg-transparent [&>button]:px-2 [&>button]:py-2 [&>button]:text-[10px] [&>button]:text-white/55 hover:[&>button]:bg-white/5 hover:[&>button]:text-foreground",
   avatar:
-    "flex size-9 items-center justify-center rounded-xl border border-violet-400/10 bg-violet-500/10 text-xs font-semibold text-violet-300",
+    "flex size-9 items-center justify-center rounded-xl border border-violet-400/10 bg-violet-500/10 bg-cover bg-center bg-no-repeat text-xs font-semibold text-violet-300",
   workspace: "min-w-0 lg:col-start-2",
   topbar:
     "sticky top-0 z-30 flex h-16 items-center justify-between border-b border-white/[0.04] bg-[#08090A]/80 px-5 backdrop-blur-md lg:px-8 [&>div:first-child]:grid [&>div:first-child]:gap-0.5 [&>div:first-child_span]:text-[10px] [&>div:first-child_span]:uppercase [&>div:first-child_span]:tracking-[0.12em] [&>div:first-child_span]:text-white/55 max-sm:[&>div:first-child_span]:hidden [&_strong]:text-sm [&_strong]:font-medium",
@@ -30,7 +30,11 @@ export const appShellStyles = {
   notificationTrigger:
     "grid size-11 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white/65 transition-colors hover:border-white/15 hover:bg-white/[0.08] hover:text-white",
   mobileNavigation:
-    "relative block lg:hidden [&_summary]:grid [&_summary]:size-11 [&_summary]:cursor-pointer [&_summary]:list-none [&_summary]:place-items-center [&_summary]:rounded-full [&_summary]:border [&_summary]:border-white/10 [&_summary]:bg-white/[0.05] [&_summary]:text-white/70 [&_summary]:transition-colors [&_summary:hover]:border-white/15 [&_summary:hover]:bg-white/[0.08] [&_summary:hover]:text-white [&_summary:focus-visible]:outline-none [&_summary:focus-visible]:ring-2 [&_summary:focus-visible]:ring-violet-400/60 [&_summary::-webkit-details-marker]:hidden [&>nav]:absolute [&>nav]:top-[calc(100%+0.8rem)] [&>nav]:right-0 [&>nav]:flex [&>nav]:max-h-[calc(100svh-90px)] [&>nav]:min-w-[min(20rem,calc(100vw-2rem))] [&>nav]:overflow-y-auto [&>nav]:rounded-2xl [&>nav]:border [&>nav]:border-white/10 [&>nav]:bg-surface-elevated [&>nav]:p-4 [&>nav]:shadow-2xl",
+    "relative block lg:hidden [&_summary]:grid [&_summary]:size-11 [&_summary]:cursor-pointer [&_summary]:list-none [&_summary]:place-items-center [&_summary]:rounded-full [&_summary]:border [&_summary]:border-white/10 [&_summary]:bg-white/[0.05] [&_summary]:text-white/70 [&_summary]:transition-colors [&_summary:hover]:border-white/15 [&_summary:hover]:bg-white/[0.08] [&_summary:hover]:text-white [&_summary:focus-visible]:outline-none [&_summary:focus-visible]:ring-2 [&_summary:focus-visible]:ring-violet-400/60 [&_summary::-webkit-details-marker]:hidden",
+  mobileMenuPanel:
+    "absolute top-[calc(100%+0.8rem)] right-0 flex max-h-[calc(100svh-90px)] min-w-[min(21rem,calc(100vw-2rem))] flex-col overflow-y-auto rounded-2xl border border-white/10 bg-surface-elevated p-4 shadow-2xl [&>nav]:mt-0 [&>nav]:overflow-visible",
+  mobileAccount:
+    "mt-5 grid grid-cols-[36px_minmax(0,1fr)] items-center gap-x-3 gap-y-3 border-t border-white/[0.06] pt-4 [&>div:nth-child(2)]:grid [&>div:nth-child(2)]:min-w-0 [&>div:nth-child(2)]:gap-0.5 [&_strong]:truncate [&_strong]:text-xs [&_span]:text-[10px] [&_span]:capitalize [&_span]:text-white/50 [&>button]:col-span-2 [&>button]:inline-flex [&>button]:min-h-11 [&>button]:w-full [&>button]:items-center [&>button]:justify-center [&>button]:gap-2 [&>button]:rounded-xl [&>button]:border [&>button]:border-white/10 [&>button]:bg-white/[0.045] [&>button]:px-4 [&>button]:text-center [&>button]:text-xs [&>button]:font-medium [&>button]:text-white/70 [&>button]:transition-colors [&>button:hover]:border-white/15 [&>button:hover]:bg-white/[0.08] [&>button:hover]:text-white",
   content:
     "min-h-[calc(100svh-64px)] px-5 py-8 pb-24 lg:px-8 lg:pb-8",
   mobileBottomNavigation:

@@ -16,6 +16,7 @@ import {
   History,
   Home,
   Library,
+  LogOut,
   MessageSquareText,
   PlusCircle,
   Settings,
@@ -27,7 +28,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState, type ReactNode } from "react";
+import { useState, type CSSProperties, type ReactNode } from "react";
 import UnequalMenuBars from "@/components/UnequalMenuBars";
 import { ApiClientError } from "@/services/apiClient";
 import {
@@ -263,15 +264,6 @@ export default function AppShell({ children }: { children: ReactNode }) {
     retry: false,
   });
 
-  useEffect(() => {
-    const theme = profileQuery.data?.theme;
-    if (theme === "light" || theme === "dark") {
-      document.documentElement.dataset.theme = theme;
-    } else {
-      delete document.documentElement.dataset.theme;
-    }
-  }, [profileQuery.data?.theme]);
-
   const logout = async () => {
     try {
       await authService.logout();
@@ -324,6 +316,13 @@ export default function AppShell({ children }: { children: ReactNode }) {
     typeof profile.role === "string"
       ? profile.role.replaceAll("_", " ").toLowerCase()
       : "investigator";
+  const avatarUrl =
+    typeof profile.avatar === "string" && profile.avatar.trim()
+      ? profile.avatar.trim()
+      : undefined;
+  const avatarStyle: CSSProperties | undefined = avatarUrl
+    ? { backgroundImage: `url(${JSON.stringify(avatarUrl)})` }
+    : undefined;
   const isAdmin =
     profile.role === "ADMIN" || profile.role === "SUPER_ADMIN";
   const isEditorial =
@@ -395,8 +394,14 @@ export default function AppShell({ children }: { children: ReactNode }) {
           superAdmin={isSuperAdmin}
         />
         <div className={styles.account}>
-          <div className={styles.avatar} aria-hidden="true">
-            {displayName.slice(0, 1).toUpperCase()}
+          <div
+            aria-label={avatarUrl ? `${displayName}'s profile image` : undefined}
+            aria-hidden={avatarUrl ? undefined : "true"}
+            className={styles.avatar}
+            role={avatarUrl ? "img" : undefined}
+            style={avatarStyle}
+          >
+            {!avatarUrl && displayName.slice(0, 1).toUpperCase()}
           </div>
           <div>
             <strong>{displayName}</strong>
@@ -429,13 +434,39 @@ export default function AppShell({ children }: { children: ReactNode }) {
                 <span className="sr-only">Navigation menu</span>
                 <UnequalMenuBars />
               </summary>
-              <Navigation
-                admin={isAdmin}
-                editorial={isEditorial}
-                moderator={isModerator}
-                pathname={pathname}
-                superAdmin={isSuperAdmin}
-              />
+              <div className={styles.mobileMenuPanel}>
+                <Navigation
+                  admin={isAdmin}
+                  editorial={isEditorial}
+                  moderator={isModerator}
+                  pathname={pathname}
+                  superAdmin={isSuperAdmin}
+                />
+                <div className={styles.mobileAccount}>
+                  <div
+                    aria-label={
+                      avatarUrl ? `${displayName}'s profile image` : undefined
+                    }
+                    aria-hidden={avatarUrl ? undefined : "true"}
+                    className={styles.avatar}
+                    role={avatarUrl ? "img" : undefined}
+                    style={avatarStyle}
+                  >
+                    {!avatarUrl && displayName.slice(0, 1).toUpperCase()}
+                  </div>
+                  <div>
+                    <strong>{displayName}</strong>
+                    <span>{role}</span>
+                  </div>
+                  <button
+                    onClick={() => setLogoutDialog(true)}
+                    type="button"
+                  >
+                    <LogOut aria-hidden="true" size={16} />
+                    Log out
+                  </button>
+                </div>
+              </div>
             </details>
           </div>
         </header>

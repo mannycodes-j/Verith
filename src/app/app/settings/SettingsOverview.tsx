@@ -1,9 +1,9 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Link from "next/link";
 import type { FormEvent } from "react";
 import { accountService, type UserProfile } from "@/services/account";
+import SettingsNav from "./SettingsNav";
 import { settingsStyles as styles } from "./settings.styles";
 
 const notificationOptions = [
@@ -64,7 +64,6 @@ export default function SettingsOverview() {
       firstName: String(data.get("firstName") ?? ""),
       lastName: String(data.get("lastName") ?? ""),
       preferredLanguage: String(data.get("preferredLanguage") ?? "en"),
-      theme: String(data.get("theme") ?? "system"),
       timezone: String(data.get("timezone") ?? "UTC"),
     });
   };
@@ -89,122 +88,123 @@ export default function SettingsOverview() {
         </p>
       </header>
 
-      <nav className={styles.settingsNav} aria-label="Settings sections">
-        <span>Profile</span>
-        <Link href="/app/settings/privacy">Privacy and data</Link>
-        <Link href="/app/settings/security">Password and sessions</Link>
-        <Link href="/app/settings/whatsapp">WhatsApp</Link>
-      </nav>
+      <SettingsNav active="profile" />
 
-      <form className={styles.formSection} onSubmit={submitProfile}>
-        <header>
-          <span>Profile</span>
-          <h2>Account identity.</h2>
-        </header>
-        <div className={styles.formGrid}>
-          <label>
-            <span>Display name</span>
-            <input defaultValue={record.displayName ?? ""} name="displayName" />
-          </label>
-          <label>
-            <span>Username</span>
-            <input disabled value={record.username} />
-          </label>
-          <label>
-            <span>First name</span>
-            <input defaultValue={record.firstName ?? ""} name="firstName" />
-          </label>
-          <label>
-            <span>Last name</span>
-            <input defaultValue={record.lastName ?? ""} name="lastName" />
-          </label>
-          <label className={styles.fullField}>
-            <span>Bio</span>
-            <textarea
-              defaultValue={record.bio ?? ""}
-              maxLength={500}
-              name="bio"
-              rows={4}
-            />
-          </label>
-          <label>
-            <span>Language</span>
-            <input
-              defaultValue={record.preferredLanguage ?? "en"}
-              name="preferredLanguage"
-            />
-          </label>
-          <label>
-            <span>Timezone</span>
-            <input defaultValue={record.timezone ?? "UTC"} name="timezone" />
-          </label>
-          <label>
-            <span>Theme</span>
-            <select defaultValue={record.theme ?? "system"} name="theme">
-              <option value="system">System</option>
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
-            </select>
-          </label>
-        </div>
-        {(profileMutation.isError || profileMutation.isSuccess) && (
-          <p
-            className={
-              profileMutation.isError ? styles.formError : styles.formSuccess
-            }
-            role="status"
-          >
-            {profileMutation.isError
-              ? profileMutation.error.message
-              : "Profile settings saved."}
-          </p>
-        )}
-        <button disabled={profileMutation.isPending} type="submit">
-          {profileMutation.isPending ? "Saving profile…" : "Save profile"}
-        </button>
-      </form>
-
-      <form className={styles.formSection} onSubmit={submitNotifications}>
-        <header>
-          <span>Notifications</span>
-          <h2>Delivery preferences.</h2>
-        </header>
-        <div className={styles.preferenceList}>
-          {notificationOptions.map(([key, label]) => (
-            <label key={key}>
-              <span>
-                <strong>{label}</strong>
-                <small>{key.replaceAll(/([A-Z])/g, " $1").toLowerCase()}</small>
-              </span>
+      <div className={styles.overviewGrid}>
+        <form
+          className={`${styles.formSection} ${styles.overviewSection}`}
+          onSubmit={submitProfile}
+        >
+          <header>
+            <span>Profile</span>
+            <h2>Account identity.</h2>
+          </header>
+          <div className={styles.formGrid}>
+            <label>
+              <span>Display name</span>
               <input
-                defaultChecked={record.notificationPreferences[key] !== false}
-                name={key}
-                type="checkbox"
+                defaultValue={record.displayName ?? ""}
+                name="displayName"
               />
             </label>
-          ))}
-        </div>
-        {(notificationsMutation.isError ||
-          notificationsMutation.isSuccess) && (
-          <p
-            className={
-              notificationsMutation.isError
-                ? styles.formError
-                : styles.formSuccess
-            }
-            role="status"
-          >
-            {notificationsMutation.isError
-              ? notificationsMutation.error.message
-              : "Notification preferences saved."}
-          </p>
-        )}
-        <button disabled={notificationsMutation.isPending} type="submit">
-          {notificationsMutation.isPending
-            ? "Saving preferences…"
-            : "Save notification preferences"}
-        </button>
-      </form>
+            <label>
+              <span>Username</span>
+              <input disabled value={record.username} />
+            </label>
+            <label>
+              <span>First name</span>
+              <input defaultValue={record.firstName ?? ""} name="firstName" />
+            </label>
+            <label>
+              <span>Last name</span>
+              <input defaultValue={record.lastName ?? ""} name="lastName" />
+            </label>
+            <label className={styles.fullField}>
+              <span>Bio</span>
+              <textarea
+                defaultValue={record.bio ?? ""}
+                maxLength={500}
+                name="bio"
+                rows={4}
+              />
+            </label>
+            <label>
+              <span>Language</span>
+              <input
+                defaultValue={record.preferredLanguage ?? "en"}
+                name="preferredLanguage"
+              />
+            </label>
+            <label>
+              <span>Timezone</span>
+              <input defaultValue={record.timezone ?? "UTC"} name="timezone" />
+            </label>
+          </div>
+          {(profileMutation.isError || profileMutation.isSuccess) && (
+            <p
+              className={
+                profileMutation.isError ? styles.formError : styles.formSuccess
+              }
+              role="status"
+            >
+              {profileMutation.isError
+                ? profileMutation.error.message
+                : "Profile settings saved."}
+            </p>
+          )}
+          <button disabled={profileMutation.isPending} type="submit">
+            {profileMutation.isPending ? "Saving profile…" : "Save profile"}
+          </button>
+        </form>
+
+        <form
+          className={`${styles.formSection} ${styles.overviewSection}`}
+          onSubmit={submitNotifications}
+        >
+          <header>
+            <span>Notifications</span>
+            <h2>Delivery preferences.</h2>
+          </header>
+          <div className={styles.preferenceList}>
+            {notificationOptions.map(([key, label]) => (
+              <label key={key}>
+                <span>
+                  <strong>{label}</strong>
+                  <small>
+                    {key.replaceAll(/([A-Z])/g, " $1").toLowerCase()}
+                  </small>
+                </span>
+                <input
+                  defaultChecked={record.notificationPreferences[key] !== false}
+                  name={key}
+                  role="switch"
+                  type="checkbox"
+                />
+              </label>
+            ))}
+          </div>
+          {(notificationsMutation.isError ||
+            notificationsMutation.isSuccess) && (
+            <p
+              className={
+                notificationsMutation.isError
+                  ? styles.formError
+                  : styles.formSuccess
+              }
+              role="status"
+            >
+              {notificationsMutation.isError
+                ? notificationsMutation.error.message
+                : "Notification preferences saved."}
+            </p>
+          )}
+          <button disabled={notificationsMutation.isPending} type="submit">
+            {notificationsMutation.isPending
+              ? "Saving preferences…"
+              : "Save notification preferences"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -26,6 +27,10 @@ type ResetValues = z.infer<typeof resetSchema>;
 
 export default function ResetPasswordForm({ token }: { token: string }) {
   const [complete, setComplete] = useState(false);
+  const [passwordVisibility, setPasswordVisibility] = useState({
+    confirmPassword: false,
+    newPassword: false,
+  });
   const [tokenInvalid, setTokenInvalid] = useState(!token);
   const [serverError, setServerError] = useState<string | null>(null);
   const {
@@ -117,13 +122,39 @@ export default function ResetPasswordForm({ token }: { token: string }) {
       <form className={styles.form} onSubmit={onSubmit} noValidate>
         <div className={styles.field}>
           <label htmlFor="reset-password">New password</label>
-          <input
-            id="reset-password"
-            type="password"
-            autoComplete="new-password"
-            aria-invalid={Boolean(errors.newPassword)}
-            {...register("newPassword")}
-          />
+          <div className={styles.passwordControl}>
+            <input
+              id="reset-password"
+              type={passwordVisibility.newPassword ? "text" : "password"}
+              autoComplete="new-password"
+              aria-invalid={Boolean(errors.newPassword)}
+              {...register("newPassword")}
+            />
+            <button
+              aria-controls="reset-password"
+              aria-label={
+                passwordVisibility.newPassword
+                  ? "Hide new password"
+                  : "Show new password"
+              }
+              aria-pressed={passwordVisibility.newPassword}
+              className={styles.passwordToggle}
+              onClick={() =>
+                setPasswordVisibility((current) => ({
+                  ...current,
+                  newPassword: !current.newPassword,
+                }))
+              }
+              onMouseDown={(event) => event.preventDefault()}
+              type="button"
+            >
+              {passwordVisibility.newPassword ? (
+                <EyeOff aria-hidden="true" size={18} />
+              ) : (
+                <Eye aria-hidden="true" size={18} />
+              )}
+            </button>
+          </div>
           {errors.newPassword ? (
             <p className={styles.fieldError}>{errors.newPassword.message}</p>
           ) : (
@@ -132,13 +163,39 @@ export default function ResetPasswordForm({ token }: { token: string }) {
         </div>
         <div className={styles.field}>
           <label htmlFor="confirm-password">Confirm new password</label>
-          <input
-            id="confirm-password"
-            type="password"
-            autoComplete="new-password"
-            aria-invalid={Boolean(errors.confirmPassword)}
-            {...register("confirmPassword")}
-          />
+          <div className={styles.passwordControl}>
+            <input
+              id="confirm-password"
+              type={passwordVisibility.confirmPassword ? "text" : "password"}
+              autoComplete="new-password"
+              aria-invalid={Boolean(errors.confirmPassword)}
+              {...register("confirmPassword")}
+            />
+            <button
+              aria-controls="confirm-password"
+              aria-label={
+                passwordVisibility.confirmPassword
+                  ? "Hide confirmed password"
+                  : "Show confirmed password"
+              }
+              aria-pressed={passwordVisibility.confirmPassword}
+              className={styles.passwordToggle}
+              onClick={() =>
+                setPasswordVisibility((current) => ({
+                  ...current,
+                  confirmPassword: !current.confirmPassword,
+                }))
+              }
+              onMouseDown={(event) => event.preventDefault()}
+              type="button"
+            >
+              {passwordVisibility.confirmPassword ? (
+                <EyeOff aria-hidden="true" size={18} />
+              ) : (
+                <Eye aria-hidden="true" size={18} />
+              )}
+            </button>
+          </div>
           {errors.confirmPassword && (
             <p className={styles.fieldError}>
               {errors.confirmPassword.message}

@@ -1,11 +1,18 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Link from "next/link";
+import {
+  CalendarClock,
+  Clock3,
+  LogOut,
+  MonitorSmartphone,
+  ShieldCheck,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { accountService, type AccountSession } from "@/services/account";
 import { settingsStyles as styles } from "../settings.styles";
+import SettingsNav from "../SettingsNav";
 
 function formatDate(value: string) {
   const date = new Date(value);
@@ -77,12 +84,7 @@ export default function SecuritySettings() {
           access from devices you no longer recognize.
         </p>
       </header>
-      <nav className={styles.settingsNav} aria-label="Settings sections">
-        <Link href="/app/settings">Profile</Link>
-        <Link href="/app/settings/privacy">Privacy and data</Link>
-        <span>Password and sessions</span>
-        <Link href="/app/settings/whatsapp">WhatsApp</Link>
-      </nav>
+      <SettingsNav active="security" />
 
       <form className={styles.formSection} onSubmit={submitPassword}>
         <header>
@@ -151,53 +153,84 @@ export default function SecuritySettings() {
         )}
         {sessions.data?.length === 0 && <p>No active sessions were returned.</p>}
         {sessions.data && sessions.data.length > 0 && (
-          <div className={styles.securityList}>
-            {sessions.data.map((session) => (
-              <div key={session.id}>
-                <dl>
-                  <div>
-                    <dt>Device</dt>
-                    <dd>
-                      {session.deviceName ||
-                        session.userAgentSummary ||
-                        "Unknown device"}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt>Browser</dt>
-                    <dd>
-                      {[session.browser, session.platform]
-                        .filter(Boolean)
-                        .join(": ") || "Unavailable"}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt>Last used</dt>
-                    <dd>{formatDate(session.lastUsedAt)}</dd>
-                  </div>
-                  <div>
-                    <dt>Expires</dt>
-                    <dd>{formatDate(session.expiresAt)}</dd>
-                  </div>
-                </dl>
-                <button
-                  onClick={() => setSelectedSession(session)}
-                  type="button"
+          <ul className={styles.sessionGrid}>
+            {sessions.data.map((session) => {
+              const isCurrent = session.id === current.data?.sessionId;
+              const device =
+                session.deviceName ||
+                session.userAgentSummary ||
+                "Unknown device";
+              const environment =
+                [session.browser, session.platform]
+                  .filter(Boolean)
+                  .join(" · ") || "Browser details unavailable";
+
+              return (
+                <li
+                  className={styles.sessionCard}
+                  data-current={isCurrent}
+                  key={session.id}
                 >
-                  {session.id === current.data?.sessionId
-                    ? "Revoke this session"
-                    : "Revoke"}
-                </button>
-              </div>
-            ))}
-          </div>
+                  <header className={styles.sessionHeader}>
+                    <span>
+                      <MonitorSmartphone aria-hidden="true" size={20} />
+                    </span>
+                    <div>
+                      <strong>{device}</strong>
+                      <small>{environment}</small>
+                    </div>
+                    {isCurrent && (
+                      <em>
+                        <ShieldCheck aria-hidden="true" size={13} />
+                        This device
+                      </em>
+                    )}
+                  </header>
+                  <dl className={styles.sessionDetails}>
+                    <div>
+                      <dt>
+                        <Clock3 aria-hidden="true" size={12} />
+                        Last active
+                      </dt>
+                      <dd>{formatDate(session.lastUsedAt)}</dd>
+                    </div>
+                    <div>
+                      <dt>
+                        <CalendarClock aria-hidden="true" size={12} />
+                        Expires
+                      </dt>
+                      <dd>{formatDate(session.expiresAt)}</dd>
+                    </div>
+                    <div>
+                      <dt>Session opened</dt>
+                      <dd>{formatDate(session.createdAt)}</dd>
+                    </div>
+                    <div>
+                      <dt>Access status</dt>
+                      <dd>Active and authenticated</dd>
+                    </div>
+                  </dl>
+                  <footer className={styles.sessionFooter}>
+                    <span>
+                      {isCurrent
+                        ? "Revoking this session will sign you out here."
+                        : "Remove access if you do not recognize this device."}
+                    </span>
+                    <button
+                      onClick={() => setSelectedSession(session)}
+                      type="button"
+                    >
+                      <LogOut aria-hidden="true" size={14} />
+                      {isCurrent ? "Sign out this device" : "Revoke access"}
+                    </button>
+                  </footer>
+                </li>
+              );
+            })}
+          </ul>
         )}
-        <div className={styles.securityActions}>
-          <button
-            className={styles.danger}
-            onClick={() => setLogoutAllDialog(true)}
-            type="button"
-          >
+        <div className={styles.securityActions} style={{ marginTop: 12 }}>
+          <button className={styles.danger} onClick={() => setLogoutAllDialog(true)} type="button">
             Sign out everywhere
           </button>
         </div>
@@ -233,18 +266,14 @@ export default function SecuritySettings() {
             <p>
               {logoutAllDialog
                 ? "Every active browser and device session will be revoked. You will need to sign in again."
-                : `The session for ${
-                    selectedSession?.deviceName ||
-                    selectedSession?.userAgentSummary ||
-                    "this device"
-                  } will lose access immediately.`}
+                : `The session for ${selectedSession?.deviceName || selectedSession?.userAgentSummary || "this device"} will lose access immediately.`}
             </p>
             {(revoke.error || logoutAll.error) && (
               <p className={styles.formError} role="alert">
                 {(revoke.error ?? logoutAll.error)?.message}
               </p>
             )}
-            <footer>
+            <footer className="mt-4">
               <button
                 disabled={revoke.isPending || logoutAll.isPending}
                 onClick={() => {

@@ -1,10 +1,8 @@
 import { vectraStyles } from "@/lib/vectra-styles";
 
 export const whatsappSettingsStyles = {
-  page: `${vectraStyles.pageMedium} pb-12`,
+  page: `${vectraStyles.page} pb-12`,
   header: vectraStyles.pageHeader,
-  settingsNav:
-    "mb-5 flex flex-wrap items-center gap-1.5 rounded-2xl border border-white/[0.05] bg-card/60 p-2 text-xs shadow-[0_18px_45px_-30px_rgba(0,0,0,0.85)] max-[700px]:items-start [&_a]:rounded-full [&_a]:px-4 [&_a]:py-2.5 [&_a]:font-medium [&_a]:text-white/45 [&_a]:transition-colors [&_a:hover]:bg-white/[0.055] [&_a:hover]:text-white [&>span]:rounded-full [&>span]:bg-gradient-to-r [&>span]:from-violet-500/25 [&>span]:to-indigo-500/15 [&>span]:px-4 [&>span]:py-2.5 [&>span]:font-medium [&>span]:text-violet-200 [&>span]:shadow-[inset_0_0_0_1px_rgba(167,139,250,0.12)]",
   status:
     `${vectraStyles.card} mt-5 flex items-center justify-between gap-8 p-[clamp(1.5rem,4vw,3rem)] max-[700px]:flex-col max-[700px]:items-start [&[data-linked=true]]:border-emerald-400/15 [&[data-linked=true]]:[background:radial-gradient(circle_at_0%_0%,rgba(16,185,129,0.12),transparent_28rem),rgba(7,7,8,0.6)] [&[data-linked=false]]:[background:radial-gradient(circle_at_0%_0%,rgba(139,92,246,0.13),transparent_28rem),rgba(7,7,8,0.6)] [&_span]:inline-flex [&_span]:items-center [&_span]:gap-2 [&_span]:text-[10px] [&_span]:font-semibold [&_span]:uppercase [&_span]:tracking-[0.14em] [&_span]:text-violet-400 [&[data-linked=true]_span]:text-emerald-300 [&_h2]:mt-4 [&_h2]:mb-0 [&_h2]:max-w-[22ch] [&_h2]:text-3xl [&_h2]:font-semibold [&_h2]:tracking-tight [&_button]:shrink-0 [&_button]:rounded-full [&_button]:border-0 [&_button]:bg-gradient-to-r [&_button]:from-[#C084FC] [&_button]:to-[#6366F1] [&_button]:px-5 [&_button]:py-3 [&_button]:text-sm [&_button]:font-medium [&_button]:text-white [&_button]:transition-all [&_button:not(:disabled):hover]:scale-[1.02] [&_button:disabled]:cursor-not-allowed [&_button:disabled]:opacity-40`,
   danger:

@@ -19,7 +19,6 @@ export interface UserProfile extends AuthenticatedUser {
   };
   preferredLanguage?: string;
   timezone?: string;
-  theme?: string;
   deletionRequestedAt?: string;
 }
 
@@ -98,6 +97,5 @@ export const accountService = {
     bio?: string;
     preferredLanguage?: string;
     timezone?: string;
-    theme?: string;
   }) => apiClient.patch<UserProfile>("/users/me", input),
 };
