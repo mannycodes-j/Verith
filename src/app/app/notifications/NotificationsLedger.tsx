@@ -1,6 +1,11 @@
 "use client";
 
-import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import Link from "next/link";
 import { notificationsService } from "@/services/notifications";
 import type { NotificationPage } from "@/services/notifications";
@@ -28,6 +33,12 @@ export default function NotificationsLedger() {
       }),
     queryKey: ["notifications"],
   });
+  const unreadStatus = useQuery({
+    queryFn: notificationsService.unreadCount,
+    queryKey: ["notifications", "unread-count"],
+    refetchOnWindowFocus: true,
+    retry: false,
+  });
   const read = useMutation({
     mutationFn: notificationsService.markRead,
     onSuccess: () =>
@@ -44,7 +55,9 @@ export default function NotificationsLedger() {
       queryClient.invalidateQueries({ queryKey: ["notifications"] }),
   });
   const records = notifications.data?.pages.flatMap((page) => page.data) ?? [];
-  const unread = records.filter((record) => !record.readAt).length;
+  const unread =
+    unreadStatus.data?.unreadCount ??
+    records.filter((record) => !record.readAt).length;
   const mutationError = read.error ?? readAll.error ?? remove.error;
 
   return (

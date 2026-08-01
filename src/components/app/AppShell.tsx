@@ -31,12 +31,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState, type CSSProperties, type ReactNode } from "react";
 import UnequalMenuBars from "@/components/UnequalMenuBars";
 import { ApiClientError } from "@/services/apiClient";
-import {
-  authService,
-  type AuthenticatedUser,
-} from "@/services/authService";
+import { authService, type AuthenticatedUser } from "@/services/authService";
 import { appShellStyles as styles } from "./app-shell.styles";
 import NotificationDrawer from "./NotificationDrawer";
+import NotificationTrigger from "./NotificationTrigger";
 
 const navigation = [
   {
@@ -419,15 +417,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
             <strong>{title}</strong>
           </div>
           <div className={styles.topbarActions}>
-            <button
-              aria-label="Open notifications"
-              className={styles.notificationTrigger}
-              onClick={() => setNotificationDrawer(true)}
-              title="Notifications"
-              type="button"
-            >
-              <Bell aria-hidden="true" size={18} strokeWidth={1.8} />
-            </button>
+            <NotificationTrigger open={() => setNotificationDrawer(true)} />
             <Link href="/app/verify">New investigation</Link>
             <details className={styles.mobileNavigation}>
               <summary>

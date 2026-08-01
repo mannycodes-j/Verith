@@ -1633,6 +1633,22 @@ export interface paths {
         patch: operations["ChallengesAdminController_status"];
         trace?: never;
     };
+    "/api/v1/notifications/unread-count": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["NotificationsController_unreadCount"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/notifications": {
         parameters: {
             query?: never;
@@ -1939,6 +1955,13 @@ export interface components {
         CreateChallengeDto: Record<string, never>;
         UpdateChallengeDto: Record<string, never>;
         UpdateChallengeStatusDto: Record<string, never>;
+        NotificationUnreadCountDto: {
+            /**
+             * @description Number of persisted notifications not yet marked as read
+             * @example 3
+             */
+            unreadCount: number;
+        };
     };
     responses: never;
     parameters: never;
@@ -4646,6 +4669,25 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    NotificationsController_unreadCount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotificationUnreadCountDto"];
+                };
             };
         };
     };

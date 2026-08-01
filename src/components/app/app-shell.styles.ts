@@ -28,7 +28,9 @@ export const appShellStyles = {
   topbarActions:
     "flex items-center gap-2.5 [&>a]:inline-flex [&>a]:min-h-11 [&>a]:items-center [&>a]:justify-center [&>a]:rounded-full [&>a]:border [&>a]:border-white/10 [&>a]:bg-white/[0.04] [&>a]:px-4 [&>a]:py-2.5 [&>a]:text-center [&>a]:text-xs [&>a]:font-medium [&>a:hover]:border-white/15 [&>a:hover]:bg-white/[0.08] [&>a:last-of-type]:border-0 [&>a:last-of-type]:bg-gradient-to-r [&>a:last-of-type]:from-[#C084FC] [&>a:last-of-type]:to-[#6366F1] [&>a:last-of-type]:text-white max-sm:[&>a]:hidden",
   notificationTrigger:
-    "grid size-11 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white/65 transition-colors hover:border-white/15 hover:bg-white/[0.08] hover:text-white",
+    "relative grid size-11 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white/65 transition-colors hover:border-white/15 hover:bg-white/[0.08] hover:text-white",
+  notificationBadge:
+    "absolute -top-1.5 -right-1.5 inline-flex min-h-5 min-w-5 items-center justify-center rounded-full border-2 border-[#08090A] bg-gradient-to-br from-[#C084FC] to-[#6366F1] px-1 text-[9px] leading-none font-bold text-white shadow-[0_6px_18px_rgba(139,92,246,0.55)]",
   mobileNavigation:
     "relative block lg:hidden [&_summary]:grid [&_summary]:size-11 [&_summary]:cursor-pointer [&_summary]:list-none [&_summary]:place-items-center [&_summary]:rounded-full [&_summary]:border [&_summary]:border-white/10 [&_summary]:bg-white/[0.05] [&_summary]:text-white/70 [&_summary]:transition-colors [&_summary:hover]:border-white/15 [&_summary:hover]:bg-white/[0.08] [&_summary:hover]:text-white [&_summary:focus-visible]:outline-none [&_summary:focus-visible]:ring-2 [&_summary:focus-visible]:ring-violet-400/60 [&_summary::-webkit-details-marker]:hidden",
   mobileMenuPanel:

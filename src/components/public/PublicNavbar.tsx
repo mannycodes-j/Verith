@@ -3,7 +3,7 @@ import Link from "next/link";
 import UnequalMenuBars from "@/components/UnequalMenuBars";
 
 const publicLinks = [
-  { href: "/#how-it-works", label: "How it works" },
+  { href: "/how-it-works", label: "How it works" },
   { href: "/about", label: "About" },
   { href: "/privacy", label: "Privacy" },
   { href: "/whatsapp", label: "WhatsApp" },
