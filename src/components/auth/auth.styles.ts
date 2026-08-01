@@ -24,6 +24,11 @@ export const authStyles = {
   form: "grid gap-5",
   field:
     "grid gap-2 [&_label]:text-xs [&_label]:font-medium [&_label]:text-white/50 [&_input]:min-h-11 [&_input]:w-full [&_input]:rounded-2xl [&_input]:border [&_input]:border-white/[0.05] [&_input]:bg-white/[0.03] [&_input]:px-4 [&_input]:outline-none [&_input]:transition-all [&_input:hover]:border-white/10 [&_input:focus]:border-violet-400/40 [&_input:focus]:bg-white/[0.05] [&_input:focus]:shadow-[0_0_0_4px_rgba(139,92,246,0.08)] [&_input[aria-invalid=true]]:border-danger",
+  passwordControl: "relative [&_input]:pr-12",
+  passwordToggle:
+    "absolute top-1/2 right-1.5 grid size-10 -translate-y-1/2 place-items-center rounded-xl border-0 bg-transparent text-white/45 transition-colors hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/60",
+  passwordRequirements:
+    "mt-1 rounded-2xl border border-violet-400/10 bg-violet-400/[0.045] p-4 [&>p]:m-0 [&>p]:text-xs [&>p]:font-medium [&>p]:text-white/75 [&_ul]:mt-3 [&_ul]:grid [&_ul]:list-none [&_ul]:gap-2 [&_ul]:p-0 [&_li]:flex [&_li]:items-center [&_li]:gap-2.5 [&_li]:text-[11px] [&_li]:leading-relaxed [&_li]:text-white/45 [&_li]:transition-colors [&_li[data-met=true]]:text-white/75 [&_li_svg]:shrink-0",
   fieldError: "m-0 text-[11px] leading-relaxed text-danger",
   fieldHint: "m-0 text-[11px] leading-relaxed text-white/55",
   formMeta: "flex items-center justify-end text-xs [&_a]:text-violet-300",

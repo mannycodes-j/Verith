@@ -33,7 +33,7 @@ export default function PublicReport({ slug }: { slug: string }) {
             <span>Verith</span>
           </Link>
           <span className="text-xs text-white/40 max-[650px]:hidden">Shared evidence report</span>
-          <Link className="justify-self-end rounded-full bg-gradient-to-r from-[#C084FC] to-[#6366F1] px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]" href="/verify">Try Verith</Link>
+          <Link className="justify-self-end rounded-full bg-gradient-to-r from-[#C084FC] to-[#6366F1] px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]" href="/register">Try Verith</Link>
         </div>
       </header>
 

@@ -147,7 +147,7 @@ export default function LandingPage() {
             </Link>
             <Link
               className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-black transition-all hover:bg-foreground/90 active:scale-[0.98]"
-              href="/verify"
+              href="/register"
             >
               Try now
               <ArrowRight size={15} />
@@ -197,7 +197,7 @@ export default function LandingPage() {
               <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
                 <Link
                   className="inline-flex min-h-12 items-center gap-2 rounded-full bg-gradient-to-r from-[#C084FC] to-[#6366F1] px-7 text-sm font-medium text-white shadow-[0_0_45px_rgba(139,92,246,0.28)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
-                  href="/verify"
+                  href="/register"
                 >
                   Try Verith now
                   <ArrowRight size={16} />

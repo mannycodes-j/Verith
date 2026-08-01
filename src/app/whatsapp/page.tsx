@@ -86,9 +86,9 @@ export default function WhatsAppPage() {
         </p>
         <Link
           className="col-start-2 justify-self-start rounded-full bg-gradient-to-r from-[#C084FC] to-[#6366F1] px-5 py-3 text-sm font-medium text-white transition-all duration-200 hover:scale-[1.02] hover:shadow-[0_12px_28px_-10px_rgba(139,92,246,0.4)] active:scale-[0.98] max-[700px]:col-start-1"
-          href="/app/settings/whatsapp"
+          href="/login"
         >
-          Open WhatsApp settings
+          Log in to connect WhatsApp
         </Link>
       </section>
     </main>
