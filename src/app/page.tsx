@@ -14,6 +14,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import Link from "next/link";
+import UnequalMenuBars from "@/components/UnequalMenuBars";
 import MotionReveal from "@/components/public/MotionReveal";
 
 const inputTypes = [
@@ -128,8 +129,9 @@ export default function LandingPage() {
           </nav>
           <div className="flex items-center gap-2">
             <details className="relative md:hidden">
-              <summary className="flex min-h-11 cursor-pointer list-none items-center rounded-full border border-white/10 bg-white/[0.04] px-4 text-xs font-medium text-white/70">
-                Menu
+              <summary className="grid size-11 cursor-pointer list-none place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-colors hover:border-white/15 hover:bg-white/[0.08] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/60 [&::-webkit-details-marker]:hidden">
+                <span className="sr-only">Navigation menu</span>
+                <UnequalMenuBars />
               </summary>
               <nav
                 aria-label="Mobile navigation"

@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { motion, useReducedMotion } from "framer-motion";
 import {
+  ArrowLeft,
   Award,
   Bell,
   BookOpen,
@@ -27,6 +28,7 @@ import {
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
+import UnequalMenuBars from "@/components/UnequalMenuBars";
 import { ApiClientError } from "@/services/apiClient";
 import {
   authService,
@@ -221,7 +223,10 @@ function WorkspaceUnavailable({
       <button type="button" onClick={retry}>
         Retry connection
       </button>
-      <Link href="/">Return home</Link>
+      <Link href="/">
+        <ArrowLeft aria-hidden="true" size={15} strokeWidth={1.8} />
+        Return home
+      </Link>
     </main>
   );
 }
@@ -238,7 +243,10 @@ function SessionExpired({ login }: { login: () => void }) {
       <button type="button" onClick={login}>
         Return to login
       </button>
-      <Link href="/">Return home</Link>
+      <Link href="/">
+        <ArrowLeft aria-hidden="true" size={15} strokeWidth={1.8} />
+        Return home
+      </Link>
     </main>
   );
 }
@@ -417,7 +425,10 @@ export default function AppShell({ children }: { children: ReactNode }) {
             </button>
             <Link href="/app/verify">New investigation</Link>
             <details className={styles.mobileNavigation}>
-              <summary>Menu</summary>
+              <summary>
+                <span className="sr-only">Navigation menu</span>
+                <UnequalMenuBars />
+              </summary>
               <Navigation
                 admin={isAdmin}
                 editorial={isEditorial}

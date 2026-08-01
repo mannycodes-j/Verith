@@ -162,7 +162,7 @@ export const reportService = {
   get: (reportId: string) =>
     apiClient.get<VerificationReport>(`/reports/${reportId}`),
   remove: (reportId: string) =>
-    apiClient.delete<void>(`/reports/${reportId}`),
+    apiClient.deleteVoid(`/reports/${reportId}`),
   export: (reportId: string, format: "pdf" | "json") =>
     apiClient.download(`/reports/${reportId}/export/${format}`),
   feedback: (

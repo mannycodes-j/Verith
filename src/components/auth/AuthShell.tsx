@@ -1,3 +1,4 @@
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { authStyles as styles } from "./auth.styles";
@@ -46,7 +47,10 @@ export default function AuthShell({ children }: { children: ReactNode }) {
       </section>
       <section className={styles.formRegion} id="auth-form" tabIndex={-1}>
         <div className={styles.formTopbar}>
-          <Link href="/">Return home</Link>
+          <Link className={styles.returnHome} href="/">
+            <ArrowLeft aria-hidden="true" size={14} strokeWidth={1.8} />
+            Return home
+          </Link>
           <span>Encrypted session</span>
         </div>
         <div className={`${styles.formContainer} animate-entrance animation-delay-150`}>

@@ -33,7 +33,11 @@ interface RegistrationResult {
 
 export const authService = {
   async forgotPassword(email: string): Promise<void> {
-    await apiClient.post<void>("/auth/forgot-password", { email });
+    await apiClient.postVoid(
+      "/auth/forgot-password",
+      { email },
+      { retryAuthentication: false },
+    );
   },
 
   getCurrentUser(): Promise<AuthenticatedUser> {
@@ -56,7 +60,7 @@ export const authService = {
 
   async logout(): Promise<void> {
     try {
-      await apiClient.post<void>("/auth/logout");
+      await apiClient.postVoid("/auth/logout");
     } finally {
       sessionToken.clear();
     }
@@ -69,7 +73,7 @@ export const authService = {
   },
 
   resendVerification(email: string): Promise<void> {
-    return apiClient.post<void>(
+    return apiClient.postVoid(
       "/auth/resend-verification",
       { email },
       { retryAuthentication: false },
@@ -77,13 +81,13 @@ export const authService = {
   },
 
   resetPassword(input: ResetPasswordInput): Promise<void> {
-    return apiClient.post<void>("/auth/reset-password", input, {
+    return apiClient.postVoid("/auth/reset-password", input, {
       retryAuthentication: false,
     });
   },
 
   verifyEmail(token: string): Promise<void> {
-    return apiClient.post<void>(
+    return apiClient.postVoid(
       "/auth/verify-email",
       { token },
       { retryAuthentication: false },

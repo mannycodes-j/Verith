@@ -54,12 +54,12 @@ export interface PrivacyExportStatus {
 }
 
 export const accountService = {
-  cancelDeletion: () => apiClient.delete<void>("/users/me/deletion-request"),
+  cancelDeletion: () => apiClient.deleteVoid("/users/me/deletion-request"),
   async changePassword(input: {
     currentPassword: string;
     newPassword: string;
   }) {
-    await apiClient.post<void>("/auth/change-password", input);
+    await apiClient.postVoid("/auth/change-password", input);
     sessionToken.clear();
   },
   currentSession: () =>
@@ -74,15 +74,15 @@ export const accountService = {
     apiClient.get<PrivacyExportStatus>(`/privacy/exports/${id}`),
   profile: () => apiClient.get<UserProfile>("/users/me"),
   requestDeletion: () =>
-    apiClient.post<void>("/users/me/deletion-request"),
+    apiClient.postVoid("/users/me/deletion-request"),
   requestExport: () =>
     apiClient.post<PrivacyExportRequest>("/privacy/exports"),
   revokeSession: (id: string) =>
-    apiClient.delete<void>(`/auth/sessions/${id}`),
+    apiClient.deleteVoid(`/auth/sessions/${id}`),
   sessions: () => apiClient.get<AccountSession[]>("/auth/sessions"),
   async signOutEverywhere() {
     try {
-      await apiClient.post<void>("/auth/logout-all");
+      await apiClient.postVoid("/auth/logout-all");
     } finally {
       sessionToken.clear();
     }

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import UnequalMenuBars from "@/components/UnequalMenuBars";
 
 export interface EditorialSection {
   label: string;
@@ -52,20 +53,21 @@ export default function PublicEditorial({
             className="flex gap-7 text-sm text-muted-foreground max-[800px]:hidden [&_a]:transition-colors [&_a:hover]:text-foreground"
           >
             <Link href="/how-it-works">How it works</Link>
-            <Link href="/learning">Learning</Link>
+            <Link href="/privacy">Privacy</Link>
             <Link href="/whatsapp">WhatsApp</Link>
           </nav>
           <div className="flex items-center gap-2">
             <details className="relative min-[801px]:hidden">
-              <summary className="flex min-h-11 cursor-pointer list-none items-center rounded-full border border-white/10 bg-white/[0.04] px-4 text-xs font-medium text-white/70">
-                Menu
+              <summary className="grid size-11 cursor-pointer list-none place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-colors hover:border-white/15 hover:bg-white/[0.08] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/60 [&::-webkit-details-marker]:hidden">
+                <span className="sr-only">Navigation menu</span>
+                <UnequalMenuBars />
               </summary>
               <nav
                 aria-label="Mobile public navigation"
                 className="absolute top-[calc(100%+0.75rem)] right-0 grid min-w-52 gap-1 rounded-2xl border border-white/10 bg-[#0F1012] p-2 shadow-2xl [&_a]:rounded-xl [&_a]:px-4 [&_a]:py-3 [&_a]:text-sm [&_a]:text-white/65 [&_a:hover]:bg-white/[0.05] [&_a:hover]:text-white"
               >
                 <Link href="/how-it-works">How it works</Link>
-                <Link href="/learning">Learning</Link>
+                <Link href="/privacy">Privacy</Link>
                 <Link href="/whatsapp">WhatsApp</Link>
               </nav>
             </details>

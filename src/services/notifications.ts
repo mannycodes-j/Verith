@@ -34,5 +34,5 @@ export const notificationsService = {
     apiClient.patch<{ updatedCount: number }>("/notifications/read-all"),
   markRead: (id: string) =>
     apiClient.patch<NotificationRecord>(`/notifications/${id}/read`),
-  remove: (id: string) => apiClient.delete<void>(`/notifications/${id}`),
+  remove: (id: string) => apiClient.deleteVoid(`/notifications/${id}`),
 };

@@ -85,6 +85,11 @@ function isSuccessEnvelope<T>(value: unknown): value is SuccessEnvelope<T> {
   return "success" in value && value.success === true && "data" in value;
 }
 
+function isDataLessSuccessEnvelope(value: unknown): boolean {
+  if (!value || typeof value !== "object") return false;
+  return "success" in value && value.success === true && !("data" in value);
+}
+
 async function parseResponseBody(response: Response): Promise<unknown> {
   if (response.status === 204) return undefined;
 
@@ -133,6 +138,7 @@ async function refreshBrowserSession(): Promise<boolean> {
 }
 
 interface RequestOptions extends RequestInit {
+  allowDataLessSuccess?: boolean;
   retryAuthentication?: boolean;
 }
 
@@ -141,6 +147,7 @@ async function request<T>(
   options: RequestOptions = {},
 ): Promise<T> {
   const {
+    allowDataLessSuccess = false,
     retryAuthentication = true,
     headers: providedHeaders,
     ...fetchOptions
@@ -204,7 +211,15 @@ async function request<T>(
   }
 
   if (response.status === 204) return undefined as T;
-  if (isSuccessEnvelope<T>(body)) return body.data;
+  if (isSuccessEnvelope<T>(body)) {
+    return (allowDataLessSuccess ? undefined : body.data) as T;
+  }
+  if (
+    allowDataLessSuccess &&
+    (body === undefined || isDataLessSuccessEnvelope(body))
+  ) {
+    return undefined as T;
+  }
 
   throw new ApiClientError({
     code: "INVALID_API_RESPONSE",
@@ -355,6 +370,17 @@ export const apiClient = {
       body: serializeBody(body),
       method: "DELETE",
     }),
+  deleteVoid: (
+    endpoint: string,
+    body?: unknown,
+    options?: RequestOptions,
+  ) =>
+    request<void>(endpoint, {
+      ...options,
+      allowDataLessSuccess: true,
+      body: serializeBody(body),
+      method: "DELETE",
+    }),
   download: (endpoint: string, headers?: HeadersInit) =>
     downloadRequest(endpoint, headers),
   get: <T>(endpoint: string, options?: RequestOptions) =>
@@ -376,6 +402,17 @@ export const apiClient = {
   ) =>
     request<T>(endpoint, {
       ...options,
+      body: serializeBody(body),
+      method: "POST",
+    }),
+  postVoid: (
+    endpoint: string,
+    body?: unknown,
+    options?: RequestOptions,
+  ) =>
+    request<void>(endpoint, {
+      ...options,
+      allowDataLessSuccess: true,
       body: serializeBody(body),
       method: "POST",
     }),

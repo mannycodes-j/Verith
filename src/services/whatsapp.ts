@@ -10,5 +10,5 @@ export const whatsappService = {
   createCode: () =>
     apiClient.post<WhatsAppLinkCode>("/whatsapp/link-code"),
   status: () => apiClient.get<{ linked: boolean }>("/whatsapp/link-status"),
-  unlink: () => apiClient.delete<void>("/whatsapp/link"),
+  unlink: () => apiClient.deleteVoid("/whatsapp/link"),
 };

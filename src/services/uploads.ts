@@ -128,7 +128,7 @@ function uploadToCloudinary(
 
 export const uploadService = {
   remove: (assetId: string) =>
-    apiClient.delete<void>(`/uploads/${assetId}`),
+    apiClient.deleteVoid(`/uploads/${assetId}`),
 
   async uploadAvatar({
     file,

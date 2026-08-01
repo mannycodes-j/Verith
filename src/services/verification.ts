@@ -99,7 +99,7 @@ export const verificationService = {
   },
 
   remove(id: string): Promise<void> {
-    return apiClient.delete<void>(`/verifications/${id}`);
+    return apiClient.deleteVoid(`/verifications/${id}`);
   },
 
   async streamEvents({

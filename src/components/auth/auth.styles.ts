@@ -16,7 +16,9 @@ export const authStyles = {
   formRegion:
     "relative z-10 flex min-h-[680px] w-full flex-col rounded-3xl border border-white/[0.06] bg-card/80 px-[clamp(1.25rem,5vw,4rem)] py-6 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] backdrop-blur-md max-lg:order-1 max-lg:min-h-auto",
   formTopbar:
-    "flex justify-between text-xs font-medium [&_a]:text-white/55 [&_a:hover]:text-white [&_span]:inline-flex [&_span]:items-center [&_span]:gap-2 [&_span]:rounded-full [&_span]:border [&_span]:border-emerald-400/15 [&_span]:bg-emerald-400/[0.04] [&_span]:px-3 [&_span]:py-1.5 [&_span]:text-emerald-300 [&_span]:before:inline-block [&_span]:before:size-1.5 [&_span]:before:rounded-full [&_span]:before:bg-current max-sm:[&_span]:hidden",
+    "flex justify-between text-xs font-medium [&_span]:inline-flex [&_span]:items-center [&_span]:gap-2 [&_span]:rounded-full [&_span]:border [&_span]:border-emerald-400/15 [&_span]:bg-emerald-400/[0.04] [&_span]:px-3 [&_span]:py-1.5 [&_span]:text-emerald-300 [&_span]:before:inline-block [&_span]:before:size-1.5 [&_span]:before:rounded-full [&_span]:before:bg-current max-sm:[&_span]:hidden",
+  returnHome:
+    "inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-center text-xs font-medium text-white/70 transition-colors hover:border-white/15 hover:bg-white/[0.08] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/60",
   formContainer: "m-auto w-full max-w-md py-14",
   formFooter: "m-0 text-center text-[11px] text-white/55",
   formHeader:
