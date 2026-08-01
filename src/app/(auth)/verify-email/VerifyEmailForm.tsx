@@ -6,6 +6,11 @@ import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { authStyles as styles } from "@/components/auth/auth.styles";
+import {
+  getVerificationResendAvailableAt,
+  startVerificationResendCooldown,
+  VERIFICATION_RESEND_COOLDOWN_MS,
+} from "@/lib/verificationCooldown";
 import { ApiClientError } from "@/services/apiClient";
 import { authService } from "@/services/authService";
 
@@ -23,6 +28,7 @@ export default function VerifyEmailForm({ token }: { token: string }) {
   );
   const [resendComplete, setResendComplete] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
+  const [remainingSeconds, setRemainingSeconds] = useState(0);
   const {
     formState: { errors, isSubmitting },
     handleSubmit,
@@ -42,10 +48,25 @@ export default function VerifyEmailForm({ token }: { token: string }) {
       .catch(() => setState("invalid"));
   }, [token]);
 
+  useEffect(() => {
+    const updateRemainingTime = () => {
+      const availableAt = getVerificationResendAvailableAt();
+      setRemainingSeconds(
+        Math.max(0, Math.ceil((availableAt - Date.now()) / 1000)),
+      );
+    };
+    updateRemainingTime();
+    const interval = window.setInterval(updateRemainingTime, 1000);
+    return () => window.clearInterval(interval);
+  }, []);
+
   const onResend = handleSubmit(async ({ email }) => {
+    if (remainingSeconds > 0) return;
     setServerError(null);
     try {
       await authService.resendVerification(email);
+      startVerificationResendCooldown();
+      setRemainingSeconds(VERIFICATION_RESEND_COOLDOWN_MS / 1000);
       setResendComplete(true);
     } catch (error) {
       setServerError(
@@ -55,6 +76,10 @@ export default function VerifyEmailForm({ token }: { token: string }) {
       );
     }
   });
+
+  const cooldownLabel = `${Math.floor(remainingSeconds / 60)}:${String(
+    remainingSeconds % 60,
+  ).padStart(2, "0")}`;
 
   if (state === "verifying") {
     return (
@@ -104,7 +129,7 @@ export default function VerifyEmailForm({ token }: { token: string }) {
             : "Enter your account email to request another verification message."}
         </p>
       </header>
-      {resendComplete ? (
+      {resendComplete && (
         <div className={styles.successState} role="status">
           <strong>Request accepted</strong>
           <p>
@@ -112,36 +137,47 @@ export default function VerifyEmailForm({ token }: { token: string }) {
             link.
           </p>
         </div>
-      ) : (
-        <form className={styles.form} onSubmit={onResend} noValidate>
-          <div className={styles.field}>
-            <label htmlFor="verification-email">Email address</label>
-            <input
-              id="verification-email"
-              type="email"
-              autoComplete="email"
-              aria-invalid={Boolean(errors.email)}
-              {...register("email")}
-            />
-            {errors.email && (
-              <p className={styles.fieldError}>{errors.email.message}</p>
-            )}
-          </div>
-          {serverError && (
-            <div className={styles.serverError} role="alert">
-              {serverError}
-            </div>
-          )}
-          <button
-            className={styles.submit}
-            type="submit"
-            disabled={isSubmitting}
-          >
-            <span>{isSubmitting ? "Submitting…" : "Resend verification"}</span>
-            <span aria-hidden="true">→</span>
-          </button>
-        </form>
       )}
+      <form className={styles.form} onSubmit={onResend} noValidate>
+        <div className={styles.field}>
+          <label htmlFor="verification-email">Email address</label>
+          <input
+            id="verification-email"
+            type="email"
+            autoComplete="email"
+            aria-invalid={Boolean(errors.email)}
+            disabled={isSubmitting || remainingSeconds > 0}
+            {...register("email")}
+          />
+          {errors.email && (
+            <p className={styles.fieldError}>{errors.email.message}</p>
+          )}
+        </div>
+        {serverError && (
+          <div className={styles.serverError} role="alert">
+            {serverError}
+          </div>
+        )}
+        <button
+          className={styles.submit}
+          type="submit"
+          disabled={isSubmitting || remainingSeconds > 0}
+        >
+          <span>
+            {isSubmitting
+              ? "Submitting…"
+              : remainingSeconds > 0
+                ? `Resend available in ${cooldownLabel}`
+                : "Resend verification"}
+          </span>
+          <span aria-hidden="true">→</span>
+        </button>
+        {remainingSeconds > 0 && (
+          <p className={styles.fieldHint} aria-live="polite">
+            Verification email requests are limited to one every three minutes.
+          </p>
+        )}
+      </form>
       <p className={styles.footerPrompt}>
         <Link href="/login">Return to login</Link>
       </p>

@@ -16,6 +16,10 @@ type Kind =
   | "badges"
   | "prompts";
 
+function collectionPath(kind: Kind): string {
+  return kind === "prompts" ? "/admin/ai/prompts" : `/admin/${kind}`;
+}
+
 function getRecord(kind: Kind, id: string): Promise<AdminRecord> {
   if (kind === "publishers") return adminService.publisher(id);
   if (kind === "feedback") return adminService.feedbackRecord(id);
@@ -113,7 +117,7 @@ export default function AdminRecordDetail({
           <span>{kind.replaceAll("_", " ")}: Detail</span>
           <h1>{heading}</h1>
         </div>
-        <Link href={`/admin/${kind}`}>Back to records</Link>
+        <Link href={collectionPath(kind)}>Back to records</Link>
       </header>
       <dl className={styles.dossier}>
         {entries.map(([key, value]) => (

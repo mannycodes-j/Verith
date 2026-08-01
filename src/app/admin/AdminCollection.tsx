@@ -100,6 +100,11 @@ function label(record: AdminRecord) {
   );
 }
 
+function recordPath(kind: Kind, id: string): string {
+  const base = kind === "prompts" ? "/admin/ai/prompts" : `/admin/${kind}`;
+  return `${base}/${id}`;
+}
+
 export default function AdminCollection({ kind }: { kind: Kind }) {
   const query = useQuery({
     queryFn: () => getRecords(kind),
@@ -185,7 +190,7 @@ export default function AdminCollection({ kind }: { kind: Kind }) {
                       </small>
                     </td>
                     <td>
-                      <Link href={`/admin/${kind}/${id}`}>Open record</Link>
+                      <Link href={recordPath(kind, id)}>Open record</Link>
                     </td>
                   </tr>
                 );

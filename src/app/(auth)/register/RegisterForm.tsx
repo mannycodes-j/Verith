@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { authStyles as styles } from "@/components/auth/auth.styles";
+import { startVerificationResendCooldown } from "@/lib/verificationCooldown";
 import { ApiClientError } from "@/services/apiClient";
 import { authService } from "@/services/authService";
 
@@ -107,6 +108,9 @@ export default function RegisterForm() {
         username: values.username,
         displayName: values.displayName || undefined,
       });
+      if (result.emailDelivery.state === "OPERATIONAL") {
+        startVerificationResendCooldown();
+      }
       setDeliveryState(result.emailDelivery.state);
       setRegisteredEmail(values.email);
     } catch (error) {
