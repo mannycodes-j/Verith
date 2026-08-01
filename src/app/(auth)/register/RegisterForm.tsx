@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
+import GoogleAuthButton from "@/components/auth/GoogleAuthButton";
 import { authStyles as styles } from "@/components/auth/auth.styles";
 import { startVerificationResendCooldown } from "@/lib/verificationCooldown";
 import { ApiClientError } from "@/services/apiClient";
@@ -164,6 +165,7 @@ export default function RegisterForm() {
           verification into media-literacy progress.
         </p>
       </header>
+      <GoogleAuthButton intent="REGISTER" />
       <form className={styles.form} onSubmit={onSubmit} noValidate>
         <div className={styles.field}>
           <label htmlFor="displayName">Display name (optional)</label>

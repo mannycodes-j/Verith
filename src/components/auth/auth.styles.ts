@@ -24,6 +24,12 @@ export const authStyles = {
   formHeader:
     "[&>span]:inline-flex [&>span]:items-center [&>span]:gap-2 [&>span]:text-[10px] [&>span]:font-semibold [&>span]:uppercase [&>span]:tracking-[0.16em] [&>span]:text-violet-400 [&>span]:before:inline-flex [&>span]:before:size-1.5 [&>span]:before:rounded-full [&>span]:before:bg-violet-400 [&>h2]:mt-5 [&>h2]:mb-3 [&>h2]:text-3xl [&>h2]:leading-[1.1] [&>h2]:font-semibold [&>h2]:tracking-tighter md:[&>h2]:text-4xl [&>p]:mb-8 [&>p]:text-sm [&>p]:leading-relaxed [&>p]:text-white/50",
   form: "grid gap-5",
+  providerAuth: "mb-6 grid gap-3",
+  providerButton:
+    "flex min-h-11 w-full items-center justify-center overflow-hidden rounded-full [&>div]:!max-w-full",
+  providerStatus: "m-0 text-center text-[11px] leading-relaxed text-white/50",
+  providerDivider:
+    "relative my-2 flex items-center justify-center before:absolute before:inset-x-0 before:h-px before:bg-white/[0.07] [&>span]:relative [&>span]:bg-card [&>span]:px-3 [&>span]:text-[10px] [&>span]:font-medium [&>span]:uppercase [&>span]:tracking-[0.12em] [&>span]:text-white/35",
   field:
     "grid gap-2 [&_label]:text-xs [&_label]:font-medium [&_label]:text-white/50 [&_input]:min-h-11 [&_input]:w-full [&_input]:rounded-2xl [&_input]:border [&_input]:border-white/[0.05] [&_input]:bg-white/[0.03] [&_input]:px-4 [&_input]:outline-none [&_input]:transition-all [&_input:hover]:border-white/10 [&_input:focus]:border-violet-400/40 [&_input:focus]:bg-white/[0.05] [&_input:focus]:shadow-[0_0_0_4px_rgba(139,92,246,0.08)] [&_input[aria-invalid=true]]:border-danger",
   passwordControl: "relative [&_input]:pr-12",

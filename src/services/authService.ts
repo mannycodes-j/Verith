@@ -11,6 +11,7 @@ export interface AuthenticatedUser {
   email?: string;
   username?: string;
   displayName?: string;
+  authProvider?: "LOCAL" | "GOOGLE";
   role?: string;
   status?: string;
   [key: string]: unknown;
@@ -31,6 +32,13 @@ interface RegistrationResult {
   };
 }
 
+export type GoogleAuthIntent = "LOGIN" | "REGISTER";
+
+export interface GoogleAuthConfiguration {
+  enabled: boolean;
+  clientId: string | null;
+}
+
 export const authService = {
   async forgotPassword(email: string): Promise<void> {
     await apiClient.postVoid(
@@ -46,6 +54,25 @@ export const authService = {
 
   getProfile(): Promise<AuthenticatedUser> {
     return apiClient.get<AuthenticatedUser>("/users/me");
+  },
+
+  googleConfiguration(): Promise<GoogleAuthConfiguration> {
+    return apiClient.get<GoogleAuthConfiguration>("/auth/google/config", {
+      retryAuthentication: false,
+    });
+  },
+
+  async googleAuthenticate(
+    credential: string,
+    intent: GoogleAuthIntent,
+  ): Promise<AuthenticationResult> {
+    const result = await apiClient.post<AuthenticationResult>(
+      "/auth/google",
+      { credential, intent },
+      { retryAuthentication: false },
+    );
+    sessionToken.set(result.accessToken);
+    return result;
   },
 
   async login(input: LoginInput): Promise<AuthenticationResult> {

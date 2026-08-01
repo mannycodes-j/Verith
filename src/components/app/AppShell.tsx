@@ -35,6 +35,7 @@ import { authService, type AuthenticatedUser } from "@/services/authService";
 import { appShellStyles as styles } from "./app-shell.styles";
 import NotificationDrawer from "./NotificationDrawer";
 import NotificationTrigger from "./NotificationTrigger";
+import SessionLoadingGate from "./SessionLoadingGate";
 
 const navigation = [
   {
@@ -271,15 +272,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
   };
 
   if (profileQuery.isPending) {
-    return (
-      <main className={styles.loadingGate} aria-busy="true">
-        <div className={styles.loadingMark}>V</div>
-        <div>
-          <span>Secure workspace</span>
-          <p role="status">Restoring your session…</p>
-        </div>
-      </main>
-    );
+    return <SessionLoadingGate />;
   }
 
   if (profileQuery.isError || !profileQuery.data) {

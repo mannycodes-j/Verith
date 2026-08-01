@@ -11,6 +11,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { accountService, type AccountSession } from "@/services/account";
+import { authService } from "@/services/authService";
 import { settingsStyles as styles } from "../settings.styles";
 import SettingsNav from "../SettingsNav";
 
@@ -36,6 +37,11 @@ export default function SecuritySettings() {
   const current = useQuery({
     queryFn: accountService.currentSession,
     queryKey: ["current-session"],
+  });
+  const profile = useQuery({
+    queryFn: authService.getProfile,
+    queryKey: ["profile"],
+    retry: false,
   });
   const password = useMutation({
     mutationFn: accountService.changePassword,
@@ -86,7 +92,33 @@ export default function SecuritySettings() {
       </header>
       <SettingsNav active="security" />
 
-      <form className={styles.formSection} onSubmit={submitPassword}>
+      {profile.isPending && (
+        <section className={styles.formSection} aria-busy="true">
+          <header>
+            <span>Authentication method</span>
+            <h2>Checking account credentials…</h2>
+          </header>
+        </section>
+      )}
+      {profile.data?.authProvider === "GOOGLE" && (
+        <section className={styles.formSection}>
+          <header>
+            <span>Google authentication</span>
+            <h2>Your password is managed by Google.</h2>
+          </header>
+          <p className={styles.formSuccess}>
+            This Verith account was created with Google and does not store a
+            Verith password. Manage credentials and recovery from your Google
+            Account; session controls below remain available here.
+          </p>
+        </section>
+      )}
+
+      <form
+        className={styles.formSection}
+        hidden={profile.isPending || profile.data?.authProvider === "GOOGLE"}
+        onSubmit={submitPassword}
+      >
         <header>
           <span>Password</span>
           <h2>Change credentials.</h2>

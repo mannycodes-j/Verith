@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import GoogleAuthButton from "@/components/auth/GoogleAuthButton";
 import { authStyles as styles } from "@/components/auth/auth.styles";
 import { ApiClientError } from "@/services/apiClient";
 import { authService } from "@/services/authService";
@@ -24,6 +25,8 @@ const errorMessages: Record<string, string> = {
   EMAIL_VERIFICATION_REQUIRED:
     "Verify your email address before logging in.",
   INVALID_CREDENTIALS: "The email, username, or password is incorrect.",
+  USE_GOOGLE_SIGN_IN:
+    "This account was created with Google. Use the Google sign-in option.",
 };
 
 export default function LoginForm({
@@ -71,6 +74,7 @@ export default function LoginForm({
           keep building your media-literacy practice.
         </p>
       </header>
+      <GoogleAuthButton intent="LOGIN" />
       <form className={styles.form} onSubmit={onSubmit} noValidate>
         {sessionExpired && (
           <div className={styles.notice} role="status">
