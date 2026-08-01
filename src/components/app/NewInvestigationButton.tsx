@@ -34,16 +34,16 @@ export default function NewInvestigationButton({
         <motion.span
           animate={expanded && !reduceMotion ? { rotate: 90, scale: 0.92 } : { rotate: 0, scale: 1 }}
           aria-hidden="true"
-          className="grid shrink-0 place-items-center"
+          className="grid shrink-0 place-items-center text-white!"
           transition={{ type: "spring", stiffness: 500, damping: 28 }}
         >
-          <Plus size={18} strokeWidth={2.4} />
+          <Plus size={21} strokeWidth={3} />
         </motion.span>
         <AnimatePresence initial={false}>
           {expanded && (
             <motion.span
               animate={{ opacity: 1, width: "auto", x: 0 }}
-              className="overflow-hidden"
+              className="overflow-hidden text-white!"
               exit={{ opacity: 0, width: 0, x: -8 }}
               initial={reduceMotion ? false : { opacity: 0, width: 0, x: -8 }}
               transition={{ duration: reduceMotion ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}

@@ -1,7 +1,10 @@
-const API_ORIGIN = (
-  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000"
-).replace(/\/$/, "");
+// Browser traffic stays on the frontend origin and is forwarded to the API by
+// the Next.js rewrite. This keeps refresh and CSRF cookies first-party when the
+// frontend and backend are hosted by different providers (for example, Vercel
+// and Render).
+const API_ORIGIN = "";
 const API_PREFIX = "/api/v1";
+const CSRF_STORAGE_KEY = "verith_csrf_token";
 
 interface ResponseMeta {
   requestId: string;
@@ -58,6 +61,7 @@ export class ApiClientError extends Error {
 interface AuthenticationPayload {
   accessToken: string;
   accessTokenExpiresIn: string;
+  csrfToken?: string;
   user: Record<string, unknown>;
 }
 
@@ -73,6 +77,28 @@ function getCookie(name: string): string | undefined {
     .find((entry) => entry.startsWith(prefix));
 
   return cookie ? decodeURIComponent(cookie.slice(prefix.length)) : undefined;
+}
+
+function getStoredCsrfToken(): string | undefined {
+  const cookieToken = getCookie("verith_csrf");
+  if (cookieToken) return cookieToken;
+  if (typeof window === "undefined") return undefined;
+  try {
+    return window.localStorage.getItem(CSRF_STORAGE_KEY) ?? undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function storeCsrfToken(token?: string) {
+  if (typeof window === "undefined") return;
+  try {
+    if (token) window.localStorage.setItem(CSRF_STORAGE_KEY, token);
+    else window.localStorage.removeItem(CSRF_STORAGE_KEY);
+  } catch {
+    // Same-site deployments can still read the non-HTTP-only CSRF cookie when
+    // browser storage is unavailable.
+  }
 }
 
 function isErrorEnvelope(value: unknown): value is ErrorEnvelope {
@@ -104,7 +130,7 @@ async function refreshBrowserSession(): Promise<boolean> {
   if (refreshRequest) return refreshRequest;
 
   refreshRequest = (async () => {
-    const csrfToken = getCookie("verith_csrf");
+    const csrfToken = getStoredCsrfToken();
     if (!csrfToken) return false;
 
     try {
@@ -121,10 +147,12 @@ async function refreshBrowserSession(): Promise<boolean> {
 
       if (!response.ok || !isSuccessEnvelope<AuthenticationPayload>(body)) {
         accessToken = null;
+        storeCsrfToken();
         return false;
       }
 
       accessToken = body.data.accessToken;
+      storeCsrfToken(body.data.csrfToken);
       return true;
     } catch {
       accessToken = null;
@@ -353,9 +381,11 @@ function serializeBody(body: unknown): BodyInit | undefined {
 export const sessionToken = {
   clear() {
     accessToken = null;
+    storeCsrfToken();
   },
-  set(token: string) {
+  set(token: string, csrfToken?: string) {
     accessToken = token;
+    storeCsrfToken(csrfToken);
   },
 };
 

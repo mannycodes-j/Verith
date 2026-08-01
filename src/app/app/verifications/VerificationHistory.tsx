@@ -42,7 +42,7 @@ export default function VerificationHistory() {
 						</option>
 					))}
 				</select>
-				<NewInvestigationButton />
+				<NewInvestigationButton className="ml-auto" />
 			</div>
 
 			{history.isPending && (
@@ -75,14 +75,14 @@ export default function VerificationHistory() {
 			)}
 
 			{history.data && history.data.items.length > 0 && (
-				<div className={styles.list}>
+				<div aria-label="Investigation history table" className={styles.list} role="region" tabIndex={0}>
 					<div className={styles.listHeader}>
 						<span>Case</span>
 						<span>Source</span>
 						<span>Status</span>
 						<span>Evidence</span>
 						<span>Updated</span>
-						<span />
+						<span>Action</span>
 					</div>
 					{history.data.items.map((record) => (
 						<article className={styles.record} key={record.id}>
@@ -94,7 +94,7 @@ export default function VerificationHistory() {
 							<span data-status={record.status}>{record.status}</span>
 							<span>{record.evidenceCount}</span>
 							<span>{formatDate(record.updatedAt)}</span>
-							<Link aria-label={`Open ${record.title || "investigation"}`} href={`/app/verifications/${record.id}`} className="ml-0!">
+							<Link aria-label={`Open ${record.title || "investigation"}`} href={`/app/verifications/${record.id}`} className="ml-0! mr-4">
 								<span>View</span>
 								<ArrowUpRight size={14} />
 							</Link>

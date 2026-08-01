@@ -20,6 +20,7 @@ export interface AuthenticatedUser {
 interface AuthenticationResult {
   accessToken: string;
   accessTokenExpiresIn: string;
+  csrfToken?: string;
   user: AuthenticatedUser;
 }
 
@@ -71,7 +72,7 @@ export const authService = {
       { credential, intent },
       { retryAuthentication: false },
     );
-    sessionToken.set(result.accessToken);
+    sessionToken.set(result.accessToken, result.csrfToken);
     return result;
   },
 
@@ -81,7 +82,7 @@ export const authService = {
       input,
       { retryAuthentication: false },
     );
-    sessionToken.set(result.accessToken);
+    sessionToken.set(result.accessToken, result.csrfToken);
     return result;
   },
 

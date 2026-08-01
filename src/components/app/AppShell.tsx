@@ -29,7 +29,13 @@ import {
 import Link from "next/link";
 import NewInvestigationButton from "@/components/app/NewInvestigationButton";
 import { usePathname, useRouter } from "next/navigation";
-import { useState, type CSSProperties, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
 import UnequalMenuBars from "@/components/UnequalMenuBars";
 import VerithLogo from "@/components/brand/VerithLogo";
 import { ApiClientError } from "@/services/apiClient";
@@ -179,14 +185,34 @@ function Navigation({
   editorial,
   moderator,
   pathname,
+  persistenceKey,
   superAdmin,
 }: {
   admin: boolean;
   editorial: boolean;
   moderator: boolean;
   pathname: string;
+  persistenceKey?: string;
   superAdmin: boolean;
 }) {
+  const navigationRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (!persistenceKey || !navigationRef.current) return;
+    let stored: string | null = null;
+    try {
+      stored = window.sessionStorage.getItem(persistenceKey);
+    } catch {
+      return;
+    }
+    if (!stored) return;
+    const frame = window.requestAnimationFrame(() => {
+      if (navigationRef.current) {
+        navigationRef.current.scrollTop = Number(stored) || 0;
+      }
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [persistenceKey]);
+
   const groups = [
     ...navigation,
     ...(admin ? adminNavigation : []),
@@ -195,7 +221,23 @@ function Navigation({
     ...(superAdmin ? superAdminNavigation : []),
   ];
   return (
-    <nav className={styles.navigation} aria-label="Workspace navigation">
+    <nav
+      className={styles.navigation}
+      aria-label="Workspace navigation"
+      onScroll={(event) => {
+        if (persistenceKey) {
+          try {
+            window.sessionStorage.setItem(
+              persistenceKey,
+              String(event.currentTarget.scrollTop),
+            );
+          } catch {
+            // Navigation remains usable when session storage is unavailable.
+          }
+        }
+      }}
+      ref={navigationRef}
+    >
       {groups.map((group) => (
         <div className={styles.navGroup} key={group.label}>
           <span className={styles.navLabel}>{group.label}</span>
@@ -395,6 +437,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
           editorial={isEditorial}
           moderator={isModerator}
           pathname={pathname}
+          persistenceKey="verith-sidebar-scroll"
           superAdmin={isSuperAdmin}
         />
         <div className={styles.account}>

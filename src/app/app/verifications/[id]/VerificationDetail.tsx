@@ -267,6 +267,10 @@ export default function VerificationDetail({ id }: { id: string }) {
         </dl>
       </section>
 
+      {["COMPLETED", "PARTIALLY_COMPLETED"].includes(record.status) && (
+        <ReportDocument verificationId={record.id} />
+      )}
+
       <div className={styles.processingGrid}>
         <section className={styles.stagePanel}>
           <div className={styles.panelHeader}>
@@ -353,10 +357,6 @@ export default function VerificationDetail({ id }: { id: string }) {
               "No safe failure summary was returned by the service."}
           </p>
         </section>
-      )}
-
-      {["COMPLETED", "PARTIALLY_COMPLETED"].includes(record.status) && (
-        <ReportDocument verificationId={record.id} />
       )}
 
       {actionDialog && (

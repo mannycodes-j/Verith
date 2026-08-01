@@ -72,11 +72,16 @@ export default function ChallengeWorkspace({ slug }: { slug: string }) {
     0,
     record.maxAttempts - (attempts.data?.length ?? 0),
   );
+  const previouslyCompleted = (attempts.data ?? []).some(
+    (attempt) => attempt.passed,
+  );
 
   return (
     <div className={styles.workspace}>
       <header>
-        <span>Challenge: {record.slug}</span>
+        <span>
+          {previouslyCompleted ? "Completed" : `Challenge: ${record.slug}`}
+        </span>
         <h1>{record.title}</h1>
         <p>{record.scenario}</p>
         <dl>

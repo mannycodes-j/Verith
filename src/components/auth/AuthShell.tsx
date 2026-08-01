@@ -20,12 +20,12 @@ export default function AuthShell({ children }: { children: ReactNode }) {
         <div className={`${styles.contextBody} animate-entrance`}>
           <p className={styles.eyebrow}>Your private evidence workspace</p>
           <h1 id="auth-context-title">
-            Move from information exposure to evidence-informed action.
+            Know what the evidence supports before you trust or share it.
           </h1>
           <p className={styles.contextCopy}>
-            Verith gives every investigation a transparent chain of reasoning:
-            the claims identified, the evidence retrieved, the inferences made,
-            and the uncertainty that still remains.
+            Bring Verith the post, headline, link, image, or voice note. You’ll
+            get a clear explanation of what checks out, what does not, and what
+            cannot yet be confirmed.
           </p>
         </div>
         <ol className={styles.workflow}>

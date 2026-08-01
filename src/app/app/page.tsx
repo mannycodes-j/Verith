@@ -9,17 +9,17 @@ export default function WorkspaceOverviewPage() {
     <div className={styles.page}>
       <header className={styles.pageHeader}>
         <span>Investigation desk</span>
-        <h1>Turn a questionable claim into an evidence-backed decision.</h1>
+        <h1>Check a claim before you trust it or share it.</h1>
         <p>
-          Start with the content in front of you. Verith preserves the original
-          material, identifies its factual claims, and builds an inspectable
-          evidence trail around every conclusion.
+          Paste the message, add a link, or upload the media. Verith shows what
+          the evidence supports, what it challenges, and what still needs
+          caution—in language you can act on.
         </p>
       </header>
       <section className={styles.composerEntry}>
         <div>
           <span>New investigation</span>
-          <h2>Launch a multimodal investigation.</h2>
+          <h2>Check text, links, images, screenshots, audio, or video.</h2>
         </div>
         <NewInvestigationButton />
       </section>
