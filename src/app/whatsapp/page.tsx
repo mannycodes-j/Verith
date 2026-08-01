@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import PublicNavbar from "@/components/public/PublicNavbar";
 
 export const metadata: Metadata = {
   description:
@@ -14,34 +15,7 @@ export default function WhatsAppPage() {
       id="main-content"
       tabIndex={-1}
     >
-      <a
-        className="fixed top-4 left-4 z-1000 -translate-y-[160%] rounded-full bg-white px-4 py-3 text-sm font-medium text-black transition-transform focus:translate-y-0"
-        href="#main-content"
-      >
-        Skip to content
-      </a>
-      <header className="sticky top-0 z-40 border-b border-white/[0.05] bg-black/70 backdrop-blur-md">
-        <div className="mx-auto grid min-h-16 max-w-[1400px] grid-cols-[1fr_auto_1fr] items-center gap-8 px-6 max-[700px]:grid-cols-[1fr_auto]">
-          <Link
-            href="/"
-            className="flex items-center gap-2.5 text-[15px] font-medium tracking-tight"
-          >
-            <span className="inline-flex size-8 items-center justify-center rounded-lg bg-[#24183f] text-sm font-semibold text-violet-300">
-              V
-            </span>
-            <span>Verith</span>
-          </Link>
-          <span className="text-xs text-white/40 max-[700px]:hidden">
-            WhatsApp verification
-          </span>
-          <Link
-            className="justify-self-end rounded-full bg-foreground px-4 py-2 text-sm font-medium text-black transition-all duration-200 hover:scale-[1.02] hover:bg-foreground/90 active:scale-[0.98]"
-            href="/login"
-          >
-            Log in
-          </Link>
-        </div>
-      </header>
+      <PublicNavbar />
       <section className="relative mx-auto grid max-w-[1300px] grid-cols-[1.2fr_0.5fr] gap-16 overflow-hidden px-6 py-[clamp(6rem,10vw,9rem)] before:pointer-events-none before:absolute before:-top-24 before:left-1/4 before:size-[30rem] before:rounded-full before:bg-emerald-500/10 before:blur-[120px] after:pointer-events-none after:absolute after:right-0 after:bottom-0 after:size-80 after:rounded-full after:bg-violet-500/10 after:blur-[120px] max-[700px]:grid-cols-1">
         <div>
           <span className="relative inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-400 before:inline-flex before:size-1.5 before:rounded-full before:bg-emerald-400 before:shadow-[0_0_18px_rgba(16,185,129,0.8)]">

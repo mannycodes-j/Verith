@@ -1,4 +1,5 @@
 import type { components } from "@/generated/api-schema";
+import type { UserProfile } from "./account";
 import { apiClient } from "./apiClient";
 
 export type AssetType =
@@ -136,7 +137,7 @@ export const uploadService = {
   }: {
     file: File;
     onProgress?: (progress: number) => void;
-  }): Promise<{ asset: MediaAsset; profile: Record<string, unknown> }> {
+  }): Promise<{ asset: MediaAsset; profile: UserProfile }> {
     const signed = await apiClient.post<SignedUpload>(
       "/users/me/avatar/upload-signature",
     );
@@ -162,7 +163,7 @@ export const uploadService = {
     }
     return apiClient.post<{
       asset: MediaAsset;
-      profile: Record<string, unknown>;
+      profile: UserProfile;
     }>("/users/me/avatar/confirm", {
       assetId: signed.assetId,
       signature: uploaded.signature,

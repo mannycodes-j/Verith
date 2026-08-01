@@ -19,6 +19,9 @@ export interface UserProfile extends AuthenticatedUser {
   };
   preferredLanguage?: string;
   timezone?: string;
+  emailVerifiedAt?: string;
+  createdAt?: string;
+  updatedAt?: string;
   deletionRequestedAt?: string;
 }
 

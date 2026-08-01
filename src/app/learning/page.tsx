@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import LearningCatalog from "@/components/learning/LearningCatalog";
+import PublicNavbar from "@/components/public/PublicNavbar";
 
 export const metadata: Metadata = {
   description:
@@ -9,8 +10,15 @@ export const metadata: Metadata = {
 
 export default function LearningPage() {
   return (
-    <main className="mx-auto max-w-[1500px] px-(--page-gutter) pb-20">
-      <LearningCatalog />
-    </main>
+    <>
+      <PublicNavbar />
+      <main
+        className="mx-auto max-w-[1500px] px-(--page-gutter) pt-24 pb-20"
+        id="main-content"
+        tabIndex={-1}
+      >
+        <LearningCatalog />
+      </main>
+    </>
   );
 }
