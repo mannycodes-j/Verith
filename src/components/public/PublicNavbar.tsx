@@ -4,7 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import UnequalMenuBars from "@/components/UnequalMenuBars";
 import VerithLogo from "@/components/brand/VerithLogo";
 
@@ -24,6 +24,7 @@ export default function PublicNavbar({
   const reduceMotion = useReducedMotion();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const update = () => setScrolled(window.scrollY > 18);
@@ -31,6 +32,24 @@ export default function PublicNavbar({
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
   }, []);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    const closeOnOutsidePress = (event: PointerEvent) => {
+      if (!menuRef.current?.contains(event.target as Node)) setMenuOpen(false);
+    };
+
+    window.addEventListener("keydown", closeOnEscape);
+    window.addEventListener("pointerdown", closeOnOutsidePress);
+    return () => {
+      window.removeEventListener("keydown", closeOnEscape);
+      window.removeEventListener("pointerdown", closeOnOutsidePress);
+    };
+  }, [menuOpen]);
 
   return (
     <>
@@ -53,6 +72,7 @@ export default function PublicNavbar({
             boxShadow: scrolled ? "0 18px 55px rgba(0,0,0,.38)" : "0 0 0 rgba(0,0,0,0)",
           }}
           className="pointer-events-auto relative w-full max-w-6xl rounded-[1.75rem] border px-3 py-2 backdrop-blur-2xl sm:rounded-full sm:px-4 sm:py-2.5"
+          ref={menuRef}
           transition={{ duration: 0.35 }}
         >
           <nav className="flex items-center justify-between" aria-label="Primary navigation">
@@ -91,7 +111,7 @@ export default function PublicNavbar({
               <button
                 aria-expanded={menuOpen}
                 aria-label={menuOpen ? "Close navigation" : "Open navigation"}
-                className="grid size-10 place-items-center rounded-full border border-white/10 text-white transition hover:bg-white/[.06] lg:hidden"
+                className="grid size-10 touch-manipulation place-items-center rounded-full border border-white/10 text-white transition hover:bg-white/[.06] lg:hidden"
                 onClick={() => setMenuOpen((open) => !open)}
                 type="button"
               >
@@ -113,11 +133,11 @@ export default function PublicNavbar({
           <AnimatePresence>
             {menuOpen && (
               <motion.div
-                animate={{ height: "auto", opacity: 1, y: 0 }}
-                className="overflow-hidden lg:hidden"
-                exit={{ height: 0, opacity: 0, y: -8 }}
-                initial={{ height: 0, opacity: 0, y: -8 }}
-                transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                className="absolute inset-x-0 top-[calc(100%+0.5rem)] origin-top overflow-hidden rounded-[1.5rem] border border-white/[.12] bg-[#09090b]/[.97] px-3 pb-3 shadow-[0_24px_70px_rgba(0,0,0,.52)] [contain:layout_paint] [will-change:transform,opacity] lg:hidden"
+                exit={{ opacity: 0, scale: 0.985, y: -6 }}
+                initial={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.985, y: -6 }}
+                transition={{ duration: reduceMotion ? 0.01 : 0.2, ease: [0.22, 1, 0.36, 1] }}
               >
                 <div className="mt-3 grid gap-1 border-t border-white/[.07] pt-3">
                   {publicLinks.map((link, index) => (
