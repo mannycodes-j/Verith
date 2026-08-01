@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Check } from "lucide-react";
+import NewInvestigationButton from "@/components/app/NewInvestigationButton";
 import RecentInvestigations from "./RecentInvestigations";
 import { workspaceStyles as styles } from "./workspace.styles";
 
@@ -20,9 +21,7 @@ export default function WorkspaceOverviewPage() {
           <span>New investigation</span>
           <h2>Launch a multimodal investigation.</h2>
         </div>
-        <Link href="/app/verify">
-          Try now <span aria-hidden="true">→</span>
-        </Link>
+        <NewInvestigationButton />
       </section>
       <div className={styles.overviewGrid}>
         <section>

@@ -1,12 +1,18 @@
-import { ArrowRight } from "lucide-react";
+"use client";
+
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ArrowRight, X } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import UnequalMenuBars from "@/components/UnequalMenuBars";
+import VerithLogo from "@/components/brand/VerithLogo";
 
 const publicLinks = [
   { href: "/how-it-works", label: "How it works" },
-  { href: "/about", label: "About" },
-  { href: "/privacy", label: "Privacy" },
+  { href: "/learning", label: "Learning" },
   { href: "/whatsapp", label: "WhatsApp" },
+  { href: "/about", label: "About" },
 ] as const;
 
 export default function PublicNavbar({
@@ -14,77 +20,127 @@ export default function PublicNavbar({
 }: {
   mainId?: string;
 }) {
+  const pathname = usePathname();
+  const reduceMotion = useReducedMotion();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 18);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+
   return (
     <>
       <a
-        className="fixed top-4 left-4 z-1000 -translate-y-[160%] rounded-full bg-white px-4 py-3 text-sm font-medium text-black transition-transform focus:translate-y-0"
+        className="fixed top-4 left-4 z-[70] -translate-y-[160%] rounded-full bg-white px-4 py-3 text-sm font-semibold text-black transition-transform focus:translate-y-0"
         href={`#${mainId}`}
       >
         Skip to content
       </a>
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-black/70 backdrop-blur-md">
-        <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6">
-          <Link
-            aria-label="Verith home"
-            className="flex shrink-0 items-center gap-2.5"
-            href="/"
-          >
-            <span className="grid size-8 place-items-center rounded-lg bg-[#24183f] text-sm font-semibold text-violet-300">
-              V
-            </span>
-            <span className="text-[15px] font-medium tracking-tight">
-              Verith
-            </span>
-          </Link>
+      <motion.header
+        animate={{ opacity: 1, y: 0 }}
+        className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-3 sm:px-4 sm:pt-4 md:pt-6"
+        initial={reduceMotion ? false : { opacity: 0, y: -40 }}
+        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <motion.div
+          animate={{
+            backgroundColor: scrolled ? "rgba(9,9,11,.88)" : "rgba(255,255,255,.025)",
+            borderColor: scrolled ? "rgba(255,255,255,.14)" : "rgba(255,255,255,.07)",
+            boxShadow: scrolled ? "0 18px 55px rgba(0,0,0,.38)" : "0 0 0 rgba(0,0,0,0)",
+          }}
+          className="pointer-events-auto relative w-full max-w-6xl rounded-[1.75rem] border px-3 py-2 backdrop-blur-2xl sm:rounded-full sm:px-4 sm:py-2.5"
+          transition={{ duration: 0.35 }}
+        >
+          <nav className="flex items-center justify-between" aria-label="Primary navigation">
+            <Link aria-label="Verith home" className="flex items-center gap-2.5 pl-1" href="/">
+              <VerithLogo />
+            </Link>
 
-          <nav
-            aria-label="Primary navigation"
-            className="hidden items-center text-sm text-muted-foreground md:flex md:gap-8 lg:gap-24"
-          >
-            {publicLinks.map((link) => (
-              <Link
-                className="transition-colors hover:text-white"
-                href={link.href}
-                key={link.href}
-              >
-                {link.label}
+            <div className="hidden items-center gap-1 lg:flex">
+              {publicLinks.map((link) => {
+                const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
+                return (
+                  <Link
+                    className="relative rounded-full px-4 py-2 text-xs font-semibold text-white/50 transition-colors hover:bg-white/[.05] hover:text-white"
+                    href={link.href}
+                    key={link.href}
+                  >
+                    {active && (
+                      <motion.span
+                        className="absolute inset-0 rounded-full bg-white/[.07]"
+                        layoutId="public-navigation-active"
+                      />
+                    )}
+                    <span className="relative">{link.label}</span>
+                  </Link>
+                );
+              })}
+            </div>
+
+            <div className="flex items-center gap-1.5">
+              <Link className="hidden rounded-full px-4 py-2.5 text-xs font-semibold text-white/55 transition hover:bg-white/[.05] hover:text-white sm:block" href="/login">
+                Log in
               </Link>
-            ))}
+              <Link className="hidden items-center gap-2 rounded-full bg-white px-5 py-2.5 text-xs font-extrabold text-black transition hover:scale-[1.03] lg:flex" href="/login">
+                Try Verith <ArrowRight aria-hidden="true" size={15} />
+              </Link>
+              <button
+                aria-expanded={menuOpen}
+                aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+                className="grid size-10 place-items-center rounded-full border border-white/10 text-white transition hover:bg-white/[.06] lg:hidden"
+                onClick={() => setMenuOpen((open) => !open)}
+                type="button"
+              >
+                <AnimatePresence initial={false} mode="wait">
+                  <motion.span
+                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                    exit={{ opacity: 0, rotate: menuOpen ? -45 : 45, scale: 0.75 }}
+                    initial={{ opacity: 0, rotate: menuOpen ? 45 : -45, scale: 0.75 }}
+                    key={menuOpen ? "close" : "open"}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {menuOpen ? <X size={17} /> : <UnequalMenuBars />}
+                  </motion.span>
+                </AnimatePresence>
+              </button>
+            </div>
           </nav>
 
-          <div className="flex shrink-0 items-center gap-2">
-            <Link
-              className="hidden rounded-full px-4 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-white/5 hover:text-white sm:block"
-              href="/login"
-            >
-              Log in
-            </Link>
-            <Link
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-center text-sm font-medium text-black transition-all hover:bg-foreground/90 active:scale-[0.98]"
-              href="/login"
-            >
-              Try now
-              <ArrowRight aria-hidden="true" size={15} />
-            </Link>
-            <details className="relative md:hidden">
-              <summary className="grid size-11 cursor-pointer list-none place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-colors hover:border-white/15 hover:bg-white/[0.08] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/60 [&::-webkit-details-marker]:hidden">
-                <span className="sr-only">Navigation menu</span>
-                <UnequalMenuBars />
-              </summary>
-              <nav
-                aria-label="Mobile navigation"
-                className="absolute top-[calc(100%+0.75rem)] right-0 grid min-w-52 gap-1 rounded-2xl border border-white/10 bg-[#0F1012] p-2 shadow-2xl [&_a]:rounded-xl [&_a]:px-4 [&_a]:py-3 [&_a]:text-sm [&_a]:text-white/65 [&_a:hover]:bg-white/[0.05] [&_a:hover]:text-white"
+          <AnimatePresence>
+            {menuOpen && (
+              <motion.div
+                animate={{ height: "auto", opacity: 1, y: 0 }}
+                className="overflow-hidden lg:hidden"
+                exit={{ height: 0, opacity: 0, y: -8 }}
+                initial={{ height: 0, opacity: 0, y: -8 }}
+                transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
               >
-                {publicLinks.map((link) => (
-                  <Link href={link.href} key={link.href}>
-                    {link.label}
+                <div className="mt-3 grid gap-1 border-t border-white/[.07] pt-3">
+                  {publicLinks.map((link, index) => (
+                    <motion.div
+                      animate={{ opacity: 1, x: 0 }}
+                      initial={reduceMotion ? false : { opacity: 0, x: 16 }}
+                      key={link.href}
+                      transition={{ delay: index * 0.045 }}
+                    >
+                      <Link className="flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-semibold text-white/65 transition hover:bg-white/[.055] hover:text-white" href={link.href} onClick={() => setMenuOpen(false)}>
+                        {link.label}<ArrowRight aria-hidden="true" size={14} />
+                      </Link>
+                    </motion.div>
+                  ))}
+                  <Link className="mt-2 flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-extrabold text-black" href="/login" onClick={() => setMenuOpen(false)}>
+                    Try Verith <ArrowRight aria-hidden="true" size={15} />
                   </Link>
-                ))}
-              </nav>
-            </details>
-          </div>
-        </div>
-      </header>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </motion.header>
     </>
   );
 }

@@ -193,7 +193,12 @@ export default function AdminRecordDetail({
             </button>
           )}
           {["courses", "lessons", "quizzes", "challenges"].includes(kind) &&
-            ["DRAFT", "PUBLISHED", "ARCHIVED"].map((status) => (
+            (kind === "courses" || kind === "lessons"
+              ? ["DRAFT", "IN_REVIEW", "PUBLISHED", "ARCHIVED"]
+              : kind === "challenges"
+                ? ["DRAFT", "SCHEDULED", "PUBLISHED", "EXPIRED", "ARCHIVED"]
+                : ["DRAFT", "PUBLISHED", "ARCHIVED"]
+            ).map((status) => (
               <button
                 disabled={action.isPending}
                 key={status}

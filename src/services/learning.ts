@@ -57,6 +57,11 @@ export interface LessonProgress {
   completedAt?: string;
 }
 
+export type LearningRecommendation = Pick<
+  LearningCourse,
+  "_id" | "title" | "slug" | "description" | "difficulty" | "estimatedDuration" | "tags"
+>;
+
 export const learningService = {
   course: (slug: string) =>
     apiClient.get<LearningCourseDetail>(`/learning/courses/${slug}`, {
@@ -70,6 +75,10 @@ export const learningService = {
     apiClient.get<LearningLessonDetail>(`/learning/lessons/${slug}`, {
       retryAuthentication: false,
     }),
+  recommendationsForReport: (reportId: string) =>
+    apiClient.get<LearningRecommendation[]>(
+      `/learning/recommendations/report/${reportId}`,
+    ),
   progress: (courseId: string) =>
     apiClient.get<LessonProgress[]>(`/learning/courses/${courseId}/progress`),
   updateProgress: (

@@ -1927,7 +1927,7 @@ export interface components {
         };
         CreateUploadSignatureDto: {
             /** @enum {string} */
-            assetType: "AVATAR" | "VERIFICATION_IMAGE" | "VERIFICATION_SCREENSHOT" | "VERIFICATION_AUDIO" | "LESSON_THUMBNAIL" | "COURSE_THUMBNAIL" | "CHALLENGE_MEDIA" | "BADGE_ICON" | "REPORT_ASSET";
+            assetType: "AVATAR" | "VERIFICATION_IMAGE" | "VERIFICATION_SCREENSHOT" | "VERIFICATION_AUDIO" | "VERIFICATION_VIDEO" | "LESSON_THUMBNAIL" | "COURSE_THUMBNAIL" | "CHALLENGE_MEDIA" | "BADGE_ICON" | "REPORT_ASSET";
         };
         ConfirmUploadDto: {
             assetId: string;
@@ -1936,7 +1936,7 @@ export interface components {
         };
         CreateVerificationDto: {
             /** @enum {string} */
-            sourceType: "TEXT" | "URL" | "IMAGE" | "SCREENSHOT" | "AUDIO" | "WHATSAPP_TEXT" | "WHATSAPP_URL" | "WHATSAPP_IMAGE" | "WHATSAPP_AUDIO";
+            sourceType: "TEXT" | "URL" | "IMAGE" | "SCREENSHOT" | "AUDIO" | "VIDEO" | "WHATSAPP_TEXT" | "WHATSAPP_URL" | "WHATSAPP_IMAGE" | "WHATSAPP_AUDIO";
             text?: string;
             url?: string;
             mediaAssetId?: string;

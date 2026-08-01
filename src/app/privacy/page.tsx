@@ -33,6 +33,19 @@ export default function PrivacyPage() {
           ),
         },
         {
+          label: "AI processing",
+          title: "Configured providers process investigation content.",
+          content: (
+            <p>
+              Verith sends only the content needed for a requested analysis to
+              its configured AI or transcription provider. Provider retention
+              and model-improvement terms can differ between free and paid
+              plans, so the deployment operator must disclose and select the
+              appropriate plan before production use.
+            </p>
+          ),
+        },
+        {
           label: "Your controls",
           title: "Visibility, export, and deletion.",
           content: (

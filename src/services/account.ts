@@ -36,6 +36,14 @@ export interface AccountSession {
   expiresAt: string;
 }
 
+export interface PublicUserProfile {
+  username: string;
+  displayName?: string;
+  bio?: string;
+  avatar?: string;
+  createdAt?: string;
+}
+
 export interface PrivacyExportRequest {
   id: string;
   status: string;
@@ -75,6 +83,10 @@ export const accountService = {
   exportStatus: (id: string) =>
     apiClient.get<PrivacyExportStatus>(`/privacy/exports/${id}`),
   profile: () => apiClient.get<UserProfile>("/users/me"),
+  publicProfile: (username: string) =>
+    apiClient.get<PublicUserProfile>(`/users/${encodeURIComponent(username)}/public`, {
+      retryAuthentication: false,
+    }),
   requestDeletion: () =>
     apiClient.postVoid("/users/me/deletion-request"),
   requestExport: () =>

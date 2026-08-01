@@ -57,8 +57,10 @@ export default function AdminVerifications() {
   return (
     <div className={styles.page}>
       <header className={styles.listHero}>
-        <span>Verification management</span>
-        <h1>Inspect processing state without opening private input.</h1>
+        <div className="admin-heading">
+          <span>Verification management</span>
+          <h1>Inspect processing state without opening private input.</h1>
+        </div>
         <p>
           The administrative projection excludes submitted content. Retry is
           available only for failed or cancelled records and requires an audit

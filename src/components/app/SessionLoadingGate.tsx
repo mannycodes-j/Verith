@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import VerithLogo from "@/components/brand/VerithLogo";
 import {
   DatabaseZap,
   FileSearch,
@@ -80,21 +81,18 @@ export default function SessionLoadingGate() {
             <div className="flex items-center gap-3">
               <motion.span
                 animate={reduceMotion ? undefined : { rotate: [0, 8, -8, 0] }}
-                className="grid size-11 place-items-center rounded-2xl bg-gradient-to-br from-violet-400 to-indigo-600 text-base font-bold shadow-[0_16px_42px_-12px_rgba(139,92,246,0.9)]"
+                className="inline-flex"
                 transition={{
                   duration: 3.8,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
               >
-                V
+                <VerithLogo size="md" />
               </motion.span>
-              <div className="grid gap-0.5">
-                <strong className="text-sm font-semibold">Verith</strong>
-                <span className="text-[10px] uppercase tracking-[0.16em] text-white/40">
-                  Secure workspace
-                </span>
-              </div>
+              <span className="hidden text-[10px] uppercase tracking-[0.16em] text-white/40 sm:inline">
+                Secure workspace
+              </span>
             </div>
             <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/15 bg-emerald-400/[0.055] px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-emerald-300">
               <motion.i

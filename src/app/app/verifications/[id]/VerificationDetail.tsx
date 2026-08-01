@@ -4,90 +4,14 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { VERIFICATION_STAGE_GROUPS as displayStages, TERMINAL_VERIFICATION_STATUSES as terminalStatuses } from "@/data/verification";
 import {
   verificationService,
   type VerificationRecord,
 } from "@/services/verification";
 import { verificationDetailStyles as styles } from "./detail.styles";
 import ReportDocument from "./ReportDocument";
-
-const displayStages = [
-  {
-    label: "Receive",
-    stages: ["RECEIVED", "INPUT_VALIDATION", "MEDIA_UPLOAD_CONFIRMATION"],
-  },
-  {
-    label: "Prepare",
-    stages: [
-      "CONTENT_EXTRACTION",
-      "LANGUAGE_DETECTION",
-      "TRANSCRIPTION",
-      "OCR",
-      "URL_EXTRACTION",
-    ],
-  },
-  {
-    label: "Extract claims",
-    stages: ["CLAIM_EXTRACTION", "SEARCH_QUERY_GENERATION"],
-  },
-  {
-    label: "Retrieve evidence",
-    stages: [
-      "EVIDENCE_SEARCH",
-      "EVIDENCE_RETRIEVAL",
-      "EVIDENCE_NORMALIZATION",
-    ],
-  },
-  { label: "Compare", stages: ["CLAIM_EVALUATION"] },
-  {
-    label: "Review context",
-    stages: [
-      "MANIPULATION_ANALYSIS",
-      "BIAS_ANALYSIS",
-      "MISSING_CONTEXT_ANALYSIS",
-    ],
-  },
-  {
-    label: "Review sources",
-    stages: [
-      "SOURCE_CREDIBILITY_ANALYSIS",
-      "MEDIA_INVESTIGATION",
-      "AI_INDICATOR_ANALYSIS",
-    ],
-  },
-  {
-    label: "Assemble report",
-    stages: [
-      "REPORT_SYNTHESIS",
-      "REPORT_VALIDATION",
-      "RECOMMENDATION_GENERATION",
-      "LEARNING_RECOMMENDATION",
-      "COMPLETED",
-    ],
-  },
-] as const;
-
-const terminalStatuses = [
-  "COMPLETED",
-  "PARTIALLY_COMPLETED",
-  "FAILED",
-  "CANCELLED",
-  "DELETED",
-];
-
-function currentStageIndex(record: VerificationRecord) {
-  const index = displayStages.findIndex((group) =>
-    group.stages.some((stage) => stage === record.currentStage),
-  );
-  return Math.max(index, 0);
-}
-
-function formatTimestamp(value: string) {
-  return new Intl.DateTimeFormat(undefined, {
-    dateStyle: "medium",
-    timeStyle: "medium",
-  }).format(new Date(value));
-}
+import { currentVerificationStageIndex as currentStageIndex, formatVerificationTimestamp as formatTimestamp } from "@/utils/verification";
 
 export default function VerificationDetail({ id }: { id: string }) {
   const queryClient = useQueryClient();

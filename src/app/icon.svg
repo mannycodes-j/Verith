@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="verith-gradient" x1="8" y1="6" x2="58" y2="60" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A78BFA"/>
+      <stop offset="0.5" stop-color="#E879F9"/>
+      <stop offset="1" stop-color="#67E8F9"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="17" fill="url(#verith-gradient)"/>
+  <rect x="3" y="3" width="58" height="58" rx="15" fill="#0A0A0D"/>
+  <path d="M17 16h9.2L32 39.2 37.8 16H47L37 49H27L17 16Z" fill="#FFFFFF"/>
+</svg>

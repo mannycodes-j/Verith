@@ -147,7 +147,7 @@ export default function LoginForm({
           </div>
         )}
         <button className={styles.submit} type="submit" disabled={isSubmitting}>
-          <span>{isSubmitting ? "Authenticating…" : "Enter workspace"}</span>
+          <span>{isSubmitting ? "Authenticating…" : "Login"}</span>
           <span aria-hidden="true">→</span>
         </button>
       </form>

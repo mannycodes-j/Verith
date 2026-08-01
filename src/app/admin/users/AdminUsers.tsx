@@ -50,8 +50,10 @@ export default function AdminUsers() {
   return (
     <div className={styles.page}>
       <header className={styles.listHero}>
-        <span>People and access</span>
-        <h1>Account inspection and access control.</h1>
+        <div className="admin-heading">
+          <span>People and access</span>
+          <h1>Account inspection and access control.</h1>
+        </div>
         <p>
           Credential material is excluded by the backend. Status and role
           changes are audited and require a documented reason.

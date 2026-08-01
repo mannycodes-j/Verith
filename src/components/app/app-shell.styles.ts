@@ -6,7 +6,7 @@ export const appShellStyles = {
   sidebarHeader:
     "grid gap-2 px-2 [&>span]:text-[11px] [&>span]:text-white/55",
   wordmark:
-    "flex items-center gap-2.5 text-[15px] font-medium tracking-tight [&>span]:flex [&>span]:size-8 [&>span]:shrink-0 [&>span]:items-center [&>span]:justify-center [&>span]:rounded-lg [&>span]:bg-[#24183f] [&>span]:text-sm [&>span]:font-semibold [&>span]:text-violet-300",
+    "flex items-center",
   sidebarWidget:
     "mt-6 rounded-xl border border-white/[0.04] bg-white/[0.02] p-4 [&>span]:flex [&>span]:items-center [&>span]:gap-2 [&>span]:text-[10px] [&>span]:font-semibold [&>span]:uppercase [&>span]:tracking-[0.12em] [&>span]:text-violet-300 [&>strong]:mt-3 [&>strong]:block [&>strong]:text-lg [&>strong]:font-medium [&>p]:mb-0 [&>p]:mt-2 [&>p]:text-[11px] [&>p]:leading-relaxed [&>p]:text-white/55",
   navigation:
@@ -57,5 +57,5 @@ export const appShellStyles = {
   dialogBackdrop:
     "fixed inset-0 z-100 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm",
   logoutDialog:
-    "w-full max-w-140 rounded-3xl border border-white/[0.08] bg-surface-elevated p-[clamp(1.5rem,4vw,3rem)] shadow-2xl [&>span]:text-xs [&>span]:font-semibold [&>span]:text-violet-300 [&_h2]:mt-3 [&_h2]:text-[2.2rem] [&_h2]:font-semibold [&_p]:leading-[1.6] [&_p]:text-muted-foreground [&_footer]:mt-8 [&_footer]:flex [&_footer]:justify-end [&_footer]:gap-3 [&_button]:rounded-full [&_button]:border-0 [&_button]:bg-white/[0.06] [&_button]:px-5 [&_button]:py-3 [&_button]:text-sm [&_button:last-child]:bg-gradient-to-r [&_button:last-child]:from-[#C084FC] [&_button:last-child]:to-[#6366F1]",
+    "w-full max-w-3xl rounded-3xl border border-white/[0.08] bg-surface-elevated p-[clamp(1.5rem,4vw,3rem)] shadow-2xl [&>span]:text-xs [&>span]:font-semibold [&>span]:text-violet-300 [&_h2]:mt-3 [&_h2]:text-[2.2rem] [&_h2]:font-semibold [&_p]:leading-[1.6] [&_p]:text-muted-foreground [&_footer]:mt-8 [&_footer]:flex [&_footer]:justify-end [&_footer]:gap-3 [&_button]:rounded-full [&_button]:border-0 [&_button]:bg-white/[0.06] [&_button]:px-5 [&_button]:py-3 [&_button]:text-sm [&_button:last-child]:bg-gradient-to-r [&_button:last-child]:from-[#C084FC] [&_button:last-child]:to-[#6366F1]",
 } as const;

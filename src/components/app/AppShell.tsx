@@ -27,9 +27,11 @@ import {
   Users,
 } from "lucide-react";
 import Link from "next/link";
+import NewInvestigationButton from "@/components/app/NewInvestigationButton";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, type CSSProperties, type ReactNode } from "react";
 import UnequalMenuBars from "@/components/UnequalMenuBars";
+import VerithLogo from "@/components/brand/VerithLogo";
 import { ApiClientError } from "@/services/apiClient";
 import { authService, type AuthenticatedUser } from "@/services/authService";
 import { appShellStyles as styles } from "./app-shell.styles";
@@ -54,7 +56,11 @@ const navigation = [
     label: "Learn and grow",
     items: [
       { href: "/app/learning", icon: BookOpen, label: "Learning" },
-      { href: "/app/challenges", icon: ClipboardCheck, label: "Daily practice" },
+      {
+        href: "/app/challenges",
+        icon: ClipboardCheck,
+        label: "Daily practice",
+      },
       { href: "/app/achievements", icon: Award, label: "Achievements" },
       { href: "/app/leaderboards", icon: Trophy, label: "Community" },
     ],
@@ -82,7 +88,11 @@ const adminNavigation = [
       },
       { href: "/admin/feedback", icon: MessageSquareText, label: "Feedback" },
       { href: "/admin/publishers", icon: HeartHandshake, label: "Publishers" },
-      { href: "/admin/system-health", icon: ShieldCheck, label: "System health" },
+      {
+        href: "/admin/system-health",
+        icon: ShieldCheck,
+        label: "System health",
+      },
       { href: "/admin/badges", icon: Award, label: "Badges" },
     ],
   },
@@ -103,7 +113,9 @@ const editorialNavigation = [
 const moderationNavigation = [
   {
     label: "Moderation",
-    items: [{ href: "/admin/feedback", icon: MessageSquareText, label: "Feedback" }],
+    items: [
+      { href: "/admin/feedback", icon: MessageSquareText, label: "Feedback" },
+    ],
   },
 ] as const;
 
@@ -112,7 +124,11 @@ const superAdminNavigation = [
     label: "Advanced",
     items: [
       { href: "/admin/audit-logs", icon: History, label: "Activity log" },
-      { href: "/admin/ai/providers", icon: BrainCircuit, label: "AI providers" },
+      {
+        href: "/admin/ai/providers",
+        icon: BrainCircuit,
+        label: "AI providers",
+      },
       { href: "/admin/ai/prompts", icon: Sparkles, label: "AI guidance" },
     ],
   },
@@ -306,7 +322,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
   const role =
     typeof profile.role === "string"
       ? profile.role.replaceAll("_", " ").toLowerCase()
-      : "investigator";
+      : "member";
   const avatarUrl =
     typeof profile.avatar === "string" && profile.avatar.trim()
       ? profile.avatar.trim()
@@ -314,10 +330,8 @@ export default function AppShell({ children }: { children: ReactNode }) {
   const avatarStyle: CSSProperties | undefined = avatarUrl
     ? { backgroundImage: `url(${JSON.stringify(avatarUrl)})` }
     : undefined;
-  const isAdmin =
-    profile.role === "ADMIN" || profile.role === "SUPER_ADMIN";
-  const isEditorial =
-    isAdmin || profile.role === "CONTENT_EDITOR";
+  const isAdmin = profile.role === "ADMIN" || profile.role === "SUPER_ADMIN";
+  const isEditorial = isAdmin || profile.role === "CONTENT_EDITOR";
   const isModerator = isAdmin || profile.role === "MODERATOR";
   const isSuperAdmin = profile.role === "SUPER_ADMIN";
   const editorialPath = [
@@ -337,8 +351,8 @@ export default function AppShell({ children }: { children: ReactNode }) {
         <span>You do not have access</span>
         <h1>This space is only available to Verith administrators.</h1>
         <p>
-          Navigation visibility is not authorization. Verith also enforces
-          this role on every administrative API request.
+          Navigation visibility is not authorization. Verith also enforces this
+          role on every administrative API request.
         </p>
         <Link href="/app">Return to investigation desk</Link>
       </main>
@@ -361,8 +375,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
       <aside className={styles.sidebar}>
         <div className={styles.sidebarHeader}>
           <Link className={styles.wordmark} href="/app">
-            <span>V</span>
-            <strong>Verith</strong>
+            <VerithLogo />
           </Link>
           <span>Your verification space</span>
         </div>
@@ -386,7 +399,9 @@ export default function AppShell({ children }: { children: ReactNode }) {
         />
         <div className={styles.account}>
           <div
-            aria-label={avatarUrl ? `${displayName}'s profile image` : undefined}
+            aria-label={
+              avatarUrl ? `${displayName}'s profile image` : undefined
+            }
             aria-hidden={avatarUrl ? undefined : "true"}
             className={styles.avatar}
             role={avatarUrl ? "img" : undefined}
@@ -398,7 +413,11 @@ export default function AppShell({ children }: { children: ReactNode }) {
             <strong>{displayName}</strong>
             <span>{role}</span>
           </div>
-          <button type="button" onClick={() => setLogoutDialog(true)}>
+          <button
+            type="button"
+            className="text-red-400!"
+            onClick={() => setLogoutDialog(true)}
+          >
             Log out
           </button>
         </div>
@@ -411,7 +430,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
           </div>
           <div className={styles.topbarActions}>
             <NotificationTrigger open={() => setNotificationDrawer(true)} />
-            <Link href="/app/verify">New investigation</Link>
+            <NewInvestigationButton className="max-sm:hidden" />
             <details className={styles.mobileNavigation}>
               <summary>
                 <span className="sr-only">Navigation menu</span>
@@ -444,8 +463,13 @@ export default function AppShell({ children }: { children: ReactNode }) {
                   <button
                     onClick={() => setLogoutDialog(true)}
                     type="button"
+                    className="text-red-400!"
                   >
-                    <LogOut aria-hidden="true" size={16} />
+                    <LogOut
+                      aria-hidden="true"
+                      size={16}
+                      className="text-red-400!"
+                    />
                     Log out
                   </button>
                 </div>
@@ -469,7 +493,10 @@ export default function AppShell({ children }: { children: ReactNode }) {
           {children}
         </motion.main>
       </div>
-      <nav className={styles.mobileBottomNavigation} aria-label="Quick navigation">
+      <nav
+        className={styles.mobileBottomNavigation}
+        aria-label="Quick navigation"
+      >
         {mobileNavigation.map((item) => {
           const Icon = item.icon;
           const active = isActive(pathname, item.href);

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import WhatsAppComingSoon from "@/components/whatsapp/WhatsAppComingSoon";
 import PublicNavbar from "@/components/public/PublicNavbar";
 
 export const metadata: Metadata = {
@@ -31,7 +31,8 @@ export default function WhatsAppPage() {
           the channel your community already uses.
         </p>
       </section>
-      <section className="mx-auto grid max-w-[1300px] grid-cols-3 gap-5 px-6 max-[700px]:grid-cols-1">
+      <div className="pb-20"><WhatsAppComingSoon /></div>
+      <section className="mx-auto grid max-w-[1300px] grid-cols-3 gap-5 px-6 opacity-50 max-[700px]:grid-cols-1">
         <div className="group min-h-62.5 rounded-3xl border border-white/[0.06] [background:radial-gradient(circle_at_20%_0%,rgba(139,92,246,0.16),transparent_18rem),rgba(7,7,8,0.72)] p-8 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-300 hover:-translate-y-1 hover:border-white/15">
           <span className="grid size-10 place-items-center rounded-xl bg-violet-500/15 text-sm font-semibold text-violet-300">1</span>
           <h2 className="mt-7 text-xl font-semibold tracking-tight">Create a secure connection</h2>
@@ -58,12 +59,7 @@ export default function WhatsAppPage() {
           for lookup, verifies Meta webhook signatures, records consent, and
           removes the encrypted number when you unlink.
         </p>
-        <Link
-          className="col-start-2 justify-self-start rounded-full bg-gradient-to-r from-[#C084FC] to-[#6366F1] px-5 py-3 text-sm font-medium text-white transition-all duration-200 hover:scale-[1.02] hover:shadow-[0_12px_28px_-10px_rgba(139,92,246,0.4)] active:scale-[0.98] max-[700px]:col-start-1"
-          href="/login"
-        >
-          Log in to connect WhatsApp
-        </Link>
+        <span className="col-start-2 justify-self-start rounded-full border border-amber-300/15 bg-amber-300/[.05] px-5 py-3 text-xs font-semibold uppercase tracking-[.12em] text-amber-200 max-[700px]:col-start-1">Connection locked during rollout</span>
       </section>
     </main>
   );

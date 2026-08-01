@@ -263,6 +263,16 @@ export const adminService = {
         : `/admin/${resource}`;
     return apiClient.get<AdminRecord>(`${base}/${id}`);
   },
+  createContent: (
+    resource: "courses" | "lessons" | "quizzes" | "challenges",
+    body: Record<string, unknown>,
+  ) => {
+    const base =
+      resource === "courses" || resource === "lessons"
+        ? `/admin/learning/${resource}`
+        : `/admin/${resource}`;
+    return apiClient.post<AdminRecord>(base, body);
+  },
   updateContentStatus: (
     resource: "courses" | "lessons" | "quizzes" | "challenges",
     id: string,
@@ -291,6 +301,8 @@ export const adminService = {
     ),
   prompt: (id: string) =>
     apiClient.get<AdminRecord>(`/admin/ai/prompts/${id}`),
+  createPrompt: (body: Record<string, unknown>) =>
+    apiClient.post<AdminRecord>("/admin/ai/prompts", body),
   promptAction: (id: string, action: "publish" | "rollback", reason: string) =>
     apiClient.patch<AdminRecord>(`/admin/ai/prompts/${id}/${action}`, {
       reason,
@@ -310,6 +322,8 @@ export const adminService = {
   badges: () => apiClient.get<AdminRecord[]>("/admin/gamification/badges"),
   badge: (id: string) =>
     apiClient.get<AdminRecord>(`/admin/gamification/badges/${id}`),
+  createBadge: (body: Record<string, unknown>) =>
+    apiClient.post<AdminRecord>("/admin/gamification/badges", body),
   archiveBadge: (id: string, reason: string) =>
     apiClient.delete<AdminRecord>(`/admin/gamification/badges/${id}`, {
       reason,

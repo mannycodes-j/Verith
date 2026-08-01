@@ -71,8 +71,16 @@ export interface SourceAssessment {
 export interface MediaAnalysis {
   status: string;
   fullText?: string;
+  mediaKind?: "IMAGE" | "VIDEO" | null;
+  spokenText?: string | null;
+  onScreenText?: string[];
+  blocks?: Array<{
+    timestamp?: string;
+    description?: string;
+    evidenceType?: string;
+  }>;
   language?: string;
-  confidence?: number;
+  confidence?: number | null;
   uncertainRegions?: unknown[];
   visibleDates?: string[];
   visibleUrls?: string[];

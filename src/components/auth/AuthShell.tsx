@@ -2,6 +2,7 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { authStyles as styles } from "./auth.styles";
+import VerithLogo from "@/components/brand/VerithLogo";
 
 export default function AuthShell({ children }: { children: ReactNode }) {
   return (
@@ -14,10 +15,7 @@ export default function AuthShell({ children }: { children: ReactNode }) {
       </a>
       <section className={styles.context} aria-labelledby="auth-context-title">
         <Link className={styles.wordmark} href="/">
-          <span className="inline-flex size-8 items-center justify-center rounded-lg bg-accent text-sm font-bold text-accent-foreground">
-            V
-          </span>
-          <span className="ml-2">Verith</span>
+          <VerithLogo />
         </Link>
         <div className={`${styles.contextBody} animate-entrance`}>
           <p className={styles.eyebrow}>Your private evidence workspace</p>

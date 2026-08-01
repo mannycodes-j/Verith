@@ -21,5 +21,5 @@ export const vectraStyles = {
   state:
     "rounded-3xl border border-white/[0.06] bg-card/60 p-8 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] [&>span]:text-[10px] [&>span]:font-semibold [&>span]:uppercase [&>span]:tracking-[0.14em] [&>span]:text-violet-400 [&_h1]:mt-4 [&_h1]:text-4xl [&_h1]:font-semibold [&_h2]:mt-4 [&_h2]:text-3xl [&_h2]:font-semibold [&_p]:max-w-2xl [&_p]:text-sm [&_p]:leading-relaxed [&_p]:text-white/50",
   dialog:
-    "w-full max-w-xl rounded-3xl border border-white/[0.08] bg-[#0F1012] p-7 shadow-2xl [&_h2]:text-3xl [&_h2]:font-semibold [&_p]:text-sm [&_p]:leading-relaxed [&_p]:text-white/50",
+    "w-full max-w-3xl rounded-3xl border border-white/[0.08] bg-[#0F1012] p-7 shadow-2xl [&_h2]:text-3xl [&_h2]:font-semibold [&_p]:text-sm [&_p]:leading-relaxed [&_p]:text-white/50",
 } as const;

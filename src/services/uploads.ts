@@ -17,6 +17,7 @@ export interface SignedUpload {
   context: string;
   allowedFormats: string[];
   maxBytes: number;
+  maxDurationSeconds?: number;
   expiresAt: string;
 }
 
@@ -55,6 +56,33 @@ export class UploadError extends Error {
 
 function extension(file: File) {
   return file.name.split(".").at(-1)?.toLowerCase() ?? "";
+}
+
+function videoDuration(file: File): Promise<number> {
+  return new Promise((resolve, reject) => {
+    const element = document.createElement("video");
+    const objectUrl = URL.createObjectURL(file);
+    const cleanup = () => {
+      URL.revokeObjectURL(objectUrl);
+      element.removeAttribute("src");
+      element.load();
+    };
+    element.preload = "metadata";
+    element.onloadedmetadata = () => {
+      const duration = element.duration;
+      cleanup();
+      if (!Number.isFinite(duration) || duration <= 0) {
+        reject(new UploadError("The selected video duration could not be read."));
+        return;
+      }
+      resolve(duration);
+    };
+    element.onerror = () => {
+      cleanup();
+      reject(new UploadError("The selected video metadata could not be read."));
+    };
+    element.src = objectUrl;
+  });
 }
 
 function uploadToCloudinary(
@@ -181,6 +209,7 @@ export const uploadService = {
       | "VERIFICATION_IMAGE"
       | "VERIFICATION_SCREENSHOT"
       | "VERIFICATION_AUDIO"
+      | "VERIFICATION_VIDEO"
     >;
     file: File;
     onProgress?: (progress: number) => void;
@@ -204,6 +233,14 @@ export const uploadService = {
       throw new UploadError(
         `Use one of these formats: ${signed.allowedFormats.join(", ")}.`,
       );
+    }
+    if (signed.maxDurationSeconds !== undefined) {
+      const duration = await videoDuration(file);
+      if (duration > signed.maxDurationSeconds) {
+        throw new UploadError(
+          `Use a video no longer than ${signed.maxDurationSeconds} seconds.`,
+        );
+      }
     }
 
     const uploaded = await uploadToCloudinary(signed, file, onProgress);

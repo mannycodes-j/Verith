@@ -4,7 +4,7 @@ export const authStyles = {
   context:
     "relative z-10 flex h-full min-h-[680px] w-full flex-col overflow-hidden rounded-3xl border border-white/[0.06] [background:radial-gradient(circle_at_18%_0%,rgba(139,92,246,0.15),transparent_28rem),rgba(7,7,8,0.72)] p-7 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] lg:p-10 max-lg:order-2 max-lg:min-h-auto",
   wordmark:
-    "relative flex items-center self-start text-[15px] font-medium tracking-tight [&_span:first-child]:!rounded-lg [&_span:first-child]:!bg-[#24183f] [&_span:first-child]:!text-violet-300",
+    "relative flex items-center self-start",
   contextBody:
     "relative my-auto max-w-2xl py-16 [&_h1]:mt-0 [&_h1]:mb-0 [&_h1]:text-4xl [&_h1]:leading-[1.06] [&_h1]:font-semibold [&_h1]:tracking-tighter md:[&_h1]:text-6xl",
   eyebrow:
@@ -25,8 +25,7 @@ export const authStyles = {
     "[&>span]:inline-flex [&>span]:items-center [&>span]:gap-2 [&>span]:text-[10px] [&>span]:font-semibold [&>span]:uppercase [&>span]:tracking-[0.16em] [&>span]:text-violet-400 [&>span]:before:inline-flex [&>span]:before:size-1.5 [&>span]:before:rounded-full [&>span]:before:bg-violet-400 [&>h2]:mt-5 [&>h2]:mb-3 [&>h2]:text-3xl [&>h2]:leading-[1.1] [&>h2]:font-semibold [&>h2]:tracking-tighter md:[&>h2]:text-4xl [&>p]:mb-8 [&>p]:text-sm [&>p]:leading-relaxed [&>p]:text-white/50",
   form: "grid gap-5",
   providerAuth: "mb-6 grid gap-3",
-  providerButton:
-    "flex min-h-11 w-full items-center justify-center overflow-hidden rounded-full [&>div]:!max-w-full",
+  providerButton: "flex min-h-10 w-full items-center justify-center",
   providerStatus: "m-0 text-center text-[11px] leading-relaxed text-white/50",
   providerDivider:
     "relative my-2 flex items-center justify-center before:absolute before:inset-x-0 before:h-px before:bg-white/[0.07] [&>span]:relative [&>span]:bg-card [&>span]:px-3 [&>span]:text-[10px] [&>span]:font-medium [&>span]:uppercase [&>span]:tracking-[0.12em] [&>span]:text-white/35",

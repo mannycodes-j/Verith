@@ -29,8 +29,10 @@ export default function AuditLogLedger() {
   return (
     <div className={styles.page}>
       <header className={styles.listHero}>
-        <span>Governance: Append-only audit record</span>
-        <h1>Every privileged intervention remains inspectable.</h1>
+        <div className="admin-heading">
+          <span>Governance: Append-only audit record</span>
+          <h1>Every privileged intervention remains inspectable.</h1>
+        </div>
         <p>
           This super-administrator view contains safe before-and-after
           projections, request identifiers, actors, resources, and required

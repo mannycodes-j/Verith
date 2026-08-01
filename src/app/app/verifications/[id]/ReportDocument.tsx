@@ -2,6 +2,8 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
+import Link from "next/link";
+import { learningService } from "@/services/learning";
 import {
   reportService,
   type ReportEvidence,
@@ -9,23 +11,10 @@ import {
 } from "@/services/reports";
 import ReportActions from "./ReportActions";
 import { reportStyles as styles } from "./report.styles";
+import { formatReportDate as formatDate, friendlyConfidence, friendlyLabel, friendlyReportText, friendlyVerdict, reportPercentage as percentage } from "@/utils/report-presentation";
 
 function humanize(value: string | undefined) {
-  return value?.replaceAll("_", " ").toLowerCase() ?? "Unavailable";
-}
-
-function percentage(value: number | undefined) {
-  return typeof value === "number" && Number.isFinite(value)
-    ? `${Math.round(value * 100)}%`
-    : "Unavailable";
-}
-
-function formatDate(value: string | undefined) {
-  if (!value) return "Unavailable";
-  const date = new Date(value);
-  return Number.isNaN(date.valueOf())
-    ? "Unavailable"
-    : new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(date);
+  return friendlyLabel(value);
 }
 
 function EvidenceDetail({ evidence }: { evidence?: ReportEvidence }) {
@@ -133,17 +122,27 @@ export function ReportReader({
     [report.evidence],
   );
   const [selectedEvidenceId, setSelectedEvidenceId] = useState<string>();
+  const learning = useQuery({
+    enabled: showActions && Boolean(report.id),
+    queryFn: () => learningService.recommendationsForReport(report.id!),
+    queryKey: ["learning-recommendations", report.id],
+    retry: false,
+  });
   const selectedEvidence = selectedEvidenceId
     ? evidenceById.get(selectedEvidenceId)
     : undefined;
+  const unavailableEvidence = report.evidence.filter((item) =>
+    !["AVAILABLE", "PARTIALLY_AVAILABLE"].includes(item.accessStatus),
+  );
+  const noReadableEvidence = report.evidence.length > 0 && unavailableEvidence.length === report.evidence.length;
 
   return (
     <article className={styles.report}>
       <header className={styles.reportHeader}>
         <div>
           <span>Report version {report.version}</span>
-          <h2>{humanize(report.overallVerdict)}</h2>
-          <p>{report.summary}</p>
+          <h2>{friendlyVerdict(report.overallVerdict)}</h2>
+          <p>{friendlyReportText(report.summary)}</p>
         </div>
         <dl>
           {report.id && (
@@ -172,7 +171,7 @@ export function ReportReader({
           </div>
           <div>
             <dt>Confidence</dt>
-            <dd>{percentage(report.confidence)}</dd>
+            <dd>{friendlyConfidence(report.confidence)}</dd>
           </div>
         </dl>
         {showActions && report.id && report.verificationId && (
@@ -183,10 +182,17 @@ export function ReportReader({
         )}
       </header>
 
+      {noReadableEvidence && (
+        <section className={styles.sourceWarning} role="status">
+          <span>Evidence check incomplete</span>
+          <div><h2>We found sources, but could not read them.</h2><p>This result does not mean the claim is true or false. Verith kept {unavailableEvidence.length} source links for inspection and avoided making a confident decision without readable evidence.</p></div>
+        </section>
+      )}
+
       <section className={styles.findings}>
         <div>
           <span>What Verith found</span>
-          <p>{report.summary}</p>
+          <p>{friendlyReportText(report.summary)}</p>
         </div>
         <div>
           <span>Recommended action</span>
@@ -201,6 +207,17 @@ export function ReportReader({
           )}
         </div>
       </section>
+
+      {showActions && report.id && (
+        <section className={styles.learningRecommendations}>
+          <div>
+            <span>Build the skill</span>
+            <h2>Learning selected from this report.</h2>
+            <p>Published courses appear only when their real catalog tags match this report’s retained learning recommendations.</p>
+          </div>
+          {learning.isPending ? <p>Matching published learning…</p> : learning.isError ? <button onClick={() => void learning.refetch()} type="button">Retry recommendations</button> : learning.data.length ? <ul>{learning.data.map((course) => <li key={course._id}><span>{course.difficulty} · {course.estimatedDuration} min</span><h3>{course.title}</h3><p>{course.description}</p><Link href={`/app/learning/${course.slug}`}>Open course</Link></li>)}</ul> : <p>No published course currently matches this report.</p>}
+        </section>
+      )}
 
       <div className={styles.claimWorkspace}>
         <section className={styles.claims}>
@@ -218,16 +235,12 @@ export function ReportReader({
                 <header>
                   <span>Claim {String(index + 1).padStart(2, "0")}</span>
                   <span data-verdict={claim.verdict}>
-                    {humanize(claim.verdict)}
+                    {friendlyVerdict(claim.verdict)}
                   </span>
                 </header>
                 <h3>{claim.text}</h3>
-                <div className={styles.claimMeta}>
-                  <span>Confidence {percentage(claim.confidence)}</span>
-                  <span>{humanize(claim.importance)} importance</span>
-                  <span>{humanize(claim.verifiability)}</span>
-                </div>
-                <p>{claim.explanation}</p>
+                <p>{friendlyReportText(claim.explanation)}</p>
+                <details className={styles.claimDetails}><summary>See confidence and technical details</summary><div className={styles.claimMeta}><span>{friendlyConfidence(claim.confidence)}</span><span>{humanize(claim.importance)} importance</span><span>{humanize(claim.verifiability)}</span></div></details>
                 <ClaimEvidence
                   evidence={evidenceById}
                   ids={claim.supportingEvidenceIds ?? []}
@@ -393,18 +406,59 @@ export function ReportReader({
           </div>
           {report.mediaAnalysis && (
             <article>
-              <span>Image or screenshot</span>
+              <span>
+                {report.mediaAnalysis.mediaKind === "VIDEO"
+                  ? "Video inspection"
+                  : "Image or screenshot"}
+              </span>
               <h3>{humanize(report.mediaAnalysis.status)}</h3>
-              {report.mediaAnalysis.fullText && (
+              {report.mediaAnalysis.mediaKind !== "VIDEO" &&
+                report.mediaAnalysis.fullText && (
                 <div>
                   <strong>Extracted text</strong>
                   <p>{report.mediaAnalysis.fullText}</p>
                 </div>
               )}
-              <p>
-                Reverse-image search:{" "}
-                {humanize(report.mediaAnalysis.reverseImageStatus)}
-              </p>
+              {report.mediaAnalysis.mediaKind === "VIDEO" &&
+                report.mediaAnalysis.spokenText && (
+                  <div>
+                    <strong>Spoken transcript</strong>
+                    <p>{report.mediaAnalysis.spokenText}</p>
+                  </div>
+                )}
+              {report.mediaAnalysis.mediaKind === "VIDEO" &&
+                report.mediaAnalysis.onScreenText?.length ? (
+                  <div>
+                    <strong>On-screen text</strong>
+                    <p>{report.mediaAnalysis.onScreenText.join(" · ")}</p>
+                  </div>
+                ) : null}
+              {report.mediaAnalysis.mediaKind === "VIDEO" &&
+                !report.mediaAnalysis.spokenText &&
+                !report.mediaAnalysis.onScreenText?.length &&
+                report.mediaAnalysis.fullText && (
+                  <div>
+                    <strong>Extracted video content</strong>
+                    <p>{report.mediaAnalysis.fullText}</p>
+                  </div>
+                )}
+              {report.mediaAnalysis.blocks?.length ? (
+                <ol>
+                  {report.mediaAnalysis.blocks.map((moment, index) => (
+                    <li key={`${moment.timestamp ?? "moment"}-${index}`}>
+                      <strong>{moment.timestamp ?? "Time unavailable"}</strong>{" "}
+                      {moment.description ?? "No description returned."}
+                      {moment.evidenceType ? ` (${humanize(moment.evidenceType)})` : ""}
+                    </li>
+                  ))}
+                </ol>
+              ) : null}
+              {report.mediaAnalysis.mediaKind !== "VIDEO" && (
+                <p>
+                  Reverse-image search:{" "}
+                  {humanize(report.mediaAnalysis.reverseImageStatus)}
+                </p>
+              )}
             </article>
           )}
           {report.audioAnalysis && (
