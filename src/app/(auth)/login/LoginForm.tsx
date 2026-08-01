@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -33,6 +34,7 @@ export default function LoginForm({
   const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
   const [verificationRequired, setVerificationRequired] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const {
     formState: { errors, isSubmitting },
     handleSubmit,
@@ -95,14 +97,31 @@ export default function LoginForm({
         </div>
         <div className={styles.field}>
           <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            autoComplete="current-password"
-            aria-invalid={Boolean(errors.password)}
-            aria-describedby={errors.password ? "password-error" : undefined}
-            {...register("password")}
-          />
+          <div className={styles.passwordControl}>
+            <input
+              id="password"
+              type={passwordVisible ? "text" : "password"}
+              autoComplete="current-password"
+              aria-invalid={Boolean(errors.password)}
+              aria-describedby={errors.password ? "password-error" : undefined}
+              {...register("password")}
+            />
+            <button
+              aria-controls="password"
+              aria-label={passwordVisible ? "Hide password" : "Show password"}
+              aria-pressed={passwordVisible}
+              className={styles.passwordToggle}
+              onClick={() => setPasswordVisible((visible) => !visible)}
+              onMouseDown={(event) => event.preventDefault()}
+              type="button"
+            >
+              {passwordVisible ? (
+                <EyeOff aria-hidden="true" size={18} />
+              ) : (
+                <Eye aria-hidden="true" size={18} />
+              )}
+            </button>
+          </div>
           {errors.password && (
             <p className={styles.fieldError} id="password-error">
               {errors.password.message}

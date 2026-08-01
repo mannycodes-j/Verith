@@ -4253,7 +4253,10 @@ export interface operations {
     };
     GamificationController_transactions: {
         parameters: {
-            query?: never;
+            query?: {
+                cursor?: string;
+                limit?: number;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -4304,7 +4307,10 @@ export interface operations {
     };
     GamificationController_leaderboard: {
         parameters: {
-            query?: never;
+            query?: {
+                period?: "WEEKLY" | "MONTHLY" | "ALL_TIME";
+                limit?: number;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -4645,7 +4651,10 @@ export interface operations {
     };
     NotificationsController_list: {
         parameters: {
-            query?: never;
+            query?: {
+                limit?: number;
+                cursor?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -4707,7 +4716,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            200: {
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };

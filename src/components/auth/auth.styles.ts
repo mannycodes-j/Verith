@@ -33,7 +33,7 @@ export const authStyles = {
   fieldHint: "m-0 text-[11px] leading-relaxed text-white/55",
   formMeta: "flex items-center justify-end text-xs [&_a]:text-violet-300",
   submit:
-    "flex min-h-11 items-center justify-between rounded-full border-0 bg-gradient-to-r from-[#C084FC] to-[#6366F1] px-5 text-sm font-medium text-white transition-all duration-200 hover:not-disabled:scale-[1.02] hover:not-disabled:shadow-[0_12px_28px_-10px_rgba(139,92,246,0.4)] active:scale-[0.98] disabled:cursor-wait disabled:opacity-50",
+    "flex min-h-11 items-center justify-center gap-2 rounded-full border-0 bg-gradient-to-r from-[#C084FC] to-[#6366F1] px-5 text-center text-sm font-medium text-white transition-all duration-200 hover:not-disabled:scale-[1.02] hover:not-disabled:shadow-[0_12px_28px_-10px_rgba(139,92,246,0.4)] active:scale-[0.98] disabled:cursor-wait disabled:opacity-50",
   serverError:
     "rounded-2xl border border-danger/20 bg-danger/[0.06] p-4 text-xs leading-relaxed text-red-200",
   notice:

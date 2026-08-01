@@ -407,11 +407,13 @@ export default function AppShell({ children }: { children: ReactNode }) {
           </div>
           <div className={styles.topbarActions}>
             <button
+              aria-label="Open notifications"
               className={styles.notificationTrigger}
               onClick={() => setNotificationDrawer(true)}
+              title="Notifications"
               type="button"
             >
-              Notifications
+              <Bell aria-hidden="true" size={18} strokeWidth={1.8} />
             </button>
             <Link href="/app/verify">New investigation</Link>
             <details className={styles.mobileNavigation}>

@@ -19,5 +19,5 @@ export const notificationStyles = {
   recordActions:
     "flex flex-wrap justify-end gap-2 max-[700px]:col-start-2 max-[700px]:justify-start [&_a]:rounded-full [&_a]:border [&_a]:border-violet-400/20 [&_a]:bg-violet-500/10 [&_a]:px-3.5 [&_a]:py-2 [&_a]:text-xs [&_a]:font-medium [&_a]:text-violet-200 [&_a]:transition-colors [&_a:hover]:bg-violet-500/20 [&_button]:rounded-full [&_button]:border [&_button]:border-white/[0.07] [&_button]:bg-white/[0.03] [&_button]:px-3.5 [&_button]:py-2 [&_button]:text-xs [&_button]:font-medium [&_button]:text-white/55 [&_button]:transition-colors [&_button:not(:disabled):hover]:bg-white/[0.07] [&_button:not(:disabled):hover]:text-white [&_button:disabled]:opacity-40",
   loadMore:
-    `${vectraStyles.secondaryAction} mx-auto my-8 block`,
+    `${vectraStyles.secondaryAction} mx-auto my-8 flex w-fit`,
 } as const;

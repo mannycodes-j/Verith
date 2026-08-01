@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { X } from "lucide-react";
 import Link from "next/link";
 import { notificationsService } from "@/services/notifications";
 import { appShellStyles as styles } from "./app-shell.styles";
@@ -37,7 +38,7 @@ export default function NotificationDrawer({
             <h2 id="notification-drawer-title">Notifications</h2>
           </div>
           <button aria-label="Close notifications" onClick={close} type="button">
-            ×
+            <X aria-hidden="true" size={18} />
           </button>
         </header>
         {notifications.isPending && (

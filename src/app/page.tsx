@@ -146,8 +146,8 @@ export default function LandingPage() {
               Log in
             </Link>
             <Link
-              className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-black transition-all hover:bg-foreground/90 active:scale-[0.98]"
-              href="/register"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-center text-sm font-medium text-black transition-all hover:bg-foreground/90 active:scale-[0.98]"
+              href="/login"
             >
               Try now
               <ArrowRight size={15} />
@@ -196,8 +196,8 @@ export default function LandingPage() {
               </p>
               <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
                 <Link
-                  className="inline-flex min-h-12 items-center gap-2 rounded-full bg-gradient-to-r from-[#C084FC] to-[#6366F1] px-7 text-sm font-medium text-white shadow-[0_0_45px_rgba(139,92,246,0.28)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
-                  href="/register"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#C084FC] to-[#6366F1] px-7 text-center text-sm font-medium text-white shadow-[0_0_45px_rgba(139,92,246,0.28)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
+                  href="/login"
                 >
                   Try Verith now
                   <ArrowRight size={16} />
@@ -358,10 +358,10 @@ export default function LandingPage() {
                   </p>
                 </div>
                 <div className="flex flex-col justify-end gap-3">
-                  <Link className="inline-flex items-center justify-between rounded-full bg-white/[0.065] px-5 py-3 text-sm font-semibold hover:bg-white/10" href="/learning">
+                  <Link className="inline-flex items-center justify-center gap-2 rounded-full bg-white/[0.065] px-5 py-3 text-center text-sm font-semibold hover:bg-white/10" href="/learning">
                     Explore learning <ArrowRight size={15} />
                   </Link>
-                  <Link className="inline-flex items-center justify-between rounded-full bg-white/[0.065] px-5 py-3 text-sm font-semibold hover:bg-white/10" href="/whatsapp">
+                  <Link className="inline-flex items-center justify-center gap-2 rounded-full bg-white/[0.065] px-5 py-3 text-center text-sm font-semibold hover:bg-white/10" href="/whatsapp">
                     Use WhatsApp <ArrowRight size={15} />
                   </Link>
                 </div>
