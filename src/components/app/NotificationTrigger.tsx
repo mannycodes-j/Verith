@@ -13,7 +13,9 @@ export default function NotificationTrigger({
   const unread = useQuery({
     queryFn: notificationsService.unreadCount,
     queryKey: ["notifications", "unread-count"],
-    refetchInterval: 30_000,
+    // The drawer and ledger always fetch current records on demand. A badge
+    // does not need a network request every 30 seconds from every active tab.
+    refetchInterval: 5 * 60_000,
     refetchOnWindowFocus: true,
     retry: false,
   });

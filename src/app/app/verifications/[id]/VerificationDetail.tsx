@@ -20,14 +20,29 @@ export default function VerificationDetail({ id }: { id: string }) {
 		queryKey: ["verification", id],
 		refetchInterval: (query) => {
 			const status = query.state.data?.status;
-			return status && terminalStatuses.includes(status) ? false : streamState === "live" ? 15_000 : 3_000;
+			// The event stream is the primary transport while it is healthy. Keep a
+			// low-frequency reconciliation fetch for a missed terminal transition,
+			// instead of continuously polling the same case alongside SSE.
+			return status && terminalStatuses.includes(status)
+				? false
+				: streamState === "live"
+					? 60_000
+					: 10_000;
 		},
 	});
 	const events = useQuery({
 		enabled: Boolean(verification.data),
 		queryFn: () => verificationService.listEvents(id),
 		queryKey: ["verification-events", id],
-		refetchInterval: verification.data ? (terminalStatuses.includes(verification.data.status) ? false : 4_000) : false,
+		// Persisted events arrive through SSE while connected. Poll only as a
+		// recovery path when that stream cannot be established.
+		refetchInterval: verification.data
+			? terminalStatuses.includes(verification.data.status)
+				? false
+				: streamState === "live"
+					? false
+					: 10_000
+			: false,
 	});
 	const cancel = useMutation({
 		mutationFn: () => verificationService.cancel(id),
