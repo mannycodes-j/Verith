@@ -84,20 +84,16 @@ export default function LandingPage() {
               
               <div className="mt-10 flex flex-wrap items-center gap-6">
                 <Link
-                  className="group relative inline-flex cursor-pointer items-center justify-center overflow-hidden rounded-full font-bold text-white transition-all duration-500 hover:scale-[1.03] active:scale-[0.97] px-8 py-3.5 text-sm"
+                  className="inline-flex h-14 items-center justify-center gap-2 rounded-full border border-violet-500/20 bg-gradient-to-r from-violet-600 to-indigo-600 px-8 text-sm font-bold text-white transition-transform hover:scale-105 active:scale-95 shadow-[0_4px_24px_rgba(139,92,246,0.3)] group"
                   href="/login"
                 >
-                  <span className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-900 via-violet-600 to-fuchsia-500 p-px shadow-[0_0_20px_-5px_rgba(139,92,246,0.5)] transition-shadow duration-500 group-hover:shadow-[0_0_35px_-5px_rgba(139,92,246,0.85)]">
-                    <span className="block size-full rounded-full bg-gradient-to-b from-[#1a103c] to-black backdrop-blur-xl"></span>
-                  </span>
-                  <span aria-hidden="true" className="absolute top-1/2 -right-4 size-24 -translate-y-1/2 bg-violet-600/30 blur-3xl transition-all duration-700 group-hover:bg-violet-500/50"></span>
                   <span className="relative z-10 flex items-center gap-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
                     Start Investigating
                     <ArrowRight size={16} className="opacity-70 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </Link>
                 <a
-                  className="inline-flex h-12 items-center justify-center rounded-full px-4 text-sm font-medium text-white/50 transition-colors hover:text-white"
+                  className="inline-flex h-14 items-center justify-center rounded-full border border-white/10 bg-white/5 px-8 text-sm font-bold text-white/70 transition-all hover:bg-white/10 hover:text-white"
                   href="#how-it-works"
                 >
                   Explore Product
@@ -360,9 +356,9 @@ export default function LandingPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
-                { quote: "Verith has completely transformed how our newsroom verifies breaking information on social media. The traceable evidence maps save us hours.", author: "Sarah Jenkins", role: "Investigative Journalist" },
-                { quote: "Finally, a tool that treats people like adults. Instead of just telling me what's fake, it actually shows me the underlying sources and bias.", author: "David Chen", role: "Independent Researcher" },
-                { quote: "The media literacy engine is brilliant. I started using it to check WhatsApp rumors, and now I actually understand how to spot missing context.", author: "Elena Rodriguez", role: "Community Educator" }
+                { quote: "Verith has completely transformed how our newsroom verifies breaking information on social media. The traceable evidence maps save us hours.", author: "Adesugba Samuel" },
+                { quote: "Finally, a tool that treats people like adults. Instead of just telling me what's fake, it actually shows me the underlying sources and bias.", author: "Zion Obadina" },
+                { quote: "The media literacy engine is brilliant. I started using it to check WhatsApp rumors, and now I actually understand how to spot missing context.", author: "Emmanuel Oluwaferanmi" }
               ].map((testimonial, i) => (
                 <MotionReveal delay={i * 0.1} key={i}>
                   <div className="rounded-3xl border border-white/10 bg-black/40 backdrop-blur-xl p-8 relative hover:border-white/20 transition-all duration-300">
@@ -374,7 +370,6 @@ export default function LandingPage() {
                       </div>
                       <div>
                         <div className="text-sm font-medium text-white/90">{testimonial.author}</div>
-                        <div className="text-xs text-white/40">{testimonial.role}</div>
                       </div>
                     </div>
                   </div>
@@ -446,7 +441,7 @@ export default function LandingPage() {
         
         <div className="mx-auto max-w-6xl relative z-10">
           <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-12 mb-16">
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-6">
               <Brand />
               <p className="mt-6 max-w-sm text-sm text-white/50 leading-relaxed">
                 Explainable verification and media literacy infrastructure for healthier digital communities. Stop guessing, start investigating.
@@ -457,7 +452,7 @@ export default function LandingPage() {
               </div>
             </div>
             
-            <div className="lg:col-span-2 lg:col-start-7 flex flex-col gap-4">
+            <div className="lg:col-span-2 flex flex-col gap-4">
               <span className="text-sm font-semibold text-white tracking-wider uppercase mb-2">Product</span>
               <Link className="text-sm text-white/50 hover:text-violet-300 transition-colors" href="/how-it-works">How it works</Link>
               <Link className="text-sm text-white/50 hover:text-violet-300 transition-colors" href="/whatsapp">WhatsApp Bot</Link>
@@ -471,7 +466,7 @@ export default function LandingPage() {
               <Link className="text-sm text-white/50 hover:text-violet-300 transition-colors" href="/careers">Careers</Link>
             </div>
 
-            <div className="lg:col-span-3 flex flex-col gap-4">
+            <div className="lg:col-span-2 flex flex-col gap-4">
               <span className="text-sm font-semibold text-white tracking-wider uppercase mb-2">Legal & Support</span>
               <Link className="text-sm text-white/50 hover:text-violet-300 transition-colors" href="/privacy">Privacy Policy</Link>
               <Link className="text-sm text-white/50 hover:text-violet-300 transition-colors" href="/terms">Terms of Service</Link>

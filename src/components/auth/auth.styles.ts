@@ -14,7 +14,7 @@ export const authStyles = {
   formContainer: "w-full rounded-3xl border border-white/10 bg-black/20 backdrop-blur-2xl shadow-2xl p-8 relative",
   formFooter: "hidden",
   formHeader:
-    "mb-8 text-center [&>span]:hidden [&>h2]:mb-2 [&>h2]:text-3xl [&>h2]:font-bold [&>h2]:tracking-tight [&>p]:text-base [&>p]:font-medium [&>p]:text-white/60",
+    "mb-8 text-center [&>span]:hidden [&>h2]:mb-2 [&>h2]:text-3xl [&>h2]:font-bold [&>h2]:tracking-tight [&>h2]:text-violet-400 [&>p]:text-base [&>p]:font-medium [&>p]:text-white/60",
   form: "grid gap-5",
   providerAuth: "mb-6 grid gap-3",
   providerButton: "flex min-h-11 w-full items-center justify-center rounded-xl border border-white/10 bg-white/5 text-sm font-medium transition-colors hover:bg-white/10",
@@ -30,7 +30,7 @@ export const authStyles = {
     "mt-1 rounded-xl border border-white/10 bg-white/5 p-4 [&>p]:m-0 [&>p]:text-xs [&>p]:font-medium [&>p]:text-white/75 [&_ul]:mt-3 [&_ul]:grid [&_ul]:list-none [&_ul]:gap-2 [&_ul]:p-0 [&_li]:flex [&_li]:items-center [&_li]:gap-2.5 [&_li]:text-[11px] [&_li]:leading-relaxed [&_li]:text-white/45 [&_li]:transition-colors [&_li[data-met=true]]:text-white/75 [&_li_svg]:shrink-0",
   fieldError: "m-0 text-[11px] leading-relaxed text-danger",
   fieldHint: "m-0 text-[11px] leading-relaxed text-white/55",
-  formMeta: "flex items-center justify-end text-xs [&_a]:text-white/70 [&_a:hover]:text-white",
+  formMeta: "flex items-center justify-end text-xs [&_a]:text-violet-400 [&_a:hover]:text-violet-300 [&_a]:transition-colors",
   submit:
     "flex min-h-12 items-center justify-center gap-2 rounded-full border border-violet-500/20 bg-gradient-to-r from-violet-600 to-indigo-600 px-5 text-center text-base font-bold text-white transition-transform hover:not-disabled:scale-[1.02] active:scale-[0.98] disabled:cursor-wait disabled:opacity-50 shadow-[0_4px_14px_0_rgba(139,92,246,0.25)]",
   serverError:
@@ -40,5 +40,5 @@ export const authStyles = {
   successState:
     "rounded-xl border border-emerald-400/15 bg-emerald-400/[0.04] p-4 text-xs leading-relaxed [&_strong]:mb-2 [&_strong]:block [&_strong]:font-medium [&_strong]:text-emerald-300 [&_p]:m-0",
   footerPrompt:
-    "mt-6 text-center text-xs text-white/55 [&_a]:font-medium [&_a]:text-white/90 [&_a:hover]:text-white",
+    "mt-6 text-center text-xs text-white/55 [&_a]:font-medium [&_a]:text-violet-400 [&_a:hover]:text-violet-300 [&_a]:transition-colors",
 } as const;
