@@ -93,16 +93,16 @@ export default function HowItWorksPage() {
 									>
 										<div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
 										<div className="relative flex items-center justify-between mb-8">
-											<span className="flex size-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white shadow-sm">
-												<Icon aria-hidden="true" size={18} strokeWidth={2} />
+											<span className="flex size-12 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white shadow-sm">
+												<Icon aria-hidden="true" size={20} strokeWidth={2.5} />
 											</span>
-											<span className="text-[10px] font-medium uppercase tracking-[0.15em] text-white/40">
+											<span className="text-xs font-bold uppercase tracking-[0.15em] text-white/50">
 												0{index + 1}
 											</span>
 										</div>
-										<h3 className="relative text-xl font-semibold tracking-tight text-white mb-2">{outcome}</h3>
-										<span className="relative inline-block mb-3 text-xs font-medium text-white/50">{role}</span>
-										<p className="relative text-sm leading-relaxed text-white/40">{description}</p>
+										<h3 className="relative text-2xl font-bold tracking-tight text-white mb-2">{outcome}</h3>
+										<span className="relative inline-block mb-3 text-sm font-bold text-white/70">{role}</span>
+										<p className="relative text-base font-medium leading-relaxed text-white/60">{description}</p>
 									</article>
 								))}
 							</div>

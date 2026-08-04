@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { ReportReader } from "@/app/app/verifications/[id]/ReportDocument";
 import PublicNavbar from "@/components/public/PublicNavbar";
+import PremiumBackground from "@/components/public/PremiumBackground";
+import ScrollProgress from "@/components/public/ScrollProgress";
 import { reportService } from "@/services/reports";
 
 export default function PublicReport({ slug }: { slug: string }) {
@@ -15,13 +17,15 @@ export default function PublicReport({ slug }: { slug: string }) {
 
   return (
     <main
-      className="min-h-screen bg-[#08090A] pb-16"
+      className="min-h-screen bg-[#08090A] pb-16 relative selection:bg-white/10 selection:text-white"
       id="main-content"
       tabIndex={-1}
     >
+      <ScrollProgress />
+      <PremiumBackground />
       <PublicNavbar />
 
-      <div className="mx-auto max-w-[1300px] px-6 pt-20">
+      <div className="relative z-10 mx-auto max-w-[1300px] px-6 pt-20">
         {report.isPending && (
           <section className="flex min-h-[calc(100svh-80px)] flex-col items-start justify-center [&>span]:inline-flex [&>span]:items-center [&>span]:gap-2 [&>span]:text-[10px] [&>span]:font-semibold [&>span]:uppercase [&>span]:tracking-[0.18em] [&>span]:text-violet-400 [&>span]:before:inline-flex [&>span]:before:size-1.5 [&>span]:before:rounded-full [&>span]:before:bg-violet-400 [&_h1]:mt-5 [&_h1]:max-w-[14ch] [&_h1]:text-4xl [&_h1]:leading-[1.05] [&_h1]:font-semibold [&_h1]:tracking-tighter md:[&_h1]:text-6xl [&_div]:mt-3 [&_div]:h-3 [&_div]:w-full [&_div]:max-w-152 [&_div]:animate-pulse [&_div]:rounded-full [&_div]:bg-white/[0.05]" aria-busy="true">
             <span>Public report</span><h1>Retrieving the evidence record…</h1><div /><div />

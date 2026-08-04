@@ -8,16 +8,16 @@ export const appShellStyles = {
   wordmark:
     "flex items-center",
   sidebarWidget:
-    "mt-6 rounded-xl border border-white/10 bg-white/5 p-4 [&>span]:flex [&>span]:items-center [&>span]:gap-2 [&>span]:text-[10px] [&>span]:font-semibold [&>span]:uppercase [&>span]:tracking-[0.12em] [&>span]:text-white/60 [&>strong]:mt-3 [&>strong]:block [&>strong]:text-lg [&>strong]:font-medium [&>p]:mb-0 [&>p]:mt-2 [&>p]:text-[11px] [&>p]:leading-relaxed [&>p]:text-white/55",
+    "mt-6 rounded-xl border border-white/10 bg-white/5 p-4 [&>span]:flex [&>span]:items-center [&>span]:gap-2 [&>span]:text-xs [&>span]:font-bold [&>span]:uppercase [&>span]:tracking-[0.12em] [&>span]:text-white/70 [&>strong]:mt-3 [&>strong]:block [&>strong]:text-lg [&>strong]:font-medium [&>p]:mb-0 [&>p]:mt-2 [&>p]:text-xs [&>p]:leading-relaxed [&>p]:text-white/60",
   navigation:
     "mt-7 flex flex-1 flex-col gap-6 overflow-y-auto",
   navGroup: "grid gap-1",
   navLabel:
     "px-3 pb-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/50",
   navItem:
-    "relative flex h-11 items-center gap-3 rounded-lg px-3 text-[13px] font-medium text-white/60 transition-colors duration-200 hover:bg-white/5 hover:text-foreground [&>svg]:shrink-0 [&>svg]:text-white/55",
+    "relative flex h-11 items-center gap-3 rounded-lg px-3 text-sm font-semibold text-white/75 transition-colors duration-200 hover:bg-white/5 hover:text-foreground [&>svg]:shrink-0 [&>svg]:text-white/55",
   navItemActive:
-    "bg-white/10 text-foreground [&>svg]:text-white before:absolute before:left-0 before:top-1/2 before:h-1/2 before:-translate-y-1/2 before:w-[3px] before:rounded-r-full before:bg-white",
+    "bg-violet-500/10 text-violet-100 [&>svg]:text-violet-300 before:absolute before:left-0 before:top-1/2 before:h-1/2 before:-translate-y-1/2 before:w-[3px] before:rounded-r-full before:bg-violet-400",
   account:
     "mt-4 grid grid-cols-[36px_minmax(0,1fr)_auto] items-center gap-2.5 border-t border-white/10 px-2 pt-4 [&>div:nth-child(2)]:grid [&>div:nth-child(2)]:min-w-0 [&>div:nth-child(2)]:gap-0.5 [&_strong]:truncate [&_strong]:text-xs [&_span]:text-[10px] [&_span]:text-white/55 [&>button]:min-h-10 [&>button]:rounded-lg [&>button]:border-0 [&>button]:bg-transparent [&>button]:px-2 [&>button]:py-2 [&>button]:text-[10px] [&>button]:text-white/55 hover:[&>button]:bg-white/5 hover:[&>button]:text-foreground",
   avatar:
@@ -30,7 +30,7 @@ export const appShellStyles = {
   notificationTrigger:
     "relative grid size-11 shrink-0 place-items-center rounded-full border border-white/10 bg-white/5 text-white/65 transition-colors hover:border-white/20 hover:bg-white/10 hover:text-white",
   notificationBadge:
-    "absolute -top-1.5 -right-1.5 inline-flex min-h-5 min-w-5 items-center justify-center rounded-full border-2 border-[#0a0a0a] bg-emerald-500 px-1 text-[9px] leading-none font-bold text-white shadow-sm",
+    "absolute -top-1.5 -right-1.5 inline-flex min-h-5 min-w-5 items-center justify-center rounded-full border-2 border-[#0a0a0a] bg-violet-600 px-1 text-[9px] leading-none font-bold text-white shadow-sm shadow-violet-500/20",
   mobileNavigation:
     "relative block lg:hidden [&_summary]:grid [&_summary]:size-11 [&_summary]:cursor-pointer [&_summary]:list-none [&_summary]:place-items-center [&_summary]:rounded-full [&_summary]:border [&_summary]:border-white/10 [&_summary]:bg-white/5 [&_summary]:text-white/70 [&_summary]:transition-colors [&_summary:hover]:border-white/20 [&_summary:hover]:bg-white/10 [&_summary:hover]:text-white [&_summary:focus-visible]:outline-none [&_summary:focus-visible]:ring-2 [&_summary:focus-visible]:ring-white/50 [&_summary::-webkit-details-marker]:hidden",
   mobileMenuPanel:
@@ -42,9 +42,9 @@ export const appShellStyles = {
   mobileBottomNavigation:
     "fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-white/10 bg-[#0a0a0a]/95 px-2 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] backdrop-blur-md lg:hidden",
   mobileBottomItem:
-    "flex min-h-11 flex-col items-center justify-center gap-1 rounded-xl px-2 py-1.5 text-[10px] font-medium text-white/55 transition-colors [&>svg]:text-white/55",
+    "flex min-h-11 flex-col items-center justify-center gap-1 rounded-xl px-2 py-1.5 text-xs font-semibold text-white/70 transition-colors [&>svg]:text-white/70",
   mobileBottomItemActive:
-    "bg-white/10 text-foreground [&>svg]:text-white",
+    "bg-violet-500/10 text-violet-100 [&>svg]:text-violet-300",
   loadingGate:
     "flex min-h-svh items-center justify-center gap-4 bg-[#0a0a0a] p-8 text-center [&_span]:text-xs [&_span]:font-semibold [&_span]:text-white/60 [&>div:last-child]:grid [&>div:last-child]:gap-1 [&>div:last-child]:text-left [&_p]:m-0 [&_p]:text-[0.84rem] [&_p]:text-white/50",
   loadingMark:
@@ -57,5 +57,5 @@ export const appShellStyles = {
   dialogBackdrop:
     "fixed inset-0 z-100 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm",
   logoutDialog:
-    "w-full max-w-2xl rounded-3xl border border-white/10 bg-[#111] p-[clamp(1.5rem,4vw,3rem)] shadow-2xl [&>span]:text-[10px] [&>span]:font-semibold [&>span]:uppercase [&>span]:tracking-[0.14em] [&>span]:text-white/50 [&_h2]:mt-3 [&_h2]:text-[2.2rem] [&_h2]:font-semibold [&_p]:leading-[1.6] [&_p]:text-white/50 [&_footer]:mt-8 [&_footer]:flex [&_footer]:justify-end [&_footer]:gap-3 [&_button]:rounded-full [&_button]:border [&_button]:border-white/10 [&_button]:bg-white/5 [&_button]:px-5 [&_button]:py-3 [&_button]:text-sm [&_button:last-child]:border-transparent [&_button:last-child]:bg-white [&_button:last-child]:text-black",
+    "w-full max-w-2xl rounded-3xl border border-white/10 bg-[#111] p-[clamp(1.5rem,4vw,3rem)] shadow-2xl [&>span]:text-[10px] [&>span]:font-semibold [&>span]:uppercase [&>span]:tracking-[0.14em] [&>span]:text-white/50 [&_h2]:mt-3 [&_h2]:text-[2.2rem] [&_h2]:font-semibold [&_p]:leading-[1.6] [&_p]:text-white/50 [&_footer]:mt-8 [&_footer]:flex [&_footer]:justify-end [&_footer]:gap-3 [&_button]:rounded-full [&_button]:border [&_button]:border-white/10 [&_button]:bg-white/5 [&_button]:px-5 [&_button]:py-3 [&_button]:text-sm [&_button:last-child]:border-violet-500/20 [&_button:last-child]:bg-gradient-to-r [&_button:last-child]:from-violet-600 [&_button:last-child]:to-indigo-600 [&_button:last-child]:text-white [&_button:last-child]:font-bold [&_button:last-child]:shadow-[0_4px_14px_0_rgba(139,92,246,0.25)]",
 } as const;

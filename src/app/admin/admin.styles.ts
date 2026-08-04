@@ -1,7 +1,7 @@
 import { vectraStyles } from "@/lib/vectra-styles";
 
 const adminHeader =
-  "[&_span]:inline-flex [&_span]:items-center [&_span]:gap-2 [&_span]:text-[10px] [&_span]:font-semibold [&_span]:uppercase [&_span]:tracking-[0.15em] [&_span]:text-violet-400 [&_h1]:mt-4 [&_h1]:mb-0 [&_h1]:max-w-[20ch] [&_h1]:text-4xl [&_h1]:leading-[1.08] [&_h1]:font-semibold [&_h1]:tracking-tighter md:[&_h1]:text-5xl [&_p]:m-0 [&_p]:max-w-2xl [&_p]:text-sm [&_p]:leading-relaxed [&_p]:text-white/45";
+  "[&_span]:inline-flex [&_span]:items-center [&_span]:gap-2 [&_span]:text-[10px] [&_span]:font-semibold [&_span]:uppercase [&_span]:tracking-[0.15em] [&_span]:text-violet-400 [&_h1]:mt-4 [&_h1]:mb-0 [&_h1]:max-w-[20ch] [&_h1]:text-4xl [&_h1]:leading-[1.08] [&_h1]:font-semibold [&_h1]:tracking-tighter md:[&_h1]:text-5xl [&_p]:m-0 [&_p]:max-w-2xl [&_p]:text-base [&_p]:leading-relaxed [&_p]:text-white/60";
 
 const adminButton =
   "[&_button]:rounded-full [&_button]:border [&_button]:border-white/[0.08] [&_button]:bg-white/[0.035] [&_button]:px-4 [&_button]:py-2.5 [&_button]:text-xs [&_button]:font-medium [&_button]:text-white/65 [&_button]:transition-all [&_button:not(:disabled):hover]:border-violet-400/20 [&_button:not(:disabled):hover]:bg-violet-500/10 [&_button:not(:disabled):hover]:text-white [&_button:disabled]:cursor-not-allowed [&_button:disabled]:opacity-35";
