@@ -67,12 +67,8 @@ export default function LoginForm({
   return (
     <>
       <header className={styles.formHeader}>
-        <span>Workspace access</span>
-        <h2>Return to your evidence workspace.</h2>
-        <p>
-          Continue active investigations, revisit source-backed reports, and
-          keep building your media-literacy practice.
-        </p>
+        <h2>Welcome back</h2>
+        <p>Log in to your account to continue.</p>
       </header>
       <GoogleAuthButton intent="LOGIN" />
       <form className={styles.form} onSubmit={onSubmit} noValidate>

@@ -27,51 +27,64 @@ export default function PublicEditorial({
 
   return (
     <main
-      className="min-h-screen bg-[#08090A]"
+      className="min-h-screen bg-[#0a0a0a]"
       id="main-content"
       tabIndex={-1}
     >
       <PublicNavbar />
-      <section className="relative mx-auto grid max-w-[1300px] grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.5fr)] gap-[clamp(3rem,8vw,8rem)] overflow-hidden px-6 py-[clamp(6rem,10vw,9rem)] before:pointer-events-none before:absolute before:-top-24 before:left-1/4 before:size-[28rem] before:rounded-full before:bg-violet-500/[0.14] before:blur-[120px] max-[800px]:grid-cols-1">
-        <div>
-          <span className="relative inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-violet-400 before:inline-flex before:size-1.5 before:rounded-full before:bg-violet-400">
-            {simplifyLabel(eyebrow)}
-          </span>
-          <h1 className="relative mt-7 max-w-[14ch] text-5xl leading-[1.05] font-semibold tracking-tighter md:text-7xl">
-            {title}
-          </h1>
-        </div>
-        <p className="relative m-0 self-end text-base leading-7 text-muted-foreground">
+      
+      {/* Elegant Centered Hero */}
+      <section className="mx-auto flex flex-col items-center text-center max-w-[800px] px-6 pt-[clamp(6rem,12vw,10rem)] pb-16">
+        <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.15em] text-white/70 mb-8 backdrop-blur-md">
+          <span className="size-1.5 rounded-full bg-white/70"></span>
+          {simplifyLabel(eyebrow)}
+        </span>
+        <h1 className="text-balance text-4xl md:text-[3.5rem] leading-[1.1] font-semibold tracking-tight text-white mb-6">
+          {title}
+        </h1>
+        <p className="max-w-2xl text-balance text-base md:text-lg leading-relaxed text-white/50">
           {introduction}
         </p>
       </section>
-      <div className="mx-auto grid max-w-[1300px] gap-6 px-6">
-        {sections.map((section) => (
-          <section
-            className="group grid grid-cols-[minmax(16rem,0.65fr)_minmax(18rem,1fr)] gap-[clamp(2rem,7vw,7rem)] rounded-3xl border border-white/[0.06] bg-card/60 p-[clamp(2rem,5vw,4.5rem)] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-300 hover:-translate-y-0.5 hover:border-white/15 max-[800px]:grid-cols-1"
-            key={section.label}
-          >
-            <div>
-              <span className="inline-flex text-[10px] font-semibold uppercase tracking-[0.14em] text-cyan-400">
-                {simplifyLabel(section.label)}
-              </span>
-              <h2 className="mt-5 text-[clamp(2rem,3.5vw,3.8rem)] leading-[1] font-semibold tracking-normal">
-                {section.title}
-              </h2>
+
+      {/* Refined Content Sections */}
+      <div className="mx-auto max-w-[1000px] px-6 pb-32">
+        <div className="flex flex-col gap-0">
+          {sections.map((section, index) => (
+            <div 
+              key={section.label}
+              className="group grid grid-cols-1 md:grid-cols-[200px_1fr] gap-x-12 gap-y-6 border-t border-white/5 py-16"
+            >
+              {/* Left Column Label */}
+              <div className="self-start pt-2">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/40">
+                  {String(index + 1).padStart(2, "0")} — {simplifyLabel(section.label)}
+                </span>
+              </div>
+              
+              {/* Right Column Content */}
+              <div className="max-w-2xl">
+                <h2 className="text-2xl md:text-3xl leading-[1.2] font-semibold tracking-tight text-white mb-6">
+                  {section.title}
+                </h2>
+                <div className="text-base leading-relaxed text-white/60 [&_a]:text-white [&_a]:underline [&_a]:decoration-white/20 [&_a]:underline-offset-4 [&_li]:py-2 [&_p:first-child]:mt-0 [&_p]:mb-6">
+                  {section.content}
+                </div>
+              </div>
             </div>
-            <div className="leading-7 text-muted-foreground [&_a]:text-foreground [&_a]:underline [&_a]:decoration-white/20 [&_a]:underline-offset-4 [&_li]:py-1 [&_p:first-child]:mt-0">
-              {section.content}
-            </div>
-          </section>
-        ))}
+          ))}
+        </div>
       </div>
-      <footer className="mx-auto flex max-w-[1300px] flex-wrap justify-between gap-6 px-6 py-10 text-xs text-muted max-[520px]:flex-col">
-        <span>Verith helps you follow the evidence</span>
-        <nav className="flex gap-4">
-          <Link href="/about">About</Link>
-          <Link href="/privacy">Privacy</Link>
-          <Link href="/terms">Terms</Link>
-        </nav>
+
+      <footer className="border-t border-white/5 bg-[#0e0e0e]">
+        <div className="mx-auto flex max-w-[1000px] flex-wrap justify-between gap-6 px-6 py-12 text-xs font-medium uppercase tracking-wider text-white/40 max-[520px]:flex-col">
+          <span>Verith helps you follow the evidence</span>
+          <nav className="flex gap-6">
+            <Link href="/about" className="hover:text-white transition-colors">About</Link>
+            <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+            <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
+          </nav>
+        </div>
       </footer>
     </main>
   );

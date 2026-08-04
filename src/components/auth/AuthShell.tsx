@@ -8,56 +8,22 @@ export default function AuthShell({ children }: { children: ReactNode }) {
   return (
     <main className={styles.shell}>
       <a
-        className="fixed top-4 left-4 z-1000 -translate-y-[160%] bg-foreground px-4 py-3 text-background transition-transform duration-150 focus:translate-y-0"
+        className="fixed top-4 left-4 z-[1000] -translate-y-[160%] bg-white px-4 py-3 text-black font-medium transition-transform duration-150 focus:translate-y-0"
         href="#auth-form"
       >
         Skip to form
       </a>
-      <section className={styles.context} aria-labelledby="auth-context-title">
-        <Link className={styles.wordmark} href="/">
-          <VerithLogo />
-        </Link>
-        <div className={`${styles.contextBody} animate-entrance`}>
-          <p className={styles.eyebrow}>Your private evidence workspace</p>
-          <h1 id="auth-context-title">
-            Know what the evidence supports before you trust or share it.
-          </h1>
-          <p className={styles.contextCopy}>
-            Bring Verith the post, headline, link, image, or voice note. You’ll
-            get a clear explanation of what checks out, what does not, and what
-            cannot yet be confirmed.
-          </p>
-        </div>
-        <ol className={styles.workflow}>
-          <li>
-            <span>1</span>
-            Preserve the original source
-          </li>
-          <li>
-            <span>2</span>
-            Explore claim-level evidence
-          </li>
-          <li>
-            <span>3</span>
-            Decide with context and confidence
-          </li>
-        </ol>
-      </section>
+      
       <section className={styles.formRegion} id="auth-form" tabIndex={-1}>
-        <div className={styles.formTopbar}>
-          <Link className={styles.returnHome} href="/">
-            <ArrowLeft aria-hidden="true" size={14} strokeWidth={1.8} />
-            Return home
+        <div className="mb-8 flex justify-center">
+          <Link href="/">
+            <VerithLogo />
           </Link>
-          <span>Encrypted session</span>
         </div>
-        <div className={`${styles.formContainer} animate-entrance animation-delay-150`}>
+        
+        <div className={styles.formContainer}>
           {children}
         </div>
-        <p className={styles.formFooter}>
-          Verith strengthens human judgement with inspectable evidence—it never
-          replaces it.
-        </p>
       </section>
     </main>
   );

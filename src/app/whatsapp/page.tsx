@@ -11,55 +11,91 @@ export const metadata: Metadata = {
 export default function WhatsAppPage() {
   return (
     <main
-      className="min-h-screen bg-[#08090A] pb-20"
+      className="min-h-screen bg-[#0a0a0a] pb-24"
       id="main-content"
       tabIndex={-1}
     >
       <PublicNavbar />
-      <section className="relative mx-auto grid max-w-[1300px] grid-cols-[1.2fr_0.5fr] gap-16 overflow-hidden px-6 py-[clamp(6rem,10vw,9rem)] before:pointer-events-none before:absolute before:-top-24 before:left-1/4 before:size-[30rem] before:rounded-full before:bg-emerald-500/10 before:blur-[120px] after:pointer-events-none after:absolute after:right-0 after:bottom-0 after:size-80 after:rounded-full after:bg-violet-500/10 after:blur-[120px] max-[700px]:grid-cols-1">
-        <div>
-          <span className="relative inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-400 before:inline-flex before:size-1.5 before:rounded-full before:bg-emerald-400 before:shadow-[0_0_18px_rgba(16,185,129,0.8)]">
-            Verification at the point of sharing
-          </span>
-          <h1 className="relative mt-7 max-w-[14ch] text-5xl leading-[1.05] font-semibold tracking-tighter md:text-7xl">
-            Bring evidence into the conversations where misinformation moves.
-          </h1>
-        </div>
-        <p className="relative self-end text-base leading-7 text-muted-foreground">
+      
+      {/* Refined Centered Hero */}
+      <section className="mx-auto flex flex-col items-center text-center max-w-[900px] px-6 pt-[clamp(6rem,12vw,10rem)] pb-16">
+        <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.15em] text-white/70 mb-8 backdrop-blur-md">
+          <span className="size-1.5 rounded-full bg-white/70"></span>
+          Verification at the point of sharing
+        </span>
+        <h1 className="text-balance text-4xl md:text-6xl lg:text-[4rem] leading-[1.1] font-semibold tracking-tight text-white mb-6">
+          Bring evidence into the conversations where misinformation moves.
+        </h1>
+        <p className="max-w-2xl text-balance text-base md:text-lg leading-relaxed text-white/50">
           Connect your account securely, forward supported content, and turn a
           fast-moving message into an explainable investigation without leaving
           the channel your community already uses.
         </p>
       </section>
-      <div className="pb-20"><WhatsAppComingSoon /></div>
-      <section className="mx-auto grid max-w-[1300px] grid-cols-3 gap-5 px-6 opacity-50 max-[700px]:grid-cols-1">
-        <div className="group min-h-62.5 rounded-3xl border border-white/[0.06] [background:radial-gradient(circle_at_20%_0%,rgba(139,92,246,0.16),transparent_18rem),rgba(7,7,8,0.72)] p-8 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-300 hover:-translate-y-1 hover:border-white/15">
-          <span className="grid size-10 place-items-center rounded-xl bg-violet-500/15 text-sm font-semibold text-violet-300">1</span>
-          <h2 className="mt-7 text-xl font-semibold tracking-tight">Create a secure connection</h2>
-          <p className="mt-3 text-sm leading-6 text-muted-foreground">Generate a short-lived, single-use link code from your private Verith settings.</p>
+
+      <div className="pb-24">
+        <WhatsAppComingSoon />
+      </div>
+
+      {/* Elegant Grid for Steps */}
+      <section className="mx-auto max-w-[1200px] px-6">
+        <div className="mb-12 text-center">
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-white/40">How it works</h2>
         </div>
-        <div className="group min-h-62.5 rounded-3xl border border-white/[0.06] [background:radial-gradient(circle_at_20%_0%,rgba(6,182,212,0.14),transparent_18rem),rgba(7,7,8,0.72)] p-8 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-300 hover:-translate-y-1 hover:border-white/15">
-          <span className="grid size-10 place-items-center rounded-xl bg-cyan-500/15 text-sm font-semibold text-cyan-300">2</span>
-          <h2 className="mt-7 text-xl font-semibold tracking-tight">Connect your conversation channel</h2>
-          <p className="mt-3 text-sm leading-6 text-muted-foreground">Complete the signed linking flow before the code expires.</p>
-        </div>
-        <div className="group min-h-62.5 rounded-3xl border border-white/[0.06] [background:radial-gradient(circle_at_20%_0%,rgba(16,185,129,0.14),transparent_18rem),rgba(7,7,8,0.72)] p-8 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-300 hover:-translate-y-1 hover:border-white/15">
-          <span className="grid size-10 place-items-center rounded-xl bg-emerald-500/15 text-sm font-semibold text-emerald-300">3</span>
-          <h2 className="mt-7 text-xl font-semibold tracking-tight">Investigate in context</h2>
-          <p className="mt-3 text-sm leading-6 text-muted-foreground">Forward supported content and let Verith begin an evidence-led investigation from the conversation.</p>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="group relative rounded-3xl border border-white/5 bg-[#0e0e0e] p-8 transition-all hover:bg-[#111] hover:border-white/10 overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <span className="relative flex size-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-sm font-medium text-white shadow-sm mb-8">
+              1
+            </span>
+            <h3 className="relative text-xl font-semibold tracking-tight text-white mb-3">Create a secure connection</h3>
+            <p className="relative text-sm leading-relaxed text-white/50">Generate a short-lived, single-use link code from your private Verith settings.</p>
+          </div>
+
+          <div className="group relative rounded-3xl border border-white/5 bg-[#0e0e0e] p-8 transition-all hover:bg-[#111] hover:border-white/10 overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <span className="relative flex size-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-sm font-medium text-white shadow-sm mb-8">
+              2
+            </span>
+            <h3 className="relative text-xl font-semibold tracking-tight text-white mb-3">Connect your channel</h3>
+            <p className="relative text-sm leading-relaxed text-white/50">Complete the signed linking flow on your device before the code expires.</p>
+          </div>
+
+          <div className="group relative rounded-3xl border border-white/5 bg-[#0e0e0e] p-8 transition-all hover:bg-[#111] hover:border-white/10 overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <span className="relative flex size-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-sm font-medium text-white shadow-sm mb-8">
+              3
+            </span>
+            <h3 className="relative text-xl font-semibold tracking-tight text-white mb-3">Investigate in context</h3>
+            <p className="relative text-sm leading-relaxed text-white/50">Forward supported content and let Verith begin an investigation from the conversation.</p>
+          </div>
         </div>
       </section>
-      <section className="mx-auto mt-20 grid w-[calc(100%_-_3rem)] max-w-[1300px] grid-cols-[1fr_0.7fr] gap-16 rounded-3xl border border-white/[0.06] bg-card/70 p-[clamp(2rem,6vw,5rem)] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] max-[700px]:grid-cols-1">
-        <div>
-          <span className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-400 before:inline-flex before:size-1.5 before:rounded-full before:bg-emerald-400">Your privacy</span>
-          <h2 className="mt-5 text-[clamp(2rem,4vw,3.75rem)] leading-[1.05] font-semibold tracking-tighter">Your number is not displayed in Verith.</h2>
+
+      {/* Refined Privacy Section */}
+      <section className="mx-auto mt-24 max-w-[1000px] px-6">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-10 rounded-3xl border border-white/5 bg-[#0e0e0e] p-8 md:p-12 text-center md:text-left">
+          <div className="max-w-md">
+            <span className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-white/50 mb-4">
+              <span className="size-1.5 rounded-full bg-white/50"></span>
+              Your privacy
+            </span>
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-white mb-4">
+              Your number is not displayed in Verith.
+            </h2>
+            <p className="text-sm leading-relaxed text-white/50">
+              The backend encrypts the linked number, stores a separate keyed hash
+              for lookup, verifies Meta webhook signatures, records consent, and
+              removes the encrypted number when you unlink.
+            </p>
+          </div>
+          <div className="shrink-0">
+            <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[10px] font-medium uppercase tracking-[0.15em] text-white/60 backdrop-blur-sm">
+              Locked during rollout
+            </span>
+          </div>
         </div>
-        <p className="self-end text-sm leading-7 text-muted-foreground">
-          The backend encrypts the linked number, stores a separate keyed hash
-          for lookup, verifies Meta webhook signatures, records consent, and
-          removes the encrypted number when you unlink.
-        </p>
-        <span className="col-start-2 justify-self-start rounded-full border border-amber-300/15 bg-amber-300/[.05] px-5 py-3 text-xs font-semibold uppercase tracking-[.12em] text-amber-200 max-[700px]:col-start-1">Connection locked during rollout</span>
       </section>
     </main>
   );

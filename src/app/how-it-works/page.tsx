@@ -85,18 +85,24 @@ export default function HowItWorksPage() {
 								Every signed-in account receives a private investigation workspace. Elevated roles add narrowly scoped moderation, editorial, operational, or governance responsibilities.
 								Every protected request is authorized by the backend; navigation visibility is never treated as permission.
 							</p>
-							<div className="mt-6 grid gap-3 sm:grid-cols-2">
-								{roleJourneys.map(({ description, icon: Icon, outcome, role }) => (
+							<div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-6">
+								{roleJourneys.map(({ description, icon: Icon, outcome, role }, index) => (
 									<article
-										className="rounded-2xl border border-white/[0.055] bg-white/[0.025] p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-violet-400/20 hover:bg-violet-500/[0.045]"
+										className="group relative rounded-3xl border border-white/5 bg-[#0e0e0e] p-8 transition-all hover:bg-[#111] hover:border-white/10 overflow-hidden"
 										key={role}
 									>
-										<span className="grid size-10 place-items-center rounded-xl bg-violet-500/10 text-violet-300">
-											<Icon aria-hidden="true" size={18} />
-										</span>
-										<small className="mt-5 block text-[10px] font-semibold uppercase tracking-[0.13em] text-violet-300">{role}</small>
-										<h3 className="mt-2 mb-0 text-base font-semibold text-white">{outcome}</h3>
-										<p className="mt-3 mb-0 text-xs leading-6 text-white/45">{description}</p>
+										<div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+										<div className="relative flex items-center justify-between mb-8">
+											<span className="flex size-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white shadow-sm">
+												<Icon aria-hidden="true" size={18} strokeWidth={2} />
+											</span>
+											<span className="text-[10px] font-medium uppercase tracking-[0.15em] text-white/40">
+												0{index + 1}
+											</span>
+										</div>
+										<h3 className="relative text-xl font-semibold tracking-tight text-white mb-2">{outcome}</h3>
+										<span className="relative inline-block mb-3 text-xs font-medium text-white/50">{role}</span>
+										<p className="relative text-sm leading-relaxed text-white/40">{description}</p>
 									</article>
 								))}
 							</div>

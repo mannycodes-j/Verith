@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import { Outfit } from "next/font/google";
 import AppProviders from "@/components/providers/AppProviders";
 import "./globals.css";
+
+const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
   title: {
@@ -17,12 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html data-scroll-behavior="smooth" lang="en" className="dark" data-theme="dark">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      </head>
-      <body className="min-h-full flex flex-col bg-background text-foreground font-sans antialiased">
+    <html data-scroll-behavior="smooth" lang="en" className={`dark ${outfit.variable}`} data-theme="dark">
+      <body className="min-h-full flex flex-col bg-background text-foreground font-sans antialiased selection:bg-white/10 selection:text-white">
         <AppProviders>{children}</AppProviders>
       </body>
     </html>
