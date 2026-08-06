@@ -25,7 +25,7 @@ export default function NewInvestigationButton({
     >
       <Link
         aria-label={label}
-        className="group inline-flex min-h-11 min-w-11 items-center justify-center gap-2 overflow-hidden rounded-full border border-violet-300/20 bg-gradient-to-r from-violet-400 to-indigo-500 px-3 text-center text-xs font-semibold whitespace-nowrap text-white shadow-[0_12px_32px_-16px_rgba(139,92,246,0.9)] transition-[border-color,filter,box-shadow] hover:brightness-110 hover:shadow-[0_16px_38px_-14px_rgba(139,92,246,0.95)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#08090A]"
+        className="group inline-flex min-h-11 min-w-11 items-center justify-center gap-2 overflow-hidden rounded-full border border-violet-300/20 bg-gradient-to-r from-[#C084FC] to-[#6366F1] px-3 text-center text-xs font-semibold whitespace-nowrap text-white shadow-[0_12px_32px_-16px_rgba(139,92,246,0.9)] transition-[border-color,filter,box-shadow] hover:brightness-110 hover:shadow-[0_16px_38px_-14px_rgba(139,92,246,0.95)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#08090A]"
         href="/app/verify"
         onBlur={() => setExpanded(false)}
         onFocus={() => setExpanded(true)}

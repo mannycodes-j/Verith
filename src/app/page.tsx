@@ -84,7 +84,7 @@ export default function LandingPage() {
               
               <div className="mt-10 flex flex-wrap items-center gap-6">
                 <Link
-                  className="inline-flex h-14 items-center justify-center gap-2 rounded-full border border-violet-500/20 bg-gradient-to-r from-violet-600 to-indigo-600 px-8 text-sm font-bold text-white transition-transform hover:scale-105 active:scale-95 shadow-[0_4px_24px_rgba(139,92,246,0.3)] group"
+                  className="inline-flex h-14 items-center justify-center gap-2 rounded-full border border-violet-500/20 bg-gradient-to-r from-[#C084FC] to-[#6366F1] px-8 text-sm font-bold text-white transition-transform hover:scale-105 active:scale-95 shadow-[0_4px_24px_rgba(139,92,246,0.3)] group"
                   href="/login"
                 >
                   <span className="relative z-10 flex items-center gap-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
@@ -197,8 +197,8 @@ export default function LandingPage() {
               {productPillars.map(({ icon: Icon, text, title }, index) => (
                 <MotionReveal delay={index * 0.1} depth={30} key={title}>
                   <article className="group h-full rounded-3xl border border-white/10 bg-black/40 backdrop-blur-xl p-8 transition-all duration-500 hover:-translate-y-1 hover:bg-white/[0.04] hover:border-white/20 hover:shadow-[0_0_40px_rgba(139,92,246,0.15)] relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-violet-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <span className="relative grid size-12 place-items-center rounded-2xl bg-gradient-to-br from-violet-500/20 to-indigo-500/10 border border-white/10 text-violet-300 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-inner shadow-white/5">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#C084FC]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <span className="relative grid size-12 place-items-center rounded-2xl bg-gradient-to-br from-[#C084FC]/20 to-[#6366F1]/10 border border-white/10 text-violet-300 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-inner shadow-white/5">
                       <Icon size={24} />
                     </span>
                     <h3 className="relative mt-8 text-xl font-medium text-white group-hover:text-violet-200 transition-colors duration-300">{title}</h3>
@@ -239,7 +239,7 @@ export default function LandingPage() {
                         Verith decomposes complex media into verifiable claims, separating fact, opinion, framing, and rhetoric before analysis begins.
                       </p>
                     </div>
-                    <div className="absolute right-0 bottom-0 w-2/3 h-2/3 bg-gradient-to-tl from-violet-500/10 to-transparent blur-2xl group-hover:bg-violet-500/30 transition-colors duration-500" />
+                    <div className="absolute right-0 bottom-0 w-2/3 h-2/3 bg-gradient-to-tl from-[#C084FC]/10 to-transparent blur-2xl group-hover:bg-violet-500/30 transition-colors duration-500" />
                 </SpotlightCard>
               </MotionReveal>
               
@@ -365,7 +365,7 @@ export default function LandingPage() {
                     <Quote className="text-violet-500/20 w-12 h-12 absolute top-6 right-6" />
                     <p className="text-white/70 leading-relaxed relative z-10">"{testimonial.quote}"</p>
                     <div className="mt-8 flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-violet-500 to-indigo-500 flex items-center justify-center text-white font-medium text-sm">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#C084FC] to-[#6366F1] flex items-center justify-center text-white font-medium text-sm">
                         {testimonial.author.charAt(0)}
                       </div>
                       <div>
@@ -423,7 +423,7 @@ export default function LandingPage() {
               </p>
               <div className="mt-10 flex items-center justify-center gap-6">
                 <Link
-                  className="inline-flex h-14 items-center justify-center gap-2 rounded-full border border-violet-500/20 bg-gradient-to-r from-violet-600 to-indigo-600 px-10 text-base font-bold text-white transition-transform hover:scale-105 active:scale-95 shadow-[0_4px_24px_rgba(139,92,246,0.3)]"
+                  className="inline-flex h-14 items-center justify-center gap-2 rounded-full border border-violet-500/20 bg-gradient-to-r from-[#C084FC] to-[#6366F1] px-10 text-base font-bold text-white transition-transform hover:scale-105 active:scale-95 shadow-[0_4px_24px_rgba(139,92,246,0.3)]"
                   href="/login"
                 >
                   Create your free account

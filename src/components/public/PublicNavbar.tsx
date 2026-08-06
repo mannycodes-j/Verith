@@ -72,7 +72,7 @@ export default function PublicNavbar({
             boxShadow: scrolled ? "0 4px 24px -1px rgba(0,0,0,0.2), 0 0 1px 0 rgba(255,255,255,0.1) inset" : "none",
             backdropFilter: scrolled ? "blur(12px)" : "blur(0px)",
           }}
-          className="pointer-events-auto relative flex w-full max-w-5xl items-center justify-between rounded-full border border-transparent px-4 py-2.5 transition-all duration-300"
+          className="pointer-events-auto relative flex w-full max-w-3xl items-center justify-between rounded-full border border-transparent px-4 py-2.5 transition-all duration-300"
           ref={menuRef}
         >
           <Link aria-label="Verith home" className="flex items-center gap-2.5 pl-2 hover:opacity-80 transition-opacity" href="/">
