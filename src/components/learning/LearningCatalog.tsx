@@ -1,17 +1,35 @@
 "use client";
 
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQueries } from "@tanstack/react-query";
 import Link from "next/link";
-import { learningService } from "@/services/learning";
+import { useDeferredValue, useState } from "react";
+import { DIFFICULTY_FILTERS } from "@/data/catalog-filters";
+import {
+	type CursorPage,
+	type LearningCourse,
+	learningService,
+} from "@/services/learning";
 import { learningStyles as styles } from "./learning.styles";
 
 export default function LearningCatalog({ authenticated = false }: { authenticated?: boolean }) {
-	const catalog = useQuery({
-		queryFn: learningService.courses,
-		queryKey: ["learning-courses"],
+	const [search, setSearch] = useState("");
+	const [difficulty, setDifficulty] = useState("");
+	const [tag, setTag] = useState("");
+	const deferredSearch = useDeferredValue(search.trim());
+	const catalog = useInfiniteQuery<CursorPage<LearningCourse>>({
+		getNextPageParam: (page) => page.pagination.nextCursor ?? undefined,
+		initialPageParam: undefined as string | undefined,
+		queryFn: ({ pageParam }) => learningService.courses({
+			cursor: typeof pageParam === "string" ? pageParam : undefined,
+			difficulty: difficulty || undefined,
+			search: deferredSearch || undefined,
+			tag: tag.trim() || undefined,
+		}),
+		queryKey: ["learning-courses", deferredSearch, difficulty, tag.trim()],
 	});
+	const courses = catalog.data?.pages.flatMap((page) => page.items) ?? [];
 	const progressQueries = useQueries({
-		queries: (catalog.data ?? []).map((course) => ({
+		queries: courses.map((course) => ({
 			enabled: authenticated,
 			queryFn: () => learningService.progress(course._id),
 			queryKey: ["learning-progress", course._id],
@@ -27,6 +45,22 @@ export default function LearningCatalog({ authenticated = false }: { authenticat
 				<h1>Build the judgement misinformation is designed to bypass.</h1>
 				<p>Progress from recognising persuasive tactics to evaluating claims, interrogating sources, recovering missing context, and making confident evidence-based decisions.</p>
 			</header>
+			<section className={styles.filters} aria-label="Filter learning catalog">
+				<label>
+					<span>Search</span>
+					<input onChange={(event) => setSearch(event.target.value)} placeholder="Search titles, topics, or skills" type="search" value={search} />
+				</label>
+				<label>
+					<span>Level</span>
+					<select onChange={(event) => setDifficulty(event.target.value)} value={difficulty}>
+						{DIFFICULTY_FILTERS.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+					</select>
+				</label>
+				<label>
+					<span>Topic</span>
+					<input onChange={(event) => setTag(event.target.value)} placeholder="e.g. source checking" value={tag} />
+				</label>
+			</section>
 
 			{catalog.isPending && (
 				<div className={styles.loading} aria-busy="true">
@@ -46,16 +80,16 @@ export default function LearningCatalog({ authenticated = false }: { authenticat
 					</button>
 				</section>
 			)}
-			{catalog.data?.length === 0 && (
+			{catalog.data && courses.length === 0 && (
 				<section className={styles.empty}>
 					<span>No published courses</span>
 					<h2>The learning catalog is currently empty.</h2>
 					<p>Verith will show courses here only after an authorized editor publishes them.</p>
 				</section>
 			)}
-			{catalog.data && catalog.data.length > 0 && (
+			{courses.length > 0 && (
 				<ol className={styles.courseList}>
-					{catalog.data.map((course, index) => {
+					{courses.map((course, index) => {
 						const completedLessons = new Set((progressQueries[index]?.data ?? []).filter((item) => item.status === "COMPLETED").map((item) => String(item.lessonId)));
 						const completed = authenticated && course.lessonIds.length > 0 && course.lessonIds.every((id) => completedLessons.has(String(id)));
 						return (
@@ -86,6 +120,11 @@ export default function LearningCatalog({ authenticated = false }: { authenticat
 						);
 					})}
 				</ol>
+			)}
+			{catalog.hasNextPage && (
+				<button className={styles.loadMore} disabled={catalog.isFetchingNextPage} onClick={() => void catalog.fetchNextPage()} type="button">
+					{catalog.isFetchingNextPage ? "Loading more…" : "Load more courses"}
+				</button>
 			)}
 		</div>
 	);

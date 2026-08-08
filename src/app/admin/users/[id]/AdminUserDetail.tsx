@@ -7,6 +7,7 @@ import {
   adminService,
   type AdminUserRole,
   type AdminUserStatus,
+  type EntitlementPlan,
 } from "@/services/admin";
 import { authService } from "@/services/authService";
 import { adminStyles as styles } from "../../admin.styles";
@@ -17,7 +18,8 @@ type StatusAction = Extract<
 >;
 type PendingAction =
   | { kind: "status"; value: StatusAction }
-  | { kind: "role"; value: AdminUserRole };
+  | { kind: "role"; value: AdminUserRole }
+  | { kind: "entitlement"; value: EntitlementPlan };
 
 const roles: AdminUserRole[] = [
   "USER",
@@ -44,16 +46,20 @@ export default function AdminUserDetail({ id }: { id: string }) {
   const mutation = useMutation({
     mutationFn: () => {
       if (!action) throw new Error("Choose an administrative action.");
-      return action.kind === "status"
-        ? adminService.changeUserStatus(id, action.value, reason.trim())
-        : adminService.changeUserRole(id, action.value, reason.trim());
+      if (action.kind === "status")
+        return adminService.changeUserStatus(id, action.value, reason.trim());
+      if (action.kind === "role")
+        return adminService.changeUserRole(id, action.value, reason.trim());
+      return adminService.grantEntitlement(id, action.value, reason.trim());
     },
     onSuccess: (next) => {
-      queryClient.setQueryData(["admin", "user", id], (current: unknown) => ({
-        ...(typeof current === "object" && current ? current : {}),
-        ...next,
-      }));
-      void queryClient.invalidateQueries({ queryKey: ["admin", "users"] });
+      if (action?.kind !== "entitlement") {
+        queryClient.setQueryData(["admin", "user", id], (current: unknown) => ({
+          ...(typeof current === "object" && current ? current : {}),
+          ...(typeof next === "object" && next ? next : {}),
+        }));
+        void queryClient.invalidateQueries({ queryKey: ["admin", "users"] });
+      }
       setAction(undefined);
       setReason("");
     },
@@ -177,6 +183,21 @@ export default function AdminUserDetail({ id }: { id: string }) {
         </section>
       )}
 
+      <section className={styles.actionSection}>
+        <header>
+          <span>Pilot entitlement</span>
+          <p>
+            Payments are not configured. Administrators may grant a documented
+            free or sponsored pilot allowance; every change is audited.
+          </p>
+        </header>
+        <div>
+          {(["FREE", "COMMUNITY", "ADMINISTRATIVE_SPONSORSHIP"] as EntitlementPlan[]).map((plan) => (
+            <button key={plan} onClick={() => { mutation.reset(); setAction({ kind: "entitlement", value: plan }); }} type="button">Grant {plan.replaceAll("_", " ").toLowerCase()}</button>
+          ))}
+        </div>
+      </section>
+
       {action && (
         <div className={styles.dialogBackdrop}>
           <section
@@ -195,14 +216,18 @@ export default function AdminUserDetail({ id }: { id: string }) {
             <span>
               {action.kind === "status"
                 ? "Account status change"
-                : "Privilege change"}
+                : action.kind === "role"
+                  ? "Privilege change"
+                  : "Sponsored entitlement"}
             </span>
             <h2 id="account-action-title">
               Confirm {action.value.replaceAll("_", " ").toLowerCase()} for{" "}
               {record.email}
             </h2>
             <p>
-              {action.kind === "role" || action.value !== "ACTIVE"
+              {action.kind === "entitlement"
+                ? "This does not charge the user or activate a checkout. The grant and reason are written to the administrative audit log."
+                : action.kind === "role" || action.value !== "ACTIVE"
                 ? "This action revokes active sessions and is written to the administrative audit log."
                 : "This action restores account access and is written to the administrative audit log."}
             </p>

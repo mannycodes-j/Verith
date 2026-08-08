@@ -37,6 +37,16 @@ export interface ChallengeAttempt {
   createdAt?: string;
 }
 
+export interface ChallengePage {
+  items: Challenge[];
+  pagination: {
+    nextCursor: string | null;
+    previousCursor: null;
+    hasNextPage: boolean;
+    limit: number;
+  };
+}
+
 export const challengesService = {
   attempts: (id: string) =>
     apiClient.get<ChallengeAttempt[]>(`/challenges/${id}/attempts`),
@@ -44,10 +54,28 @@ export const challengesService = {
     apiClient.get<Challenge>(`/challenges/${slug}`, {
       retryAuthentication: false,
     }),
-  list: () =>
-    apiClient.get<Challenge[]>("/challenges", {
+  list: ({
+    cursor,
+    difficulty,
+    limit = 12,
+    search,
+    tag,
+  }: {
+    cursor?: string;
+    difficulty?: string;
+    limit?: number;
+    search?: string;
+    tag?: string;
+  } = {}) => {
+    const query = new URLSearchParams({ limit: String(limit) });
+    if (cursor) query.set("cursor", cursor);
+    if (difficulty) query.set("difficulty", difficulty);
+    if (search) query.set("search", search);
+    if (tag) query.set("tag", tag);
+    return apiClient.get<ChallengePage>(`/challenges?${query}`, {
       retryAuthentication: false,
-    }),
+    });
+  },
   submit: (
     id: string,
     answers: Array<{ questionId: string; selectedOptionIds: string[] }>,

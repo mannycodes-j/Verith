@@ -1,5 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const localChromePath = process.env.PLAYWRIGHT_CHROME_PATH;
+
 export default defineConfig({
   testDir: "./tests/e2e",
   timeout: 90_000,
@@ -16,7 +18,12 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      use: {
+        ...devices["Desktop Chrome"],
+        ...(localChromePath
+          ? { launchOptions: { executablePath: localChromePath } }
+          : {}),
+      },
     },
   ],
   webServer: {

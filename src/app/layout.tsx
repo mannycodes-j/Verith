@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
 import AppProviders from "@/components/providers/AppProviders";
 import "./globals.css";
-
-const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
+import AdaptiveExperience from "@/components/providers/AdaptiveExperience";
 
 export const metadata: Metadata = {
   title: {
@@ -20,8 +18,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html data-scroll-behavior="smooth" lang="en" className={`dark ${outfit.variable}`} data-theme="dark">
+    <html data-scroll-behavior="smooth" lang="en" className="dark" data-theme="dark">
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans antialiased selection:bg-white/10 selection:text-white">
+        <AdaptiveExperience />
         <AppProviders>{children}</AppProviders>
       </body>
     </html>

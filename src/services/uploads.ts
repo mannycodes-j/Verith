@@ -1,6 +1,6 @@
 import type { components } from "@/generated/api-schema";
 import type { UserProfile } from "./account";
-import { apiClient } from "./apiClient";
+import { ApiClientError, apiClient } from "./apiClient";
 
 export type AssetType =
   components["schemas"]["CreateUploadSignatureDto"]["assetType"];
@@ -155,6 +155,34 @@ function uploadToCloudinary(
   });
 }
 
+async function confirmVerificationUpload(
+  signed: SignedUpload,
+  uploaded: CloudinaryUploadResponse,
+): Promise<MediaAsset> {
+  const confirm = () =>
+    apiClient.post<MediaAsset>("/uploads/confirm", {
+      assetId: signed.assetId,
+      signature: uploaded.signature,
+      version: uploaded.version,
+    });
+  try {
+    return await confirm();
+  } catch (error) {
+    if (
+      !(error instanceof ApiClientError) ||
+      (!error.isUnavailable &&
+        ![
+          "CLOUDINARY_ASSET_UNAVAILABLE",
+          "URL_TEMPORARY_NETWORK_FAILURE",
+        ].includes(error.code))
+    ) {
+      throw error;
+    }
+    await new Promise((resolve) => window.setTimeout(resolve, 800));
+    return confirm();
+  }
+}
+
 export const uploadService = {
   remove: (assetId: string) =>
     apiClient.deleteVoid(`/uploads/${assetId}`),
@@ -250,10 +278,6 @@ export const uploadService = {
       );
     }
 
-    return apiClient.post<MediaAsset>("/uploads/confirm", {
-      assetId: signed.assetId,
-      signature: uploaded.signature,
-      version: uploaded.version,
-    });
+    return confirmVerificationUpload(signed, uploaded);
   },
 };

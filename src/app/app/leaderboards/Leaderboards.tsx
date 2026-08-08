@@ -7,6 +7,8 @@ import {
   type LeaderboardPeriod,
 } from "@/services/gamification";
 import { leaderboardStyles as styles } from "./leaderboards.styles";
+import Link from "next/link";
+import { missionService } from "@/services/missions";
 
 const periods: LeaderboardPeriod[] = ["WEEKLY", "MONTHLY", "ALL_TIME"];
 
@@ -16,6 +18,7 @@ export default function Leaderboards() {
     queryFn: () => gamificationService.leaderboard(period),
     queryKey: ["leaderboard", period],
   });
+  const missions = useQuery({ queryKey: ["community-missions"], queryFn: missionService.list });
 
   return (
     <div className={styles.page}>
@@ -28,6 +31,10 @@ export default function Leaderboards() {
           backed by persisted learning activity.
         </p>
       </header>
+      <section className={styles.missions}>
+        <div><span>Community verification missions</span><h2>Build a skill, then use it where information actually travels.</h2><p>Missions combine a baseline, realistic synthetic scenarios, approved learning, practice, and a follow-up. Your individual answers remain private.</p></div>
+        {missions.isPending ? <p>Loading active missions…</p> : missions.isError ? <button type="button" onClick={() => void missions.refetch()}>Retry missions</button> : missions.data.length ? <div>{missions.data.map((mission) => <article key={mission.id}><span>{mission.difficulty} · {mission.topic}</span><h3>{mission.title}</h3><p>{mission.summary}</p><small>{mission.participation ? mission.participation.status.replaceAll("_", " ") : "Open for participation"}</small><Link href={`/app/missions/${mission.slug}`}>{mission.participation ? "Continue mission" : "Explore mission"}</Link></article>)}</div> : <p>No published community mission is active right now.</p>}
+      </section>
       <div className={styles.filters}>
         <span>Period</span>
         {periods.map((value) => (

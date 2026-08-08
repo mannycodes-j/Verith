@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
-import { useState } from "react";
+import { useDeferredValue, useState } from "react";
 import {
   learningService,
   type LearningLesson,
@@ -127,6 +127,10 @@ export default function CourseReader({
   slug: string;
 }) {
   const [activeLesson, setActiveLesson] = useState<string>();
+  const [lessonSearch, setLessonSearch] = useState("");
+  const [lessonTag, setLessonTag] = useState("");
+  const [lessonPage, setLessonPage] = useState(1);
+  const deferredLessonSearch = useDeferredValue(lessonSearch.trim().toLowerCase());
   const course = useQuery({
     queryFn: () => learningService.course(slug),
     queryKey: ["learning-course", slug],
@@ -136,9 +140,19 @@ export default function CourseReader({
     queryFn: () => learningService.progress(course.data!._id),
     queryKey: ["learning-progress", course.data?._id],
   });
+  const filteredLessons = (course.data?.lessons ?? []).filter((lesson) => {
+    const matchesSearch = !deferredLessonSearch || [lesson.title, lesson.summary, ...lesson.tags].some((value) => value.toLowerCase().includes(deferredLessonSearch));
+    const normalizedTag = lessonTag.trim().toLowerCase();
+    const matchesTag = !normalizedTag || lesson.tags.some((value) => value.toLowerCase().includes(normalizedTag));
+    return matchesSearch && matchesTag;
+  });
+  const lessonPageSize = 8;
+  const lessonPageCount = Math.max(1, Math.ceil(filteredLessons.length / lessonPageSize));
+  const safeLessonPage = Math.min(lessonPage, lessonPageCount);
+  const visibleLessons = filteredLessons.slice((safeLessonPage - 1) * lessonPageSize, safeLessonPage * lessonPageSize);
   const selected =
-    course.data?.lessons.find((lesson) => lesson._id === activeLesson) ??
-    course.data?.lessons[0];
+    filteredLessons.find((lesson) => lesson._id === activeLesson) ??
+    visibleLessons[0];
   const lessonQuiz = useQuery({
     enabled: authenticated && Boolean(selected?._id),
     queryFn: () => quizzesService.forLesson(selected!._id),
@@ -225,8 +239,12 @@ export default function CourseReader({
           <div className={styles.readerGrid}>
           <aside>
             <span>Course outline</span>
+            <div className={styles.lessonFilters}>
+              <label><span>Search lessons</span><input onChange={(event) => { setLessonSearch(event.target.value); setLessonPage(1); setActiveLesson(undefined); }} placeholder="Search lesson titles or skills" type="search" value={lessonSearch} /></label>
+              <label><span>Topic</span><input onChange={(event) => { setLessonTag(event.target.value); setLessonPage(1); setActiveLesson(undefined); }} placeholder="Any topic" value={lessonTag} /></label>
+            </div>
             <ol>
-              {record.lessons.map((lesson) => (
+              {visibleLessons.map((lesson) => (
                 <li key={lesson._id}>
                   <button
                     data-active={selected?._id === lesson._id}
@@ -241,6 +259,8 @@ export default function CourseReader({
                 </li>
               ))}
             </ol>
+            {filteredLessons.length === 0 && <p className={styles.outlineEmpty}>No lessons match these filters.</p>}
+            {lessonPageCount > 1 && <div className={styles.outlinePagination}><button disabled={safeLessonPage === 1} onClick={() => { setLessonPage((page) => Math.max(1, page - 1)); setActiveLesson(undefined); }} type="button">Previous</button><span>{safeLessonPage} of {lessonPageCount}</span><button disabled={safeLessonPage === lessonPageCount} onClick={() => { setLessonPage((page) => Math.min(lessonPageCount, page + 1)); setActiveLesson(undefined); }} type="button">Next</button></div>}
             <Link href={authenticated ? "/app/learning" : "/learning"}>
               Return to catalog
             </Link>

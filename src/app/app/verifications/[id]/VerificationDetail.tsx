@@ -9,12 +9,15 @@ import { verificationService, type VerificationRecord } from "@/services/verific
 import { verificationDetailStyles as styles } from "./detail.styles";
 import ReportDocument, { ReportClaimWorkspace } from "./ReportDocument";
 import { currentVerificationStageIndex as currentStageIndex, formatVerificationTimestamp as formatTimestamp } from "@/utils/verification";
+import { verificationFailurePresentation } from "@/services/verificationFailure";
+import GuidedInvestigationPanel from "./GuidedInvestigationPanel";
 
 export default function VerificationDetail({ id }: { id: string }) {
 	const queryClient = useQueryClient();
 	const router = useRouter();
-	const [actionDialog, setActionDialog] = useState<"cancel" | "retry" | "reprocess" | "delete" | null>(null);
+	const [actionDialog, setActionDialog] = useState<"cancel" | "retry" | "delete" | null>(null);
 	const [streamState, setStreamState] = useState<"connecting" | "live" | "fallback">("connecting");
+	const [guidanceStatus, setGuidanceStatus] = useState<"LOADING" | "READY" | "SUBMITTED" | "FEEDBACK_READY">("LOADING");
 	const verification = useQuery({
 		queryFn: () => verificationService.get(id),
 		queryKey: ["verification", id],
@@ -54,19 +57,10 @@ export default function VerificationDetail({ id }: { id: string }) {
 		mutationFn: () => verificationService.retry(id),
 		onSuccess: (record) => {
 			queryClient.setQueryData(["verification", id], record);
+			void queryClient.invalidateQueries({ queryKey: ["investigation-allowance"] });
 			void queryClient.invalidateQueries({
 				queryKey: ["verification-events", id],
 			});
-		},
-	});
-	const reprocess = useMutation({
-		mutationFn: () => verificationService.reprocess(id),
-		onSuccess: (record) => {
-			queryClient.setQueryData(["verification", id], record);
-			void queryClient.invalidateQueries({
-				queryKey: ["verification-events", id],
-			});
-			void queryClient.invalidateQueries({ queryKey: ["report", id] });
 		},
 	});
 	const remove = useMutation({
@@ -111,6 +105,9 @@ export default function VerificationDetail({ id }: { id: string }) {
 							queryKey: ["verification", id],
 						});
 					}
+					if (event.stage === "COMPLETED" || ["FAILED", "UNAVAILABLE"].includes(event.status)) {
+						void queryClient.invalidateQueries({ queryKey: ["investigation-allowance"] });
+					}
 				},
 				onOpen: () => setStreamState("live"),
 				signal: controller.signal,
@@ -150,14 +147,16 @@ export default function VerificationDetail({ id }: { id: string }) {
 	}
 
 	const record = verification.data;
+	const failurePresentation = verificationFailurePresentation(record);
 	const activeStage = currentStageIndex(record);
 	const canCancel = ["QUEUED", "PROCESSING"].includes(record.status);
-	const canRetry = ["FAILED", "CANCELLED"].includes(record.status);
-	const canReprocess = ["COMPLETED", "PARTIALLY_COMPLETED"].includes(record.status);
+	const canRetry = record.status === "FAILED" && failurePresentation.retryable;
 	const canDelete = !["QUEUED", "PROCESSING", "CANCEL_REQUESTED", "DELETED"].includes(record.status);
 	const processing = !terminalStatuses.includes(record.status);
-	const actionPending = cancel.isPending || retry.isPending || reprocess.isPending || remove.isPending;
-	const actionError = cancel.error ?? retry.error ?? reprocess.error ?? remove.error;
+	const guided = record.mode === "GUIDED";
+	const guidedComplete = !guided || ["SUBMITTED", "FEEDBACK_READY"].includes(guidanceStatus);
+	const actionPending = cancel.isPending || retry.isPending || remove.isPending;
+	const actionError = cancel.error ?? retry.error ?? remove.error;
 
 	return (
 		<div className={styles.page}>
@@ -179,11 +178,6 @@ export default function VerificationDetail({ id }: { id: string }) {
 					{canRetry && (
 						<button data-variant="primary" type="button" disabled={retry.isPending} onClick={() => setActionDialog("retry")}>
 							{retry.isPending ? "Re-queuing…" : "Retry"}
-						</button>
-					)}
-					{canReprocess && (
-						<button data-variant="primary" disabled={reprocess.isPending} onClick={() => setActionDialog("reprocess")} type="button">
-							{reprocess.isPending ? "Re-queuing…" : "Reprocess"}
 						</button>
 					)}
 					{canDelete && (
@@ -221,7 +215,19 @@ export default function VerificationDetail({ id }: { id: string }) {
 				</dl>
 			</section>
 
-			{["COMPLETED", "PARTIALLY_COMPLETED"].includes(record.status) && (
+			{guided && (
+				<GuidedInvestigationPanel
+					enabled={record.claimsCount > 0 || terminalStatuses.includes(record.status)}
+					onStatus={setGuidanceStatus}
+					verificationId={record.id}
+				/>
+			)}
+
+			{guided && !guidedComplete && ["COMPLETED", "PARTIALLY_COMPLETED"].includes(record.status) && (
+				<section className={styles.guidedGate}><span>Evidence report ready</span><h2>Save your first observations to open it.</h2><p>Your report is complete, but its finding stays covered until your guided answers are safely stored.</p></section>
+			)}
+
+			{guidedComplete && ["COMPLETED", "PARTIALLY_COMPLETED"].includes(record.status) && (
 				<ReportClaimWorkspace verificationId={record.id} />
 			)}
 
@@ -280,13 +286,21 @@ export default function VerificationDetail({ id }: { id: string }) {
 				</aside>
 			</div>
 
-			{["COMPLETED", "PARTIALLY_COMPLETED"].includes(record.status) && <ReportDocument verificationId={record.id} />}
+			{guidedComplete && ["COMPLETED", "PARTIALLY_COMPLETED"].includes(record.status) && <ReportDocument verificationId={record.id} />}
 
 			{record.status === "FAILED" && (
 				<section className={styles.failure} role="alert">
 					<span>{record.failureCode || "PROCESSING_FAILED"}</span>
-					<h2>The investigation did not complete.</h2>
-					<p>{record.failureSummary || "No safe failure summary was returned by the service."}</p>
+					<h2>{failurePresentation.title}</h2>
+					<p>{failurePresentation.explanation}</p>
+					{(failurePresentation.offerText || failurePresentation.offerScreenshot) && (
+						<div>
+							{failurePresentation.offerText && <Link href={`/app/verify?source=TEXT&from=${record.id}`}>Paste the source text</Link>}
+							{failurePresentation.offerScreenshot && <Link href={`/app/verify?source=SCREENSHOT&from=${record.id}`}>Upload a screenshot</Link>}
+							<small>This failed retrieval does not contain evidence and should not be treated as a completed investigation.</small>
+						</div>
+					)}
+					{failurePresentation.supportReference && <small>Support reference: {failurePresentation.supportReference}</small>}
 				</section>
 			)}
 
@@ -304,18 +318,14 @@ export default function VerificationDetail({ id }: { id: string }) {
 								? "Cancel this investigation?"
 								: actionDialog === "retry"
 									? "Run this investigation again?"
-									: actionDialog === "reprocess"
-										? "Create a new report version?"
-										: "Delete this investigation?"}
+									: "Delete this investigation?"}
 						</h2>
 						<p>
 							{actionDialog === "cancel"
-								? "Processing will stop and the case will remain in your archive. You can retry it later."
+								? "Processing will stop and the cancelled case will remain in your archive."
 								: actionDialog === "retry"
-									? "The backend will enqueue a new processing attempt and preserve the case history."
-									: actionDialog === "reprocess"
-										? "The completed case will run through the evidence pipeline again. Existing report versions remain inspectable while the new version is assembled."
-										: "This removes the case from your active archive. The backend records it as deleted and it cannot be opened afterward."}
+									? "A new daily attempt will be reserved. It is used once meaningful processing begins and released if Verith cannot start the retry."
+									: "This removes the case from your active archive. The backend records it as deleted and it cannot be opened afterward."}
 						</p>
 						{actionError && (
 							<p className={styles.dialogError} role="alert">
@@ -338,10 +348,6 @@ export default function VerificationDetail({ id }: { id: string }) {
 										retry.mutate(undefined, {
 											onSuccess: () => setActionDialog(null),
 										});
-									} else if (actionDialog === "reprocess") {
-										reprocess.mutate(undefined, {
-											onSuccess: () => setActionDialog(null),
-										});
 									} else {
 										remove.mutate();
 									}
@@ -354,9 +360,7 @@ export default function VerificationDetail({ id }: { id: string }) {
 										? "Cancel investigation"
 										: actionDialog === "retry"
 											? "Retry investigation"
-											: actionDialog === "reprocess"
-												? "Reprocess investigation"
-												: "Delete investigation"}
+										: "Delete investigation"}
 							</button>
 						</footer>
 					</section>

@@ -17,7 +17,7 @@ export const appShellStyles = {
   navItem:
     "relative flex h-11 items-center gap-3 rounded-lg px-3 text-sm font-semibold text-white/75 transition-colors duration-200 hover:bg-white/5 hover:text-foreground [&>svg]:shrink-0 [&>svg]:text-white/55",
   navItemActive:
-    "bg-violet-500/10 text-violet-100 [&>svg]:text-violet-300 before:absolute before:left-0 before:top-1/2 before:h-1/2 before:-translate-y-1/2 before:w-[3px] before:rounded-r-full before:bg-violet-400",
+    "border border-violet-300/20 bg-gradient-to-r from-[#C084FC] to-[#6366F1] text-white shadow-[0_12px_28px_-16px_rgba(139,92,246,.85)] [&>svg]:text-white",
   account:
     "mt-4 grid grid-cols-[36px_minmax(0,1fr)_auto] items-center gap-2.5 border-t border-white/10 px-2 pt-4 [&>div:nth-child(2)]:grid [&>div:nth-child(2)]:min-w-0 [&>div:nth-child(2)]:gap-0.5 [&_strong]:truncate [&_strong]:text-xs [&_span]:text-[10px] [&_span]:text-white/55 [&>button]:min-h-10 [&>button]:rounded-lg [&>button]:border-0 [&>button]:bg-transparent [&>button]:px-2 [&>button]:py-2 [&>button]:text-[10px] [&>button]:text-white/55 hover:[&>button]:bg-white/5 hover:[&>button]:text-foreground",
   avatar:

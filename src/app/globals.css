@@ -16,7 +16,7 @@
   --color-accent: #f8f8f8;
   --color-accent-foreground: #000000;
   
-  --font-sans: var(--font-outfit), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Outfit", "Avenir Next", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
   --animate-marquee: marquee 30s linear infinite;
   --animate-text-shimmer: text-shimmer 2.5s ease-out infinite alternate;
@@ -70,6 +70,49 @@
   button, input, textarea, select {
     @apply text-inherit;
     font: inherit;
+  }
+
+  :focus-visible {
+    outline: 2px solid #a78bfa;
+    outline-offset: 3px;
+  }
+
+  @media (pointer: coarse) {
+    button,
+    [role="button"],
+    input:not([type="checkbox"]):not([type="radio"]),
+    select {
+      min-height: 44px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-delay: 0s !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  html[data-low-bandwidth] body {
+    background-attachment: scroll;
+    background-image: none;
+  }
+
+  html[data-low-bandwidth] *,
+  html[data-low-bandwidth] *::before,
+  html[data-low-bandwidth] *::after {
+    animation: none !important;
+    backdrop-filter: none !important;
+    transition-duration: 0.01ms !important;
   }
 }
 

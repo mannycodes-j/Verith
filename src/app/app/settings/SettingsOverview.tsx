@@ -6,6 +6,7 @@ import {
   BellRing,
   CheckCircle2,
   Languages,
+  LockKeyhole,
   MapPin,
   PencilLine,
   ShieldCheck,
@@ -22,47 +23,56 @@ const notificationOptions = [
     description: "Know when an evidence report is ready to inspect.",
     key: "verificationComplete",
     label: "Completed investigations",
+    locked: false,
   },
   {
     description: "Receive a clear alert when an investigation cannot finish.",
     key: "verificationFailed",
     label: "Failed investigations",
+    locked: false,
   },
   {
     description: "Surface relevant published lessons for your learning path.",
     key: "learningRecommendations",
     label: "Learning recommendations",
+    locked: false,
   },
   {
     description: "Be reminded when a new daily practice is available.",
     key: "dailyChallenges",
     label: "Daily challenges",
+    locked: false,
   },
   {
     description: "Protect an active learning streak before it expires.",
     key: "streakReminders",
     label: "Streak reminders",
+    locked: false,
   },
   {
     description: "Follow earned badges, level changes, and milestones.",
     key: "gamification",
     label: "Achievements and levels",
+    locked: false,
   },
   {
     description: "Receive occasional operational and product messages.",
     key: "marketing",
     label: "Product messages",
+    locked: false,
   },
   {
     description: "Allow enabled notification categories to reach your email.",
     key: "emailEnabled",
     label: "Email delivery",
+    locked: false,
   },
   {
     description:
-      "Allow supported updates through your linked WhatsApp account.",
+      "WhatsApp delivery is coming soon and cannot be enabled yet.",
     key: "whatsappEnabled",
     label: "WhatsApp delivery",
+    locked: true,
   },
 ] as const;
 
@@ -128,7 +138,10 @@ export default function SettingsOverview() {
     const data = new FormData(event.currentTarget);
     notificationsMutation.mutate(
       Object.fromEntries(
-        notificationOptions.map(({ key }) => [key, data.has(key)]),
+        notificationOptions.map(({ key, locked }) => [
+          key,
+          locked ? false : data.has(key),
+        ]),
       ),
     );
   };
@@ -314,14 +327,26 @@ export default function SettingsOverview() {
             </div>
           </header>
           <div className={`mt-6 ${styles.preferenceList}`}>
-            {notificationOptions.map(({ description, key, label }) => (
-              <label key={key}>
+            {notificationOptions.map(({ description, key, label, locked }) => (
+              <label data-locked={locked || undefined} key={key}>
                 <span>
-                  <strong>{label}</strong>
+                  <strong>
+                    {label}
+                    {locked && (
+                      <em>
+                        <LockKeyhole aria-hidden="true" size={11} />
+                        Coming soon
+                      </em>
+                    )}
+                  </strong>
                   <small>{description}</small>
                 </span>
                 <input
-                  defaultChecked={record.notificationPreferences[key] !== false}
+                  aria-label={`${label}${locked ? ", coming soon" : ""}`}
+                  defaultChecked={
+                    !locked && record.notificationPreferences[key] !== false
+                  }
+                  disabled={locked}
                   name={key}
                   role="switch"
                   type="checkbox"

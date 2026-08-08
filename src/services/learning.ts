@@ -33,6 +33,16 @@ export interface LearningCourseDetail extends LearningCourse {
   lessons: LearningLesson[];
 }
 
+export interface CursorPage<T> {
+  items: T[];
+  pagination: {
+    nextCursor: string | null;
+    previousCursor: null;
+    hasNextPage: boolean;
+    limit: number;
+  };
+}
+
 export interface LearningLessonDetail extends LearningLesson {
   course: Pick<
     LearningCourse,
@@ -67,10 +77,28 @@ export const learningService = {
     apiClient.get<LearningCourseDetail>(`/learning/courses/${slug}`, {
       retryAuthentication: false,
     }),
-  courses: () =>
-    apiClient.get<LearningCourse[]>("/learning/courses", {
+  courses: ({
+    cursor,
+    difficulty,
+    limit = 12,
+    search,
+    tag,
+  }: {
+    cursor?: string;
+    difficulty?: string;
+    limit?: number;
+    search?: string;
+    tag?: string;
+  } = {}) => {
+    const query = new URLSearchParams({ limit: String(limit) });
+    if (cursor) query.set("cursor", cursor);
+    if (difficulty) query.set("difficulty", difficulty);
+    if (search) query.set("search", search);
+    if (tag) query.set("tag", tag);
+    return apiClient.get<CursorPage<LearningCourse>>(`/learning/courses?${query}`, {
       retryAuthentication: false,
-    }),
+    });
+  },
   lesson: (slug: string) =>
     apiClient.get<LearningLessonDetail>(`/learning/lessons/${slug}`, {
       retryAuthentication: false,

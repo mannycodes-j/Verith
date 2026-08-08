@@ -44,7 +44,7 @@ export default function AdminVerificationDetail({ id }: { id: string }) {
   }
 
   const verification = record.data;
-  const retryable = ["FAILED", "CANCELLED"].includes(verification.status);
+  const retryable = verification.status === "FAILED";
   return (
     <div className={styles.page}>
       <header className={styles.detailHero}>
@@ -100,19 +100,17 @@ export default function AdminVerificationDetail({ id }: { id: string }) {
         <header>
           <span>Pipeline intervention</span>
           <p>
-            Only failed or cancelled records can be retried. Every intervention
+            Only failed records can be retried. Every intervention
             requires an operational reason and is audit logged.
           </p>
         </header>
-        <div>
-          <button
-            disabled={!retryable}
-            onClick={() => setConfirmRetry(true)}
-            type="button"
-          >
-            Retry verification
-          </button>
-        </div>
+        {retryable && (
+          <div>
+            <button onClick={() => setConfirmRetry(true)} type="button">
+              Retry verification
+            </button>
+          </div>
+        )}
       </section>
       {confirmRetry && (
         <div className={styles.dialogBackdrop}>

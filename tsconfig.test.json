@@ -17,6 +17,10 @@
     "src/services/admin.ts",
     "src/services/admin.test.ts",
     "src/services/apiClient.ts",
-    "src/services/apiClient.test.ts"
+    "src/services/apiClient.test.ts",
+    "src/services/verificationFailure.ts",
+    "src/services/verificationFailure.test.ts",
+    "src/services/uploadFailure.ts",
+    "src/services/uploadFailure.test.ts"
   ]
 }

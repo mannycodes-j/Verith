@@ -145,17 +145,17 @@ export default function AdminVerifications() {
 										<Link href={`/admin/verifications/${record.id}`} className="mr-4!">
 											Inspect
 										</Link>
-										<button
-											className={record.status === "COMPLETED" ? "hidden" : ""}
-											disabled={record.status !== "FAILED" && record.status !== "CANCELLED"}
-											onClick={() => {
-												retry.reset();
-												setRetryRecord(record);
-											}}
-											type="button"
-										>
-											Retry
-										</button>
+										{record.status === "FAILED" && (
+											<button
+												onClick={() => {
+													retry.reset();
+													setRetryRecord(record);
+												}}
+												type="button"
+											>
+												Retry
+											</button>
+										)}
 									</td>
 								</tr>
 							))}

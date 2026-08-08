@@ -23,6 +23,7 @@ import {
   ShieldCheck,
   Sparkles,
   Trophy,
+  TrendingUp,
   UserRound,
   Users,
 } from "lucide-react";
@@ -44,6 +45,7 @@ import { appShellStyles as styles } from "./app-shell.styles";
 import NotificationDrawer from "./NotificationDrawer";
 import NotificationTrigger from "./NotificationTrigger";
 import SessionLoadingGate from "./SessionLoadingGate";
+import AchievementCelebrationCenter from "@/components/achievements/AchievementCelebrationCenter";
 
 const navigation = [
   {
@@ -68,6 +70,7 @@ const navigation = [
         label: "Daily practice",
       },
       { href: "/app/achievements", icon: Award, label: "Achievements" },
+      { href: "/app/growth", icon: TrendingUp, label: "Growth profile" },
       { href: "/app/leaderboards", icon: Trophy, label: "Community" },
     ],
   },
@@ -159,6 +162,8 @@ const pageTitles: Record<string, string> = {
   "/app/challenges": "Daily challenges",
   "/app/learning": "Learning",
   "/app/leaderboards": "Leaderboards",
+  "/app/missions": "Community mission",
+  "/app/growth": "Media literacy growth",
   "/app/notifications": "Notifications",
   "/app/profile": "Profile",
   "/app/settings": "Settings",
@@ -588,6 +593,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
           </section>
         </div>
       )}
+      <AchievementCelebrationCenter />
     </div>
   );
 }

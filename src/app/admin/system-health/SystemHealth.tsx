@@ -30,6 +30,18 @@ function ProviderList({
                 {new Date(record.checkedAt).toLocaleString()}
               </time>
               <small>{record.safeCode || "No provider code"}</small>
+              {record.configuredKeys !== undefined && (
+                <small>
+                  {record.healthyKeys ?? 0} of {record.configuredKeys} keys
+                  healthy
+                  {record.cooldownKeys
+                    ? ` · ${record.cooldownKeys} cooling down`
+                    : ""}
+                  {record.disabledKeys
+                    ? ` · ${record.disabledKeys} disabled`
+                    : ""}
+                </small>
+              )}
             </li>
           ))}
         </ol>

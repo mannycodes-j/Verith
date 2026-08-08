@@ -20,6 +20,7 @@ import { useRef, useState } from "react";
 import { accountService } from "@/services/account";
 import { uploadService } from "@/services/uploads";
 import { profileStyles as styles } from "./profile.styles";
+import CurrentRankCard from "@/components/achievements/CurrentRankCard";
 
 function formatDate(value?: string) {
   if (!value) return "Not available";
@@ -157,6 +158,7 @@ export default function ProfilePage() {
       </section>
 
       <div className={styles.contentGrid}>
+        <CurrentRankCard className="col-span-full" />
         <section className={styles.details} aria-labelledby="account-details">
           <header className={styles.panelHeader}>
             <span>

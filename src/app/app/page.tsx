@@ -3,6 +3,7 @@ import { Check } from "lucide-react";
 import NewInvestigationButton from "@/components/app/NewInvestigationButton";
 import RecentInvestigations from "./RecentInvestigations";
 import { workspaceStyles as styles } from "./workspace.styles";
+import CurrentRankCard from "@/components/achievements/CurrentRankCard";
 
 export default function WorkspaceOverviewPage() {
   return (
@@ -32,6 +33,7 @@ export default function WorkspaceOverviewPage() {
           <RecentInvestigations />
         </section>
         <aside>
+          <CurrentRankCard compact />
           <div className={styles.sectionHeader}>
             <span>Trust architecture</span>
           </div>

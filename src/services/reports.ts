@@ -153,11 +153,64 @@ export interface ReportVersion {
   publishedAt: string | null;
 }
 
+export interface MilCoachCard {
+  taxonomy: string;
+  competency: string;
+  skillFocus: string;
+  whatHappened: string;
+  whyItMatters: string;
+  nextCheck: string;
+  practiceQuestion: string;
+  relatedLesson: null | {
+    id: string;
+    title: string;
+    slug: string;
+    summary: string;
+    estimatedDuration: number;
+    course: { title: string; slug: string };
+  };
+  relatedChallenge: null | {
+    id: string;
+    title: string;
+    slug: string;
+    scenario: string;
+    difficulty: string;
+    expiresAt: string;
+  };
+  generatedFrom: {
+    reportId: string;
+    reportVersion: number;
+    templateVersion: string;
+    adaptedByAi: false;
+  };
+}
+
+export interface CheckCard {
+  reportVersion: number;
+  claim: string;
+  finding: string;
+  summary: string;
+  keyEvidence: Array<{
+    title: string;
+    publisher: string | null;
+    relationship: string;
+    sourceUrl: string;
+  }>;
+  missingContext: string | null;
+  recommendedCheck: string;
+  limitation: string;
+  reportDate: string;
+  publicReportUrl: string | null;
+  shareState: "READY" | "PRIVATE";
+  shareMetadata: {
+    title: string;
+    description: string;
+    url: string | null;
+  };
+}
+
 export type ReportVisibility = "PRIVATE" | "UNLISTED" | "PUBLIC";
-export type ReportFeedbackType =
-  | "HELPFUL"
-  | "NOT_HELPFUL"
-  | "PROBLEM_REPORTED";
+export type ReportFeedbackType = "HELPFUL" | "NOT_HELPFUL" | "PROBLEM_REPORTED";
 export type ReportProblemCategory =
   | "INCORRECT_VERDICT"
   | "MISSING_CONTEXT"
@@ -167,10 +220,20 @@ export type ReportProblemCategory =
   | "OTHER";
 
 export const reportService = {
+  inspectEvidence: (reportId: string, evidenceId: string) =>
+    apiClient.post<{ recorded: boolean }>(
+      `/reports/${reportId}/evidence/${encodeURIComponent(evidenceId)}/inspect`,
+      {},
+    ),
+  checkCard: (reportId: string) =>
+    apiClient.get<CheckCard>(`/reports/${reportId}/check-card`),
+  downloadCheckCard: (reportId: string) =>
+    apiClient.download(`/reports/${reportId}/check-card.svg`),
+  coach: (reportId: string) =>
+    apiClient.get<MilCoachCard>(`/reports/${reportId}/coach`),
   get: (reportId: string) =>
     apiClient.get<VerificationReport>(`/reports/${reportId}`),
-  remove: (reportId: string) =>
-    apiClient.deleteVoid(`/reports/${reportId}`),
+  remove: (reportId: string) => apiClient.deleteVoid(`/reports/${reportId}`),
   export: (reportId: string, format: "pdf" | "json") =>
     apiClient.download(`/reports/${reportId}/export/${format}`),
   feedback: (

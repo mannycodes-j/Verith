@@ -17,6 +17,7 @@ export type VerificationStatus =
 
 export interface VerificationRecord {
   id: string;
+  mode: "STANDARD" | "GUIDED";
   sourceType: CreateVerificationInput["sourceType"];
   status: VerificationStatus;
   currentStage: string;
@@ -26,6 +27,17 @@ export interface VerificationRecord {
   question?: string;
   requestedLanguage?: string;
   detectedLanguage?: string;
+  urlMetadata?: {
+    extractionState?: string;
+    canonicalUrl?: string;
+    sourceKind?: string;
+    failureCode?: string;
+    retryRecommended?: boolean;
+    alternativeSubmission?: "PASTE_TEXT_OR_UPLOAD_SCREENSHOT";
+    supportReference?: string;
+    socialPostId?: string;
+    [key: string]: unknown;
+  };
   claimsCount: number;
   evidenceCount: number;
   retryCount: number;
@@ -34,6 +46,65 @@ export interface VerificationRecord {
   createdAt: string;
   updatedAt: string;
   streamUrl: string;
+}
+
+export interface GuidedQuestion {
+  id: string;
+  version: number;
+  type: "SINGLE_SELECT" | "MULTIPLE_SELECT" | "SHORT_TEXT" | "PROVISIONAL_VERDICT";
+  prompt: string;
+  options: Array<{ id: string; label: string }>;
+  competency: string;
+  objectivelyScorable: boolean;
+}
+
+export interface GuidedInvestigation {
+  id: string;
+  verificationId: string;
+  questionSetVersion: number;
+  status: "READY" | "SUBMITTED" | "FEEDBACK_READY";
+  questions: GuidedQuestion[];
+  responses: Array<{
+    questionId: string;
+    selectedOptionIds: string[];
+    text?: string;
+    competency: string;
+    score?: number;
+    submittedAt: string;
+  }>;
+  feedback: Array<{
+    questionId: string;
+    heading: string;
+    message: string;
+    competency: string;
+  }>;
+  submittedAt?: string;
+  feedbackGeneratedAt?: string;
+}
+
+export interface InvestigationAllowance {
+  dateKey: string;
+  timezone: string;
+  limit: number;
+  used: number;
+  reserved: number;
+  released: number;
+  remaining: number;
+  resetAt: string;
+  costs: {
+    text: number;
+    link: number;
+    image: number;
+    screenshot: number;
+    audio: number;
+    video: number;
+  };
+  paymentsAvailable: boolean;
+  entitlement: {
+    plan: "FREE" | "PLUS" | "COMMUNITY" | "ADMINISTRATIVE_SPONSORSHIP";
+    source: "DEFAULT" | "ADMIN_GRANT";
+    expiresAt: string | null;
+  };
 }
 
 export interface VerificationPage {
@@ -60,6 +131,10 @@ export interface VerificationEvent {
 }
 
 export const verificationService = {
+  allowance(): Promise<InvestigationAllowance> {
+    return apiClient.get<InvestigationAllowance>("/verifications/allowance");
+  },
+
   cancel(id: string): Promise<VerificationRecord> {
     return apiClient.post<VerificationRecord>(`/verifications/${id}/cancel`);
   },
@@ -75,6 +150,20 @@ export const verificationService = {
 
   get(id: string): Promise<VerificationRecord> {
     return apiClient.get<VerificationRecord>(`/verifications/${id}`);
+  },
+
+  guidance(id: string): Promise<GuidedInvestigation> {
+    return apiClient.get<GuidedInvestigation>(`/verifications/${id}/guidance`);
+  },
+
+  submitGuidance(
+    id: string,
+    responses: Array<{ questionId: string; selectedOptionIds?: string[]; text?: string }>,
+  ): Promise<GuidedInvestigation> {
+    return apiClient.post<GuidedInvestigation>(
+      `/verifications/${id}/guidance/responses`,
+      { responses },
+    );
   },
 
   list({

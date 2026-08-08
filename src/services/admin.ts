@@ -27,6 +27,51 @@ export interface AdminAnalyticsOverview {
   whatsapp: { messages: number };
 }
 
+export interface AdminPilotAnalytics {
+  privacy: {
+    minimumGroupSize: number;
+    individualResponsesIncluded: false;
+    privateInvestigationsIncluded: false;
+  };
+  missions: Array<{
+    id: string;
+    title: string;
+    slug: string;
+    status: string;
+    organization: string;
+    startsAt: string;
+    endsAt: string;
+    participation: {
+      joined: number;
+      completed: number;
+      baselineCompleted: number;
+      followUpCompleted: number;
+      completionRate: number;
+    };
+    impact:
+      | {
+          state: "AVAILABLE";
+          baselineAverage: number | null;
+          followUpAverage: number | null;
+          averageChange: number | null;
+          competencies: Array<{
+            competency: string;
+            baseline: number | null;
+            followUp: number | null;
+            change: number | null;
+          }>;
+        }
+      | {
+          state: "WITHHELD_FOR_PRIVACY";
+          minimumGroupSize: number;
+          currentGroupSize: number;
+        };
+    limitation: string;
+  }>;
+  interactions: Array<{ event: string; count: number }>;
+  reportFeedback: Array<{ type: string; count: number }>;
+}
+
 export type AdminUserRole =
   | "USER"
   | "MODERATOR"
@@ -41,6 +86,11 @@ export type AdminUserStatus =
   | "DISABLED"
   | "DELETION_PENDING"
   | "DELETED";
+export type EntitlementPlan =
+  | "FREE"
+  | "PLUS"
+  | "COMMUNITY"
+  | "ADMINISTRATIVE_SPONSORSHIP";
 
 export interface AdminUser {
   id: string;
@@ -124,6 +174,11 @@ export interface ProviderHealth {
   checkedAt: string;
   latencyMs: number;
   safeCode?: string;
+  configuredKeys?: number;
+  healthyKeys?: number;
+  cooldownKeys?: number;
+  disabledKeys?: number;
+  nextAvailableAt?: string;
 }
 
 export interface DependencyHealth {
@@ -134,6 +189,10 @@ export interface DependencyHealth {
 }
 
 export const adminService = {
+  pilots: () =>
+    apiClient.get<AdminPilotAnalytics>("/admin/analytics/pilots"),
+  grantEntitlement: (userId: string, plan: EntitlementPlan, reason: string) =>
+    apiClient.put(`/admin/entitlements/${userId}`, { plan, reason }),
   overview: () =>
     apiClient.get<AdminAnalyticsOverview>("/admin/analytics/overview"),
   users: ({
@@ -243,15 +302,39 @@ export const adminService = {
   ) => apiClient.patch<AdminRecord>(`/admin/feedback/${id}`, body),
   contentRecords: (
     resource: "courses" | "lessons" | "quizzes" | "challenges",
-    cursor?: string,
+    {
+      courseId,
+      cursor,
+      difficulty,
+      lessonId,
+      limit = 20,
+      search,
+      status,
+      tag,
+    }: {
+      courseId?: string;
+      cursor?: string;
+      difficulty?: string;
+      lessonId?: string;
+      limit?: number;
+      search?: string;
+      status?: string;
+      tag?: string;
+    } = {},
   ) => {
     const base =
       resource === "courses" || resource === "lessons"
         ? `/admin/learning/${resource}`
         : `/admin/${resource}`;
-    return apiClient.get<CursorPage<AdminRecord>>(
-      `${base}?limit=20${cursor ? `&cursor=${cursor}` : ""}`,
-    );
+    const query = new URLSearchParams({ limit: String(limit) });
+    if (courseId) query.set("courseId", courseId);
+    if (cursor) query.set("cursor", cursor);
+    if (difficulty) query.set("difficulty", difficulty);
+    if (lessonId) query.set("lessonId", lessonId);
+    if (search) query.set("search", search);
+    if (status) query.set("status", status);
+    if (tag) query.set("tag", tag);
+    return apiClient.get<CursorPage<AdminRecord>>(`${base}?${query}`);
   },
   contentRecord: (
     resource: "courses" | "lessons" | "quizzes" | "challenges",
@@ -319,7 +402,31 @@ export const adminService = {
       enabledProviders,
       reason,
     }),
-  badges: () => apiClient.get<AdminRecord[]>("/admin/gamification/badges"),
+  badges: ({
+    active,
+    category,
+    cursor,
+    limit = 20,
+    rarity,
+    search,
+  }: {
+    active?: boolean;
+    category?: string;
+    cursor?: string;
+    limit?: number;
+    rarity?: string;
+    search?: string;
+  } = {}) => {
+    const query = new URLSearchParams({ limit: String(limit) });
+    if (active !== undefined) query.set("active", String(active));
+    if (category) query.set("category", category);
+    if (cursor) query.set("cursor", cursor);
+    if (rarity) query.set("rarity", rarity);
+    if (search) query.set("search", search);
+    return apiClient.get<CursorPage<AdminRecord>>(
+      `/admin/gamification/badges?${query}`,
+    );
+  },
   badge: (id: string) =>
     apiClient.get<AdminRecord>(`/admin/gamification/badges/${id}`),
   createBadge: (body: Record<string, unknown>) =>
