@@ -1,4 +1,27 @@
-import { ArrowRight, Check, FileSearch, Globe2, ImageIcon, Link2, MessageCircle, Mic2, Search, ShieldCheck, Video, ShieldAlert, BookOpen, Quote, ChevronDown } from "lucide-react";
+import {
+	ArrowRight,
+	BadgeCheck,
+	BookOpen,
+	Check,
+	ChevronDown,
+	CircleHelp,
+	Crosshair,
+	FileSearch,
+	Globe2,
+	GraduationCap,
+	History,
+	ImageIcon,
+	Layers3,
+	MessageCircle,
+	Mic2,
+	Quote,
+	ScanSearch,
+	Search,
+	ShieldAlert,
+	ShieldCheck,
+	Sparkles,
+	Video,
+} from "lucide-react";
 import Link from "next/link";
 import PublicNavbar from "@/components/public/PublicNavbar";
 import VerithLogo from "@/components/brand/VerithLogo";
@@ -6,10 +29,11 @@ import MotionReveal from "@/components/public/MotionReveal";
 import PremiumBackground from "@/components/public/PremiumBackground";
 import ScrollProgress from "@/components/public/ScrollProgress";
 import SpotlightCard from "@/components/public/SpotlightCard";
+import { INVESTIGATION_GUIDE, USER_CAPABILITIES } from "@/data/landing";
+import type { LandingIconKey } from "@/types/landing";
 
 const inputTypes = [
 	{ icon: MessageCircle, label: "Text" },
-	{ icon: Link2, label: "Link" },
 	{ icon: ImageIcon, label: "Image" },
 	{ icon: Mic2, label: "Voice note" },
 	{ icon: Video, label: "Video" },
@@ -37,6 +61,19 @@ const productPillars = [
 		text: "Every investigation is a learning opportunity. Interactive challenges and evidence quizzes turn fact-checking into practical, reusable skills.",
 	},
 ];
+
+const landingIcons: Record<LandingIconKey, typeof Search> = {
+	capture: Layers3,
+	focus: Crosshair,
+	inspect: ScanSearch,
+	decide: ShieldCheck,
+	investigate: FileSearch,
+	evidence: Search,
+	learning: GraduationCap,
+	practice: CircleHelp,
+	achievements: BadgeCheck,
+	history: History,
+};
 
 function Brand() {
 	return (
@@ -318,7 +355,7 @@ export default function LandingPage() {
 								<div className="pb-8">
 									<h3 className="text-xl font-medium text-white">Capture the source</h3>
 									<p className="mt-2 text-sm text-white/50 leading-relaxed">
-										Submit text, a link, image, screenshot, voice note, or short video while preserving the original material and its context.
+										Submit text, an image, screenshot, voice note, or short video while preserving the original material and its context.
 									</p>
 								</div>
 							</div>
@@ -351,6 +388,92 @@ export default function LandingPage() {
 									</p>
 								</div>
 							</div>
+						</div>
+					</div>
+				</section>
+
+				{/* INVESTIGATION PLAYBOOK */}
+				<section className="relative overflow-hidden px-6 py-24 md:py-32" id="investigation-guide">
+					<div aria-hidden="true" className="absolute left-1/2 top-16 size-[34rem] -translate-x-1/2 rounded-full bg-violet-600/10 blur-[120px]" />
+					<div className="relative mx-auto max-w-6xl">
+						<MotionReveal>
+							<div className="mx-auto max-w-3xl text-center">
+								<span className="inline-flex items-center gap-2 rounded-full border border-violet-400/20 bg-violet-400/10 px-4 py-2 text-xs font-semibold text-violet-200">
+									<Sparkles size={14} />
+									Your investigation playbook
+								</span>
+								<h2 className="mt-6 text-3xl font-medium tracking-tight md:text-5xl">
+									Get a useful answer without wasting time.
+								</h2>
+								<p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/50">
+									A strong investigation starts before you press submit. These four habits help Verith examine the right claim and help you use the result responsibly.
+								</p>
+							</div>
+						</MotionReveal>
+
+						<div className="mt-16 grid gap-5 md:grid-cols-2">
+							{INVESTIGATION_GUIDE.map((item, index) => {
+								const Icon = landingIcons[item.iconKey];
+								return (
+									<MotionReveal delay={index * 0.08} key={item.title}>
+										<article className="group relative h-full overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.035] p-7 backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-violet-300/30 hover:bg-violet-400/[0.06] md:p-9">
+											<div aria-hidden="true" className="absolute -right-14 -top-14 size-40 rounded-full bg-violet-500/10 blur-3xl transition-transform duration-700 group-hover:scale-150" />
+											<div className="relative flex items-start gap-5">
+												<span className="grid size-14 shrink-0 place-items-center rounded-[1.25rem] border border-white/10 bg-gradient-to-br from-violet-400/20 to-indigo-500/10 text-violet-200 shadow-inner shadow-white/5 transition-transform duration-500 group-hover:rotate-3 group-hover:scale-105">
+													<Icon size={24} />
+												</span>
+												<div>
+													<span className="text-xs font-semibold uppercase tracking-[0.18em] text-violet-300/70">Step {index + 1}</span>
+													<h3 className="mt-2 text-xl font-medium text-white">{item.title}</h3>
+												</div>
+											</div>
+											<p className="relative mt-6 text-sm leading-7 text-white/55">{item.description}</p>
+											<div className="relative mt-6 rounded-2xl bg-black/30 px-4 py-3 text-xs leading-5 text-white/55">
+												<span className="font-semibold text-violet-200">Useful tip:</span> {item.tip}
+											</div>
+										</article>
+									</MotionReveal>
+								);
+							})}
+						</div>
+					</div>
+				</section>
+
+				{/* AUTHENTICATED USER CAPABILITIES */}
+				<section className="relative px-6 py-24" id="user-capabilities">
+					<div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] border border-white/10 bg-gradient-to-br from-violet-500/[0.09] via-white/[0.025] to-indigo-500/[0.07] p-7 shadow-[0_35px_100px_rgba(0,0,0,0.35)] md:p-12 lg:p-16">
+						<div aria-hidden="true" className="absolute -right-24 -top-24 size-80 animate-pulse rounded-full border border-violet-300/10 bg-violet-500/10 blur-2xl" />
+						<MotionReveal>
+							<div className="relative flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+								<div className="max-w-2xl">
+									<span className="inline-flex rounded-full border border-white/10 bg-black/25 px-4 py-2 text-xs font-semibold text-white/60">Inside your Verith account</span>
+									<h2 className="mt-5 text-3xl font-medium tracking-tight md:text-5xl">One workspace. More confident digital decisions.</h2>
+									<p className="mt-5 text-base leading-relaxed text-white/50">
+										These tools are available to signed-in users and are designed to move you from checking one claim to building habits you can use anywhere.
+									</p>
+								</div>
+								<Link className="inline-flex h-12 shrink-0 items-center justify-center gap-2 self-start rounded-full bg-white px-6 text-sm font-bold text-black transition-all hover:scale-105 hover:bg-violet-100 active:scale-95 lg:self-auto" href="/login">
+									Sign in to your workspace
+									<ArrowRight size={16} />
+								</Link>
+							</div>
+						</MotionReveal>
+
+						<div className="relative mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+							{USER_CAPABILITIES.map((capability, index) => {
+								const Icon = landingIcons[capability.iconKey];
+								return (
+									<MotionReveal delay={index * 0.06} key={capability.title}>
+										<article className="group h-full rounded-3xl border border-white/[0.08] bg-black/25 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.05]">
+											<span className="grid size-11 place-items-center rounded-2xl bg-white/[0.06] text-violet-200 transition-all duration-500 group-hover:bg-violet-500/20 group-hover:scale-110">
+												<Icon size={20} />
+											</span>
+											<h3 className="mt-5 text-base font-medium text-white">{capability.title}</h3>
+											<p className="mt-2 text-sm leading-6 text-white/45 transition-colors group-hover:text-white/65">{capability.description}</p>
+										</article>
+									</MotionReveal>
+								);
+							})}
 						</div>
 					</div>
 				</section>
@@ -422,7 +545,7 @@ export default function LandingPage() {
 								},
 								{
 									q: "What types of media can I verify?",
-									a: "You can submit text claims, links to articles, screenshots, images, and even voice notes or short video clips. Verith extracts the relevant claims from the media before beginning the analysis.",
+									a: "You can submit text claims, screenshots, images, voice notes, or short video clips. Direct link submission is temporarily unavailable while Verith improves source retrieval reliability.",
 								},
 								{
 									q: "Do I need to be a fact-checker to use it?",
@@ -481,18 +604,20 @@ export default function LandingPage() {
 								Explainable verification and media literacy infrastructure for healthier digital communities. Stop guessing, start investigating.
 							</p>
 							<div className="mt-8 flex gap-4">
-								<a
-									href="#"
+								<Link
+									aria-label="Learn more about Verith"
+									href="/about"
 									className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-violet-500 hover:bg-violet-500/10 transition-all"
 								>
-									<Globe2 size={18} />
-								</a>
-								<a
-									href="#"
+									<Globe2 aria-hidden="true" size={18} />
+								</Link>
+								<Link
+									aria-label="Explore Verith for WhatsApp"
+									href="/whatsapp"
 									className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-violet-500 hover:bg-violet-500/10 transition-all"
 								>
-									<MessageCircle size={18} />
-								</a>
+									<MessageCircle aria-hidden="true" size={18} />
+								</Link>
 							</div>
 						</div>
 
@@ -504,34 +629,34 @@ export default function LandingPage() {
 							<Link className="text-sm text-white/50 hover:text-violet-300 transition-colors" href="/whatsapp">
 								WhatsApp Bot
 							</Link>
-							<Link className="text-sm text-white/50 hover:text-violet-300 transition-colors" href="/pricing">
-								Pricing
+							<Link className="text-sm text-white/50 hover:text-violet-300 transition-colors" href="/learning">
+								Learning
 							</Link>
 						</div>
 
 						<div className="lg:col-span-2 flex flex-col gap-4">
-							<span className="text-sm font-semibold text-white tracking-wider uppercase mb-2">Company</span>
+							<span className="text-sm font-semibold text-white tracking-wider uppercase mb-2">About Verith</span>
 							<Link className="text-sm text-white/50 hover:text-violet-300 transition-colors" href="/about">
 								About Us
 							</Link>
-							<Link className="text-sm text-white/50 hover:text-violet-300 transition-colors" href="/blog">
-								Blog
-							</Link>
-							<Link className="text-sm text-white/50 hover:text-violet-300 transition-colors" href="/careers">
-								Careers
-							</Link>
-						</div>
-
-						<div className="lg:col-span-2 flex flex-col gap-4">
-							<span className="text-sm font-semibold text-white tracking-wider uppercase mb-2">Legal & Support</span>
 							<Link className="text-sm text-white/50 hover:text-violet-300 transition-colors" href="/privacy">
 								Privacy Policy
 							</Link>
 							<Link className="text-sm text-white/50 hover:text-violet-300 transition-colors" href="/terms">
 								Terms of Service
 							</Link>
-							<Link className="text-sm text-white/50 hover:text-violet-300 transition-colors" href="/contact">
-								Contact Support
+						</div>
+
+						<div className="lg:col-span-2 flex flex-col gap-4">
+							<span className="text-sm font-semibold text-white tracking-wider uppercase mb-2">Get started</span>
+							<Link className="text-sm text-white/50 hover:text-violet-300 transition-colors" href="/register">
+								Create an account
+							</Link>
+							<Link className="text-sm text-white/50 hover:text-violet-300 transition-colors" href="/login">
+								Log in
+							</Link>
+							<Link className="text-sm text-white/50 hover:text-violet-300 transition-colors" href="/login">
+								Start an investigation
 							</Link>
 						</div>
 					</div>

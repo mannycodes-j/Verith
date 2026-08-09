@@ -42,7 +42,7 @@ export default function NotificationDrawer({
           </button>
         </header>
         {notifications.isPending && (
-          <p aria-busy="true">Loading persisted notifications…</p>
+          <p aria-busy="true">Loading notifications…</p>
         )}
         {notifications.isError && (
           <div role="alert">
@@ -53,7 +53,7 @@ export default function NotificationDrawer({
           </div>
         )}
         {notifications.data?.data.length === 0 && (
-          <p>No persisted notifications are available.</p>
+          <p>No notifications are available.</p>
         )}
         {notifications.data && notifications.data.data.length > 0 && (
           <ol>

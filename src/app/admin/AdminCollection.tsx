@@ -75,7 +75,7 @@ export default function AdminCollection({ kind }: { kind: Kind }) {
 			</section>}
 			{query.isPending && (
 				<div className={styles.tableLoading} aria-busy="true">
-					Loading persisted records…
+					Loading records…
 				</div>
 			)}
 			{query.isError && (
@@ -90,7 +90,7 @@ export default function AdminCollection({ kind }: { kind: Kind }) {
 			{query.data && records.length === 0 && (
 				<section className={styles.listEmpty}>
 					<span>Empty state</span>
-					<h2>No records have been persisted.</h2>
+					<h2>No records have been saved.</h2>
 				</section>
 			)}
 			{records.length > 0 && (

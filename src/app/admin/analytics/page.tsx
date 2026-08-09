@@ -41,7 +41,7 @@ export default function AdminAnalyticsPage() {
           <header><span>{mission.organization}</span><small>{mission.status}</small></header>
           <h2>{mission.title}</h2>
           <ol>
-            <li><span>Joined</span><strong>{number.format(mission.participation.joined)}</strong><small>Persisted mission participants</small></li>
+            <li><span>Joined</span><strong>{number.format(mission.participation.joined)}</strong><small>Saved mission participants</small></li>
             <li><span>Completed</span><strong>{number.format(mission.participation.completed)}</strong><small>{percent.format(mission.participation.completionRate)} completion rate</small></li>
             {mission.impact.state === "AVAILABLE" ? <>
               <li><span>Baseline</span><strong>{score(mission.impact.baselineAverage)}</strong><small>Average scored assessment</small></li>
@@ -53,8 +53,8 @@ export default function AdminAnalyticsPage() {
       ))}
 
       <div className={styles.grid}>
-        <section className={styles.record}><header><span>Product interactions</span><small>Safe categories only</small></header>{record.interactions.length ? <ol>{record.interactions.map((item) => <li key={item.event}><span>{item.event.replaceAll("_", " ")}</span><strong>{number.format(item.count)}</strong><small>No investigation text retained</small></li>)}</ol> : <p className={styles.empty}>No tracked pilot interactions have been persisted yet.</p>}</section>
-        <section className={styles.record}><header><span>Report feedback</span><small>Persisted responses</small></header>{record.reportFeedback.length ? <ol>{record.reportFeedback.map((item) => <li key={item.type}><span>{item.type.replaceAll("_", " ")}</span><strong>{number.format(item.count)}</strong><small>Aggregate feedback count</small></li>)}</ol> : <p className={styles.empty}>No report feedback has been persisted yet.</p>}</section>
+        <section className={styles.record}><header><span>Product interactions</span><small>Safe categories only</small></header>{record.interactions.length ? <ol>{record.interactions.map((item) => <li key={item.event}><span>{item.event.replaceAll("_", " ")}</span><strong>{number.format(item.count)}</strong><small>No investigation text retained</small></li>)}</ol> : <p className={styles.empty}>No tracked pilot interactions have been saved yet.</p>}</section>
+        <section className={styles.record}><header><span>Report feedback</span><small>Saved responses</small></header>{record.reportFeedback.length ? <ol>{record.reportFeedback.map((item) => <li key={item.type}><span>{item.type.replaceAll("_", " ")}</span><strong>{number.format(item.count)}</strong><small>Aggregate feedback count</small></li>)}</ol> : <p className={styles.empty}>No report feedback has been saved yet.</p>}</section>
       </div>
     </div>
   );

@@ -431,6 +431,10 @@ export const adminService = {
     apiClient.get<AdminRecord>(`/admin/gamification/badges/${id}`),
   createBadge: (body: Record<string, unknown>) =>
     apiClient.post<AdminRecord>("/admin/gamification/badges", body),
+  updateBadgeActive: (id: string, active: boolean) =>
+    apiClient.patch<AdminRecord>(`/admin/gamification/badges/${id}`, {
+      active,
+    }),
   archiveBadge: (id: string, reason: string) =>
     apiClient.delete<AdminRecord>(`/admin/gamification/badges/${id}`, {
       reason,

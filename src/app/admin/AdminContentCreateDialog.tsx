@@ -4,9 +4,19 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Plus, X } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import QuestionBuilder from "@/components/admin/QuestionBuilder";
-import { ADMIN_CONTENT_COPY, createBlankQuestion } from "@/data/admin-content";
+import {
+  ADMIN_BADGE_CATEGORIES,
+  ADMIN_BADGE_CRITERIA_OPTIONS,
+  ADMIN_BADGE_RARITIES,
+  ADMIN_CONTENT_COPY,
+  createBlankQuestion,
+} from "@/data/admin-content";
 import { adminService } from "@/services/admin";
-import type { CreatableContent, EditorialQuestion } from "@/types/admin-content";
+import type {
+  CreatableContent,
+  EditorialQuestion,
+  SupportedBadgeCriteriaType,
+} from "@/types/admin-content";
 import { createAdminContentPayload } from "@/utils/admin-content";
 import { adminStyles as styles } from "./admin.styles";
 
@@ -16,6 +26,8 @@ export default function AdminContentCreateDialog({ kind }: { kind: CreatableCont
   const [open, setOpen] = useState(false);
   const [clientError, setClientError] = useState<string>();
   const [questions, setQuestions] = useState<EditorialQuestion[]>([createBlankQuestion()]);
+  const [badgeCriteriaType, setBadgeCriteriaType] =
+    useState<SupportedBadgeCriteriaType>("VERIFICATION_COUNT");
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (payload: Record<string, unknown>) =>
@@ -25,6 +37,7 @@ export default function AdminContentCreateDialog({ kind }: { kind: CreatableCont
       setOpen(false);
       setClientError(undefined);
       setQuestions([createBlankQuestion()]);
+      setBadgeCriteriaType("VERIFICATION_COUNT");
     },
   });
   const copy = ADMIN_CONTENT_COPY[kind];
@@ -38,7 +51,7 @@ export default function AdminContentCreateDialog({ kind }: { kind: CreatableCont
 
   return (
     <>
-      <button className={styles.createButton} onClick={() => setOpen(true)} type="button"><Plus size={16} /> Create {copy.singular}</button>
+      <button className={styles.createButton} onClick={() => { setBadgeCriteriaType("VERIFICATION_COUNT"); setOpen(true); }} type="button"><Plus size={16} /> Create {copy.singular}</button>
       {open && (
         <div className={styles.dialogBackdrop} role="presentation" onMouseDown={(event) => event.target === event.currentTarget && setOpen(false)}>
           <section aria-labelledby="create-content-title" aria-modal="true" className={styles.editorDialog} role="dialog">
@@ -56,7 +69,7 @@ export default function AdminContentCreateDialog({ kind }: { kind: CreatableCont
               {kind === "quizzes" && <><label className="full">Description<textarea maxLength={2000} minLength={3} name="description" required /></label><label>Passing score<input defaultValue={70} max={100} min={0} name="passingScore" required type="number" /></label><label>Maximum attempts<input defaultValue={3} max={100} min={1} name="maxAttempts" required type="number" /></label><label>XP awarded<input defaultValue={25} min={0} name="xp" required type="number" /><small>Experience points earned after passing.</small></label><label>Truth points awarded<input defaultValue={10} min={0} name="truthPoints" required type="number" /><small>Points added to the learner’s Verith record.</small></label></>}
               {kind === "challenges" && <><label className="full">Scenario<textarea maxLength={3000} minLength={3} name="scenario" required /></label><label className="full">Challenge content<textarea maxLength={10000} minLength={3} name="content" required /></label><label>Difficulty<select name="difficulty"><option value="BEGINNER">Beginner</option><option value="INTERMEDIATE">Intermediate</option><option value="ADVANCED">Advanced</option></select></label><label>Media asset ID<input name="mediaAssetId" pattern="[a-fA-F0-9]{24}" /></label><label>Passing score<input defaultValue={70} max={100} min={0} name="passingScore" required type="number" /></label><label>Maximum attempts<input defaultValue={3} max={100} min={1} name="maxAttempts" required type="number" /></label><label>XP reward<input defaultValue={25} min={0} name="xp" required type="number" /></label><label>Truth points<input defaultValue={10} min={0} name="truthPoints" required type="number" /></label><label>Publish at<input name="publishAt" required type="datetime-local" /></label><label>Expires at<input name="expiresAt" required type="datetime-local" /></label></>}
               {(kind === "quizzes" || kind === "challenges") && <QuestionBuilder onChange={setQuestions} questions={questions} />}
-              {kind === "badges" && <><label>Name<input maxLength={100} minLength={2} name="name" required /></label><label>Slug<input maxLength={100} minLength={2} name="slug" required /></label><label className="full">Description<textarea maxLength={1000} minLength={3} name="description" required /></label><label>Category<input maxLength={100} minLength={2} name="category" required /></label><label>Criteria type<select name="criteriaType"><option value="VERIFICATION_COUNT">Verification count</option><option value="LESSON_COUNT">Lesson count</option><option value="QUIZ_SCORE">Quiz score</option><option value="CHALLENGE_STREAK">Challenge streak</option><option value="DAILY_STREAK">Daily streak</option><option value="REPORT_FEEDBACK">Report feedback</option><option value="SPECIAL_EVENT">Special event</option></select></label><label>Rarity<input maxLength={50} minLength={2} name="rarity" required /></label><label className="full">Criteria JSON<textarea className="code" defaultValue={'{"threshold": 100}'} name="criteria" required /></label><label className="full">Reward JSON<textarea className="code" defaultValue={'{"xp": 25, "truthPoints": 10}'} name="reward" required /></label></>}
+              {kind === "badges" && <><label>Name<input maxLength={100} minLength={2} name="name" required /></label><label>Slug<input maxLength={100} minLength={2} name="slug" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" placeholder="careful-reader" required /></label><label className="full">Description<textarea maxLength={1000} minLength={3} name="description" required /><small>State exactly which recorded activity earns this badge.</small></label><label>Category<select name="category">{ADMIN_BADGE_CATEGORIES.map((category) => <option key={category} value={category}>{category.replaceAll("_", " ")}</option>)}</select></label><label>Rarity<select name="rarity">{ADMIN_BADGE_RARITIES.map((rarity) => <option key={rarity} value={rarity}>{rarity.replaceAll("_", " ")}</option>)}</select></label><label className="full">Measurable criterion<select name="criteriaType" onChange={(event) => setBadgeCriteriaType(event.target.value as SupportedBadgeCriteriaType)} value={badgeCriteriaType}>{ADMIN_BADGE_CRITERIA_OPTIONS.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select><small>{ADMIN_BADGE_CRITERIA_OPTIONS.find((option) => option.value === badgeCriteriaType)?.description}</small></label><label>Required activity count<input defaultValue={1} max={100000} min={1} name="threshold" required type="number" /><small>The badge unlocks when this recorded count is reached.</small></label>{badgeCriteriaType === "TAGGED_ACTIVITY_COUNT" && <label>Eligible tags<input name="tags" placeholder="context, source-checking" required /><small>Comma-separated tags already used by published lessons or challenges.</small></label>}<label>XP reward<input defaultValue={25} max={100000} min={0} name="xp" required type="number" /><small>XP is issued once when the badge is first earned.</small></label><label>Truth Points reward<input defaultValue={10} max={100000} min={0} name="truthPoints" required type="number" /><small>Truth Points are issued once when the badge is first earned.</small></label><div className="full rounded-2xl border border-violet-300/10 bg-violet-400/[.04] p-4 text-xs leading-5 text-white/45">Badge awards remain server-controlled and idempotent. Fixed Verith catalog definitions cannot be edited after creation; only their active state can change.</div></>}
               {kind === "prompts" && <><label>Registry key<input maxLength={120} minLength={2} name="key" required /></label><label>Task<input maxLength={120} minLength={2} name="task" required /></label><label className="full">System prompt<textarea className="code tall" maxLength={50000} minLength={10} name="systemPrompt" required /></label><label className="full">User prompt template<textarea className="code" maxLength={50000} minLength={3} name="userPromptTemplate" required /></label><label>Supported providers<input name="supportedProviders" placeholder="GEMINI, GROQ, OPENROUTER" required /></label><label>Supported models<input name="supportedModels" placeholder="One model per line" required /></label><label>Output schema version<input maxLength={120} minLength={2} name="outputSchemaVersion" required /></label><label className="full">Change summary<textarea maxLength={1000} minLength={10} name="changeSummary" required /></label><label className="full">Audit reason<textarea maxLength={1000} minLength={10} name="reason" required /></label></>}
               {(clientError || mutation.isError) && <p className="full error" role="alert">{clientError ?? mutation.error?.message ?? "The record could not be created."}</p>}
               <footer className="full"><button onClick={() => setOpen(false)} type="button">Cancel</button><button disabled={mutation.isPending} type="submit">{mutation.isPending ? "Creating…" : `Create ${copy.singular}`}</button></footer>

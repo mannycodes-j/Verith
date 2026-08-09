@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { quizzesService, type QuizAttempt } from "@/services/quizzes";
 import { quizStyles as styles } from "./quiz.styles";
+import { requestAchievementCelebrationCheck } from "@/utils/achievement-celebrations";
 
 export default function QuizWorkspace({ id }: { id: string }) {
   const queryClient = useQueryClient();
@@ -31,12 +32,18 @@ export default function QuizWorkspace({ id }: { id: string }) {
       setResult(next);
       void queryClient.invalidateQueries({ queryKey: ["quiz-attempts", id] });
       void queryClient.invalidateQueries({ queryKey: ["gamification-profile"] });
+      void queryClient.invalidateQueries({ queryKey: ["gamification-badges"] });
       void queryClient.invalidateQueries({
         queryKey: ["gamification-transactions"],
       });
       void queryClient.invalidateQueries({
         queryKey: ["learning-progress", String(quiz.data?.courseId)],
       });
+      if (next.passed) {
+        requestAchievementCelebrationCheck({
+          allowDuringCriticalInteraction: true,
+        });
+      }
     },
   });
 

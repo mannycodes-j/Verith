@@ -1,6 +1,6 @@
 "use client";
 
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { learningService } from "@/services/learning";
@@ -21,6 +21,7 @@ import {
 } from "@/utils/report-presentation";
 import { useReportMode, type ReportMode } from "./useReportMode";
 import { analyticsService } from "@/services/analytics";
+import { requestAchievementCelebrationCheck } from "@/utils/achievement-celebrations";
 
 function humanize(value: string | undefined) {
   return friendlyLabel(value);
@@ -335,6 +336,7 @@ function simpleVerdict(value: string, language: "en" | "pcm") {
 }
 
 export function ClaimWorkspace({ report }: { report: VerificationReport }) {
+  const queryClient = useQueryClient();
   const evidenceById = useMemo(
     () =>
       new Map(
@@ -351,13 +353,28 @@ export function ClaimWorkspace({ report }: { report: VerificationReport }) {
   };
   const openEvidence = () => {
     if (!report.id || !selectedEvidence) return;
-    void Promise.allSettled([
-      reportService.inspectEvidence(report.id, selectedEvidence.evidenceId),
-      analyticsService.record("EVIDENCE_SOURCE_OPENED", {
+    void reportService
+      .inspectEvidence(report.id, selectedEvidence.evidenceId)
+      .then((result) => {
+        if (!result.recorded) return;
+        void queryClient.invalidateQueries({
+          queryKey: ["gamification-profile"],
+        });
+        void queryClient.invalidateQueries({
+          queryKey: ["gamification-badges"],
+        });
+        void queryClient.invalidateQueries({
+          queryKey: ["gamification-transactions"],
+        });
+        requestAchievementCelebrationCheck();
+      })
+      .catch(() => undefined);
+    void analyticsService
+      .record("EVIDENCE_SOURCE_OPENED", {
         reportId: report.id,
         verificationId: report.verificationId,
-      }),
-    ]);
+      })
+      .catch(() => undefined);
   };
 
   return (

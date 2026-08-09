@@ -13,7 +13,6 @@ export default async function NewVerificationPage({
   const source = (await searchParams).source;
   const initialSourceType = [
     "TEXT",
-    "URL",
     "IMAGE",
     "SCREENSHOT",
     "AUDIO",
@@ -21,7 +20,6 @@ export default async function NewVerificationPage({
   ].includes(source ?? "")
     ? (source as
         | "TEXT"
-        | "URL"
         | "IMAGE"
         | "SCREENSHOT"
         | "AUDIO"

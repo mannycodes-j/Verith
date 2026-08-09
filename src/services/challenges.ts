@@ -54,6 +54,10 @@ export const challengesService = {
     apiClient.get<Challenge>(`/challenges/${slug}`, {
       retryAuthentication: false,
     }),
+  today: () =>
+    apiClient.get<Challenge>("/challenges/today", {
+      retryAuthentication: false,
+    }),
   list: ({
     cursor,
     difficulty,

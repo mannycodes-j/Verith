@@ -4,10 +4,12 @@ import { apiClient } from "./apiClient";
 import { adminService } from "./admin";
 
 const originalGet = apiClient.get;
+const originalPatch = apiClient.patch;
 
 describe("adminService contract adapters", () => {
   afterEach(() => {
     apiClient.get = originalGet;
+    apiClient.patch = originalPatch;
   });
 
   it("sends only supported user filters and preserves cursor pagination", async () => {
@@ -63,5 +65,22 @@ describe("adminService contract adapters", () => {
       "/integrations/search/health",
     ]);
     assert.equal(calls.join(" ").includes("force=true"), false);
+  });
+
+  it("reactivates a badge without mutating its fixed definition", async () => {
+    const calls: Array<{ body: unknown; endpoint: string }> = [];
+    apiClient.patch = (async (endpoint: string, body: unknown) => {
+      calls.push({ body, endpoint });
+      return { _id: "badge-1", active: true };
+    }) as typeof apiClient.patch;
+
+    await adminService.updateBadgeActive("badge-1", true);
+
+    assert.deepEqual(calls, [
+      {
+        body: { active: true },
+        endpoint: "/admin/gamification/badges/badge-1",
+      },
+    ]);
   });
 });

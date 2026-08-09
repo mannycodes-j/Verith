@@ -28,7 +28,7 @@ export default function Leaderboards() {
         <p>
           A privacy-respecting view of sustained media-literacy practice,
           featuring only participants who choose to be visible and scores
-          backed by persisted learning activity.
+          backed by saved learning activity.
         </p>
       </header>
       <section className={styles.missions}>

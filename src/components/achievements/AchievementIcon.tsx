@@ -8,6 +8,7 @@ import {
   Flame,
   HeartHandshake,
   Search,
+  Shield,
   ShieldCheck,
   Sparkles,
   Trophy,
@@ -27,7 +28,8 @@ const icons = {
   "streak-7": Flame,
   "streak-30": Flame,
   search: Search,
-  shield: ShieldCheck,
+  shield: Shield,
+  "verified-shield": ShieldCheck,
   spark: Sparkles,
 } as const;
 

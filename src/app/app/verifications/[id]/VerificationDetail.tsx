@@ -11,6 +11,7 @@ import ReportDocument, { ReportClaimWorkspace } from "./ReportDocument";
 import { currentVerificationStageIndex as currentStageIndex, formatVerificationTimestamp as formatTimestamp } from "@/utils/verification";
 import { verificationFailurePresentation } from "@/services/verificationFailure";
 import GuidedInvestigationPanel from "./GuidedInvestigationPanel";
+import { requestAchievementCelebrationCheck } from "@/utils/achievement-celebrations";
 
 export default function VerificationDetail({ id }: { id: string }) {
 	const queryClient = useQueryClient();
@@ -37,7 +38,7 @@ export default function VerificationDetail({ id }: { id: string }) {
 		enabled: Boolean(verification.data),
 		queryFn: () => verificationService.listEvents(id),
 		queryKey: ["verification-events", id],
-		// Persisted events arrive through SSE while connected. Poll only as a
+		// Recorded events arrive through SSE while connected. Poll only as a
 		// recovery path when that stream cannot be established.
 		refetchInterval: verification.data
 			? terminalStatuses.includes(verification.data.status)
@@ -73,6 +74,14 @@ export default function VerificationDetail({ id }: { id: string }) {
 		},
 	});
 	const verificationStatus = verification.data?.status;
+
+	useEffect(() => {
+		if (verificationStatus !== "COMPLETED") return;
+		void queryClient.invalidateQueries({ queryKey: ["gamification-profile"] });
+		void queryClient.invalidateQueries({ queryKey: ["gamification-badges"] });
+		void queryClient.invalidateQueries({ queryKey: ["gamification-transactions"] });
+		requestAchievementCelebrationCheck();
+	}, [queryClient, verificationStatus]);
 
 	useEffect(() => {
 		if (!verificationStatus || terminalStatuses.includes(verificationStatus)) return;
@@ -259,7 +268,7 @@ export default function VerificationDetail({ id }: { id: string }) {
 						<span>Operational events</span>
 						<span>{events.data?.length ?? 0} records</span>
 					</div>
-					{events.isPending && <p>Loading persisted events…</p>}
+					{events.isPending && <p>Loading events…</p>}
 					{events.isError && (
 						<div className={styles.eventError}>
 							<p>Events are temporarily unavailable.</p>
@@ -268,7 +277,7 @@ export default function VerificationDetail({ id }: { id: string }) {
 							</button>
 						</div>
 					)}
-					{events.data?.length === 0 && <p>No persisted processing events are available yet.</p>}
+					{events.data?.length === 0 && <p>No processing events are available yet.</p>}
 					{events.data && events.data.length > 0 && (
 						<ol className={styles.events}>
 							{[...events.data].reverse().map((event) => (

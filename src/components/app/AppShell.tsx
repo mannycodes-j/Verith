@@ -593,7 +593,10 @@ export default function AppShell({ children }: { children: ReactNode }) {
           </section>
         </div>
       )}
-      <AchievementCelebrationCenter />
+      <AchievementCelebrationCenter
+        key={String(profile.id ?? profile.userId ?? "authenticated")}
+        userId={String(profile.id ?? profile.userId ?? "authenticated")}
+      />
     </div>
   );
 }

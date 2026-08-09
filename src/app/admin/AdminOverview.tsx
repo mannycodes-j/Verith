@@ -57,7 +57,7 @@ export default function AdminOverview() {
           <h1>System evidence, not decorative metrics.</h1>
         </div>
         <p>
-          This view contains persisted operational aggregates from Verith.
+          This view contains operational aggregates from Verith.
           Provider cost remains explicitly unavailable because the backend does
           not store it.
         </p>
@@ -86,7 +86,7 @@ export default function AdminOverview() {
         <div>
           <span>WhatsApp messages</span>
           <strong>{number.format(record.whatsapp.messages)}</strong>
-          <small>Persisted during period</small>
+          <small>Saved during period</small>
         </div>
       </section>
 
@@ -94,7 +94,7 @@ export default function AdminOverview() {
         <section className={styles.record}>
           <header>
             <span>Verification activity</span>
-            <small>Persisted status groups</small>
+            <small>Saved status groups</small>
           </header>
           {record.verifications.byStatus.length === 0 ? (
             <p className={styles.empty}>
@@ -118,11 +118,11 @@ export default function AdminOverview() {
         <section className={styles.record}>
           <header>
             <span>Provider activity</span>
-            <small>Persisted provider runs</small>
+            <small>Saved provider runs</small>
           </header>
           {record.providers.length === 0 ? (
             <p className={styles.empty}>
-              No provider executions were persisted for this period.
+              No provider executions were saved for this period.
             </p>
           ) : (
             <ol>

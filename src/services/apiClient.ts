@@ -2,6 +2,11 @@
 // the Next.js rewrite. This keeps refresh and CSRF cookies first-party when the
 // frontend and backend are hosted by different providers (for example, Vercel
 // and Render).
+import {
+  publishSessionIdentityChange,
+  type SessionIdentityChangeReason,
+} from "./sessionLifecycle";
+
 const API_ORIGIN = "";
 const API_PREFIX = "/api/v1";
 const CSRF_STORAGE_KEY = "verith_csrf_token";
@@ -68,6 +73,12 @@ interface AuthenticationPayload {
 let accessToken: string | null = null;
 let refreshRequest: Promise<boolean> | null = null;
 
+function clearBrowserSession(reason: SessionIdentityChangeReason) {
+  accessToken = null;
+  storeCsrfToken();
+  publishSessionIdentityChange(reason);
+}
+
 function getCookie(name: string): string | undefined {
   if (typeof document === "undefined") return undefined;
 
@@ -125,42 +136,67 @@ async function parseResponseBody(response: Response): Promise<unknown> {
   return response.json();
 }
 
+async function withRefreshLock<T>(operation: () => Promise<T>): Promise<T> {
+  const locks = navigator.locks;
+  if (!locks) return operation();
+  return locks.request("verith-session-refresh", { mode: "exclusive" }, operation);
+}
+
+function waitForConcurrentRotation(attempt: number) {
+  const delays = [150, 350, 750, 1_250];
+  return new Promise<void>((resolve) => {
+    window.setTimeout(resolve, delays[Math.min(attempt, delays.length - 1)]);
+  });
+}
+
 async function refreshBrowserSession(): Promise<boolean> {
   if (typeof window === "undefined") return false;
   if (refreshRequest) return refreshRequest;
 
-  refreshRequest = (async () => {
-    const csrfToken = getStoredCsrfToken();
-    if (!csrfToken) return false;
-
-    try {
-      const response = await fetch(`${API_ORIGIN}${API_PREFIX}/auth/refresh`, {
-        body: "{}",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          "x-csrf-token": csrfToken,
-        },
-        method: "POST",
-      });
-      const body: unknown = await parseResponseBody(response);
-
-      if (!response.ok || !isSuccessEnvelope<AuthenticationPayload>(body)) {
-        accessToken = null;
-        storeCsrfToken();
+  refreshRequest = withRefreshLock(async () => {
+    for (let attempt = 0; attempt < 5; attempt += 1) {
+      const csrfToken = getStoredCsrfToken();
+      if (!csrfToken) {
+        clearBrowserSession("REFRESH_FAILED");
         return false;
       }
-
-      accessToken = body.data.accessToken;
-      storeCsrfToken(body.data.csrfToken);
-      return true;
-    } catch {
-      accessToken = null;
-      return false;
-    } finally {
-      refreshRequest = null;
+      try {
+        const response = await fetch(`${API_ORIGIN}${API_PREFIX}/auth/refresh`, {
+          body: "{}",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            "x-csrf-token": csrfToken,
+          },
+          method: "POST",
+        });
+        const body: unknown = await parseResponseBody(response);
+        if (
+          !response.ok &&
+          isErrorEnvelope(body) &&
+          body.error.code === "REFRESH_CONCURRENT_ROTATION" &&
+          attempt < 4
+        ) {
+          await waitForConcurrentRotation(attempt);
+          continue;
+        }
+        if (!response.ok || !isSuccessEnvelope<AuthenticationPayload>(body)) {
+          clearBrowserSession("REFRESH_FAILED");
+          return false;
+        }
+        accessToken = body.data.accessToken;
+        storeCsrfToken(body.data.csrfToken);
+        return true;
+      } catch {
+        clearBrowserSession("REFRESH_FAILED");
+        return false;
+      }
     }
-  })();
+    clearBrowserSession("REFRESH_FAILED");
+    return false;
+  }).finally(() => {
+    refreshRequest = null;
+  });
 
   return refreshRequest;
 }
@@ -379,13 +415,13 @@ function serializeBody(body: unknown): BodyInit | undefined {
 }
 
 export const sessionToken = {
-  clear() {
-    accessToken = null;
-    storeCsrfToken();
+  clear(reason: SessionIdentityChangeReason = "SESSION_CLEARED") {
+    clearBrowserSession(reason);
   },
   set(token: string, csrfToken?: string) {
     accessToken = token;
     storeCsrfToken(csrfToken);
+    publishSessionIdentityChange("AUTHENTICATED");
   },
 };
 

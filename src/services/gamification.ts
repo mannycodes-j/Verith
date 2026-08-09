@@ -43,6 +43,7 @@ export interface RewardTransaction {
 
 export interface Badge {
   _id: string;
+  code?: string;
   name: string;
   slug: string;
   description: string;
@@ -94,7 +95,7 @@ export interface RewardTransactionPage {
   items: RewardTransaction[];
   pagination: {
     nextCursor: string | null;
-    previousCursor: null;
+    previousCursor: string | null;
     hasNextPage: boolean;
     limit: number;
   };

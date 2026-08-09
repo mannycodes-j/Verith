@@ -11,6 +11,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { accountService, type AccountSession } from "@/services/account";
+import { sessionToken } from "@/services/apiClient";
 import { authService } from "@/services/authService";
 import { describeSessionClient } from "@/utils/user-agent";
 import { settingsStyles as styles } from "../settings.styles";
@@ -53,6 +54,7 @@ export default function SecuritySettings() {
     onSuccess: async (_, sessionId) => {
       setSelectedSession(undefined);
       if (sessionId === current.data?.sessionId) {
+        sessionToken.clear("SESSION_REVOKED");
         router.replace("/login?reason=session-expired");
         return;
       }

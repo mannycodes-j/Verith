@@ -1,6 +1,10 @@
 "use client";
 
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useInfiniteQuery,
+  useQuery,
+} from "@tanstack/react-query";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, LockKeyhole, Sparkles, X } from "lucide-react";
 import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
@@ -12,6 +16,10 @@ import {
   gamificationService,
   type RewardTransactionPage,
 } from "@/services/gamification";
+import {
+  badgeUnlockCriterion,
+  clampAchievementPercentage,
+} from "@/utils/achievement-display";
 import { achievementStyles as styles } from "./achievements.styles";
 
 function formatDate(value?: string | null) {
@@ -31,26 +39,29 @@ function readable(value: string) {
 
 export default function Achievements() {
   const reducedMotion = useReducedMotion();
+  const motionAllowed = reducedMotion === false;
   const badgeDialogClose = useRef<HTMLButtonElement>(null);
+  const badgeDialog = useRef<HTMLElement>(null);
+  const badgeDialogReturnFocus = useRef<HTMLElement | null>(null);
   const [selectedBadge, setSelectedBadge] = useState<Badge>();
   const [badgeSearch, setBadgeSearch] = useState("");
   const [badgeCategory, setBadgeCategory] = useState("");
   const [badgeEarned, setBadgeEarned] = useState<"ALL" | "EARNED" | "LOCKED">(
     "ALL",
   );
+  const [transactionCursor, setTransactionCursor] = useState<string>();
+  const [transactionCursorHistory, setTransactionCursorHistory] = useState<
+    Array<string | undefined>
+  >([]);
   const deferredBadgeSearch = useDeferredValue(badgeSearch.trim());
   const profile = useQuery({
     queryFn: gamificationService.profile,
     queryKey: ["gamification-profile"],
   });
-  const transactions = useInfiniteQuery<RewardTransactionPage>({
-    getNextPageParam: (page) => page.pagination.nextCursor ?? undefined,
-    initialPageParam: undefined as string | undefined,
-    queryFn: ({ pageParam }) =>
-      gamificationService.transactions(
-        typeof pageParam === "string" ? pageParam : undefined,
-      ),
-    queryKey: ["gamification-transactions"],
+  const transactions = useQuery<RewardTransactionPage>({
+    placeholderData: keepPreviousData,
+    queryFn: () => gamificationService.transactions(transactionCursor, 10),
+    queryKey: ["gamification-transactions", transactionCursor ?? "first"],
   });
   const badges = useInfiniteQuery<BadgePage>({
     getNextPageParam: (page) => page.pagination.nextCursor ?? undefined,
@@ -77,8 +88,7 @@ export default function Achievements() {
       ),
     [badges.data],
   );
-  const transactionRecords =
-    transactions.data?.pages.flatMap((page) => page.items) ?? [];
+  const transactionRecords = transactions.data?.items ?? [];
   const closest = useMemo(
     () =>
       badgeRecords
@@ -90,16 +100,64 @@ export default function Achievements() {
         )[0],
     [badgeRecords],
   );
-  const error = profile.error ?? badges.error ?? transactions.error;
+  const visibleClosest =
+    !deferredBadgeSearch && !badgeCategory && badgeEarned === "ALL"
+      ? closest
+      : undefined;
+  const error =
+    (profile.isError && !profile.data ? profile.error : undefined) ??
+    (badges.isError && !badges.data ? badges.error : undefined) ??
+    (transactions.isError && !transactions.data
+      ? transactions.error
+      : undefined);
 
   useEffect(() => {
     if (!selectedBadge) return;
+    badgeDialogReturnFocus.current =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     badgeDialogClose.current?.focus();
-    const close = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setSelectedBadge(undefined);
+    const handleKeyboard = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setSelectedBadge(undefined);
+        return;
+      }
+      if (event.key !== "Tab" || !badgeDialog.current) return;
+      const controls = Array.from(
+        badgeDialog.current.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      );
+      const first = controls[0];
+      const last = controls.at(-1);
+      if (!first || !last) {
+        event.preventDefault();
+        badgeDialog.current.focus();
+        return;
+      }
+      if (!badgeDialog.current.contains(document.activeElement)) {
+        event.preventDefault();
+        first.focus();
+      } else if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
-    window.addEventListener("keydown", close);
-    return () => window.removeEventListener("keydown", close);
+    window.addEventListener("keydown", handleKeyboard);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyboard);
+      const returnTarget = badgeDialogReturnFocus.current;
+      badgeDialogReturnFocus.current = null;
+      if (returnTarget?.isConnected) returnTarget.focus();
+    };
   }, [selectedBadge]);
 
   return (
@@ -108,7 +166,7 @@ export default function Achievements() {
         <span>Achievements and rank</span>
         <h1>Every careful check moves your practice forward.</h1>
         <p>
-          Rank reflects persisted XP. Badges recognize specific, measurable
+          Rank reflects XP. Badges recognize specific, measurable
           actions. Your separate Media Literacy Growth profile measures
           demonstrated competencies.
         </p>
@@ -124,7 +182,7 @@ export default function Achievements() {
       {error && (
         <section className={styles.error} role="alert">
           <span>Achievement record unavailable</span>
-          <h2>Your persisted progress could not be loaded.</h2>
+          <h2>Your progress could not be loaded.</h2>
           <p>{error.message}</p>
           <button
             onClick={() => {
@@ -142,7 +200,7 @@ export default function Achievements() {
       {profile.data && (
         <motion.section
           className="relative overflow-hidden rounded-[2rem] border border-violet-300/15 bg-[radial-gradient(circle_at_12%_0%,rgba(139,92,246,0.3),transparent_34rem),radial-gradient(circle_at_92%_100%,rgba(34,211,238,0.09),transparent_26rem),rgba(14,14,18,0.9)] p-[clamp(1.5rem,5vw,3.25rem)] shadow-[0_40px_100px_-50px_rgba(109,40,217,0.8)]"
-          initial={reducedMotion ? false : { opacity: 0, y: 18 }}
+          initial={motionAllowed ? { opacity: 0, y: 18 } : false}
           animate={{ opacity: 1, y: 0 }}
         >
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(18rem,.85fr)] lg:items-end">
@@ -162,34 +220,36 @@ export default function Achievements() {
                     {profile.data.rank.currentRankLabel}
                   </h2>
                   <p className="mt-2 mb-0 text-sm text-white/45">
-                    {profile.data.xp.toLocaleString()} persisted XP
+                    {profile.data.xp.toLocaleString()} XP
                   </p>
                 </div>
               </div>
               <div className="mt-8">
-                <div className="mb-2 flex justify-between gap-4 text-xs text-white/45">
+                <div className="mb-2 flex flex-col gap-1.5 text-xs text-white/45 sm:flex-row sm:justify-between sm:gap-4">
                   <span>
-                    {profile.data.rank.currentRankMinXp.toLocaleString()} XP
+                    {profile.data.rank.currentRankLabel} begins at {profile.data.rank.currentRankMinXp.toLocaleString()} XP
                   </span>
                   <span>
                     {profile.data.rank.nextRank
-                      ? `${profile.data.rank.xpUntilNextRank.toLocaleString()} XP to ${profile.data.rank.nextRankLabel}`
+                      ? `${profile.data.rank.xpUntilNextRank.toLocaleString()} more XP to reach ${profile.data.rank.nextRankLabel} at ${profile.data.rank.nextRankMinXp?.toLocaleString()} XP`
                       : "Highest rank achieved"}
                   </span>
                 </div>
                 <div
-                  aria-label={`${profile.data.rank.progressPercentage}% rank progress`}
+                  aria-label={`${clampAchievementPercentage(profile.data.rank.progressPercentage)}% progress through the ${profile.data.rank.currentRankLabel} rank`}
                   aria-valuemax={100}
                   aria-valuemin={0}
-                  aria-valuenow={profile.data.rank.progressPercentage}
+                  aria-valuenow={clampAchievementPercentage(
+                    profile.data.rank.progressPercentage,
+                  )}
                   className="h-3 overflow-hidden rounded-full border border-white/[.04] bg-black/30 p-0.5"
                   role="progressbar"
                 >
                   <motion.span
                     className="block h-full rounded-full bg-gradient-to-r from-violet-300 via-violet-500 to-indigo-500 shadow-[0_0_24px_rgba(139,92,246,.65)]"
-                    initial={reducedMotion ? false : { width: 0 }}
+                    initial={motionAllowed ? { width: 0 } : false}
                     animate={{
-                      width: `${profile.data.rank.progressPercentage}%`,
+                      width: `${clampAchievementPercentage(profile.data.rank.progressPercentage)}%`,
                     }}
                     transition={{ duration: 0.8 }}
                   />
@@ -245,14 +305,16 @@ export default function Achievements() {
                 Badge collection
               </span>
               <h2 className="mt-3 mb-0 text-3xl font-semibold tracking-tight">
-                Skills made visible
+                Milestones made visible
               </h2>
             </div>
-            {closest && (
+            {visibleClosest && (
               <p className="m-0 max-w-xs text-xs leading-5 text-white/40">
                 Closest measurable badge:{" "}
-                <strong className="text-white/70">{closest.name}</strong> ·{" "}
-                {closest.progress?.label}
+                <strong className="text-white/70">
+                  {visibleClosest.name}
+                </strong>{" "}
+                · {visibleClosest.progress?.label}
               </p>
             )}
           </header>
@@ -316,14 +378,26 @@ export default function Achievements() {
             </div>
           ) : (
             <ul className="m-0 grid list-none gap-3 p-0 md:grid-cols-2 xl:grid-cols-3">
-              {badgeRecords.map((badge) => (
-                <li key={badge._id}>
+              {badgeRecords.map((badge) => {
+                const comingSoon = badge.availability === "COMING_SOON";
+                const progress = clampAchievementPercentage(
+                  badge.progress?.percentage ?? 0,
+                );
+                const stateLabel = badge.earned
+                  ? `Earned ${formatDate(badge.earnedAt)}`
+                  : comingSoon
+                    ? "Coming soon"
+                    : (badge.progress?.label ?? "Locked");
+                return (
+                  <li key={badge._id}>
                   <motion.button
+                    aria-label={`${badge.name}. ${stateLabel}. Open badge details.`}
                     className="group relative flex h-full min-h-72 w-full flex-col items-start overflow-hidden rounded-3xl border border-white/[.06] bg-white/[.025] p-5 text-left transition-colors hover:border-violet-300/20 hover:bg-violet-400/[.055] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-violet-400/15 disabled:cursor-not-allowed"
+                    data-availability={badge.availability ?? "AVAILABLE"}
                     data-earned={badge.earned}
                     onClick={() => setSelectedBadge(badge)}
                     type="button"
-                    whileHover={reducedMotion ? undefined : { y: -4 }}
+                    whileHover={motionAllowed ? { y: -4 } : undefined}
                   >
                     <span
                       className={`grid size-14 place-items-center rounded-2xl border ${badge.earned ? "border-violet-300/20 bg-violet-400/12 text-violet-200 shadow-[0_0_35px_rgba(139,92,246,.2)]" : "border-white/[.06] bg-white/[.035] text-white/35"}`}
@@ -344,12 +418,19 @@ export default function Achievements() {
                         <>
                           <div className="mb-2 flex justify-between text-[10px] text-white/35">
                             <span>{badge.progress.label}</span>
-                            <span>{badge.progress.percentage}%</span>
+                            <span>{progress}%</span>
                           </div>
-                          <div className="h-1.5 overflow-hidden rounded-full bg-white/[.06]">
+                          <div
+                            aria-label={`${progress}% progress toward ${badge.name}`}
+                            aria-valuemax={100}
+                            aria-valuemin={0}
+                            aria-valuenow={progress}
+                            className="h-1.5 overflow-hidden rounded-full bg-white/[.06]"
+                            role="progressbar"
+                          >
                             <span
                               className="block h-full rounded-full bg-violet-400"
-                              style={{ width: `${badge.progress.percentage}%` }}
+                              style={{ width: `${progress}%` }}
                             />
                           </div>
                         </>
@@ -362,14 +443,13 @@ export default function Achievements() {
                         ) : (
                           <LockKeyhole size={11} />
                         )}
-                        {badge.earned
-                          ? `Earned ${formatDate(badge.earnedAt)}`
-                          : (badge.progress?.label ?? "Locked")}
+                        {stateLabel}
                       </span>
                     </div>
                   </motion.button>
                 </li>
-              ))}
+                );
+              })}
             </ul>
           )}
           {badges.hasNextPage && (
@@ -386,10 +466,17 @@ export default function Achievements() {
       )}
 
       {transactions.data && (
-        <section className={styles.transactions}>
+        <section
+          aria-busy={transactions.isFetching}
+          className={styles.transactions}
+        >
           <div className={styles.sectionHeader}>
-            <span>Persisted reward ledger</span>
-            <span>{transactionRecords.length} loaded records</span>
+            <span>Reward ledger</span>
+            <span aria-live="polite">
+              {transactions.isPlaceholderData
+                ? `Loading page ${transactionCursorHistory.length + 1}`
+                : `Page ${transactionCursorHistory.length + 1} · ${transactionRecords.length} records`}
+            </span>
           </div>
           {transactionRecords.length === 0 ? (
             <p>
@@ -402,29 +489,65 @@ export default function Achievements() {
                 <li key={transaction._id}>
                   <span>{readable(transaction.type)}</span>
                   <strong>
-                    {transaction.xp >= 0 ? "+" : ""}
-                    {transaction.xp} XP
+                    {transaction.xp === 0
+                      ? "No XP issued"
+                      : `${transaction.xp > 0 ? "+" : ""}${transaction.xp} XP`}
                   </strong>
                   <strong>
-                    {transaction.truthPoints >= 0 ? "+" : ""}
-                    {transaction.truthPoints} points
+                    {transaction.truthPoints === 0
+                      ? "No Truth Points issued"
+                      : `${transaction.truthPoints > 0 ? "+" : ""}${transaction.truthPoints} Truth Points`}
                   </strong>
                   <small>{formatDate(transaction.createdAt)}</small>
                 </li>
               ))}
             </ol>
           )}
-          {transactions.hasNextPage && (
-            <button
-              className={styles.loadMore}
-              disabled={transactions.isFetchingNextPage}
-              onClick={() => void transactions.fetchNextPage()}
-              type="button"
+          {(transactionCursorHistory.length > 0 ||
+            transactions.data.pagination.hasNextPage) && (
+            <nav
+              aria-label="Reward ledger pages"
+              className="mt-5 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2"
             >
-              {transactions.isFetchingNextPage
-                ? "Loading more…"
-                : "Load older activity"}
-            </button>
+              <button
+                className={`${styles.paginationButton} justify-self-start`}
+                disabled={
+                  transactions.isFetching ||
+                  transactionCursorHistory.length === 0
+                }
+                onClick={() => {
+                  const history = [...transactionCursorHistory];
+                  const previousCursor = history.pop();
+                  setTransactionCursorHistory(history);
+                  setTransactionCursor(previousCursor);
+                }}
+                type="button"
+              >
+                Previous
+              </button>
+              <span aria-live="polite" className="text-xs text-white/40">
+                Page {transactionCursorHistory.length + 1}
+              </span>
+              <button
+                className={`${styles.paginationButton} justify-self-end`}
+                disabled={
+                  transactions.isFetching ||
+                  !transactions.data.pagination.nextCursor
+                }
+                onClick={() => {
+                  const nextCursor = transactions.data.pagination.nextCursor;
+                  if (!nextCursor) return;
+                  setTransactionCursorHistory((history) => [
+                    ...history,
+                    transactionCursor,
+                  ]);
+                  setTransactionCursor(nextCursor);
+                }}
+                type="button"
+              >
+                Next
+              </button>
+            </nav>
           )}
         </section>
       )}
@@ -443,11 +566,14 @@ export default function Achievements() {
           >
             <motion.section
               animate={{ scale: 1, y: 0 }}
+              aria-describedby="badge-detail-description"
               aria-labelledby="badge-detail-title"
               aria-modal="true"
               className="relative w-full max-w-2xl rounded-[2rem] border border-white/10 bg-[#111216] p-[clamp(1.5rem,5vw,3rem)] shadow-2xl"
-              initial={reducedMotion ? false : { scale: 0.94, y: 18 }}
+              initial={motionAllowed ? { scale: 0.94, y: 18 } : false}
+              ref={badgeDialog}
               role="dialog"
+              tabIndex={-1}
             >
               <button
                 aria-label="Close badge details"
@@ -470,7 +596,10 @@ export default function Achievements() {
               >
                 {selectedBadge.name}
               </h2>
-              <p className="mt-4 text-sm leading-6 text-white/55">
+              <p
+                className="mt-4 text-sm leading-6 text-white/55"
+                id="badge-detail-description"
+              >
                 {selectedBadge.description}
               </p>
               {selectedBadge.whyItMatters && (
@@ -483,20 +612,36 @@ export default function Achievements() {
                   </p>
                 </div>
               )}
-              <dl className="mt-5 grid grid-cols-2 gap-2">
+              <dl className="mt-5 grid gap-2 sm:grid-cols-2">
                 <div className="rounded-2xl bg-white/[.025] p-4">
                   <dt className="text-[10px] text-white/35">Status</dt>
                   <dd className="mt-2 ml-0 text-sm font-semibold">
-                    {selectedBadge.earned ? "Earned" : "Locked"}
+                    {selectedBadge.earned
+                      ? `Earned ${formatDate(selectedBadge.earnedAt)}`
+                      : selectedBadge.availability === "COMING_SOON"
+                        ? "Coming soon"
+                        : "Locked"}
                   </dd>
                 </div>
                 <div className="rounded-2xl bg-white/[.025] p-4">
                   <dt className="text-[10px] text-white/35">Progress</dt>
                   <dd className="mt-2 ml-0 text-sm font-semibold">
-                    {selectedBadge.progress?.label ?? "Not measurable"}
+                    {selectedBadge.progress?.measurable
+                      ? selectedBadge.progress.label
+                      : selectedBadge.earned
+                        ? "Complete"
+                        : "No numeric progress available"}
                   </dd>
                 </div>
               </dl>
+              <div className="mt-2 rounded-2xl border border-white/[.05] bg-white/[.025] p-4">
+                <span className="text-[10px] font-semibold tracking-[.12em] text-white/35 uppercase">
+                  How to unlock
+                </span>
+                <p className="mt-2 mb-0 text-sm leading-6 text-white/55">
+                  {badgeUnlockCriterion(selectedBadge)}
+                </p>
+              </div>
               <footer className="mt-7 flex justify-end">
                 <button
                   className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-violet-400 to-indigo-500 px-5 text-sm font-medium text-white"

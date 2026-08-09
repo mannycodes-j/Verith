@@ -11,6 +11,11 @@
 !.yarn/versions
 
 # testing
+**/*.spec.*
+**/*.test.*
+**/__tests__/
+**/test/
+**/tests/
 /coverage
 /playwright-report/
 /test-results/

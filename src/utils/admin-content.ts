@@ -6,14 +6,6 @@ const lines = (value: FormDataEntryValue | null) =>
 const integer = (data: FormData, name: string) =>
   Number.parseInt(String(data.get(name)), 10);
 
-function structuredJson(data: FormData, name: string, label: string) {
-  try {
-    return JSON.parse(String(data.get(name)));
-  } catch {
-    throw new Error(`${label} must contain valid JSON.`);
-  }
-}
-
 export function validateQuestions(questions: EditorialQuestion[]) {
   if (!questions.length) throw new Error("Add at least one question.");
   questions.forEach((question, index) => {
@@ -44,6 +36,32 @@ export function createAdminContentPayload(
     validateQuestions(questions);
     return { title: String(data.get("title")), slug: String(data.get("slug")), scenario: String(data.get("scenario")), content: String(data.get("content")), difficulty: String(data.get("difficulty")), maxAttempts: integer(data, "maxAttempts"), passingScore: integer(data, "passingScore"), publishAt: new Date(String(data.get("publishAt"))).toISOString(), expiresAt: new Date(String(data.get("expiresAt"))).toISOString(), rewardPolicy: { xp: integer(data, "xp"), truthPoints: integer(data, "truthPoints") }, questions, ...(String(data.get("mediaAssetId") ?? "").trim() ? { mediaAssetId: String(data.get("mediaAssetId")) } : {}) };
   }
-  if (kind === "badges") return { name: String(data.get("name")), slug: String(data.get("slug")), description: String(data.get("description")), category: String(data.get("category")), criteriaType: String(data.get("criteriaType")), rarity: String(data.get("rarity")), criteria: structuredJson(data, "criteria", "Criteria"), reward: structuredJson(data, "reward", "Reward"), active: true };
+  if (kind === "badges") {
+    const criteriaType = String(data.get("criteriaType"));
+    const threshold = integer(data, "threshold");
+    const xp = integer(data, "xp");
+    const truthPoints = integer(data, "truthPoints");
+    if (!Number.isInteger(threshold) || threshold < 1)
+      throw new Error("The badge threshold must be a whole number of at least 1.");
+    if (!Number.isInteger(xp) || xp < 0 || !Number.isInteger(truthPoints) || truthPoints < 0)
+      throw new Error("Badge rewards must be whole numbers of 0 or more.");
+    const tags = lines(data.get("tags"));
+    if (criteriaType === "TAGGED_ACTIVITY_COUNT" && tags.length === 0)
+      throw new Error("Add at least one eligible learning or challenge tag.");
+    return {
+      name: String(data.get("name")),
+      slug: String(data.get("slug")),
+      description: String(data.get("description")),
+      category: String(data.get("category")),
+      criteriaType,
+      rarity: String(data.get("rarity")),
+      criteria: {
+        threshold,
+        ...(criteriaType === "TAGGED_ACTIVITY_COUNT" ? { tags } : {}),
+      },
+      reward: { xp, truthPoints },
+      active: true,
+    };
+  }
   return { key: String(data.get("key")), task: String(data.get("task")), systemPrompt: String(data.get("systemPrompt")), userPromptTemplate: String(data.get("userPromptTemplate")), supportedProviders: lines(data.get("supportedProviders")), supportedModels: lines(data.get("supportedModels")), outputSchemaVersion: String(data.get("outputSchemaVersion")), changeSummary: String(data.get("changeSummary")), reason: String(data.get("reason")) };
 }

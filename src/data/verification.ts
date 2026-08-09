@@ -13,14 +13,13 @@ export const TERMINAL_VERIFICATION_STATUSES: string[] = ["COMPLETED", "PARTIALLY
 import type { VerificationStatus } from "@/services/verification";
 import type { InvestigationSourceOption } from "@/types/verification-ui";
 
-export const INVESTIGATION_SOURCE_OPTIONS: readonly InvestigationSourceOption[] = [
+export const INVESTIGATION_SOURCE_OPTIONS = [
   { label: "Text", value: "TEXT" },
-  { label: "Link", value: "URL" },
   { label: "Image", value: "IMAGE" },
   { label: "Screenshot", value: "SCREENSHOT" },
   { label: "Voice", value: "AUDIO" },
   { label: "Video", value: "VIDEO" },
-];
+] as const satisfies readonly InvestigationSourceOption[];
 
 export const VERIFICATION_STATUS_OPTIONS: Array<{ label: string; value: VerificationStatus | "" }> = [
   { label: "All states", value: "" },

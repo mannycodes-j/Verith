@@ -70,7 +70,7 @@ export const accountService = {
     newPassword: string;
   }) {
     await apiClient.postVoid("/auth/change-password", input);
-    sessionToken.clear();
+    sessionToken.clear("PASSWORD_CHANGED");
   },
   currentSession: () =>
     apiClient.get<{ userId: string; sessionId: string; role: string }>(
@@ -98,7 +98,7 @@ export const accountService = {
     try {
       await apiClient.postVoid("/auth/logout-all");
     } finally {
-      sessionToken.clear();
+      sessionToken.clear("SIGNED_OUT_EVERYWHERE");
     }
   },
   updateNotifications: (preferences: Record<string, boolean>) =>

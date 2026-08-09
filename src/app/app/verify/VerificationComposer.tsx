@@ -3,6 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { motion, useReducedMotion } from "framer-motion";
+import { AudioLines, ImageIcon, ScanText, Sparkles, TextQuote, Video } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
@@ -18,10 +20,9 @@ const composerSchema = z
 	.object({
 		question: z.string().trim().max(1000, "Question must be 1,000 characters or fewer."),
 		mode: z.enum(["STANDARD", "GUIDED"]),
-		sourceType: z.enum(["TEXT", "URL", "IMAGE", "SCREENSHOT", "AUDIO", "VIDEO"]),
+		sourceType: z.enum(["TEXT", "IMAGE", "SCREENSHOT", "AUDIO", "VIDEO"]),
 		text: z.string().trim().max(50000),
 		title: z.string().trim().max(200, "Title must be 200 characters or fewer."),
-		url: z.union([z.literal(""), z.url("Enter a complete http or https URL.")]),
 		visibility: z.enum(["PRIVATE", "UNLISTED", "PUBLIC"]),
 	})
 	.superRefine((values, context) => {
@@ -32,23 +33,26 @@ const composerSchema = z
 				path: ["text"],
 			});
 		}
-		if (values.sourceType === "URL" && values.url.length === 0) {
-			context.addIssue({
-				code: "custom",
-				message: "Enter the source URL.",
-				path: ["url"],
-			});
-		}
 	});
 
 type ComposerValues = z.infer<typeof composerSchema>;
 const DRAFT_KEY = "verith:investigation-draft:v1";
+const sourceIcons = {
+	AUDIO: AudioLines,
+	IMAGE: ImageIcon,
+	SCREENSHOT: ScanText,
+	TEXT: TextQuote,
+	VIDEO: Video,
+} as const;
 
-export default function VerificationComposer({ initialSourceType = "TEXT" }: { initialSourceType?: SourceType }) {
+type ComposerSourceType = Exclude<SourceType, "URL">;
+
+export default function VerificationComposer({ initialSourceType = "TEXT" }: { initialSourceType?: ComposerSourceType }) {
 	const router = useRouter();
+	const reducedMotion = useReducedMotion();
 	const queryClient = useQueryClient();
 	const idempotencyKey = useRef(crypto.randomUUID());
-	const [sourceType, setSourceType] = useState<SourceType>(initialSourceType);
+	const [sourceType, setSourceType] = useState<ComposerSourceType>(initialSourceType);
 	const [mediaFile, setMediaFile] = useState<File | null>(null);
 	const [mediaError, setMediaError] = useState<string | null>(null);
 	const [allowanceError, setAllowanceError] = useState<string | null>(null);
@@ -74,7 +78,6 @@ export default function VerificationComposer({ initialSourceType = "TEXT" }: { i
 			sourceType: initialSourceType,
 			text: "",
 			title: "",
-			url: "",
 			visibility: "PRIVATE",
 		},
 		resolver: zodResolver(composerSchema),
@@ -100,7 +103,6 @@ export default function VerificationComposer({ initialSourceType = "TEXT" }: { i
 							sourceType: draft.sourceType,
 							text: typeof draft.text === "string" ? draft.text : "",
 							title: typeof draft.title === "string" ? draft.title : "",
-							url: typeof draft.url === "string" ? draft.url : "",
 							visibility: ["PRIVATE", "UNLISTED", "PUBLIC"].includes(draft.visibility ?? "") ? draft.visibility : "PRIVATE",
 						});
 					}
@@ -160,7 +162,7 @@ export default function VerificationComposer({ initialSourceType = "TEXT" }: { i
 		onError: () => setUploadProgress(null),
 	});
 
-	const chooseSourceType = (nextType: SourceType) => {
+	const chooseSourceType = (nextType: ComposerSourceType) => {
 		setSourceType(nextType);
 		setValue("sourceType", nextType, { shouldValidate: true });
 		setMediaFile(null);
@@ -172,7 +174,7 @@ export default function VerificationComposer({ initialSourceType = "TEXT" }: { i
 
 	const onSubmit = handleSubmit((values) => {
 		const currentAllowance = allowance.data;
-		const costKey = values.sourceType === "URL" ? "link" : values.sourceType.toLowerCase() as keyof NonNullable<typeof currentAllowance>["costs"];
+		const costKey = values.sourceType.toLowerCase() as keyof NonNullable<typeof currentAllowance>["costs"];
 		const submissionCost = currentAllowance?.costs[costKey];
 		if (currentAllowance && submissionCost !== undefined && currentAllowance.remaining < submissionCost) {
 			setAllowanceError(`This ${values.sourceType.toLowerCase()} investigation needs ${submissionCost} ${submissionCost === 1 ? "attempt" : "attempts"}, but you have ${currentAllowance.remaining} remaining today.`);
@@ -189,8 +191,6 @@ export default function VerificationComposer({ initialSourceType = "TEXT" }: { i
 		let input: CreateVerificationInput;
 		if (values.sourceType === "TEXT") {
 			input = { ...shared, sourceType: "TEXT", text: values.text };
-		} else if (values.sourceType === "URL") {
-			input = { ...shared, sourceType: "URL", url: values.url };
 		} else {
 			if (!mediaFile) {
 				setMediaError("Choose a file before running the investigation.");
@@ -206,8 +206,8 @@ export default function VerificationComposer({ initialSourceType = "TEXT" }: { i
 		});
 	});
 
-	const mediaSelected = !["TEXT", "URL"].includes(sourceType);
-	const sourceCostKey = sourceType === "URL" ? "link" : sourceType.toLowerCase() as keyof NonNullable<typeof allowance.data>["costs"];
+	const mediaSelected = sourceType !== "TEXT";
+	const sourceCostKey = sourceType.toLowerCase() as keyof NonNullable<typeof allowance.data>["costs"];
 	const selectedCost = allowance.data?.costs[sourceCostKey] ?? (sourceType === "VIDEO" ? 2 : 1);
 	const insufficientAllowance = allowance.data !== undefined && allowance.data.remaining < selectedCost;
 	const resetLabel = allowance.data
@@ -223,17 +223,30 @@ export default function VerificationComposer({ initialSourceType = "TEXT" }: { i
 
 	return (
 		<div className={styles.page}>
-			<header className={styles.header}>
+			<div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+				<motion.div className="absolute -top-32 left-[5%] size-[28rem] rounded-full bg-violet-600/15 blur-[100px]" animate={reducedMotion ? undefined : { x: [0, 90, -20, 0], y: [0, 55, 20, 0], scale: [1, 1.15, .95, 1] }} transition={{ duration: 16, ease: "easeInOut", repeat: Infinity }} />
+				<motion.div className="absolute top-[22rem] right-[-8rem] size-[30rem] rounded-full bg-cyan-400/[.08] blur-[110px]" animate={reducedMotion ? undefined : { x: [0, -70, 15, 0], y: [0, -35, 45, 0], scale: [1, .9, 1.1, 1] }} transition={{ duration: 19, ease: "easeInOut", repeat: Infinity }} />
+			</div>
+			<motion.header className={styles.header} initial={reducedMotion ? false : { opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}>
 				<div>
-					<span>New investigation</span>
-					<span>Case: Created after submission</span>
+					<span><Sparkles aria-hidden="true" size={13} /> New investigation</span>
+					<span>Private by default</span>
 				</div>
-				<h1>Build an evidence map around what you have seen.</h1>
-				<p>Verith transforms source material into a structured, explainable investigation—connecting every claim to supporting, contradicting, or contextual evidence while keeping uncertainty visible.</p>
-			</header>
+				<h1>Bring the content. Leave with a clearer decision.</h1>
+				<p>Choose what you received and how deeply you want to participate. Verith preserves the material, separates checkable claims, searches for evidence, and explains what is supported, challenged, or still uncertain.</p>
+				<div className="mt-8 flex max-w-3xl items-center gap-2 overflow-hidden" aria-label="Investigation workflow">
+					{["Preserve", "Read", "Check claims", "Compare evidence", "Explain"].map((stage, index) => (
+						<div className="flex min-w-0 flex-1 items-center gap-2" key={stage}>
+							<span className="grid size-7 shrink-0 place-items-center rounded-full border border-violet-300/20 bg-violet-400/10 text-[10px] font-semibold text-violet-200">{index + 1}</span>
+							<span className="hidden truncate text-[10px] text-white/40 md:block">{stage}</span>
+							{index < 4 && <motion.span className="h-px min-w-3 flex-1 bg-gradient-to-r from-violet-400/45 to-white/[.06]" animate={reducedMotion ? undefined : { opacity: [.25, 1, .25] }} transition={{ delay: index * .18, duration: 1.8, repeat: Infinity }} />}
+						</div>
+					))}
+				</div>
+			</motion.header>
 
 			<div className={styles.workspace}>
-				<form className={styles.composer} onSubmit={onSubmit} noValidate>
+				<motion.form className={styles.composer} onSubmit={onSubmit} noValidate initial={reducedMotion ? false : { opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .12 }}>
 					<section className={styles.allowance} aria-live="polite">
 						<div>
 							<span>{allowance.data?.entitlement.source === "ADMIN_GRANT" ? "Today’s sponsored allowance" : "Today’s free allowance"}</span>
@@ -270,6 +283,9 @@ export default function VerificationComposer({ initialSourceType = "TEXT" }: { i
 					</fieldset>
 					<div className={styles.tabs} role="tablist" aria-label="Investigation input type">
 						{sourceTypes.map((type) => (
+							(() => {
+								const SourceIcon = sourceIcons[type.value as ComposerSourceType];
+								return (
 							<button
 								aria-selected={sourceType === type.value}
 								className={sourceType === type.value ? styles.activeTab : undefined}
@@ -278,8 +294,11 @@ export default function VerificationComposer({ initialSourceType = "TEXT" }: { i
 								role="tab"
 								type="button"
 							>
+								<SourceIcon aria-hidden="true" size={16} />
 								{type.label}
 							</button>
+								);
+							})()
 						))}
 					</div>
 
@@ -291,14 +310,6 @@ export default function VerificationComposer({ initialSourceType = "TEXT" }: { i
 								<label htmlFor="investigation-text">Claim, headline, or article excerpt</label>
 								<textarea id="investigation-text" placeholder="Paste the source material exactly as you received it…" aria-describedby={errors.text ? "investigation-text-error" : undefined} aria-invalid={Boolean(errors.text)} {...register("text")} />
 								{errors.text && <p className={styles.fieldError} id="investigation-text-error">{errors.text.message}</p>}
-							</>
-						)}
-
-						{sourceType === "URL" && (
-							<>
-								<label htmlFor="investigation-url">Source URL</label>
-								<input id="investigation-url" type="url" placeholder="https://example.com/article" aria-describedby={errors.url ? "investigation-url-error" : undefined} aria-invalid={Boolean(errors.url)} {...register("url")} />
-								{errors.url && <p className={styles.fieldError} id="investigation-url-error">{errors.url.message}</p>}
 							</>
 						)}
 
@@ -395,9 +406,9 @@ export default function VerificationComposer({ initialSourceType = "TEXT" }: { i
 							{createVerification.isPending ? (uploadProgress !== null && uploadProgress < 100 ? "Uploading media…" : "Creating investigation…") : "Run investigation"}
 						</button>
 					</div>
-				</form>
+				</motion.form>
 
-				<aside className={styles.guidance}>
+				<motion.aside className={styles.guidance} initial={reducedMotion ? false : { opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: .22 }}>
 					<div>
 						<span>Evidence behavior</span>
 						<h2>A transparent investigation from start to finish.</h2>
@@ -422,11 +433,11 @@ export default function VerificationComposer({ initialSourceType = "TEXT" }: { i
 					</dl>
 					<div className={styles.limit}>
 						<span>Input limits</span>
-						<p>Text up to 50,000 characters. URLs must use HTTP or HTTPS. Video is limited to a 12 MB, 60-second MP4 or WEBM clip.</p>
+						<p>Text supports up to 50,000 characters. Video is limited to a 12 MB, 60-second MP4 or WEBM clip. Direct link submission is temporarily unavailable.</p>
 						<p>Short clips are analyzed by the configured Gemini provider. Frame sampling can miss brief edits or small text, and the result is not a forensic deepfake or identity assessment.</p>
 						<p>The daily allowance keeps provider costs sustainable. Viewing reports, lessons, quizzes, challenges, invalid submissions, and failures before meaningful processing do not count. Payments are not enabled, so Verith does not show a misleading upgrade action.</p>
 					</div>
-				</aside>
+				</motion.aside>
 			</div>
 		</div>
 	);

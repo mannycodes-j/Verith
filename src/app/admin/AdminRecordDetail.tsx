@@ -28,6 +28,23 @@ function getRecord(kind: Kind, id: string): Promise<AdminRecord> {
   return adminService.contentRecord(kind, id);
 }
 
+function recordValue(kind: Kind, key: string, value: unknown) {
+  if (kind === "badges" && key === "criteria" && value && typeof value === "object") {
+    const criteria = value as Record<string, unknown>;
+    const threshold = Number(criteria.threshold);
+    const tags = Array.isArray(criteria.tags)
+      ? criteria.tags.filter((tag): tag is string => typeof tag === "string")
+      : [];
+    return `${Number.isFinite(threshold) ? `${threshold} required` : "Threshold unavailable"}${tags.length ? ` · Tags: ${tags.join(", ")}` : ""}`;
+  }
+  if (kind === "badges" && key === "reward" && value && typeof value === "object") {
+    const reward = value as Record<string, unknown>;
+    return `${Number(reward.xp ?? 0)} XP · ${Number(reward.truthPoints ?? 0)} Truth Points`;
+  }
+  if (typeof value === "boolean") return value ? "Active" : "Inactive";
+  return typeof value === "object" ? JSON.stringify(value) : String(value ?? "Unavailable");
+}
+
 export default function AdminRecordDetail({
   id,
   kind,
@@ -45,6 +62,9 @@ export default function AdminRecordDetail({
   });
   const action = useMutation({
     mutationFn: async (operation: string) => {
+      if (kind === "badges" && operation === "ACTIVATE") {
+        return adminService.updateBadgeActive(id, true);
+      }
       if (reason.trim().length < 10)
         throw new Error("Enter an audit reason of at least 10 characters.");
       if (kind === "publishers") {
@@ -123,11 +143,7 @@ export default function AdminRecordDetail({
         {entries.map(([key, value]) => (
           <div key={key}>
             <dt>{key.replaceAll(/([A-Z])/g, " $1")}</dt>
-            <dd>
-              {typeof value === "object"
-                ? JSON.stringify(value)
-                : String(value ?? "Unavailable")}
-            </dd>
+            <dd>{recordValue(kind, key, value)}</dd>
           </div>
         ))}
       </dl>
@@ -143,13 +159,20 @@ export default function AdminRecordDetail({
             />
           </label>
         )}
-        <label>
-          Audit reason
-          <textarea
-            value={reason}
-            onChange={(event) => setReason(event.target.value)}
-          />
-        </label>
+        {kind !== "badges" || record.active !== false ? (
+          <label>
+            Audit reason
+            <textarea
+              value={reason}
+              onChange={(event) => setReason(event.target.value)}
+            />
+          </label>
+        ) : (
+          <p>
+            Reactivation restores this definition to the active catalog. Its
+            recorded ownership history remains unchanged.
+          </p>
+        )}
         {action.isError && <p role="alert">{action.error.message}</p>}
         <div className={styles.actionRow}>
           {kind === "publishers" && (
@@ -183,13 +206,22 @@ export default function AdminRecordDetail({
                 {operation}
               </button>
             ))}
-          {kind === "badges" && (
+          {kind === "badges" && record.active !== false && (
             <button
               disabled={action.isPending}
               onClick={() => action.mutate("ARCHIVED")}
               type="button"
             >
               Archive badge
+            </button>
+          )}
+          {kind === "badges" && record.active === false && (
+            <button
+              disabled={action.isPending}
+              onClick={() => action.mutate("ACTIVATE")}
+              type="button"
+            >
+              Reactivate badge
             </button>
           )}
           {["courses", "lessons", "quizzes", "challenges"].includes(kind) &&

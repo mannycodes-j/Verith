@@ -11,6 +11,7 @@ import {
 import { ApiClientError } from "@/services/apiClient";
 import { quizzesService, type Quiz } from "@/services/quizzes";
 import { learningStyles as styles } from "./learning.styles";
+import { requestAchievementCelebrationCheck } from "@/utils/achievement-celebrations";
 
 export function LessonReader({
   authenticated,
@@ -45,6 +46,18 @@ export function LessonReader({
           next,
         ],
       );
+      if (next.status === "COMPLETED") {
+        void queryClient.invalidateQueries({
+          queryKey: ["gamification-profile"],
+        });
+        void queryClient.invalidateQueries({
+          queryKey: ["gamification-badges"],
+        });
+        void queryClient.invalidateQueries({
+          queryKey: ["gamification-transactions"],
+        });
+        requestAchievementCelebrationCheck();
+      }
     },
   });
 

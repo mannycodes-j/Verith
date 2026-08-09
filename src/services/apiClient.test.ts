@@ -5,6 +5,30 @@ import {
   apiClient,
   sessionToken,
 } from "./apiClient";
+import {
+  subscribeToSessionIdentityChanges,
+  type SessionIdentityChangeReason,
+} from "./sessionLifecycle";
+
+class BrowserStorage {
+  readonly values = new Map<string, string>();
+
+  getItem(key: string) {
+    return this.values.get(key) ?? null;
+  }
+
+  removeItem(key: string) {
+    this.values.delete(key);
+  }
+
+  setItem(key: string, value: string) {
+    this.values.set(key, value);
+  }
+}
+
+class BrowserHost extends EventTarget {
+  readonly localStorage = new BrowserStorage();
+}
 
 function envelope(data: unknown, status = 200) {
   return new Response(
@@ -92,6 +116,15 @@ describe("apiClient browser session contract", () => {
   });
 
   it("rotates with the readable CSRF cookie and retries with the new bearer token", async () => {
+    const host = new BrowserHost();
+    Object.defineProperty(globalThis, "window", {
+      configurable: true,
+      value: host,
+    });
+    const identityChanges: SessionIdentityChangeReason[] = [];
+    const unsubscribe = subscribeToSessionIdentityChanges((change) =>
+      identityChanges.push(change.reason),
+    );
     document.cookie = "verith_csrf=csrf-test";
     const responses = [
       errorEnvelope("AUTHENTICATION_REQUIRED", "Sign in required", 401),
@@ -122,6 +155,35 @@ describe("apiClient browser session contract", () => {
       retriedHeaders.get("authorization"),
       "Bearer rotated-access-token",
     );
+    assert.deepEqual(identityChanges, []);
+    unsubscribe();
+  });
+
+  it("clears the browser identity when refresh rotation fails", async () => {
+    const host = new BrowserHost();
+    Object.defineProperty(globalThis, "window", {
+      configurable: true,
+      value: host,
+    });
+    const identityChanges: SessionIdentityChangeReason[] = [];
+    const unsubscribe = subscribeToSessionIdentityChanges((change) =>
+      identityChanges.push(change.reason),
+    );
+    document.cookie = "verith_csrf=csrf-expired";
+    const responses = [
+      errorEnvelope("AUTHENTICATION_REQUIRED", "Sign in required", 401),
+      errorEnvelope("REFRESH_SESSION_INVALID", "Session ended", 401),
+    ];
+    globalThis.fetch = async () => responses.shift()!;
+
+    await assert.rejects(
+      apiClient.get("/users/me"),
+      (error: unknown) =>
+        error instanceof ApiClientError && error.status === 401,
+    );
+    assert.deepEqual(identityChanges, ["REFRESH_FAILED"]);
+    assert.equal(host.localStorage.getItem("verith_csrf_token"), null);
+    unsubscribe();
   });
 
   it("coalesces concurrent 401 responses into one refresh request", async () => {

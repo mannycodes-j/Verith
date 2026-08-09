@@ -1,26 +1,42 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
+    "baseUrl": ".",
     "forceConsistentCasingInFileNames": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "CommonJS",
     "moduleResolution": "Node",
     "noEmit": false,
     "outDir": ".next/test-build",
-    "rootDir": "src/services",
+    "rootDir": "src",
     "skipLibCheck": true,
     "strict": true,
     "target": "ES2022",
+    "paths": { "@/*": ["./src/*"] },
     "types": ["node"]
   },
   "include": [
     "src/services/admin.ts",
     "src/services/admin.test.ts",
+    "src/services/authService.ts",
+    "src/services/authService.test.ts",
     "src/services/apiClient.ts",
     "src/services/apiClient.test.ts",
+    "src/services/sessionLifecycle.ts",
+    "src/services/sessionLifecycle.test.ts",
     "src/services/verificationFailure.ts",
     "src/services/verificationFailure.test.ts",
     "src/services/uploadFailure.ts",
-    "src/services/uploadFailure.test.ts"
+    "src/services/uploadFailure.test.ts",
+    "src/services/gamification.ts",
+    "src/services/gamification.test.ts",
+    "src/utils/achievement-celebrations.ts",
+    "src/utils/achievement-celebrations.test.ts",
+    "src/utils/achievement-display.ts",
+    "src/utils/achievement-display.test.ts",
+    "src/utils/admin-content.ts",
+    "src/utils/admin-content.test.ts",
+    "src/data/admin-content.ts",
+    "src/types/admin-content.ts"
   ]
 }

@@ -620,7 +620,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get the persisted guided-investigation exercise */
+        /** Get the guided-investigation exercise */
         get: operations["VerificationsController_guidanceFor"];
         put?: never;
         post?: never;
@@ -719,7 +719,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Stream persisted and live verification events */
+        /** Stream recorded and live verification events */
         get: operations["VerificationStreamController_stream"];
         put?: never;
         post?: never;
@@ -2372,7 +2372,7 @@ export interface components {
         UpdateBadgeDto: Record<string, never>;
         NotificationUnreadCountDto: {
             /**
-             * @description Number of persisted notifications not yet marked as read
+             * @description Number of notifications not yet marked as read
              * @example 3
              */
             unreadCount: number;

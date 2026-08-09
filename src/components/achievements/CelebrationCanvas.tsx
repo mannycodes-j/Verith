@@ -20,10 +20,31 @@ interface Particle {
 
 const colors = ["#c084fc", "#8b5cf6", "#6366f1", "#22d3ee", "#f8fafc"];
 
-export default function CelebrationCanvas() {
+function seededRandom(seed: string) {
+  let state = 2166136261;
+  for (const character of seed) {
+    state ^= character.charCodeAt(0);
+    state = Math.imul(state, 16777619);
+  }
+  return () => {
+    state += 0x6d2b79f5;
+    let value = state;
+    value = Math.imul(value ^ (value >>> 15), value | 1);
+    value ^= value + Math.imul(value ^ (value >>> 7), value | 61);
+    return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+export default function CelebrationCanvas({ seed = "verith" }: { seed?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    if (
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
     const canvas = canvasRef.current;
     if (!canvas) return;
     const context = canvas.getContext("2d");
@@ -31,6 +52,7 @@ export default function CelebrationCanvas() {
     let frame = 0;
     let animation = 0;
     const particles: Particle[] = [];
+    const random = seededRandom(seed);
     const resize = () => {
       const ratio = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = window.innerWidth * ratio;
@@ -41,8 +63,8 @@ export default function CelebrationCanvas() {
     };
     const burst = (x: number, y: number, count: number) => {
       for (let index = 0; index < count; index += 1) {
-        const angle = (Math.PI * 2 * index) / count + Math.random() * 0.18;
-        const speed = 2.2 + Math.random() * 3.8;
+        const angle = (Math.PI * 2 * index) / count + random() * 0.18;
+        const speed = 2.2 + random() * 3.8;
         particles.push({
           x,
           y,
@@ -51,9 +73,9 @@ export default function CelebrationCanvas() {
           gravity: 0.045,
           drag: 0.985,
           life: 0,
-          maxLife: 70 + Math.random() * 35,
-          size: 1.5 + Math.random() * 2.5,
-          color: colors[Math.floor(Math.random() * colors.length)] ?? colors[0],
+          maxLife: 70 + random() * 35,
+          size: 1.5 + random() * 2.5,
+          color: colors[Math.floor(random() * colors.length)] ?? colors[0],
           confetti: false,
           rotation: 0,
           rotationSpeed: 0,
@@ -64,19 +86,19 @@ export default function CelebrationCanvas() {
       const count = window.innerWidth < 600 ? 44 : 72;
       for (let index = 0; index < count; index += 1) {
         particles.push({
-          x: Math.random() * window.innerWidth,
-          y: -20 - Math.random() * 180,
-          vx: -0.8 + Math.random() * 1.6,
-          vy: 1.2 + Math.random() * 2,
+          x: random() * window.innerWidth,
+          y: -20 - random() * 180,
+          vx: -0.8 + random() * 1.6,
+          vy: 1.2 + random() * 2,
           gravity: 0.018,
           drag: 0.998,
           life: 0,
-          maxLife: 150 + Math.random() * 60,
-          size: 4 + Math.random() * 4,
-          color: colors[Math.floor(Math.random() * colors.length)] ?? colors[0],
+          maxLife: 150 + random() * 60,
+          size: 4 + random() * 4,
+          color: colors[Math.floor(random() * colors.length)] ?? colors[0],
           confetti: true,
-          rotation: Math.random() * Math.PI,
-          rotationSpeed: -0.12 + Math.random() * 0.24,
+          rotation: random() * Math.PI,
+          rotationSpeed: -0.12 + random() * 0.24,
         });
       }
     };
@@ -128,7 +150,7 @@ export default function CelebrationCanvas() {
       window.removeEventListener("resize", resize);
       context.clearRect(0, 0, canvas.width, canvas.height);
     };
-  }, []);
+  }, [seed]);
 
   return (
     <canvas

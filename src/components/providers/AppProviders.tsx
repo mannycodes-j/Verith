@@ -4,7 +4,11 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import {
+  clearSessionBoundQueryCache,
+  subscribeToSessionIdentityChanges,
+} from "@/services/sessionLifecycle";
 
 export default function AppProviders({ children }: { children: ReactNode }) {
   const [queryClient] = useState(
@@ -29,6 +33,14 @@ export default function AppProviders({ children }: { children: ReactNode }) {
           },
         },
       }),
+  );
+
+  useEffect(
+    () =>
+      subscribeToSessionIdentityChanges(() => {
+        clearSessionBoundQueryCache(queryClient);
+      }),
+    [queryClient],
   );
 
   return (

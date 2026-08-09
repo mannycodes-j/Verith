@@ -8,6 +8,7 @@ import {
   type ChallengeAttempt,
 } from "@/services/challenges";
 import { challengeStyles as styles } from "../challenges.styles";
+import { requestAchievementCelebrationCheck } from "@/utils/achievement-celebrations";
 
 export default function ChallengeWorkspace({ slug }: { slug: string }) {
   const queryClient = useQueryClient();
@@ -42,9 +43,15 @@ export default function ChallengeWorkspace({ slug }: { slug: string }) {
         queryKey: ["challenge-attempts", challengeId],
       });
       void queryClient.invalidateQueries({ queryKey: ["gamification-profile"] });
+      void queryClient.invalidateQueries({ queryKey: ["gamification-badges"] });
       void queryClient.invalidateQueries({
         queryKey: ["gamification-transactions"],
       });
+      if (next.passed) {
+        requestAchievementCelebrationCheck({
+          allowDuringCriticalInteraction: true,
+        });
+      }
     },
   });
 

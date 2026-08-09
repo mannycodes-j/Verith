@@ -12,7 +12,7 @@ export default function WorkspaceOverviewPage() {
         <span>Investigation desk</span>
         <h1>Check a claim before you trust it or share it.</h1>
         <p>
-          Paste the message, add a link, or upload the media. Verith shows what
+          Paste the message or upload the media. Verith shows what
           the evidence supports, what it challenges, and what still needs
           caution—in language you can act on.
         </p>
@@ -20,7 +20,7 @@ export default function WorkspaceOverviewPage() {
       <section className={styles.composerEntry}>
         <div>
           <span>New investigation</span>
-          <h2>Check text, links, images, screenshots, audio, or video.</h2>
+          <h2>Check text, images, screenshots, audio, or video.</h2>
         </div>
         <NewInvestigationButton />
       </section>

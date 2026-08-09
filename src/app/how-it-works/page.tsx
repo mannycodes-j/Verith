@@ -14,7 +14,7 @@ const roleJourneys = [
 		role: "Public visitor",
 	},
 	{
-		description: "Submit supported text, links, images, screenshots, audio, or short video; follow real processing stages; inspect claims, sources, uncertainty, limitations, and recommended actions; then control personal history, sharing, learning, privacy, sessions, notifications, and WhatsApp.",
+		description: "Submit supported text, images, screenshots, audio, or short video; follow real processing stages; inspect claims, sources, uncertainty, limitations, and recommended actions; then control personal history, sharing, learning, privacy, sessions, notifications, and WhatsApp.",
 		icon: FileSearch,
 		outcome: "Investigate uncertain content",
 		role: "Member",
@@ -49,12 +49,12 @@ export default function HowItWorksPage() {
 	return (
 		<PublicEditorial
 			eyebrow="Verification workflow"
-			introduction="Verith processes submitted material through persisted stages. A stage describes completed work; it is not converted into a fabricated percentage when the backend supplies no finer measurement."
+			introduction="Verith processes submitted material through stages. A stage describes completed work; it is not converted into a fabricated percentage when the backend supplies no finer measurement."
 			sections={[
 				{
 					label: "Receive",
 					title: "Preserve the submitted material.",
-					content: <p>Text, links, supported images, screenshots, audio, and short video are validated before processing. Media uses owner-bound signed uploads and is confirmed against the provider before attachment.</p>,
+					content: <p>Text, supported images, screenshots, audio, and short video are validated before processing. Media uses owner-bound signed uploads and is confirmed against the provider before attachment.</p>,
 				},
 				{
 					label: "Extract",

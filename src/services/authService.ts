@@ -90,7 +90,7 @@ export const authService = {
     try {
       await apiClient.postVoid("/auth/logout");
     } finally {
-      sessionToken.clear();
+      sessionToken.clear("LOGOUT");
     }
   },
 

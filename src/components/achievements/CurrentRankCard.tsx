@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { gamificationService } from "@/services/gamification";
 import AchievementIcon from "./AchievementIcon";
+import { clampAchievementPercentage } from "@/utils/achievement-display";
 
 export default function CurrentRankCard({
   compact = false,
@@ -25,6 +26,7 @@ export default function CurrentRankCard({
     );
   if (profile.isError || !profile.data) return null;
   const rank = profile.data.rank;
+  const progress = clampAchievementPercentage(rank.progressPercentage);
   return (
     <section
       className={`relative overflow-hidden rounded-3xl border border-violet-300/10 bg-[radial-gradient(circle_at_0%_0%,rgba(139,92,246,.18),transparent_18rem),rgba(255,255,255,.02)] ${compact ? "p-5" : "p-6"} ${className}`}
@@ -43,18 +45,25 @@ export default function CurrentRankCard({
           </h2>
         </div>
       </div>
-      <div className="mt-5 flex items-center justify-between gap-3 text-[10px] text-white/40">
+      <div className="mt-5 flex flex-col gap-1.5 text-[10px] text-white/40 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
         <span>{profile.data.xp.toLocaleString()} XP</span>
         <span>
           {rank.nextRank
-            ? `${rank.xpUntilNextRank.toLocaleString()} to ${rank.nextRankLabel}`
+            ? `${rank.xpUntilNextRank.toLocaleString()} more XP to reach ${rank.nextRankLabel}`
             : "Highest rank"}
         </span>
       </div>
-      <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/[.06]">
+      <div
+        aria-label={`${progress}% progress through the ${rank.currentRankLabel} rank`}
+        aria-valuemax={100}
+        aria-valuemin={0}
+        aria-valuenow={progress}
+        className="mt-2 h-2 overflow-hidden rounded-full bg-white/[.06]"
+        role="progressbar"
+      >
         <span
           className="block h-full rounded-full bg-gradient-to-r from-violet-300 to-indigo-500"
-          style={{ width: `${rank.progressPercentage}%` }}
+          style={{ width: `${progress}%` }}
         />
       </div>
       <Link

@@ -19,4 +19,5 @@ export const achievementStyles = {
     `${vectraStyles.card} mt-6 p-[clamp(1.25rem,3vw,2rem)] [&>p]:text-sm [&>p]:text-white/50 [&_ol]:m-0 [&_ol]:grid [&_ol]:list-none [&_ol]:gap-2 [&_ol]:p-0 [&_li]:grid [&_li]:grid-cols-[minmax(0,1fr)_0.5fr_0.5fr_0.65fr] [&_li]:items-center [&_li]:gap-4 [&_li]:rounded-2xl [&_li]:border [&_li]:border-white/[0.04] [&_li]:bg-white/[0.02] [&_li]:p-4 [&_li]:transition-colors [&_li:hover]:bg-white/[0.04] max-[700px]:[&_li]:grid-cols-2 [&_span]:text-sm [&_span]:font-medium [&_span]:text-white/65 [&_small]:text-xs [&_small]:text-white/35 [&_strong]:text-sm [&_strong]:font-semibold [&_strong]:text-violet-200`,
   loadMore:
     `${vectraStyles.secondaryAction} mt-5`,
+  paginationButton: `${vectraStyles.secondaryAction} min-w-24 disabled:cursor-not-allowed disabled:opacity-45`,
 } as const;
