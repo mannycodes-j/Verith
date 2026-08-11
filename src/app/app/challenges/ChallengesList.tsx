@@ -82,7 +82,7 @@ export default function ChallengesList() {
               <dl className="mt-8 grid max-w-2xl gap-3 sm:grid-cols-3">
                 <div className="rounded-2xl border border-white/[.06] bg-white/[.025] p-4">
                   <dt className="flex items-center gap-2 text-[10px] text-white/35 uppercase"><CalendarDays size={13} /> Questions</dt>
-                  <dd className="mt-2 ml-0 font-semibold">{challenge.data.questions.length} unique today</dd>
+                  <dd className="mt-2 ml-0 font-semibold">{challenge.data.questions.length}</dd>
                 </div>
                 <div className="rounded-2xl border border-white/[.06] bg-white/[.025] p-4">
                   <dt className="text-[10px] text-white/35 uppercase">Passing score</dt>

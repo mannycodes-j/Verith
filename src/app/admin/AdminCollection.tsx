@@ -71,7 +71,7 @@ export default function AdminCollection({ kind }: { kind: Kind }) {
 				<label><span>Search</span><input onChange={(event) => setSearch(event.target.value)} placeholder={`Search ${kind}`} type="search" value={search} /></label>
 				<label><span>Status</span><select onChange={(event) => setStatus(event.target.value)} value={status}><option value="">All statuses</option>{CONTENT_STATUS_FILTERS[kind as keyof typeof CONTENT_STATUS_FILTERS].map((value) => <option key={value} value={value}>{value.replaceAll("_", " ")}</option>)}</select></label>
 				{(kind === "courses" || kind === "challenges") && <label><span>Level</span><select onChange={(event) => setDifficulty(event.target.value)} value={difficulty}>{DIFFICULTY_FILTERS.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>}
-				<label><span>{kind === "lessons" || kind === "quizzes" ? "Course ID" : kind === "badges" ? "Category" : "Topic"}</span><input onChange={(event) => setSecondary(event.target.value)} placeholder={kind === "lessons" || kind === "quizzes" ? "MongoDB course ID" : "Any"} value={secondary} /></label>
+				<label><span>{kind === "lessons" || kind === "quizzes" ? "Course ID" : kind === "badges" ? "Category" : "Topic"}</span><input onChange={(event) => setSecondary(event.target.value)} placeholder={kind === "lessons" || kind === "quizzes" ? "Course ID" : "Any"} value={secondary} /></label>
 			</section>}
 			{query.isPending && (
 				<div className={styles.tableLoading} aria-busy="true">
