@@ -29,6 +29,22 @@ function getRecord(kind: Kind, id: string): Promise<AdminRecord> {
 }
 
 function recordValue(kind: Kind, key: string, value: unknown) {
+  if (kind === "challenges" && key === "generation" && value && typeof value === "object") {
+    const generation = value as Record<string, unknown>;
+    const mode = String(generation.mode ?? "LEGACY").replaceAll("_", " ");
+    const provider = typeof generation.provider === "string" ? generation.provider : mode === "TEMPLATE" ? "Template Bank" : "Administrator";
+    const model = typeof generation.model === "string" ? ` · ${generation.model}` : "";
+    const validation = typeof generation.validationStatus === "string" ? ` · Validation: ${generation.validationStatus.replaceAll("_", " ")}` : "";
+    const generatedAt = typeof generation.generatedAt === "string"
+      ? ` · Generated: ${new Date(generation.generatedAt).toLocaleString()}`
+      : "";
+    const generatorVersion = typeof generation.generatorVersion === "string"
+      ? ` · Generator: ${generation.generatorVersion}`
+      : "";
+    const topics = readableList(generation.topicCoverage);
+    const competencies = readableList(generation.competencyCoverage);
+    return `${mode} · ${provider}${model}${validation}${generatedAt}${generatorVersion}${topics ? ` · Topics: ${topics}` : ""}${competencies ? ` · Competencies: ${competencies}` : ""}`;
+  }
   if (kind === "badges" && key === "criteria" && value && typeof value === "object") {
     const criteria = value as Record<string, unknown>;
     const threshold = Number(criteria.threshold);
@@ -43,6 +59,14 @@ function recordValue(kind: Kind, key: string, value: unknown) {
   }
   if (typeof value === "boolean") return value ? "Active" : "Inactive";
   return typeof value === "object" ? JSON.stringify(value) : String(value ?? "Unavailable");
+}
+
+function readableList(value: unknown): string {
+  if (!Array.isArray(value)) return "";
+  return value
+    .filter((item): item is string => typeof item === "string")
+    .map((item) => item.toLowerCase().replaceAll("_", " "))
+    .join(", ");
 }
 
 export default function AdminRecordDetail({
