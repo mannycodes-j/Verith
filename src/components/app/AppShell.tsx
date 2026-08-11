@@ -41,6 +41,7 @@ import UnequalMenuBars from "@/components/UnequalMenuBars";
 import VerithLogo from "@/components/brand/VerithLogo";
 import { ApiClientError } from "@/services/apiClient";
 import { authService, type AuthenticatedUser } from "@/services/authService";
+import LanguageSelector from "@/components/LanguageSelector";
 import { appShellStyles as styles } from "./app-shell.styles";
 import NotificationDrawer from "./NotificationDrawer";
 import NotificationTrigger from "./NotificationTrigger";
@@ -477,6 +478,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
             <strong>{title}</strong>
           </div>
           <div className={styles.topbarActions}>
+            <LanguageSelector variant="subtle" />
             <NotificationTrigger open={() => setNotificationDrawer(true)} />
             <NewInvestigationButton className="max-sm:hidden" />
             <details className={styles.mobileNavigation}>

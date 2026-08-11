@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
+import LanguageSelector from "@/components/LanguageSelector";
 import GoogleAuthButton from "@/components/auth/GoogleAuthButton";
 import { authStyles as styles } from "@/components/auth/auth.styles";
 import { startVerificationResendCooldown } from "@/lib/verificationCooldown";
@@ -166,6 +167,9 @@ export default function RegisterForm() {
         </p>
       </header>
       <GoogleAuthButton intent="REGISTER" />
+      <div className="flex justify-end mb-4 -mt-2">
+        <LanguageSelector id="language" name="language" variant="subtle" />
+      </div>
       <form className={styles.form} onSubmit={onSubmit} noValidate>
         <div className={styles.field}>
           <label htmlFor="displayName">Display name (optional)</label>
