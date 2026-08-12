@@ -83,11 +83,6 @@ export default function AdminOverview() {
             {percent.format(record.verifications.failureRate)} of volume
           </small>
         </div>
-        <div>
-          <span>WhatsApp messages</span>
-          <strong>{number.format(record.whatsapp.messages)}</strong>
-          <small>Saved during period</small>
-        </div>
       </section>
 
       <div className={styles.grid}>

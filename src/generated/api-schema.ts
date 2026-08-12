@@ -11,7 +11,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get API service information */
+        /**
+         * Get API service information
+         * @description Get API service information. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["AppController_getRoot"];
         put?: never;
         post?: never;
@@ -28,7 +31,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Check application readiness */
+        /**
+         * Check application readiness
+         * @description Check application readiness. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["HealthController_readiness"];
         put?: never;
         post?: never;
@@ -45,7 +51,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Check process liveness */
+        /**
+         * Check process liveness
+         * @description Check process liveness. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["HealthController_liveness"];
         put?: never;
         post?: never;
@@ -62,7 +71,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Check MongoDB and Redis readiness */
+        /**
+         * Check MongoDB and Redis readiness
+         * @description Check MongoDB and Redis readiness. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["HealthController_readinessAlias"];
         put?: never;
         post?: never;
@@ -79,6 +91,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get public profile
+         * @description Get public profile. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["UsersController_publicProfile"];
         put?: never;
         post?: never;
@@ -95,12 +111,20 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get profile
+         * @description Get profile. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["UsersController_profile"];
         put?: never;
         post?: never;
         delete?: never;
         options?: never;
         head?: never;
+        /**
+         * Update profile
+         * @description Update profile. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["UsersController_updateProfile"];
         trace?: never;
     };
@@ -117,6 +141,10 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
+        /**
+         * Update notifications
+         * @description Update notifications. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["UsersController_updateNotifications"];
         trace?: never;
     };
@@ -133,6 +161,10 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
+        /**
+         * Update privacy
+         * @description Update privacy. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["UsersController_updatePrivacy"];
         trace?: never;
     };
@@ -145,7 +177,15 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * Request deletion
+         * @description Request deletion. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["UsersController_requestDeletion"];
+        /**
+         * Cancel deletion
+         * @description Cancel deletion. Requires a valid Verith access token. A successful request returns no response body.
+         */
         delete: operations["UsersController_cancelDeletion"];
         options?: never;
         head?: never;
@@ -161,7 +201,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Register a user and request email verification */
+        /**
+         * Register a user and request email verification
+         * @description Register a user and request email verification. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["AuthController_register"];
         delete?: never;
         options?: never;
@@ -176,7 +219,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get the public Google authentication client */
+        /**
+         * Get the public Google authentication client
+         * @description Get the public Google authentication client. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["AuthController_googleConfiguration"];
         put?: never;
         post?: never;
@@ -195,7 +241,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Register or log in with a Google ID token */
+        /**
+         * Register or log in with a Google ID token
+         * @description Register or log in with a Google ID token. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["AuthController_googleAuthentication"];
         delete?: never;
         options?: never;
@@ -212,6 +261,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * Verify email
+         * @description Verify email. This operation is publicly accessible. A successful request returns no response body.
+         */
         post: operations["AuthController_verifyEmail"];
         delete?: never;
         options?: never;
@@ -228,6 +281,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * Resend verification email
+         * @description Resend verification email. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["AuthController_resendVerification"];
         delete?: never;
         options?: never;
@@ -244,6 +301,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * Log in
+         * @description Log in. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["AuthController_login"];
         delete?: never;
         options?: never;
@@ -260,6 +321,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * Refresh authentication tokens
+         * @description Refresh authentication tokens. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["AuthController_refresh"];
         delete?: never;
         options?: never;
@@ -276,6 +341,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * Request password reset
+         * @description Request password reset. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["AuthController_forgotPassword"];
         delete?: never;
         options?: never;
@@ -292,6 +361,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * Reset password
+         * @description Reset password. This operation is publicly accessible. A successful request returns no response body.
+         */
         post: operations["AuthController_resetPassword"];
         delete?: never;
         options?: never;
@@ -308,6 +381,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * Change password
+         * @description Change password. Requires a valid Verith access token. A successful request returns no response body.
+         */
         post: operations["AuthController_changePassword"];
         delete?: never;
         options?: never;
@@ -324,6 +401,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * Log out
+         * @description Log out. Requires a valid Verith access token. A successful request returns no response body.
+         */
         post: operations["AuthController_logout"];
         delete?: never;
         options?: never;
@@ -340,6 +421,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * Log out all sessions
+         * @description Log out all sessions. Requires a valid Verith access token. A successful request returns no response body.
+         */
         post: operations["AuthController_logoutAll"];
         delete?: never;
         options?: never;
@@ -354,6 +439,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get current authenticated user
+         * @description Get current authenticated user. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["AuthController_me"];
         put?: never;
         post?: never;
@@ -370,6 +459,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get sessions
+         * @description Get sessions. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["AuthController_sessions"];
         put?: never;
         post?: never;
@@ -389,6 +482,10 @@ export interface paths {
         get?: never;
         put?: never;
         post?: never;
+        /**
+         * Revoke session
+         * @description Revoke session. Requires a valid Verith access token. A successful request returns no response body.
+         */
         delete: operations["AuthController_revokeSession"];
         options?: never;
         head?: never;
@@ -404,7 +501,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Create an owner-bound signed upload request */
+        /**
+         * Create an owner-bound signed upload request
+         * @description Create an owner-bound signed upload request. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["UploadsController_signature"];
         delete?: never;
         options?: never;
@@ -421,7 +521,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Verify and persist a Cloudinary upload */
+        /**
+         * Verify and persist a Cloudinary upload
+         * @description Verify and persist a Cloudinary upload. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["UploadsController_confirm"];
         delete?: never;
         options?: never;
@@ -436,9 +539,17 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get upload
+         * @description Get upload. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["UploadsController_get"];
         put?: never;
         post?: never;
+        /**
+         * Delete upload
+         * @description Delete upload. Requires a valid Verith access token. A successful request returns no response body.
+         */
         delete: operations["UploadsController_delete"];
         options?: never;
         head?: never;
@@ -454,7 +565,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Create a signed avatar upload request */
+        /**
+         * Create a signed avatar upload request
+         * @description Create a signed avatar upload request. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["AvatarUploadsController_signature"];
         delete?: never;
         options?: never;
@@ -471,7 +585,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Confirm and attach an uploaded avatar */
+        /**
+         * Confirm and attach an uploaded avatar
+         * @description Confirm and attach an uploaded avatar. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["AvatarUploadsController_confirm"];
         delete?: never;
         options?: never;
@@ -486,9 +603,16 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * List verification
+         * @description List verification. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["VerificationsController_list"];
         put?: never;
-        /** Create and enqueue a verification */
+        /**
+         * Create and enqueue a verification
+         * @description Create and enqueue a verification. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["VerificationsController_create"];
         delete?: never;
         options?: never;
@@ -503,7 +627,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Retrieve image analysis or audio transcript */
+        /**
+         * Retrieve image analysis or audio transcript
+         * @description Retrieve image analysis or audio transcript. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["VerificationsController_getMedia"];
         put?: never;
         post?: never;
@@ -520,7 +647,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Retrieve evidence-derived analysis and confidence factors */
+        /**
+         * Retrieve evidence-derived analysis and confidence factors
+         * @description Retrieve evidence-derived analysis and confidence factors. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["VerificationsController_getAnalysis"];
         put?: never;
         post?: never;
@@ -537,7 +667,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List retrieved evidence and source access states */
+        /**
+         * List retrieved evidence and source access states
+         * @description List retrieved evidence and source access states. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["VerificationsController_listEvidence"];
         put?: never;
         post?: never;
@@ -554,7 +687,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get today’s investigation allowance */
+        /**
+         * Get today’s investigation allowance
+         * @description Get today’s investigation allowance. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["VerificationsController_allowance"];
         put?: never;
         post?: never;
@@ -571,9 +707,17 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get verification
+         * @description Get verification. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["VerificationsController_get"];
         put?: never;
         post?: never;
+        /**
+         * Delete verification
+         * @description Delete verification. Requires a valid Verith access token. A successful request returns no response body.
+         */
         delete: operations["VerificationsController_remove"];
         options?: never;
         head?: never;
@@ -587,6 +731,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * List events
+         * @description List events. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["VerificationsController_listEvents"];
         put?: never;
         post?: never;
@@ -603,7 +751,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List extracted claims and search queries */
+        /**
+         * List extracted claims and search queries
+         * @description List extracted claims and search queries. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["VerificationsController_listClaims"];
         put?: never;
         post?: never;
@@ -620,7 +771,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get the guided-investigation exercise */
+        /**
+         * Get the guided-investigation exercise
+         * @description Get the guided-investigation exercise. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["VerificationsController_guidanceFor"];
         put?: never;
         post?: never;
@@ -639,7 +793,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Submit guided-investigation reasoning */
+        /**
+         * Submit guided-investigation reasoning
+         * @description Submit guided-investigation reasoning. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["VerificationsController_submitGuidance"];
         delete?: never;
         options?: never;
@@ -656,6 +813,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * Cancel cancel
+         * @description Cancel cancel. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["VerificationsController_cancel"];
         delete?: never;
         options?: never;
@@ -672,6 +833,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * Retry retry
+         * @description Retry retry. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["VerificationsController_retry"];
         delete?: never;
         options?: never;
@@ -688,7 +853,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Create a new report version by rerunning a completed verification */
+        /**
+         * Create a new report version by rerunning a completed verification
+         * @description Create a new report version by rerunning a completed verification. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["VerificationsController_reprocess"];
         delete?: never;
         options?: never;
@@ -709,6 +877,10 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
+        /**
+         * Update visibility
+         * @description Update visibility. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["VerificationsController_visibility"];
         trace?: never;
     };
@@ -719,7 +891,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Stream recorded and live verification events */
+        /**
+         * Stream and live verification events
+         * @description Stream and live verification events. Requires a valid Verith access token. The successful response is returned as the documented raw media type.
+         */
         get: operations["VerificationStreamController_stream"];
         put?: never;
         post?: never;
@@ -736,7 +911,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Check configured AI provider connectivity */
+        /**
+         * Check configured AI provider connectivity
+         * @description Check configured AI provider connectivity. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["AiHealthController_check"];
         put?: never;
         post?: never;
@@ -753,8 +931,16 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * List prompt
+         * @description List prompt. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["PromptAdminController_list"];
         put?: never;
+        /**
+         * Create prompt
+         * @description Create prompt. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["PromptAdminController_create"];
         delete?: never;
         options?: never;
@@ -769,6 +955,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get prompt
+         * @description Get prompt. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["PromptAdminController_detail"];
         put?: never;
         post?: never;
@@ -791,6 +981,10 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
+        /**
+         * Publish publish
+         * @description Publish publish. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["PromptAdminController_publish"];
         trace?: never;
     };
@@ -807,6 +1001,10 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
+        /**
+         * Update rollback
+         * @description Update rollback. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["PromptAdminController_rollback"];
         trace?: never;
     };
@@ -817,12 +1015,20 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get provider
+         * @description Get provider. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["ProviderConfigAdminController_get"];
         put?: never;
         post?: never;
         delete?: never;
         options?: never;
         head?: never;
+        /**
+         * Update provider
+         * @description Update provider. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["ProviderConfigAdminController_update"];
         trace?: never;
     };
@@ -833,7 +1039,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Search users without exposing credentials */
+        /**
+         * Search users without exposing credentials
+         * @description Search users without exposing credentials. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["AdminController_listUsers"];
         put?: never;
         post?: never;
@@ -850,7 +1059,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get safe administrative user details */
+        /**
+         * Get safe administrative user details
+         * @description Get safe administrative user details. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["AdminController_getUser"];
         put?: never;
         post?: never;
@@ -873,7 +1085,10 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        /** Change account status and revoke sessions when required */
+        /**
+         * Change account status and revoke sessions when required
+         * @description Change account status and revoke sessions when required. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["AdminController_changeStatus"];
         trace?: never;
     };
@@ -890,7 +1105,10 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        /** Change a user role as a super administrator */
+        /**
+         * Change a user role as a super administrator
+         * @description Change a user role as a super administrator. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["AdminController_changeRole"];
         trace?: never;
     };
@@ -901,7 +1119,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Inspect verification lifecycle metadata */
+        /**
+         * Inspect verification lifecycle metadata
+         * @description Inspect verification lifecycle metadata. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["AdminController_listVerifications"];
         put?: never;
         post?: never;
@@ -918,7 +1139,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Inspect safe verification lifecycle metadata without input */
+        /**
+         * Inspect safe verification lifecycle metadata without input
+         * @description Inspect safe verification lifecycle metadata without input. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["AdminController_getVerification"];
         put?: never;
         post?: never;
@@ -937,7 +1161,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Idempotently enqueue a failed verification retry */
+        /**
+         * Idempotently enqueue a failed verification retry
+         * @description Idempotently enqueue a failed verification retry. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["AdminController_retryVerification"];
         delete?: never;
         options?: never;
@@ -952,7 +1179,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List append-only administrative audit records */
+        /**
+         * List append-only administrative audit records
+         * @description List append-only administrative audit records. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["AdminController_listAuditLogs"];
         put?: never;
         post?: never;
@@ -969,7 +1199,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Check credential-free search provider connectivity */
+        /**
+         * Check credential-free search provider connectivity
+         * @description Check credential-free search provider connectivity. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["SearchHealthController_check"];
         put?: never;
         post?: never;
@@ -986,6 +1219,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * List publisher
+         * @description List publisher. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["PublishersAdminController_list"];
         put?: never;
         post?: never;
@@ -1002,6 +1239,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get publisher
+         * @description Get publisher. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["PublishersAdminController_detail"];
         put?: never;
         post?: never;
@@ -1024,6 +1265,10 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
+        /**
+         * Update override
+         * @description Update override. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["PublishersAdminController_override"];
         trace?: never;
     };
@@ -1034,6 +1279,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get latest
+         * @description Get latest. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["ReportsController_latest"];
         put?: never;
         post?: never;
@@ -1050,7 +1299,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get a public-safe check card from report data */
+        /**
+         * Get a public-safe check card from report data
+         * @description Get a public-safe check card from report data. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["ReportsController_checkCard"];
         put?: never;
         post?: never;
@@ -1067,7 +1319,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Download a public-safe Verith Check Card */
+        /**
+         * Download a public-safe Verith Check Card
+         * @description Download a public-safe Verith Check Card. Requires a valid Verith access token. The successful response is returned as the documented raw media type.
+         */
         get: operations["ReportsController_checkCardSvg"];
         put?: never;
         post?: never;
@@ -1084,6 +1339,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get versions
+         * @description Get versions. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["ReportsController_versions"];
         put?: never;
         post?: never;
@@ -1100,9 +1359,17 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get report
+         * @description Get report. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["ReportsController_get"];
         put?: never;
         post?: never;
+        /**
+         * Delete report
+         * @description Delete report. Requires a valid Verith access token. A successful request returns no response body.
+         */
         delete: operations["ReportsController_remove"];
         options?: never;
         head?: never;
@@ -1116,7 +1383,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get deterministic media-literacy coaching */
+        /**
+         * Get deterministic media-literacy coaching
+         * @description Get deterministic media-literacy coaching. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["ReportsController_coachFor"];
         put?: never;
         post?: never;
@@ -1135,7 +1405,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Record that the report owner opened an evidence source */
+        /**
+         * Record that the report owner opened an evidence source
+         * @description Record that the report owner opened an evidence source. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["ReportsController_inspectEvidence"];
         delete?: never;
         options?: never;
@@ -1156,6 +1429,10 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
+        /**
+         * Update visibility
+         * @description Update visibility. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["ReportsController_visibility"];
         trace?: never;
     };
@@ -1168,6 +1445,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * Revoke
+         * @description Revoke. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["ReportsController_revoke"];
         delete?: never;
         options?: never;
@@ -1184,6 +1465,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * Create feedback
+         * @description Create feedback. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["ReportsController_feedback"];
         delete?: never;
         options?: never;
@@ -1198,7 +1483,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Download a real public-safe JSON report export */
+        /**
+         * Download a real public-safe JSON report export
+         * @description Download a real public-safe JSON report export. Requires a valid Verith access token. The successful response is returned as the documented raw media type.
+         */
         get: operations["ReportsController_jsonExport"];
         put?: never;
         post?: never;
@@ -1215,7 +1503,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Download a real public-safe PDF report export */
+        /**
+         * Download a real public-safe PDF report export
+         * @description Download a real public-safe PDF report export. Requires a valid Verith access token. The successful response is returned as the documented raw media type.
+         */
         get: operations["ReportsController_pdfExport"];
         put?: never;
         post?: never;
@@ -1232,7 +1523,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Retrieve a sanitized shared report */
+        /**
+         * Retrieve a sanitized shared report
+         * @description Retrieve a sanitized shared report. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["PublicReportsController_get"];
         put?: never;
         post?: never;
@@ -1249,6 +1543,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * List feedback
+         * @description List feedback. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["ReportFeedbackAdminController_list"];
         put?: never;
         post?: never;
@@ -1265,12 +1563,20 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get feedback
+         * @description Get feedback. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["ReportFeedbackAdminController_detail"];
         put?: never;
         post?: never;
         delete?: never;
         options?: never;
         head?: never;
+        /**
+         * Update resolve
+         * @description Update resolve. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["ReportFeedbackAdminController_resolve"];
         trace?: never;
     };
@@ -1281,7 +1587,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get real operational aggregates for the last 30 days */
+        /**
+         * Get real operational aggregates for the last 30 days
+         * @description Get real operational aggregates for the last 30 days. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["AnalyticsController_overview"];
         put?: never;
         post?: never;
@@ -1298,7 +1607,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get privacy-thresholded mission and pilot aggregates */
+        /**
+         * Get privacy-thresholded mission and pilot aggregates
+         * @description Get privacy-thresholded mission and pilot aggregates. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["AnalyticsController_pilots"];
         put?: never;
         post?: never;
@@ -1317,7 +1629,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Record a privacy-safe product interaction */
+        /**
+         * Record a privacy-safe product interaction
+         * @description Record a privacy-safe product interaction. Requires a valid Verith access token. A successful request returns no response body.
+         */
         post: operations["ProductAnalyticsController_record"];
         delete?: never;
         options?: never;
@@ -1332,6 +1647,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get current authenticated user
+         * @description Get current authenticated user. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["GamificationController_me"];
         put?: never;
         post?: never;
@@ -1348,6 +1667,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get transactions
+         * @description Get transactions. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["GamificationController_transactions"];
         put?: never;
         post?: never;
@@ -1364,6 +1687,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get badges
+         * @description Get badges. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["GamificationController_badges"];
         put?: never;
         post?: never;
@@ -1380,6 +1707,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get my badges
+         * @description Get my badges. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["GamificationController_myBadges"];
         put?: never;
         post?: never;
@@ -1396,6 +1727,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get leaderboard
+         * @description Get leaderboard. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["GamificationController_leaderboard"];
         put?: never;
         post?: never;
@@ -1414,6 +1749,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * Create claim celebrations
+         * @description Create claim celebrations. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["GamificationController_claimCelebrations"];
         delete?: never;
         options?: never;
@@ -1434,6 +1773,10 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
+        /**
+         * Update acknowledge celebration
+         * @description Update acknowledge celebration. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["GamificationController_acknowledgeCelebration"];
         trace?: never;
     };
@@ -1444,9 +1787,37 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * List badges
+         * @description List badges. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["GamificationAdminController_listBadges"];
         put?: never;
+        /**
+         * Create badge
+         * @description Create badge. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["GamificationAdminController_createBadge"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/gamification/backfill": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create backfill existing users
+         * @description Create backfill existing users. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
+        post: operations["GamificationAdminController_backfillExistingUsers"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1460,12 +1831,24 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get badge
+         * @description Get badge. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["GamificationAdminController_getBadge"];
         put?: never;
         post?: never;
+        /**
+         * Archive badge
+         * @description Archive badge. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         delete: operations["GamificationAdminController_archiveBadge"];
         options?: never;
         head?: never;
+        /**
+         * Update badge
+         * @description Update badge. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["GamificationAdminController_updateBadge"];
         trace?: never;
     };
@@ -1476,6 +1859,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get unread count
+         * @description Get unread count. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["NotificationsController_unreadCount"];
         put?: never;
         post?: never;
@@ -1492,6 +1879,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * List notification
+         * @description List notification. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["NotificationsController_list"];
         put?: never;
         post?: never;
@@ -1514,6 +1905,10 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
+        /**
+         * Update read
+         * @description Update read. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["NotificationsController_read"];
         trace?: never;
     };
@@ -1530,6 +1925,10 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
+        /**
+         * Update read all
+         * @description Update read all. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["NotificationsController_readAll"];
         trace?: never;
     };
@@ -1543,6 +1942,10 @@ export interface paths {
         get?: never;
         put?: never;
         post?: never;
+        /**
+         * Delete notification
+         * @description Delete notification. Requires a valid Verith access token. A successful request returns no response body.
+         */
         delete: operations["NotificationsController_remove"];
         options?: never;
         head?: never;
@@ -1558,6 +1961,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * Create broadcast product message
+         * @description Create broadcast product message. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["NotificationsAdminController_broadcastProductMessage"];
         delete?: never;
         options?: never;
@@ -1572,6 +1979,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get profile
+         * @description Get profile. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["MilController_profile"];
         put?: never;
         post?: never;
@@ -1588,6 +1999,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get evidence
+         * @description Get evidence. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["MilController_evidence"];
         put?: never;
         post?: never;
@@ -1604,7 +2019,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get the current effective product entitlement */
+        /**
+         * Get the current effective product entitlement
+         * @description Get the current effective product entitlement. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["EntitlementsController_mine"];
         put?: never;
         post?: never;
@@ -1622,7 +2040,10 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        /** Grant a sponsored or administrative entitlement */
+        /**
+         * Grant a sponsored or administrative entitlement
+         * @description Grant a sponsored or administrative entitlement. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         put: operations["EntitlementsController_grant"];
         post?: never;
         delete?: never;
@@ -1638,6 +2059,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * List courses
+         * @description List courses. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["LearningController_listCourses"];
         put?: never;
         post?: never;
@@ -1654,6 +2079,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get course
+         * @description Get course. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["LearningController_getCourse"];
         put?: never;
         post?: never;
@@ -1670,6 +2099,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get lesson
+         * @description Get lesson. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["LearningController_getLesson"];
         put?: never;
         post?: never;
@@ -1692,6 +2125,10 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
+        /**
+         * Update progress
+         * @description Update progress. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["LearningController_progress"];
         trace?: never;
     };
@@ -1702,6 +2139,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get my progress
+         * @description Get my progress. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["LearningController_myProgress"];
         put?: never;
         post?: never;
@@ -1718,6 +2159,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get recommendations
+         * @description Get recommendations. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["LearningController_recommendations"];
         put?: never;
         post?: never;
@@ -1734,8 +2179,16 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * List courses
+         * @description List courses. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["LearningAdminController_listCourses"];
         put?: never;
+        /**
+         * Create course
+         * @description Create course. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["LearningAdminController_createCourse"];
         delete?: never;
         options?: never;
@@ -1750,12 +2203,24 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get course
+         * @description Get course. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["LearningAdminController_getCourse"];
         put?: never;
         post?: never;
+        /**
+         * Archive course
+         * @description Archive course. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         delete: operations["LearningAdminController_archiveCourse"];
         options?: never;
         head?: never;
+        /**
+         * Update course
+         * @description Update course. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["LearningAdminController_updateCourse"];
         trace?: never;
     };
@@ -1766,8 +2231,16 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * List lessons
+         * @description List lessons. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["LearningAdminController_listLessons"];
         put?: never;
+        /**
+         * Create lesson
+         * @description Create lesson. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["LearningAdminController_createLesson"];
         delete?: never;
         options?: never;
@@ -1782,12 +2255,24 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get lesson
+         * @description Get lesson. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["LearningAdminController_getLesson"];
         put?: never;
         post?: never;
+        /**
+         * Archive lesson
+         * @description Archive lesson. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         delete: operations["LearningAdminController_archiveLesson"];
         options?: never;
         head?: never;
+        /**
+         * Update lesson
+         * @description Update lesson. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["LearningAdminController_updateLesson"];
         trace?: never;
     };
@@ -1804,6 +2289,10 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
+        /**
+         * Update course status
+         * @description Update course status. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["LearningAdminController_courseStatus"];
         trace?: never;
     };
@@ -1820,6 +2309,10 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
+        /**
+         * Update lesson status
+         * @description Update lesson status. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["LearningAdminController_lessonStatus"];
         trace?: never;
     };
@@ -1830,6 +2323,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get quizze
+         * @description Get quizze. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["QuizzesController_get"];
         put?: never;
         post?: never;
@@ -1846,6 +2343,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get by lesson
+         * @description Get by lesson. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["QuizzesController_byLesson"];
         put?: never;
         post?: never;
@@ -1862,8 +2363,16 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get attempts
+         * @description Get attempts. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["QuizzesController_attempts"];
         put?: never;
+        /**
+         * Submit
+         * @description Submit. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["QuizzesController_submit"];
         delete?: never;
         options?: never;
@@ -1878,8 +2387,16 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * List quizze
+         * @description List quizze. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["QuizzesAdminController_list"];
         put?: never;
+        /**
+         * Create quizze
+         * @description Create quizze. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["QuizzesAdminController_create"];
         delete?: never;
         options?: never;
@@ -1894,12 +2411,24 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get quizze
+         * @description Get quizze. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["QuizzesAdminController_detail"];
         put?: never;
         post?: never;
+        /**
+         * Archive quizze
+         * @description Archive quizze. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         delete: operations["QuizzesAdminController_archive"];
         options?: never;
         head?: never;
+        /**
+         * Update quizze
+         * @description Update quizze. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["QuizzesAdminController_update"];
         trace?: never;
     };
@@ -1916,6 +2445,10 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
+        /**
+         * Update status
+         * @description Update status. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["QuizzesAdminController_status"];
         trace?: never;
     };
@@ -1926,6 +2459,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * List challenge
+         * @description List challenge. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["ChallengesController_list"];
         put?: never;
         post?: never;
@@ -1942,6 +2479,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get today's challenge
+         * @description Get today's challenge. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["ChallengesController_today"];
         put?: never;
         post?: never;
@@ -1958,6 +2499,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get challenge
+         * @description Get challenge. This operation is publicly accessible. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["ChallengesController_get"];
         put?: never;
         post?: never;
@@ -1974,8 +2519,16 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get attempts
+         * @description Get attempts. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["ChallengesController_attempts"];
         put?: never;
+        /**
+         * Submit challenge attempt
+         * @description Submit challenge attempt. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["ChallengesController_attempt"];
         delete?: never;
         options?: never;
@@ -1990,8 +2543,16 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * List challenge
+         * @description List challenge. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["ChallengesAdminController_list"];
         put?: never;
+        /**
+         * Create challenge
+         * @description Create challenge. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["ChallengesAdminController_create"];
         delete?: never;
         options?: never;
@@ -2006,12 +2567,24 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get challenge
+         * @description Get challenge. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["ChallengesAdminController_detail"];
         put?: never;
         post?: never;
+        /**
+         * Archive challenge
+         * @description Archive challenge. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         delete: operations["ChallengesAdminController_archive"];
         options?: never;
         head?: never;
+        /**
+         * Update challenge
+         * @description Update challenge. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["ChallengesAdminController_update"];
         trace?: never;
     };
@@ -2028,55 +2601,11 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
+        /**
+         * Update status
+         * @description Update status. Requires an authenticated account with the endpoint’s administrative role. Successful JSON is returned in the standard Verith response envelope.
+         */
         patch: operations["ChallengesAdminController_status"];
-        trace?: never;
-    };
-    "/api/v1/whatsapp/link-code": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["WhatsAppController_linkCode"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/whatsapp/link-status": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["WhatsAppController_status"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/whatsapp/link": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete: operations["WhatsAppController_unlink"];
-        options?: never;
-        head?: never;
-        patch?: never;
         trace?: never;
     };
     "/api/v1/privacy/exports": {
@@ -2088,7 +2617,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Request an encrypted asynchronous account export */
+        /**
+         * Request an encrypted asynchronous account export
+         * @description Request an encrypted asynchronous account export. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["PrivacyController_requestExport"];
         delete?: never;
         options?: never;
@@ -2103,7 +2635,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get account export preparation status */
+        /**
+         * Get account export preparation status
+         * @description Get account export preparation status. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["PrivacyController_status"];
         put?: never;
         post?: never;
@@ -2120,7 +2655,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Download a completed account export */
+        /**
+         * Download a completed account export
+         * @description Download a completed account export. Requires a valid Verith access token. The successful response is returned as the documented raw media type.
+         */
         get: operations["PrivacyController_download"];
         put?: never;
         post?: never;
@@ -2137,6 +2675,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * List mission
+         * @description List mission. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["MissionsController_list"];
         put?: never;
         post?: never;
@@ -2153,6 +2695,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get mission
+         * @description Get mission. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["MissionsController_get"];
         put?: never;
         post?: never;
@@ -2171,6 +2717,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * Create join
+         * @description Create join. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["MissionsController_join"];
         delete?: never;
         options?: never;
@@ -2185,6 +2735,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get assessment
+         * @description Get assessment. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["MissionsController_assessment"];
         put?: never;
         post?: never;
@@ -2203,6 +2757,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * Submit
+         * @description Submit. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["MissionsController_submit"];
         delete?: never;
         options?: never;
@@ -2219,6 +2777,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * Create scenario
+         * @description Create scenario. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         post: operations["MissionsController_scenario"];
         delete?: never;
         options?: never;
@@ -2233,6 +2795,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * Get impact
+         * @description Get impact. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
         get: operations["MissionsController_impact"];
         put?: never;
         post?: never;
@@ -2320,7 +2886,7 @@ export interface components {
              */
             mode: "STANDARD" | "GUIDED";
             /** @enum {string} */
-            sourceType: "TEXT" | "URL" | "IMAGE" | "SCREENSHOT" | "AUDIO" | "VIDEO" | "WHATSAPP_TEXT" | "WHATSAPP_URL" | "WHATSAPP_IMAGE" | "WHATSAPP_AUDIO";
+            sourceType: "TEXT" | "URL" | "IMAGE" | "SCREENSHOT" | "AUDIO" | "VIDEO";
             text?: string;
             url?: string;
             mediaAssetId?: string;
@@ -2368,6 +2934,11 @@ export interface components {
         ResolveReportFeedbackDto: Record<string, never>;
         RecordAnalyticsEventDto: Record<string, never>;
         AcknowledgeCelebrationDto: Record<string, never>;
+        AchievementBackfillDto: {
+            cursor?: string;
+            /** @default 25 */
+            limit: number;
+        };
         CreateBadgeDto: Record<string, never>;
         UpdateBadgeDto: Record<string, never>;
         NotificationUnreadCountDto: {
@@ -2416,9 +2987,145 @@ export interface components {
         JoinMissionDto: Record<string, never>;
         SubmitMissionAssessmentDto: Record<string, never>;
         CompleteMissionScenarioDto: Record<string, never>;
+        ApiResponseMeta: {
+            /**
+             * @description Request correlation identifier.
+             * @example req_01J5F4Y7J8W3K9M2Q6R1T0VABC
+             */
+            requestId: string;
+            /**
+             * Format: date-time
+             * @example 2026-08-11T12:00:00.000Z
+             */
+            timestamp: string;
+        };
+        ApiSuccessResponse: {
+            /**
+             * @example true
+             * @enum {boolean}
+             */
+            success: true;
+            /** @example Request completed successfully */
+            message: string;
+            /** @description Operation-specific response payload. */
+            data: unknown;
+            meta: components["schemas"]["ApiResponseMeta"];
+        };
+        ApiError: {
+            /**
+             * @description Stable machine-readable application error code.
+             * @example VALIDATION_ERROR
+             */
+            code: string;
+            /** @description Safe structured error details when available. */
+            details: unknown;
+        };
+        ApiErrorResponse: {
+            /**
+             * @example false
+             * @enum {boolean}
+             */
+            success: false;
+            /** @example Request validation failed */
+            message: string;
+            error: components["schemas"]["ApiError"];
+            meta: components["schemas"]["ApiResponseMeta"];
+        };
     };
-    responses: never;
-    parameters: never;
+    responses: {
+        /** @description Request validation failed. */
+        BadRequest: {
+            headers: {
+                /** @description Effective request correlation identifier. */
+                "X-Request-Id"?: string;
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ApiErrorResponse"];
+            };
+        };
+        /** @description Authentication is missing or invalid. */
+        Unauthorized: {
+            headers: {
+                /** @description Effective request correlation identifier. */
+                "X-Request-Id"?: string;
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ApiErrorResponse"];
+            };
+        };
+        /** @description The authenticated account does not have the required role or permission. */
+        Forbidden: {
+            headers: {
+                /** @description Effective request correlation identifier. */
+                "X-Request-Id"?: string;
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ApiErrorResponse"];
+            };
+        };
+        /** @description The requested resource was not found. */
+        NotFound: {
+            headers: {
+                /** @description Effective request correlation identifier. */
+                "X-Request-Id"?: string;
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ApiErrorResponse"];
+            };
+        };
+        /** @description The request conflicts with the current resource state or a uniqueness constraint. */
+        Conflict: {
+            headers: {
+                /** @description Effective request correlation identifier. */
+                "X-Request-Id"?: string;
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ApiErrorResponse"];
+            };
+        };
+        /** @description The endpoint rate limit was exceeded. */
+        TooManyRequests: {
+            headers: {
+                /** @description Effective request correlation identifier. */
+                "X-Request-Id"?: string;
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ApiErrorResponse"];
+            };
+        };
+        /** @description An unexpected server error occurred. */
+        InternalServerError: {
+            headers: {
+                /** @description Effective request correlation identifier. */
+                "X-Request-Id"?: string;
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ApiErrorResponse"];
+            };
+        };
+        /** @description A required dependency or external provider is temporarily unavailable. */
+        ServiceUnavailable: {
+            headers: {
+                /** @description Effective request correlation identifier. */
+                "X-Request-Id"?: string;
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ApiErrorResponse"];
+            };
+        };
+    };
+    parameters: {
+        /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+        RequestIdHeader: string;
+    };
     requestBodies: never;
     headers: never;
     pathItems: never;
@@ -2428,24 +3135,37 @@ export interface operations {
     AppController_getRoot: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     HealthController_readiness: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
@@ -2458,51 +3178,56 @@ export interface operations {
              */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        /** @example ok */
-                        status?: string;
-                        /**
-                         * @example {
-                         *       "database": {
-                         *         "status": "up"
-                         *       }
-                         *     }
-                         */
-                        info?: {
-                            [key: string]: {
-                                status: string;
-                            } & {
-                                [key: string]: unknown;
-                            };
-                        } | null;
-                        /** @example {} */
-                        error?: {
-                            [key: string]: {
-                                status: string;
-                            } & {
-                                [key: string]: unknown;
-                            };
-                        } | null;
-                        /**
-                         * @example {
-                         *       "database": {
-                         *         "status": "up"
-                         *       }
-                         *     }
-                         */
-                        details?: {
-                            [key: string]: {
-                                status: string;
-                            } & {
-                                [key: string]: unknown;
+                    "application/json": components["schemas"]["ApiSuccessResponse"] & {
+                        data?: {
+                            /** @example ok */
+                            status?: string;
+                            /**
+                             * @example {
+                             *       "database": {
+                             *         "status": "up"
+                             *       }
+                             *     }
+                             */
+                            info?: {
+                                [key: string]: {
+                                    status: string;
+                                } & {
+                                    [key: string]: unknown;
+                                };
+                            } | null;
+                            /** @example {} */
+                            error?: {
+                                [key: string]: {
+                                    status: string;
+                                } & {
+                                    [key: string]: unknown;
+                                };
+                            } | null;
+                            /**
+                             * @example {
+                             *       "database": {
+                             *         "status": "up"
+                             *       }
+                             *     }
+                             */
+                            details?: {
+                                [key: string]: {
+                                    status: string;
+                                } & {
+                                    [key: string]: unknown;
+                                };
                             };
                         };
                     };
                 };
             };
+            500: components["responses"]["InternalServerError"];
             /**
              * @description At least one required dependency is unavailable
              *
@@ -2510,6 +3235,8 @@ export interface operations {
              */
             503: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
                 content: {
@@ -2571,7 +3298,10 @@ export interface operations {
     HealthController_liveness: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
@@ -2580,16 +3310,25 @@ export interface operations {
             /** @description The application process is alive */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     HealthController_readinessAlias: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
@@ -2598,54 +3337,61 @@ export interface operations {
             /** @description The Health Check is successful */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        /** @example ok */
-                        status?: string;
-                        /**
-                         * @example {
-                         *       "database": {
-                         *         "status": "up"
-                         *       }
-                         *     }
-                         */
-                        info?: {
-                            [key: string]: {
-                                status: string;
-                            } & {
-                                [key: string]: unknown;
-                            };
-                        } | null;
-                        /** @example {} */
-                        error?: {
-                            [key: string]: {
-                                status: string;
-                            } & {
-                                [key: string]: unknown;
-                            };
-                        } | null;
-                        /**
-                         * @example {
-                         *       "database": {
-                         *         "status": "up"
-                         *       }
-                         *     }
-                         */
-                        details?: {
-                            [key: string]: {
-                                status: string;
-                            } & {
-                                [key: string]: unknown;
+                    "application/json": components["schemas"]["ApiSuccessResponse"] & {
+                        data?: {
+                            /** @example ok */
+                            status?: string;
+                            /**
+                             * @example {
+                             *       "database": {
+                             *         "status": "up"
+                             *       }
+                             *     }
+                             */
+                            info?: {
+                                [key: string]: {
+                                    status: string;
+                                } & {
+                                    [key: string]: unknown;
+                                };
+                            } | null;
+                            /** @example {} */
+                            error?: {
+                                [key: string]: {
+                                    status: string;
+                                } & {
+                                    [key: string]: unknown;
+                                };
+                            } | null;
+                            /**
+                             * @example {
+                             *       "database": {
+                             *         "status": "up"
+                             *       }
+                             *     }
+                             */
+                            details?: {
+                                [key: string]: {
+                                    status: string;
+                                } & {
+                                    [key: string]: unknown;
+                                };
                             };
                         };
                     };
                 };
             };
+            500: components["responses"]["InternalServerError"];
             /** @description The Health Check is not successful */
             503: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
                 content: {
@@ -2707,3199 +3453,5403 @@ export interface operations {
     UsersController_publicProfile: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description Case-insensitive public username. */
                 username: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     UsersController_profile: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     UsersController_updateProfile: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as UpdateProfileDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["UpdateProfileDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     UsersController_updateNotifications: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as UpdatePreferencesDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["UpdatePreferencesDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     UsersController_updatePrivacy: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as UpdatePrivacyDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["UpdatePrivacyDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     UsersController_requestDeletion: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request accepted for asynchronous processing. */
             202: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     UsersController_cancelDeletion: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully with no content. */
             204: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
                 content?: never;
             };
+            401: components["responses"]["Unauthorized"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AuthController_register: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as RegisterDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["RegisterDto"];
             };
         };
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AuthController_googleConfiguration: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["GoogleAuthConfigDto"];
+                    "application/json": components["schemas"]["ApiSuccessResponse"] & {
+                        data?: components["schemas"]["GoogleAuthConfigDto"];
+                    };
                 };
             };
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AuthController_googleAuthentication: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+                /** @description Set to `mobile` to receive the refresh token in the JSON payload instead of browser cookies. */
+                "X-Client-Type"?: string;
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as GoogleAuthDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["GoogleAuthDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AuthController_verifyEmail: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as TokenDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["TokenDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully with no content. */
             204: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
                 content?: never;
             };
+            400: components["responses"]["BadRequest"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AuthController_resendVerification: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as EmailDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["EmailDto"];
             };
         };
         responses: {
+            /** @description Request accepted for asynchronous processing. */
             202: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AuthController_login: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+                /** @description Set to `mobile` to receive the refresh token in the JSON payload instead of browser cookies. */
+                "X-Client-Type"?: string;
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as LoginDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["LoginDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AuthController_refresh: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+                /** @description Set to `mobile` to receive the refresh token in the JSON payload instead of browser cookies. */
+                "X-Client-Type"?: string;
+                /** @description Required when refreshing with the browser cookie; must match the `verith_csrf` cookie. */
+                "X-CSRF-Token"?: string;
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as RefreshDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["RefreshDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AuthController_forgotPassword: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as EmailDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["EmailDto"];
             };
         };
         responses: {
+            /** @description Request accepted for asynchronous processing. */
             202: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AuthController_resetPassword: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as ResetPasswordDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["ResetPasswordDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully with no content. */
             204: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
                 content?: never;
             };
+            400: components["responses"]["BadRequest"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AuthController_changePassword: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as ChangePasswordDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["ChangePasswordDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully with no content. */
             204: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
                 content?: never;
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AuthController_logout: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully with no content. */
             204: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
                 content?: never;
             };
+            401: components["responses"]["Unauthorized"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AuthController_logoutAll: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully with no content. */
             204: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
                 content?: never;
             };
+            401: components["responses"]["Unauthorized"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AuthController_me: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AuthController_sessions: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AuthController_revokeSession: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the authenticated session. */
                 sessionId: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully with no content. */
             204: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
                 content?: never;
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     UploadsController_signature: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as CreateUploadSignatureDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["CreateUploadSignatureDto"];
             };
         };
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     UploadsController_confirm: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as ConfirmUploadDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["ConfirmUploadDto"];
             };
         };
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     UploadsController_get: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     UploadsController_delete: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully with no content. */
             204: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
                 content?: never;
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     AvatarUploadsController_signature: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AvatarUploadsController_confirm: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as ConfirmUploadDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["ConfirmUploadDto"];
             };
         };
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     VerificationsController_list: {
         parameters: {
             query?: {
-                limit?: components["schemas"]["Object"];
+                /** @description Maximum number of records to return. */
+                limit?: number;
+                /** @description Opaque cursor returned by the previous page. */
                 cursor?: string;
+                /** @description Optional status used to filter results. */
                 status?: "DRAFT" | "QUEUED" | "PROCESSING" | "PARTIALLY_COMPLETED" | "COMPLETED" | "FAILED" | "CANCEL_REQUESTED" | "CANCELLED" | "DELETED";
             };
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     VerificationsController_create: {
         parameters: {
             query?: never;
             header: {
+                /** @description Value of the Idempotency-Key header parameter. */
                 "Idempotency-Key": string;
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
             };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as CreateVerificationDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["CreateVerificationDto"];
             };
         };
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     VerificationsController_getMedia: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     VerificationsController_getAnalysis: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     VerificationsController_listEvidence: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     VerificationsController_allowance: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     VerificationsController_get: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     VerificationsController_remove: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully with no content. */
             204: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
                 content?: never;
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     VerificationsController_listEvents: {
         parameters: {
             query?: {
-                after?: components["schemas"]["Object"];
+                /** @description Return events whose sequence is greater than this value. */
+                after?: number;
             };
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     VerificationsController_listClaims: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     VerificationsController_guidanceFor: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     VerificationsController_submitGuidance: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as SubmitGuidedResponsesDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["SubmitGuidedResponsesDto"];
             };
         };
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     VerificationsController_cancel: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     VerificationsController_retry: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     VerificationsController_reprocess: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     VerificationsController_visibility: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as UpdateVerificationVisibilityDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["UpdateVerificationVisibilityDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     VerificationStreamController_stream: {
         parameters: {
             query?: {
-                after?: components["schemas"]["Object"];
+                /** @description Return events whose sequence is greater than this value. */
+                after?: number;
             };
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "text/event-stream": string;
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     AiHealthController_check: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     PromptAdminController_list: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     PromptAdminController_create: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as CreatePromptVersionDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["CreatePromptVersionDto"];
             };
         };
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     PromptAdminController_detail: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     PromptAdminController_publish: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as PromptActionDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["PromptActionDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     PromptAdminController_rollback: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as PromptActionDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["PromptActionDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ProviderConfigAdminController_get: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ProviderConfigAdminController_update: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as UpdateProviderConfigDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["UpdateProviderConfigDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AdminController_listUsers: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AdminController_getUser: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AdminController_changeStatus: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as AdminUserStatusDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["AdminUserStatusDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AdminController_changeRole: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as AdminUserRoleDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["AdminUserRoleDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AdminController_listVerifications: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     AdminController_getVerification: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     AdminController_retryVerification: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as AdminReasonDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["AdminReasonDto"];
             };
         };
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     AdminController_listAuditLogs: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     SearchHealthController_check: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     PublishersAdminController_list: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     PublishersAdminController_detail: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     PublishersAdminController_override: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as PublisherOverrideDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["PublisherOverrideDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ReportsController_latest: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the verification. */
                 verificationId: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ReportsController_checkCard: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ReportsController_checkCardSvg: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Attachment filename selected by the server. */
+                    "Content-Disposition"?: string;
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "image/svg+xml": string;
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ReportsController_versions: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the verification. */
                 verificationId: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ReportsController_get: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ReportsController_remove: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully with no content. */
             204: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
                 content?: never;
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ReportsController_coachFor: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ReportsController_inspectEvidence: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
+                /** @description Stable identifier of the evidence record. */
                 evidenceId: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ReportsController_visibility: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as UpdateReportVisibilityDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["UpdateReportVisibilityDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ReportsController_revoke: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ReportsController_feedback: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as ReportFeedbackDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["ReportFeedbackDto"];
             };
         };
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ReportsController_jsonExport: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Attachment filename selected by the server. */
+                    "Content-Disposition"?: string;
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ReportsController_pdfExport: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Attachment filename selected by the server. */
+                    "Content-Disposition"?: string;
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/pdf": string;
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     PublicReportsController_get: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ReportFeedbackAdminController_list: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ReportFeedbackAdminController_detail: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ReportFeedbackAdminController_resolve: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as ResolveReportFeedbackDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["ResolveReportFeedbackDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AnalyticsController_overview: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     AnalyticsController_pilots: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ProductAnalyticsController_record: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as RecordAnalyticsEventDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["RecordAnalyticsEventDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully with no content. */
             204: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
                 content?: never;
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     GamificationController_me: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     GamificationController_transactions: {
         parameters: {
             query?: {
+                /** @description Opaque cursor returned by the previous page. */
                 cursor?: string;
+                /** @description Maximum number of records to return. */
                 limit?: number;
             };
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     GamificationController_badges: {
         parameters: {
             query?: {
+                /** @description Opaque cursor returned by the previous page. */
                 cursor?: string;
-                limit?: components["schemas"]["Object"];
+                /** @description Maximum number of records to return. */
+                limit?: number;
+                /** @description Case-insensitive search text. */
                 search?: string;
+                /** @description Value of the category query parameter. */
                 category?: string;
+                /** @description Value of the rarity query parameter. */
                 rarity?: string;
+                /** @description Value of the earned query parameter. */
                 earned?: "ALL" | "EARNED" | "LOCKED";
             };
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     GamificationController_myBadges: {
         parameters: {
             query?: {
+                /** @description Opaque cursor returned by the previous page. */
                 cursor?: string;
-                limit?: components["schemas"]["Object"];
+                /** @description Maximum number of records to return. */
+                limit?: number;
+                /** @description Case-insensitive search text. */
                 search?: string;
+                /** @description Value of the category query parameter. */
                 category?: string;
+                /** @description Value of the rarity query parameter. */
                 rarity?: string;
+                /** @description Value of the earned query parameter. */
                 earned?: "ALL" | "EARNED" | "LOCKED";
             };
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     GamificationController_leaderboard: {
         parameters: {
             query?: {
+                /** @description Value of the period query parameter. */
                 period?: "WEEKLY" | "MONTHLY" | "ALL_TIME";
+                /** @description Maximum number of records to return. */
                 limit?: number;
             };
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     GamificationController_claimCelebrations: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     GamificationController_acknowledgeCelebration: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as AcknowledgeCelebrationDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["AcknowledgeCelebrationDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     GamificationAdminController_listBadges: {
         parameters: {
             query?: {
+                /** @description Opaque cursor returned by the previous page. */
                 cursor?: string;
-                limit?: components["schemas"]["Object"];
+                /** @description Maximum number of records to return. */
+                limit?: number;
+                /** @description Case-insensitive search text. */
                 search?: string;
+                /** @description Value of the category query parameter. */
                 category?: string;
+                /** @description Value of the rarity query parameter. */
                 rarity?: string;
+                /** @description Value of the active query parameter. */
                 active?: boolean;
             };
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     GamificationAdminController_createBadge: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as CreateBadgeDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["CreateBadgeDto"];
             };
         };
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    GamificationAdminController_backfillExistingUsers: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        /** @description JSON payload validated as AchievementBackfillDto. */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AchievementBackfillDto"];
+            };
+        };
+        responses: {
+            /** @description Resource created successfully. */
+            201: {
+                headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     GamificationAdminController_getBadge: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     GamificationAdminController_archiveBadge: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as AdminReasonDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["AdminReasonDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     GamificationAdminController_updateBadge: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as UpdateBadgeDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["UpdateBadgeDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     NotificationsController_unreadCount: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["NotificationUnreadCountDto"];
+                    "application/json": components["schemas"]["ApiSuccessResponse"] & {
+                        data?: components["schemas"]["NotificationUnreadCountDto"];
+                    };
                 };
             };
+            401: components["responses"]["Unauthorized"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     NotificationsController_list: {
         parameters: {
             query?: {
+                /** @description Maximum number of records to return. */
                 limit?: number;
+                /** @description Opaque cursor returned by the previous page. */
                 cursor?: string;
             };
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     NotificationsController_read: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     NotificationsController_readAll: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     NotificationsController_remove: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully with no content. */
             204: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
                 content?: never;
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     NotificationsAdminController_broadcastProductMessage: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as ProductMessageDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["ProductMessageDto"];
             };
         };
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     MilController_profile: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     MilController_evidence: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     EntitlementsController_mine: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     EntitlementsController_grant: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target user. */
                 userId: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as GrantEntitlementDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["GrantEntitlementDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     LearningController_listCourses: {
         parameters: {
             query?: {
+                /** @description Opaque cursor returned by the previous page. */
                 cursor?: string;
-                limit?: components["schemas"]["Object"];
+                /** @description Maximum number of records to return. */
+                limit?: number;
+                /** @description Case-insensitive search text. */
                 search?: string;
+                /** @description Value of the difficulty query parameter. */
                 difficulty?: "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
+                /** @description Value of the tag query parameter. */
                 tag?: string;
             };
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     LearningController_getCourse: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description Stable, URL-safe resource slug. */
                 slug: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     LearningController_getLesson: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description Stable, URL-safe resource slug. */
                 slug: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     LearningController_progress: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as UpdateLessonProgressDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["UpdateLessonProgressDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     LearningController_myProgress: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     LearningController_recommendations: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the report. */
                 reportId: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     LearningAdminController_listCourses: {
         parameters: {
             query?: {
+                /** @description Opaque cursor returned by the previous page. */
                 cursor?: string;
-                limit?: components["schemas"]["Object"];
+                /** @description Maximum number of records to return. */
+                limit?: number;
+                /** @description Case-insensitive search text. */
                 search?: string;
+                /** @description Optional status used to filter results. */
                 status?: "DRAFT" | "IN_REVIEW" | "PUBLISHED" | "ARCHIVED";
+                /** @description Value of the difficulty query parameter. */
                 difficulty?: "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
+                /** @description Value of the courseId query parameter. */
                 courseId?: string;
+                /** @description Value of the tag query parameter. */
                 tag?: string;
             };
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     LearningAdminController_createCourse: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as CreateCourseDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["CreateCourseDto"];
             };
         };
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     LearningAdminController_getCourse: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     LearningAdminController_archiveCourse: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as AdminReasonDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["AdminReasonDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     LearningAdminController_updateCourse: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as UpdateCourseDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["UpdateCourseDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     LearningAdminController_listLessons: {
         parameters: {
             query?: {
+                /** @description Opaque cursor returned by the previous page. */
                 cursor?: string;
-                limit?: components["schemas"]["Object"];
+                /** @description Maximum number of records to return. */
+                limit?: number;
+                /** @description Case-insensitive search text. */
                 search?: string;
+                /** @description Optional status used to filter results. */
                 status?: "DRAFT" | "IN_REVIEW" | "PUBLISHED" | "ARCHIVED";
+                /** @description Value of the difficulty query parameter. */
                 difficulty?: "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
+                /** @description Value of the courseId query parameter. */
                 courseId?: string;
+                /** @description Value of the tag query parameter. */
                 tag?: string;
             };
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     LearningAdminController_createLesson: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as CreateLessonDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["CreateLessonDto"];
             };
         };
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     LearningAdminController_getLesson: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     LearningAdminController_archiveLesson: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as AdminReasonDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["AdminReasonDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     LearningAdminController_updateLesson: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as UpdateLessonDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["UpdateLessonDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     LearningAdminController_courseStatus: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as UpdateCourseStatusDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["UpdateCourseStatusDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     LearningAdminController_lessonStatus: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as UpdateLessonStatusDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["UpdateLessonStatusDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     QuizzesController_get: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     QuizzesController_byLesson: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the lesson. */
                 lessonId: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     QuizzesController_attempts: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     QuizzesController_submit: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as SubmitQuizDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["SubmitQuizDto"];
             };
         };
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     QuizzesAdminController_list: {
         parameters: {
             query?: {
+                /** @description Opaque cursor returned by the previous page. */
                 cursor?: string;
-                limit?: components["schemas"]["Object"];
+                /** @description Maximum number of records to return. */
+                limit?: number;
+                /** @description Case-insensitive search text. */
                 search?: string;
+                /** @description Optional status used to filter results. */
                 status?: "DRAFT" | "PUBLISHED" | "ARCHIVED";
+                /** @description Value of the courseId query parameter. */
                 courseId?: string;
+                /** @description MongoDB ObjectId of the lesson. */
                 lessonId?: string;
             };
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     QuizzesAdminController_create: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as CreateQuizDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["CreateQuizDto"];
             };
         };
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     QuizzesAdminController_detail: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     QuizzesAdminController_archive: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as AdminReasonDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["AdminReasonDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     QuizzesAdminController_update: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as UpdateQuizDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["UpdateQuizDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     QuizzesAdminController_status: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as UpdateQuizStatusDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["UpdateQuizStatusDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ChallengesController_list: {
         parameters: {
             query?: {
+                /** @description Opaque cursor returned by the previous page. */
                 cursor?: string;
-                limit?: components["schemas"]["Object"];
+                /** @description Maximum number of records to return. */
+                limit?: number;
+                /** @description Case-insensitive search text. */
                 search?: string;
+                /** @description Value of the difficulty query parameter. */
                 difficulty?: "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
+                /** @description Value of the tag query parameter. */
                 tag?: string;
             };
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ChallengesController_today: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ChallengesController_get: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description Stable, URL-safe resource slug. */
                 slug: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ChallengesController_attempts: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ChallengesController_attempt: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as SubmitChallengeDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["SubmitChallengeDto"];
             };
         };
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ChallengesAdminController_list: {
         parameters: {
             query?: {
+                /** @description Opaque cursor returned by the previous page. */
                 cursor?: string;
-                limit?: components["schemas"]["Object"];
+                /** @description Maximum number of records to return. */
+                limit?: number;
+                /** @description Case-insensitive search text. */
                 search?: string;
+                /** @description Optional status used to filter results. */
                 status?: "DRAFT" | "SCHEDULED" | "PUBLISHED" | "EXPIRED" | "ARCHIVED";
+                /** @description Value of the difficulty query parameter. */
                 difficulty?: "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
+                /** @description Value of the tag query parameter. */
                 tag?: string;
             };
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ChallengesAdminController_create: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
+        /** @description JSON payload validated as CreateChallengeDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["CreateChallengeDto"];
             };
         };
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ChallengesAdminController_detail: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ChallengesAdminController_archive: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as AdminReasonDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["AdminReasonDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ChallengesAdminController_update: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as UpdateChallengeDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["UpdateChallengeDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     ChallengesAdminController_status: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as UpdateChallengeStatusDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["UpdateChallengeStatusDto"];
             };
         };
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
-            };
-        };
-    };
-    WhatsAppController_linkCode: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
                 };
-                content?: never;
             };
-        };
-    };
-    WhatsAppController_status: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    WhatsAppController_unlink: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     PrivacyController_requestExport: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     PrivacyController_status: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     PrivacyController_download: {
         parameters: {
             query?: never;
             header: {
+                /** @description Value of the x-data-export-token header parameter. */
                 "x-data-export-token": string;
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
             };
             path: {
+                /** @description MongoDB ObjectId of the target resource. */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Attachment filename selected by the server. */
+                    "Content-Disposition"?: string;
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     MissionsController_list: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     MissionsController_get: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description Stable, URL-safe resource slug. */
                 slug: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     MissionsController_join: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description Stable, URL-safe resource slug. */
                 slug: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as JoinMissionDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["JoinMissionDto"];
             };
         };
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     MissionsController_assessment: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description Stable, URL-safe resource slug. */
                 slug: string;
+                /** @description Assessment phase within the mission learning journey. */
                 phase: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     MissionsController_submit: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description Stable, URL-safe resource slug. */
                 slug: string;
+                /** @description Assessment phase within the mission learning journey. */
                 phase: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as SubmitMissionAssessmentDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["SubmitMissionAssessmentDto"];
             };
         };
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     MissionsController_scenario: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description Stable, URL-safe resource slug. */
                 slug: string;
             };
             cookie?: never;
         };
+        /** @description JSON payload validated as CompleteMissionScenarioDto. */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["CompleteMissionScenarioDto"];
             };
         };
         responses: {
+            /** @description Resource created successfully. */
             201: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     MissionsController_impact: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
             path: {
+                /** @description Stable, URL-safe resource slug. */
                 slug: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Request completed successfully. */
             200: {
                 headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
         };
     };
 }

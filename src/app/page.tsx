@@ -501,7 +501,7 @@ export default function LandingPage() {
 									author: "Zion Obadina",
 								},
 								{
-									quote: "The media literacy engine is brilliant. I started using it to check WhatsApp rumors, and now I actually understand how to spot missing context.",
+									quote: "The media literacy engine is brilliant. I started using it to check forwarded rumors, and now I actually understand how to spot missing context.",
 									author: "Emmanuel Oluwaferanmi",
 								},
 							].map((testimonial, i) => (
@@ -611,13 +611,6 @@ export default function LandingPage() {
 								>
 									<Globe2 aria-hidden="true" size={18} />
 								</Link>
-								<Link
-									aria-label="Explore Verith for WhatsApp"
-									href="/whatsapp"
-									className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-violet-500 hover:bg-violet-500/10 transition-all"
-								>
-									<MessageCircle aria-hidden="true" size={18} />
-								</Link>
 							</div>
 						</div>
 
@@ -625,9 +618,6 @@ export default function LandingPage() {
 							<span className="text-sm font-semibold text-white tracking-wider uppercase mb-2">Product</span>
 							<Link className="text-sm text-white/50 hover:text-violet-300 transition-colors" href="/how-it-works">
 								How it works
-							</Link>
-							<Link className="text-sm text-white/50 hover:text-violet-300 transition-colors" href="/whatsapp">
-								WhatsApp Bot
 							</Link>
 							<Link className="text-sm text-white/50 hover:text-violet-300 transition-colors" href="/learning">
 								Learning

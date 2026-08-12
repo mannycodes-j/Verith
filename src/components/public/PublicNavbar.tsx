@@ -12,7 +12,6 @@ import LanguageSelector from "@/components/LanguageSelector";
 const publicLinks = [
 	{ href: "/how-it-works", label: "How it works" },
 	{ href: "/learning", label: "Learning" },
-	{ href: "/whatsapp", label: "WhatsApp" },
 	{ href: "/about", label: "About" },
 ] as const;
 

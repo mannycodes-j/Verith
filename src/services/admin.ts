@@ -24,7 +24,6 @@ export interface AdminAnalyticsOverview {
     outputTokens: number;
     cost: { state: "UNAVAILABLE"; reason: string };
   }>;
-  whatsapp: { messages: number };
 }
 
 export interface AdminPilotAnalytics {

@@ -13,7 +13,6 @@ const sections = [
     id: "security",
     label: "Password and sessions",
   },
-  { href: "/app/settings/whatsapp", id: "whatsapp", label: "WhatsApp" },
 ] as const;
 
 export type SettingsSection = (typeof sections)[number]["id"];

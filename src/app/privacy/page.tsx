@@ -56,17 +56,6 @@ export default function PrivacyPage() {
             </p>
           ),
         },
-        {
-          label: "WhatsApp",
-          title: "Encrypted linkage with explicit consent.",
-          content: (
-            <p>
-              Linked phone numbers are encrypted, separately hashed for lookup,
-              and removed from the link record when the account is unlinked.
-              Incoming webhooks require Meta signature verification.
-            </p>
-          ),
-        },
       ]}
       title="Privacy controls tied to real operations."
     />

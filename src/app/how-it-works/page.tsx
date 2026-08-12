@@ -8,13 +8,13 @@ export const metadata: Metadata = {
 
 const roleJourneys = [
 	{
-		description: "Explore Verith’s evidence method, published learning material, WhatsApp workflow, and reports that their owners intentionally made public. Sign in before starting private work.",
+		description: "Explore Verith’s evidence method, published learning material, and reports that their owners intentionally made public. Sign in before starting private work.",
 		icon: Eye,
 		outcome: "Learn and inspect",
 		role: "Public visitor",
 	},
 	{
-		description: "Submit supported text, images, screenshots, audio, or short video; follow real processing stages; inspect claims, sources, uncertainty, limitations, and recommended actions; then control personal history, sharing, learning, privacy, sessions, notifications, and WhatsApp.",
+		description: "Submit supported text, images, screenshots, audio, or short video; follow real processing stages; inspect claims, sources, uncertainty, limitations, and recommended actions; then control personal history, sharing, learning, privacy, sessions, and notifications.",
 		icon: FileSearch,
 		outcome: "Investigate uncertain content",
 		role: "Member",
