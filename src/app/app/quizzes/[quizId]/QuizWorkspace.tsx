@@ -175,7 +175,7 @@ export default function QuizWorkspace({ id }: { id: string }) {
 							type="button"
 							onClick={() => router.back()}
 						>
-							Return to learning
+							Return to course
 						</button>
 						{(attemptsRemaining === undefined || attemptsRemaining > 0) && (
 							<button
