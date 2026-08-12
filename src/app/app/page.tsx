@@ -34,7 +34,7 @@ export default function WorkspaceOverviewPage() {
         </section>
         <aside>
           <CurrentRankCard compact />
-          <div className={styles.sectionHeader}>
+          <div className={`${styles.sectionHeader} mt-16`}>
             <span>Trust architecture</span>
           </div>
           <ul className={styles.principles}>

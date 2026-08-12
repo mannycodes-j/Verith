@@ -181,7 +181,7 @@ const mobileNavigation = [
 ] as const;
 
 function isActive(pathname: string, href: string) {
-  return href === "/app"
+  return href === "/app" || href === "/admin"
     ? pathname === href
     : pathname === href || pathname.startsWith(`${href}/`);
 }

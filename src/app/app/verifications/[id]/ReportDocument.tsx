@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import Link from "next/link";
 import { learningService } from "@/services/learning";
 import {
@@ -175,15 +175,18 @@ function CheckCard({ reportId }: { reportId: string }) {
     queryKey: ["check-card", reportId],
     retry: false,
   });
+  const cardRef = useRef<HTMLElement>(null);
   const download = useMutation({
-    mutationFn: () => reportService.downloadCheckCard(reportId),
-    onSuccess: ({ blob, filename }) => {
-      const objectUrl = URL.createObjectURL(blob);
+    mutationFn: async () => {
+      if (!cardRef.current) throw new Error("Card not ready");
+      const { toPng } = await import("html-to-image");
+      return toPng(cardRef.current, { pixelRatio: 2, backgroundColor: "#070708" });
+    },
+    onSuccess: (dataUrl) => {
       const anchor = document.createElement("a");
-      anchor.href = objectUrl;
-      anchor.download = filename ?? "verith-check-card.svg";
+      anchor.href = dataUrl;
+      anchor.download = "verith-check-card.png";
       anchor.click();
-      URL.revokeObjectURL(objectUrl);
     },
   });
 
@@ -225,7 +228,7 @@ function CheckCard({ reportId }: { reportId: string }) {
           <small role="alert">{download.error.message}</small>
         )}
       </div>
-      <article>
+      <article ref={cardRef}>
         <header>
           <strong>Verith</strong>
           <span>{friendlyVerdict(card.data.finding)}</span>
@@ -1023,16 +1026,16 @@ export function ReportReader({
                 <h3>{humanize(report.mediaAnalysis.status)}</h3>
                 {report.mediaAnalysis.mediaKind !== "VIDEO" &&
                   report.mediaAnalysis.fullText && (
-                    <div>
-                      <strong>Extracted text</strong>
-                      <p>{report.mediaAnalysis.fullText}</p>
+                    <div className="!grid-cols-1 !gap-2">
+                      <strong className="!text-left block text-xs font-semibold uppercase tracking-[0.12em] text-white/40">Extracted text</strong>
+                      <p className="!text-left max-h-48 overflow-y-auto rounded-xl border border-white/[0.06] bg-black/30 p-3 font-mono text-xs leading-relaxed text-white/60 whitespace-pre-wrap break-words scrollbar-thin">{report.mediaAnalysis.fullText}</p>
                     </div>
                   )}
                 {report.mediaAnalysis.mediaKind === "VIDEO" &&
                   report.mediaAnalysis.spokenText && (
-                    <div>
-                      <strong>Spoken transcript</strong>
-                      <p>{report.mediaAnalysis.spokenText}</p>
+                    <div className="!grid-cols-1 !gap-2">
+                      <strong className="!text-left block text-xs font-semibold uppercase tracking-[0.12em] text-white/40">Spoken transcript</strong>
+                      <p className="!text-left max-h-48 overflow-y-auto rounded-xl border border-white/[0.06] bg-black/30 p-3 font-mono text-xs leading-relaxed text-white/60 whitespace-pre-wrap break-words scrollbar-thin">{report.mediaAnalysis.spokenText}</p>
                     </div>
                   )}
                 {report.mediaAnalysis.mediaKind === "VIDEO" &&
@@ -1046,9 +1049,9 @@ export function ReportReader({
                   !report.mediaAnalysis.spokenText &&
                   !report.mediaAnalysis.onScreenText?.length &&
                   report.mediaAnalysis.fullText && (
-                    <div>
-                      <strong>Extracted video content</strong>
-                      <p>{report.mediaAnalysis.fullText}</p>
+                    <div className="!grid-cols-1 !gap-2">
+                      <strong className="!text-left block text-xs font-semibold uppercase tracking-[0.12em] text-white/40">Extracted video content</strong>
+                      <p className="!text-left max-h-48 overflow-y-auto rounded-xl border border-white/[0.06] bg-black/30 p-3 font-mono text-xs leading-relaxed text-white/60 whitespace-pre-wrap break-words scrollbar-thin">{report.mediaAnalysis.fullText}</p>
                     </div>
                   )}
                 {report.mediaAnalysis.blocks?.length ? (
