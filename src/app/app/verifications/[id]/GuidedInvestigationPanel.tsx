@@ -38,7 +38,7 @@ export default function GuidedInvestigationPanel({
 			const incomplete = responses.some((response) =>
 				"text" in response ? !response.text : !response.selectedOptionIds?.length,
 			);
-			if (incomplete) throw new Error("Answer every question before comparing your reasoning.");
+			if (incomplete) throw new Error(session.copy.incomplete);
 			return verificationService.submitGuidance(verificationId, responses);
 		},
 		onSuccess: (session) => {
@@ -78,8 +78,8 @@ export default function GuidedInvestigationPanel({
 	return (
 		<section className={styles.panel}>
 			<header>
-				<div><span>Guided investigation · Question set {session.questionSetVersion}</span><h2>{submitted ? "See how your reasoning developed." : "Think first. Then inspect the evidence."}</h2></div>
-				<p>{submitted ? "Your original answers are preserved. Feedback compares your process with the completed report without changing its finding." : "These questions do not contain Verith’s verdict. Record what you notice before opening the completed evidence report."}</p>
+				<div><span>Guided investigation · Question set {session.questionSetVersion}</span><h2>{submitted ? session.copy.titleComplete : session.copy.titleReady}</h2></div>
+				<p>{submitted ? session.copy.introComplete : session.copy.introReady}</p>
 			</header>
 
 			{submitted ? (
@@ -94,7 +94,7 @@ export default function GuidedInvestigationPanel({
 						<fieldset key={question.id}>
 							<legend><span>{String(index + 1).padStart(2, "0")} · {question.competency.replaceAll("_", " ")}</span>{question.prompt}</legend>
 							{question.type === "SHORT_TEXT" ? (
-								<textarea maxLength={2000} placeholder="Write what you notice in your own words…" value={writtenAnswers[question.id] ?? ""} onChange={(event) => setWrittenAnswers((current) => ({ ...current, [question.id]: event.target.value }))} />
+								<textarea maxLength={2000} placeholder={question.helperText ?? "Write what you notice in your own words…"} value={writtenAnswers[question.id] ?? ""} onChange={(event) => setWrittenAnswers((current) => ({ ...current, [question.id]: event.target.value }))} />
 							) : (
 								<div>{question.options.map((option) => {
 									const multiple = question.type === "MULTIPLE_SELECT";
@@ -108,10 +108,9 @@ export default function GuidedInvestigationPanel({
 						</fieldset>
 					))}
 					{(formError || submit.error) && <p className={styles.formError} role="alert">{formError || submit.error?.message}</p>}
-					<button disabled={submit.isPending} type="submit">{submit.isPending ? "Saving your reasoning…" : "Save answers and compare"}</button>
+					<button disabled={submit.isPending} type="submit">{submit.isPending ? session.copy.submitting : session.copy.submit}</button>
 				</form>
 			)}
 		</section>
 	);
 }
-

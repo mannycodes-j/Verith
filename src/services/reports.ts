@@ -1,8 +1,14 @@
 import { apiClient } from "./apiClient";
+import type { SupportedLanguage } from "@/data/supported-languages";
 
 export interface ReportClaim {
   claimId: string;
   text: string;
+  originalText?: string;
+  originalLanguage?: string;
+  canonicalText?: string;
+  canonicalLanguage?: string;
+  displayText?: string;
   importance: string;
   verifiability: string;
   verdict: string;
@@ -23,6 +29,8 @@ export interface ReportEvidence {
   publisher?: string;
   publishedAt?: string;
   relevantExcerpt?: string;
+  originalExcerpt?: string;
+  language?: string;
   relationship: string;
   accessStatus: string;
   lineageType: string;
@@ -118,6 +126,14 @@ export interface VerificationReport {
   riskLevel: string;
   confidence: number;
   confidenceFactors: Record<string, number | boolean>;
+  sourceLanguage: string;
+  requestedLanguage: SupportedLanguage;
+  presentationLanguage: SupportedLanguage;
+  localizationStatus: "PENDING" | "COMPLETE" | "FALLBACK";
+  localizationLimitations?: string[];
+  localizationRetryable?: boolean;
+  localizationFailureCode?: string;
+  localizationRetryAfter?: string;
   summary: string;
   claims: ReportClaim[];
   evidence: ReportEvidence[];
@@ -231,11 +247,19 @@ export const reportService = {
     apiClient.download(`/reports/${reportId}/check-card.svg`),
   coach: (reportId: string) =>
     apiClient.get<MilCoachCard>(`/reports/${reportId}/coach`),
-  get: (reportId: string) =>
-    apiClient.get<VerificationReport>(`/reports/${reportId}`),
+  get: (reportId: string, language?: SupportedLanguage) =>
+    apiClient.get<VerificationReport>(
+      `/reports/${reportId}${language ? `?language=${language}` : ""}`,
+    ),
   remove: (reportId: string) => apiClient.deleteVoid(`/reports/${reportId}`),
-  export: (reportId: string, format: "pdf" | "json") =>
-    apiClient.download(`/reports/${reportId}/export/${format}`),
+  export: (
+    reportId: string,
+    format: "pdf" | "json",
+    language?: SupportedLanguage,
+  ) =>
+    apiClient.download(
+      `/reports/${reportId}/export/${format}${language ? `?language=${language}` : ""}`,
+    ),
   feedback: (
     reportId: string,
     input: {
@@ -244,18 +268,23 @@ export const reportService = {
       comment?: string;
     },
   ) => apiClient.post(`/reports/${reportId}/feedback`, input),
-  latest: (verificationId: string) =>
+  latest: (verificationId: string, language?: SupportedLanguage) =>
     apiClient.get<VerificationReport>(
-      `/reports/verification/${verificationId}/latest`,
+      `/reports/verification/${verificationId}/latest${language ? `?language=${language}` : ""}`,
     ),
   versions: (verificationId: string) =>
     apiClient.get<ReportVersion[]>(
       `/reports/verification/${verificationId}/versions`,
     ),
-  public: (slug: string) =>
-    apiClient.get<VerificationReport>(`/public/reports/${slug}`, {
+  public: (slug: string, language?: SupportedLanguage) =>
+    apiClient.get<VerificationReport>(`/public/reports/${slug}${language ? `?language=${language}` : ""}`, {
       retryAuthentication: false,
     }),
+  retryLocalization: (reportId: string, language: SupportedLanguage) =>
+    apiClient.post<VerificationReport>(
+      `/reports/${reportId}/localizations/${language}/retry`,
+      {},
+    ),
   revoke: (reportId: string) =>
     apiClient.post<VerificationReport>(`/reports/${reportId}/revoke`),
   setVisibility: (reportId: string, visibility: ReportVisibility) =>

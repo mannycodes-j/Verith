@@ -10,6 +10,7 @@ import {
   type VerificationReport,
 } from "@/services/reports";
 import { reportActionStyles as styles } from "./report-actions.styles";
+import type { SupportedLanguage } from "@/data/supported-languages";
 
 type Panel = "visibility" | "export" | "feedback" | "delete" | null;
 
@@ -29,9 +30,11 @@ function humanize(value: string) {
 export default function ReportActions({
   report,
   verificationId,
+  language,
 }: {
   report: VerificationReport;
   verificationId: string;
+  language: SupportedLanguage;
 }) {
   const queryClient = useQueryClient();
   const [panel, setPanel] = useState<Panel>(null);
@@ -71,7 +74,7 @@ export default function ReportActions({
   });
   const exportMutation = useMutation({
     mutationFn: (format: "pdf" | "json") =>
-      reportService.export(report.id!, format),
+      reportService.export(report.id!, format, language),
     onSuccess: ({ blob, filename }, format) => {
       const objectUrl = URL.createObjectURL(blob);
       const anchor = document.createElement("a");

@@ -22,6 +22,10 @@ import {
 import { useReportMode, type ReportMode } from "./useReportMode";
 import { analyticsService } from "@/services/analytics";
 import { requestAchievementCelebrationCheck } from "@/utils/achievement-celebrations";
+import LanguageSelector from "@/components/LanguageSelector";
+import type { SupportedLanguage } from "@/data/supported-languages";
+import { REPORT_LANGUAGE_COPY } from "@/data/report-language-copy";
+import { useReportLanguage } from "./useReportLanguage";
 
 function humanize(value: string | undefined) {
   return friendlyLabel(value);
@@ -30,9 +34,11 @@ function humanize(value: string | undefined) {
 function EvidenceDetail({
   evidence,
   onOpen,
+  language = "en",
 }: {
   evidence?: ReportEvidence;
   onOpen?: () => void;
+  language?: SupportedLanguage;
 }) {
   if (!evidence) {
     return (
@@ -75,7 +81,12 @@ function EvidenceDetail({
         </div>
       </dl>
       {evidence.relevantExcerpt ? (
-        <blockquote>{evidence.relevantExcerpt}</blockquote>
+        <div>
+          <small>
+            {REPORT_LANGUAGE_COPY[language].originalExcerpt}{evidence.language ? ` · ${evidence.language}` : ""}
+          </small>
+          <blockquote lang={evidence.language}>{evidence.originalExcerpt ?? evidence.relevantExcerpt}</blockquote>
+        </div>
       ) : (
         <p className={styles.unavailable}>
           No relevant excerpt was retained for this source.
@@ -362,19 +373,6 @@ function SpokenReportSummary({ report }: { report: VerificationReport }) {
   );
 }
 
-function simpleVerdict(value: string, language: "en" | "pcm") {
-  if (language === "en") return friendlyVerdict(value);
-  const labels: Record<string, string> = {
-    CONTRADICTED: "Evidence no agree with this claim",
-    FALSE: "Evidence no agree with this claim",
-    INSUFFICIENT_EVIDENCE: "Evidence never reach to decide",
-    MIXED: "Evidence dey point different ways",
-    SUPPORTED: "Evidence dey support this claim",
-    TRUE: "Evidence dey support this claim",
-  };
-  return labels[value] ?? friendlyVerdict(value);
-}
-
 export function ClaimWorkspace({ report }: { report: VerificationReport }) {
   const queryClient = useQueryClient();
   const evidenceById = useMemo(
@@ -437,7 +435,13 @@ export function ClaimWorkspace({ report }: { report: VerificationReport }) {
                   {friendlyVerdict(claim.verdict)}
                 </span>
               </header>
-              <h3>{claim.text}</h3>
+              <h3>{claim.displayText ?? claim.text}</h3>
+              {claim.displayText && claim.displayText !== claim.originalText && (
+                <details className={styles.claimDetails}>
+                  <summary>{REPORT_LANGUAGE_COPY[report.presentationLanguage ?? "en"].originalClaim}</summary>
+                  <p lang={claim.originalLanguage}>{claim.originalText ?? claim.text}</p>
+                </details>
+              )}
               <p>{friendlyReportText(claim.explanation)}</p>
               <details className={styles.claimDetails}>
                 <summary>See confidence and technical details</summary>
@@ -485,7 +489,7 @@ export function ClaimWorkspace({ report }: { report: VerificationReport }) {
       </section>
 
       <aside className={styles.inspector}>
-        <EvidenceDetail evidence={selectedEvidence} onOpen={openEvidence} />
+        <EvidenceDetail evidence={selectedEvidence} onOpen={openEvidence} language={report.presentationLanguage} />
       </aside>
     </div>
   );
@@ -496,10 +500,11 @@ export function ReportClaimWorkspace({
 }: {
   verificationId: string;
 }) {
+  const [language] = useReportLanguage();
   const [mode, setMode] = useReportMode();
   const report = useQuery({
-    queryFn: () => reportService.latest(verificationId),
-    queryKey: ["report", verificationId, "latest"],
+    queryFn: () => reportService.latest(verificationId, language),
+    queryKey: ["report", verificationId, "latest", language ?? "default"],
     retry: 1,
   });
 
@@ -566,13 +571,45 @@ export function ReportReader({
   showActions = true,
   showClaimWorkspace = true,
   mode = "evidence",
+  language = report.presentationLanguage ?? report.requestedLanguage ?? "en",
+  onLanguageChange,
 }: {
   report: VerificationReport;
   showActions?: boolean;
   showClaimWorkspace?: boolean;
   mode?: ReportMode;
+  language?: SupportedLanguage;
+  onLanguageChange?: (language: SupportedLanguage) => void;
 }) {
-  const [simpleLanguage, setSimpleLanguage] = useState<"en" | "pcm">("en");
+  const reportCopy = REPORT_LANGUAGE_COPY[language];
+  const queryClient = useQueryClient();
+  const retryLocalization = useMutation({
+    mutationFn: () => reportService.retryLocalization(report.id!, language),
+    onSuccess: (localizedReport) => {
+      queryClient.setQueriesData<VerificationReport>(
+        {
+          predicate: (query) => {
+            if (query.queryKey[0] !== "report") return false;
+            const cachedReport = query.state.data;
+            return (
+              !Array.isArray(cachedReport) &&
+              typeof cachedReport === "object" &&
+              cachedReport !== null &&
+              "id" in cachedReport &&
+              cachedReport.id === localizedReport.id
+            );
+          },
+        },
+        localizedReport,
+      );
+
+      if (report.verificationId) {
+        void queryClient.invalidateQueries({
+          queryKey: ["report", report.verificationId],
+        });
+      }
+    },
+  });
   const learning = useQuery({
     enabled: mode === "learn" && showActions && Boolean(report.id),
     queryFn: () => learningService.recommendationsForReport(report.id!),
@@ -661,11 +698,84 @@ export function ReportReader({
             <dt>Confidence</dt>
             <dd>{friendlyConfidence(report.confidence)}</dd>
           </div>
+          <div>
+            <dt>Source language</dt>
+            <dd>{report.sourceLanguage || "Not detected"}</dd>
+          </div>
+          <div>
+            <dt>Report language</dt>
+            <dd>{report.presentationLanguage || report.requestedLanguage}</dd>
+          </div>
         </dl>
+        <div className={styles.simpleLanguage}>
+          <div>
+            <span>Report language</span>
+            <strong>
+              Switch the explanation without rerunning the investigation. Original claims and evidence stay unchanged.
+            </strong>
+          </div>
+          <LanguageSelector
+            value={language}
+            variant="input"
+            syncInterface={false}
+            onChange={(nextLanguage) => {
+              onLanguageChange?.(nextLanguage);
+              if (showActions && report.id) {
+                void analyticsService.record("REPORT_LANGUAGE_CHANGED", {
+                  reportId: report.id,
+                  verificationId: report.verificationId,
+                  feature: nextLanguage,
+                }).catch(() => undefined);
+              }
+            }}
+          />
+        </div>
+        {report.localizationStatus === "PENDING" && (
+          <section className={styles.sourceWarning} role="status">
+            <span>Translation in progress</span>
+            <div>
+              <h2>The original report is ready.</h2>
+              <p>
+                Verith is preparing the requested translation. Canonical English
+                is shown until the translated report passes validation.
+              </p>
+            </div>
+          </section>
+        )}
+        {report.localizationStatus === "FALLBACK" && (
+          <section className={styles.sourceWarning} role="status">
+            <span>Translation unavailable</span>
+            <div>
+              <h2>Canonical English is shown safely.</h2>
+              <p>
+                The requested translation did not pass validation, so Verith
+                kept the original analysis instead of showing an unreliable
+                translation.
+              </p>
+              {showActions && report.id && (
+                <button
+                  type="button"
+                  disabled={retryLocalization.isPending}
+                  onClick={() => retryLocalization.mutate()}
+                >
+                  {retryLocalization.isPending
+                    ? "Retrying translation…"
+                    : report.localizationRetryable
+                      ? "Retry translation"
+                      : "Try translation again"}
+                </button>
+              )}
+              {retryLocalization.isError && (
+                <p role="alert">{retryLocalization.error.message}</p>
+              )}
+            </div>
+          </section>
+        )}
         {showActions && report.id && report.verificationId && (
           <ReportActions
             report={report}
             verificationId={report.verificationId}
+            language={language}
           />
         )}
       </header>
@@ -829,61 +939,25 @@ export function ReportReader({
 
       {mode === "simple" && (
         <>
-          <section className={styles.simpleLanguage}>
-            <div>
-              <span>Explanation language</span>
-              <strong>
-                Nigerian Pidgin is a limited pilot. Detailed report content
-                stays in English so meaning and uncertainty are not silently
-                rewritten.
-              </strong>
-            </div>
-            <div role="group" aria-label="Simple report language">
-              <button
-                aria-pressed={simpleLanguage === "en"}
-                data-active={simpleLanguage === "en"}
-                onClick={() => setSimpleLanguage("en")}
-                type="button"
-              >
-                English
-              </button>
-              <button
-                aria-pressed={simpleLanguage === "pcm"}
-                data-active={simpleLanguage === "pcm"}
-                onClick={() => setSimpleLanguage("pcm")}
-                type="button"
-              >
-                Pidgin pilot
-              </button>
-            </div>
-          </section>
           <section className={styles.simpleSummary}>
             <article>
-              <span>
-                {simpleLanguage === "pcm"
-                  ? "Wetin evidence show"
-                  : "Main finding"}
-              </span>
-              <h3>{simpleVerdict(report.overallVerdict, simpleLanguage)}</h3>
-              <p>
-                {simpleLanguage === "pcm"
-                  ? "Read the original English summary and evidence below before you decide or share am."
-                  : friendlyReportText(report.summary)}
-              </p>
+              <span>{reportCopy.mainFinding}</span>
+              <h3>{friendlyVerdict(report.overallVerdict)}</h3>
+              <p>{friendlyReportText(report.summary)}</p>
             </article>
             <article>
-              <span>Important missing context</span>
+              <span>{reportCopy.missingContext}</span>
               <h3>
                 {report.missingContext[0]?.omittedContext ||
-                  "No major missing-context finding was retained."}
+                  reportCopy.noMissingContext}
               </h3>
               <p>
                 {report.missingContext[0]?.whyItMatters ||
-                  "Keep the report limitations in view before acting on the finding."}
+                  reportCopy.keepLimitations}
               </p>
             </article>
             <article>
-              <span>Strongest sources</span>
+              <span>{reportCopy.strongestSources}</span>
               {strongestSources.length ? (
                 <ul>
                   {strongestSources.map((source) => (
@@ -896,7 +970,7 @@ export function ReportReader({
                         {source.title}
                       </a>
                       <small>
-                        {source.publisher || "Publisher unknown"} ·{" "}
+                        {source.publisher || reportCopy.publisherUnknown} ·{" "}
                         {humanize(source.relationship)}
                       </small>
                     </li>
@@ -904,17 +978,17 @@ export function ReportReader({
                 </ul>
               ) : (
                 <p>
-                  No readable supporting or contradicting source was retained.
+                  {reportCopy.noReadableSources}
                 </p>
               )}
             </article>
             <article>
-              <span>Main limitation</span>
+              <span>{reportCopy.mainLimitation}</span>
               <h3>
                 {report.limitations[0] ||
-                  "No report-level limitation was returned."}
+                  reportCopy.noLimitation}
               </h3>
-              <p>Use the Evidence view before making a high-impact decision.</p>
+              <p>{reportCopy.evidenceReminder}</p>
             </article>
           </section>
           <SpokenReportSummary report={report} />
@@ -1170,9 +1244,10 @@ export default function ReportDocument({
 }) {
   const [mode] = useReportMode();
   const [selectedReportId, setSelectedReportId] = useState<string>();
+  const [language, setLanguage] = useReportLanguage();
   const report = useQuery({
-    queryFn: () => reportService.latest(verificationId),
-    queryKey: ["report", verificationId, "latest"],
+    queryFn: () => reportService.latest(verificationId, language),
+    queryKey: ["report", verificationId, "latest", language ?? "default"],
     retry: 1,
   });
   const versions = useQuery({
@@ -1182,8 +1257,8 @@ export default function ReportDocument({
   });
   const selectedReport = useQuery({
     enabled: Boolean(selectedReportId),
-    queryFn: () => reportService.get(selectedReportId!),
-    queryKey: ["report", verificationId, selectedReportId],
+    queryFn: () => reportService.get(selectedReportId!, language),
+    queryKey: ["report", verificationId, selectedReportId, language ?? "default"],
     retry: 1,
   });
 
@@ -1212,6 +1287,8 @@ export default function ReportDocument({
   }
 
   const displayed = selectedReportId ? selectedReport.data : report.data;
+  const activeLanguage =
+    language ?? displayed?.presentationLanguage ?? displayed?.requestedLanguage ?? "en";
   return (
     <>
       <nav className={styles.reportVersions} aria-label="Report versions">
@@ -1266,6 +1343,8 @@ export default function ReportDocument({
           report={displayed}
           showClaimWorkspace={false}
           mode={mode}
+          language={activeLanguage}
+          onLanguageChange={setLanguage}
         />
       )}
     </>

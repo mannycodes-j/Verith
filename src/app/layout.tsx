@@ -29,9 +29,10 @@ export default function RootLayout({
               function googleTranslateElementInit() {
                 new google.translate.TranslateElement({
                   pageLanguage: 'en',
-                  includedLanguages: 'en,fr,yo',
+                  includedLanguages: 'en,es,fr,yo',
                   autoDisplay: false
                 }, 'google_translate_element');
+                window.dispatchEvent(new Event('verith:google-translate-ready'));
               }
             `,
           }}

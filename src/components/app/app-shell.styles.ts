@@ -2,16 +2,16 @@ export const appShellStyles = {
   shell:
     "relative min-h-svh bg-[#0a0a0a] text-foreground lg:grid lg:grid-cols-[292px_minmax(0,1fr)]",
   sidebar:
-    "fixed inset-y-4 left-4 z-40 hidden w-[260px] flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#111] px-4 py-5 shadow-2xl lg:flex",
+    "fixed inset-y-4 left-4 z-40 hidden w-[260px] flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#111] px-4 py-5 shadow-2xl lg:flex [@media(max-height:600px)]:inset-y-2 [@media(max-height:600px)]:py-4",
   sidebarHeader:
-    "grid gap-2 px-2 [&>span]:text-[11px] [&>span]:text-white/55",
+    "grid shrink-0 gap-2 px-2 [&>span]:text-[11px] [&>span]:text-white/55",
   wordmark:
     "flex items-center",
   sidebarWidget:
-    "mt-6 rounded-xl border border-white/10 bg-white/5 p-4 [&>span]:flex [&>span]:items-center [&>span]:gap-2 [&>span]:text-xs [&>span]:font-bold [&>span]:uppercase [&>span]:tracking-[0.12em] [&>span]:text-white/70 [&>strong]:mt-3 [&>strong]:block [&>strong]:text-lg [&>strong]:font-medium [&>p]:mb-0 [&>p]:mt-2 [&>p]:text-xs [&>p]:leading-relaxed [&>p]:text-white/60",
+    "mt-6 shrink-0 rounded-xl border border-white/10 bg-white/5 p-4 [@media(max-height:720px)]:hidden [&>span]:flex [&>span]:items-center [&>span]:gap-2 [&>span]:text-xs [&>span]:font-bold [&>span]:uppercase [&>span]:tracking-[0.12em] [&>span]:text-white/70 [&>strong]:mt-3 [&>strong]:block [&>strong]:text-lg [&>strong]:font-medium [&>p]:mb-0 [&>p]:mt-2 [&>p]:text-xs [&>p]:leading-relaxed [&>p]:text-white/60",
   navigation:
-    "mt-7 flex flex-1 flex-col gap-6 overflow-y-auto",
-  navGroup: "grid gap-1",
+    "verith-scrollbar mt-7 flex min-h-0 flex-1 flex-col gap-6 overflow-x-hidden overflow-y-auto pr-1 [@media(max-height:720px)]:mt-4 [@media(max-height:600px)]:gap-4",
+  navGroup: "grid shrink-0 gap-1",
   navLabel:
     "px-3 pb-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/50",
   navItem:
@@ -19,7 +19,7 @@ export const appShellStyles = {
   navItemActive:
     "bg-gradient-to-r from-violet-400/15 to-transparent text-white [&>svg]:text-violet-400 relative before:absolute before:left-0 before:top-1/4 before:h-1/2 before:w-[3px] before:rounded-r-full before:bg-violet-400",
   account:
-    "mt-4 grid grid-cols-[36px_minmax(0,1fr)_auto] items-center gap-2.5 border-t border-white/10 px-2 pt-4 [&>div:nth-child(2)]:grid [&>div:nth-child(2)]:min-w-0 [&>div:nth-child(2)]:gap-0.5 [&_strong]:truncate [&_strong]:text-xs [&_span]:text-[10px] [&_span]:text-white/55 [&>button]:min-h-10 [&>button]:rounded-lg [&>button]:border-0 [&>button]:bg-transparent [&>button]:px-2 [&>button]:py-2 [&>button]:text-[10px] [&>button]:text-white/55 hover:[&>button]:bg-white/5 hover:[&>button]:text-foreground",
+    "mt-4 grid shrink-0 grid-cols-[36px_minmax(0,1fr)_auto] items-center gap-2.5 border-t border-white/10 px-2 pt-4 [@media(max-height:600px)]:mt-2 [@media(max-height:600px)]:pt-2 [&>div:nth-child(2)]:grid [&>div:nth-child(2)]:min-w-0 [&>div:nth-child(2)]:gap-0.5 [&_strong]:truncate [&_strong]:text-xs [&_span]:text-[10px] [&_span]:text-white/55 [&>button]:min-h-10 [&>button]:whitespace-nowrap [&>button]:rounded-lg [&>button]:border-0 [&>button]:bg-transparent [&>button]:px-2 [&>button]:py-2 [&>button]:text-[10px] [&>button]:text-white/55 hover:[&>button]:bg-white/5 hover:[&>button]:text-foreground",
   avatar:
     "flex size-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 bg-cover bg-center bg-no-repeat text-xs font-semibold text-white",
   workspace: "min-w-0 lg:col-start-2",

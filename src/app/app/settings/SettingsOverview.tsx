@@ -15,6 +15,7 @@ import Link from "next/link";
 import type { FormEvent } from "react";
 import { accountService } from "@/services/account";
 import LanguageSelector from "@/components/LanguageSelector";
+import { isSupportedLanguage } from "@/data/supported-languages";
 import SettingsNav from "./SettingsNav";
 import { settingsStyles as styles } from "./settings.styles";
 
@@ -109,12 +110,15 @@ export default function SettingsOverview() {
   const submitProfile = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const preferredLanguage = data.get("preferredLanguage");
     profileMutation.mutate({
       bio: String(data.get("bio") ?? ""),
       displayName: String(data.get("displayName") ?? ""),
       firstName: String(data.get("firstName") ?? ""),
       lastName: String(data.get("lastName") ?? ""),
-      preferredLanguage: String(data.get("preferredLanguage") ?? "en"),
+      preferredLanguage: isSupportedLanguage(preferredLanguage)
+        ? preferredLanguage
+        : "en",
       timezone: String(data.get("timezone") ?? "UTC"),
     });
   };

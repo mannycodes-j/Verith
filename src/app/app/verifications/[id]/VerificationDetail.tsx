@@ -12,6 +12,11 @@ import { currentVerificationStageIndex as currentStageIndex, formatVerificationT
 import { verificationFailurePresentation } from "@/services/verificationFailure";
 import GuidedInvestigationPanel from "./GuidedInvestigationPanel";
 import { requestAchievementCelebrationCheck } from "@/utils/achievement-celebrations";
+import {
+	SUPPORTED_LANGUAGES,
+	isSupportedLanguage,
+	type SupportedLanguage,
+} from "@/data/supported-languages";
 
 export default function VerificationDetail({ id }: { id: string }) {
 	const queryClient = useQueryClient();
@@ -19,6 +24,7 @@ export default function VerificationDetail({ id }: { id: string }) {
 	const [actionDialog, setActionDialog] = useState<"cancel" | "retry" | "delete" | null>(null);
 	const [streamState, setStreamState] = useState<"connecting" | "live" | "fallback">("connecting");
 	const [guidanceStatus, setGuidanceStatus] = useState<"LOADING" | "READY" | "SUBMITTED" | "FEEDBACK_READY">("LOADING");
+	const [selectedSourceLanguage, setSelectedSourceLanguage] = useState<SupportedLanguage | null>(null);
 	const verification = useQuery({
 		queryFn: () => verificationService.get(id),
 		queryKey: ["verification", id],
@@ -34,6 +40,12 @@ export default function VerificationDetail({ id }: { id: string }) {
 					: 10_000;
 		},
 	});
+	const suggestedSourceLanguage =
+		verification.data?.confirmedSourceLanguage ??
+		verification.data?.detectedLanguage;
+	const confirmedLanguage =
+		selectedSourceLanguage ??
+		(isSupportedLanguage(suggestedSourceLanguage) ? suggestedSourceLanguage : "en");
 	const events = useQuery({
 		enabled: Boolean(verification.data),
 		queryFn: () => verificationService.listEvents(id),
@@ -62,6 +74,17 @@ export default function VerificationDetail({ id }: { id: string }) {
 			void queryClient.invalidateQueries({
 				queryKey: ["verification-events", id],
 			});
+		},
+	});
+	const confirmLanguage = useMutation({
+		mutationFn: async () => {
+			await verificationService.confirmSourceLanguage(id, confirmedLanguage);
+			return verificationService.reprocess(id);
+		},
+		onSuccess: (record) => {
+			queryClient.setQueryData(["verification", id], record);
+			void queryClient.invalidateQueries({ queryKey: ["verification-events", id] });
+			void queryClient.removeQueries({ queryKey: ["report", id] });
 		},
 	});
 	const remove = useMutation({
@@ -167,8 +190,8 @@ export default function VerificationDetail({ id }: { id: string }) {
 		: Math.max(0, Math.min(100, record.progress));
 	const guided = record.mode === "GUIDED";
 	const guidedComplete = !guided || ["SUBMITTED", "FEEDBACK_READY"].includes(guidanceStatus);
-	const actionPending = cancel.isPending || retry.isPending || remove.isPending;
-	const actionError = cancel.error ?? retry.error ?? remove.error;
+	const actionPending = cancel.isPending || retry.isPending || remove.isPending || confirmLanguage.isPending;
+	const actionError = cancel.error ?? retry.error ?? remove.error ?? confirmLanguage.error;
 
 	return (
 		<div className={styles.page}>
@@ -224,8 +247,65 @@ export default function VerificationDetail({ id }: { id: string }) {
 						<dt>Evidence records</dt>
 						<dd>{record.evidenceCount}</dd>
 					</div>
+					<div>
+						<dt>Source language</dt>
+						<dd>{record.detectedLanguage || "Detecting"}</dd>
+					</div>
+					<div>
+						<dt>Report language</dt>
+						<dd>{record.requestedLanguage || "en"}</dd>
+					</div>
 				</dl>
 			</section>
+
+			{record.sourceLanguageExperimental && (
+				<section className={styles.guidedGate} role="status">
+					<span>Experimental source-language support</span>
+					<h2>Verith detected a language outside its four validated languages.</h2>
+					<p>The original content is preserved, but claim extraction and evidence matching may be less reliable. Review sources and limitations carefully.</p>
+				</section>
+			)}
+
+			{record.sourceLanguageNeedsConfirmation &&
+				["COMPLETED", "PARTIALLY_COMPLETED"].includes(record.status) && (
+				<section className={styles.languageConfirmation} role="status">
+					<span>Confirm the source language</span>
+					<h2>The language detector was not confident enough.</h2>
+					<p>
+						Verith estimated {record.detectedLanguage || "an unknown language"}
+						{typeof record.languageDetectionConfidence === "number"
+							? ` at ${Math.round(record.languageDetectionConfidence * 100)}% confidence`
+							: ""}. Choose the language used in the original content, then Verith will
+							run the investigation again using that confirmed language.
+					</p>
+					<form
+						onSubmit={(event) => {
+							event.preventDefault();
+							confirmLanguage.mutate();
+						}}
+					>
+						<label>
+							Original content language
+							<select
+								value={confirmedLanguage}
+								onChange={(event) =>
+									setSelectedSourceLanguage(event.target.value as SupportedLanguage)
+								}
+							>
+								{SUPPORTED_LANGUAGES.map((language) => (
+									<option key={language.code} value={language.code}>
+										{language.label}
+									</option>
+								))}
+							</select>
+						</label>
+						<button type="submit" disabled={confirmLanguage.isPending}>
+							{confirmLanguage.isPending ? "Confirming and restarting…" : "Confirm and check again"}
+						</button>
+						{confirmLanguage.error && <small>{confirmLanguage.error.message}</small>}
+					</form>
+				</section>
+			)}
 
 			{guided && (
 				<GuidedInvestigationPanel

@@ -3,39 +3,91 @@
 import { useEffect, useRef, useState } from "react";
 import { Globe, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const languages = [
-  { code: "en", label: "English" },
-  { code: "fr", label: "Français" },
-  { code: "yo", label: "Yorùbá" },
-];
+import {
+  SUPPORTED_LANGUAGES,
+  isSupportedLanguage,
+  type SupportedLanguage,
+} from "@/data/supported-languages";
+import {
+  applyInterfaceLanguage,
+  GOOGLE_TRANSLATE_READY_EVENT,
+  getCurrentInterfaceLanguage,
+  INTERFACE_LANGUAGE_EVENT,
+  isInterfaceLanguageStorageEvent,
+  setCurrentInterfaceLanguage,
+} from "@/utils/interface-language";
 
 export default function LanguageSelector({
   name,
   defaultValue,
   id,
+  onChange,
+  value,
   variant = "subtle",
+  syncInterface = true,
 }: {
   name?: string;
   defaultValue?: string;
   id?: string;
+  onChange?: (language: SupportedLanguage) => void;
+  value?: SupportedLanguage;
   variant?: "subtle" | "input";
+  syncInterface?: boolean;
 }) {
-  const [lang, setLang] = useState(defaultValue || "en");
+  const initialLanguage = isSupportedLanguage(value)
+    ? value
+    : isSupportedLanguage(defaultValue)
+      ? defaultValue
+      : "en";
+  const [lang, setLang] = useState<SupportedLanguage>(initialLanguage);
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Check if googtrans cookie is set
-    const cookies = document.cookie.split("; ");
-    const googtrans = cookies.find((c) => c.startsWith("googtrans="));
-    if (googtrans) {
-      const val = googtrans.split("=")[1];
-      if (val.includes("fr")) setLang("fr");
-      else if (val.includes("yo")) setLang("yo");
-      else setLang("en");
-    }
-  }, []);
+    const frame = window.requestAnimationFrame(() => {
+      setLang(
+        value ??
+          (isSupportedLanguage(defaultValue)
+            ? defaultValue
+            : getCurrentInterfaceLanguage()),
+      );
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [defaultValue, value]);
+
+  useEffect(() => {
+    if (!syncInterface || value !== undefined) return;
+    const syncLanguage = (event?: Event) => {
+      const detail = (event as CustomEvent<unknown> | undefined)?.detail;
+      setLang(
+        isSupportedLanguage(detail)
+          ? detail
+          : getCurrentInterfaceLanguage(),
+      );
+    };
+    const syncStoredLanguage = (event: StorageEvent) => {
+      if (isInterfaceLanguageStorageEvent(event)) syncLanguage();
+    };
+    const applyPendingLanguage = () => {
+      const current = getCurrentInterfaceLanguage();
+      setLang(current);
+      applyInterfaceLanguage(current);
+    };
+    window.addEventListener(INTERFACE_LANGUAGE_EVENT, syncLanguage);
+    window.addEventListener("storage", syncStoredLanguage);
+    window.addEventListener(
+      GOOGLE_TRANSLATE_READY_EVENT,
+      applyPendingLanguage,
+    );
+    return () => {
+      window.removeEventListener(INTERFACE_LANGUAGE_EVENT, syncLanguage);
+      window.removeEventListener("storage", syncStoredLanguage);
+      window.removeEventListener(
+        GOOGLE_TRANSLATE_READY_EVENT,
+        applyPendingLanguage,
+      );
+    };
+  }, [syncInterface, value]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -50,25 +102,25 @@ export default function LanguageSelector({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleChange = (newLang: string) => {
+  const handleChange = (newLang: SupportedLanguage) => {
     setLang(newLang);
     setIsOpen(false);
-    
-    // Set googtrans cookie
-    const val = newLang === "en" ? "/en/en" : `/en/${newLang}`;
-    
-    document.cookie = `googtrans=${val}; path=/`;
-    document.cookie = `googtrans=${val}; path=/; domain=${window.location.hostname}`;
-    
-    // Reload to apply translation
-    window.location.reload();
+    if (syncInterface) setCurrentInterfaceLanguage(newLang);
+    onChange?.(newLang);
   };
 
-  const selectedLang = languages.find((l) => l.code === lang) || languages[0];
+  const activeLanguage = value ?? lang;
+  const selectedLang =
+    SUPPORTED_LANGUAGES.find((language) => language.code === activeLanguage) ??
+    SUPPORTED_LANGUAGES[0];
 
   return (
-    <div className="relative inline-block text-left" ref={containerRef}>
-      <input type="hidden" name={name} id={id} value={lang} />
+    <div
+      className="notranslate relative inline-block text-left"
+      ref={containerRef}
+      translate="no"
+    >
+      <input type="hidden" name={name} id={id} value={activeLanguage} />
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
@@ -103,19 +155,19 @@ export default function LanguageSelector({
             }`}
           >
             <div className="grid gap-0.5">
-              {languages.map((l) => (
+              {SUPPORTED_LANGUAGES.map((l) => (
                 <button
                   key={l.code}
                   type="button"
                   onClick={() => handleChange(l.code)}
                   className={`flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors ${
-                    lang === l.code
+                    activeLanguage === l.code
                       ? "bg-white/10 text-white"
                       : "text-white/60 hover:bg-white/5 hover:text-white"
                   }`}
                 >
                   {l.label}
-                  {lang === l.code && <Check size={12} className="text-white/80" />}
+                  {activeLanguage === l.code && <Check size={12} className="text-white/80" />}
                 </button>
               ))}
             </div>

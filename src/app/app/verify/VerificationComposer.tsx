@@ -15,6 +15,10 @@ import { INVESTIGATION_SOURCE_OPTIONS as sourceTypes } from "@/data/verification
 import type { InvestigationSourceType as SourceType } from "@/types/verification-ui";
 import { verifyStyles as styles } from "./verify.styles";
 import { uploadFailureMessage } from "@/services/uploadFailure";
+import LanguageSelector from "@/components/LanguageSelector";
+import { accountService } from "@/services/account";
+import { isSupportedLanguage, resolveSupportedLanguage } from "@/data/supported-languages";
+import { getCurrentInterfaceLanguage } from "@/utils/interface-language";
 
 const composerSchema = z
 	.object({
@@ -24,6 +28,7 @@ const composerSchema = z
 		text: z.string().trim().max(50000),
 		title: z.string().trim().max(200, "Title must be 200 characters or fewer."),
 		visibility: z.enum(["PRIVATE", "UNLISTED", "PUBLIC"]),
+		requestedLanguage: z.enum(["en", "fr", "es", "yo"]),
 	})
 	.superRefine((values, context) => {
 		if (values.sourceType === "TEXT" && values.text.length === 0) {
@@ -59,6 +64,12 @@ export default function VerificationComposer({ initialSourceType = "TEXT" }: { i
 	const [uploadProgress, setUploadProgress] = useState<number | null>(null);
 	const [online, setOnline] = useState(true);
 	const [draftReady, setDraftReady] = useState(false);
+	const languageChosen = useRef(false);
+	const profile = useQuery({
+		queryKey: ["profile"],
+		queryFn: accountService.profile,
+		staleTime: 30_000,
+	});
 	const allowance = useQuery({
 		queryKey: ["investigation-allowance"],
 		queryFn: () => verificationService.allowance(),
@@ -79,6 +90,7 @@ export default function VerificationComposer({ initialSourceType = "TEXT" }: { i
 			text: "",
 			title: "",
 			visibility: "PRIVATE",
+			requestedLanguage: "en",
 		},
 		resolver: zodResolver(composerSchema),
 	});
@@ -96,6 +108,7 @@ export default function VerificationComposer({ initialSourceType = "TEXT" }: { i
 				if (stored) {
 					const draft = JSON.parse(stored) as Partial<ComposerValues>;
 					if (draft.sourceType && sourceTypes.some((item) => item.value === draft.sourceType)) {
+						languageChosen.current = isSupportedLanguage(draft.requestedLanguage);
 						setSourceType(draft.sourceType);
 						reset({
 							mode: draft.mode === "GUIDED" ? "GUIDED" : "STANDARD",
@@ -104,6 +117,9 @@ export default function VerificationComposer({ initialSourceType = "TEXT" }: { i
 							text: typeof draft.text === "string" ? draft.text : "",
 							title: typeof draft.title === "string" ? draft.title : "",
 							visibility: ["PRIVATE", "UNLISTED", "PUBLIC"].includes(draft.visibility ?? "") ? draft.visibility : "PRIVATE",
+							requestedLanguage: isSupportedLanguage(draft.requestedLanguage)
+								? draft.requestedLanguage
+								: getCurrentInterfaceLanguage(),
 						});
 					}
 				}
@@ -118,6 +134,15 @@ export default function VerificationComposer({ initialSourceType = "TEXT" }: { i
 			window.removeEventListener("offline", handleOffline);
 		};
 	}, [reset]);
+
+	useEffect(() => {
+		if (!draftReady || languageChosen.current) return;
+		const preferred = profile.data?.preferredLanguage;
+		setValue(
+			"requestedLanguage",
+			resolveSupportedLanguage(preferred, getCurrentInterfaceLanguage()),
+		);
+	}, [draftReady, profile.data?.preferredLanguage, setValue]);
 
 	useEffect(() => {
 		if (!draftReady) return;
@@ -184,7 +209,7 @@ export default function VerificationComposer({ initialSourceType = "TEXT" }: { i
 		const shared = {
 			mode: values.mode,
 			question: values.question || undefined,
-			requestedLanguage: "en",
+			requestedLanguage: values.requestedLanguage,
 			title: values.title || undefined,
 			visibility: values.visibility,
 		};
@@ -420,6 +445,26 @@ export default function VerificationComposer({ initialSourceType = "TEXT" }: { i
 							<label htmlFor="investigation-question">Investigation question (optional)</label>
 							<textarea id="investigation-question" rows={3} {...register("question")} />
 							{errors.question && <p className={styles.fieldError}>{errors.question.message}</p>}
+						</div>
+						<div className={styles.field}>
+							<label htmlFor="report-language">Report language</label>
+							<LanguageSelector
+								id="report-language"
+								name="requestedLanguage"
+								variant="input"
+								syncInterface={false}
+								value={draftValues.requestedLanguage}
+								onChange={(language) => {
+									languageChosen.current = true;
+									setValue("requestedLanguage", language, {
+										shouldDirty: true,
+										shouldValidate: true,
+									});
+								}}
+							/>
+							<p className={styles.fieldHint}>
+								The source stays in its original language. Verith presents explanations and the final report in this language.
+							</p>
 						</div>
 						<div className={styles.field}>
 							<label htmlFor="visibility">Report visibility</label>

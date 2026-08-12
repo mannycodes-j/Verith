@@ -14,7 +14,6 @@ import { learningStyles as styles } from "./learning.styles";
 export default function LearningCatalog({ authenticated = false }: { authenticated?: boolean }) {
 	const [search, setSearch] = useState("");
 	const [difficulty, setDifficulty] = useState("");
-	const [tag, setTag] = useState("");
 	const deferredSearch = useDeferredValue(search.trim());
 	const catalog = useInfiniteQuery<CursorPage<LearningCourse>>({
 		getNextPageParam: (page) => page.pagination.nextCursor ?? undefined,
@@ -23,9 +22,8 @@ export default function LearningCatalog({ authenticated = false }: { authenticat
 			cursor: typeof pageParam === "string" ? pageParam : undefined,
 			difficulty: difficulty || undefined,
 			search: deferredSearch || undefined,
-			tag: tag.trim() || undefined,
 		}),
-		queryKey: ["learning-courses", deferredSearch, difficulty, tag.trim()],
+		queryKey: ["learning-courses", deferredSearch, difficulty],
 	});
 	const courses = catalog.data?.pages.flatMap((page) => page.items) ?? [];
 	const progressQueries = useQueries({
@@ -55,10 +53,6 @@ export default function LearningCatalog({ authenticated = false }: { authenticat
 					<select onChange={(event) => setDifficulty(event.target.value)} value={difficulty}>
 						{DIFFICULTY_FILTERS.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
 					</select>
-				</label>
-				<label>
-					<span>Topic</span>
-					<input onChange={(event) => setTag(event.target.value)} placeholder="e.g. source checking" value={tag} />
 				</label>
 			</section>
 

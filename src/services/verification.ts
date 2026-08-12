@@ -1,4 +1,5 @@
 import type { components } from "@/generated/api-schema";
+import type { SupportedLanguage } from "@/data/supported-languages";
 import { apiClient } from "./apiClient";
 
 export type CreateVerificationInput =
@@ -27,6 +28,11 @@ export interface VerificationRecord {
   question?: string;
   requestedLanguage?: string;
   detectedLanguage?: string;
+  languageDetectionConfidence?: number;
+  confirmedSourceLanguage?: SupportedLanguage;
+  languageConfirmedAt?: string;
+  sourceLanguageNeedsConfirmation?: boolean;
+  sourceLanguageExperimental?: boolean;
   urlMetadata?: {
     extractionState?: string;
     canonicalUrl?: string;
@@ -50,9 +56,11 @@ export interface VerificationRecord {
 
 export interface GuidedQuestion {
   id: string;
+  code?: string;
   version: number;
   type: "SINGLE_SELECT" | "MULTIPLE_SELECT" | "SHORT_TEXT" | "PROVISIONAL_VERDICT";
   prompt: string;
+  helperText?: string;
   options: Array<{ id: string; label: string }>;
   competency: string;
   objectivelyScorable: boolean;
@@ -62,6 +70,17 @@ export interface GuidedInvestigation {
   id: string;
   verificationId: string;
   questionSetVersion: number;
+  reportLanguage: "en" | "fr" | "es" | "yo";
+  sourceLanguage: string;
+  copy: {
+    titleReady: string;
+    titleComplete: string;
+    introReady: string;
+    introComplete: string;
+    submit: string;
+    submitting: string;
+    incomplete: string;
+  };
   status: "READY" | "SUBMITTED" | "FEEDBACK_READY";
   questions: GuidedQuestion[];
   responses: Array<{
@@ -259,6 +278,16 @@ export const verificationService = {
   reprocess(id: string): Promise<VerificationRecord> {
     return apiClient.post<VerificationRecord>(
       `/verifications/${id}/reprocess`,
+    );
+  },
+
+  confirmSourceLanguage(
+    id: string,
+    sourceLanguage: SupportedLanguage,
+  ): Promise<VerificationRecord> {
+    return apiClient.patch<VerificationRecord>(
+      `/verifications/${id}/source-language`,
+      { sourceLanguage },
     );
   },
 };

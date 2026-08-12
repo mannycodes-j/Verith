@@ -37,6 +37,8 @@
     "src/utils/admin-content.ts",
     "src/utils/admin-content.test.ts",
     "src/data/admin-content.ts",
+    "src/data/supported-languages.ts",
+    "src/utils/supported-languages.test.ts",
     "src/types/admin-content.ts"
   ]
 }

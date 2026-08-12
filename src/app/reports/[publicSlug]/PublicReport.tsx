@@ -7,11 +7,14 @@ import PublicNavbar from "@/components/public/PublicNavbar";
 import PremiumBackground from "@/components/public/PremiumBackground";
 import ScrollProgress from "@/components/public/ScrollProgress";
 import { reportService } from "@/services/reports";
+import { useState } from "react";
+import type { SupportedLanguage } from "@/data/supported-languages";
 
 export default function PublicReport({ slug }: { slug: string }) {
+  const [language, setLanguage] = useState<SupportedLanguage>();
   const report = useQuery({
-    queryFn: () => reportService.public(slug),
-    queryKey: ["public-report", slug],
+    queryFn: () => reportService.public(slug, language),
+    queryKey: ["public-report", slug, language ?? "default"],
     retry: 1,
   });
 
@@ -55,7 +58,12 @@ export default function PublicReport({ slug }: { slug: string }) {
                 evidence-derived assessments, not declarations of absolute truth.
               </p>
             </section>
-            <ReportReader report={report.data} showActions={false} />
+            <ReportReader
+              report={report.data}
+              showActions={false}
+              language={language ?? report.data.presentationLanguage ?? report.data.requestedLanguage ?? "en"}
+              onLanguageChange={setLanguage}
+            />
           </>
         )}
       </div>

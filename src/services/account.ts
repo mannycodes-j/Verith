@@ -1,5 +1,6 @@
 import { apiClient, sessionToken } from "./apiClient";
 import type { AuthenticatedUser } from "./authService";
+import type { SupportedLanguage } from "@/data/supported-languages";
 
 export interface UserProfile extends AuthenticatedUser {
   id: string;
@@ -17,7 +18,7 @@ export interface UserProfile extends AuthenticatedUser {
     publicProfile?: boolean;
     leaderboard?: boolean;
   };
-  preferredLanguage?: string;
+  preferredLanguage?: SupportedLanguage;
   timezone?: string;
   emailVerifiedAt?: string;
   createdAt?: string;
@@ -110,7 +111,7 @@ export const accountService = {
     firstName?: string;
     lastName?: string;
     bio?: string;
-    preferredLanguage?: string;
+    preferredLanguage?: SupportedLanguage;
     timezone?: string;
   }) => apiClient.patch<UserProfile>("/users/me", input),
 };

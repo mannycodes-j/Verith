@@ -21,6 +21,7 @@ import { accountService } from "@/services/account";
 import { uploadService } from "@/services/uploads";
 import { profileStyles as styles } from "./profile.styles";
 import CurrentRankCard from "@/components/achievements/CurrentRankCard";
+import { SUPPORTED_LANGUAGES } from "@/data/supported-languages";
 
 function formatDate(value?: string) {
   if (!value) return "Not available";
@@ -81,7 +82,10 @@ export default function ProfilePage() {
     {
       icon: Languages,
       label: "Preferred language",
-      value: record.preferredLanguage ?? "English",
+      value:
+        SUPPORTED_LANGUAGES.find(
+          (language) => language.code === record.preferredLanguage,
+        )?.label ?? "English",
     },
     {
       icon: Clock3,

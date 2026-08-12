@@ -884,6 +884,26 @@ export interface paths {
         patch: operations["VerificationsController_visibility"];
         trace?: never;
     };
+    "/api/v1/verifications/{id}/source-language": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Confirm or correct the detected source language before reprocessing
+         * @description Confirm or correct the detected source language before reprocessing. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
+        patch: operations["VerificationsController_sourceLanguage"];
+        trace?: never;
+    };
     "/api/v1/verifications/{id}/stream": {
         parameters: {
             query?: never;
@@ -1371,6 +1391,46 @@ export interface paths {
          * @description Delete report. Requires a valid Verith access token. A successful request returns no response body.
          */
         delete: operations["ReportsController_remove"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reports/{id}/localizations/{language}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a validated localized report presentation
+         * @description Get a validated localized report presentation. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
+        get: operations["ReportsController_localization"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reports/{id}/localizations/{language}/retry": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Explicitly retry a failed or unavailable report localization
+         * @description Explicitly retry a failed or unavailable report localization. Requires a valid Verith access token. Successful JSON is returned in the standard Verith response envelope.
+         */
+        post: operations["ReportsController_retryLocalization"];
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -2817,7 +2877,8 @@ export interface components {
             firstName?: string;
             lastName?: string;
             bio?: string;
-            preferredLanguage?: string;
+            /** @enum {string} */
+            preferredLanguage?: "en" | "fr" | "es" | "yo";
             timezone?: string;
             theme?: string;
         };
@@ -2892,8 +2953,11 @@ export interface components {
             mediaAssetId?: string;
             title?: string;
             question?: string;
-            /** @default en */
-            requestedLanguage: string;
+            /**
+             * @default en
+             * @enum {string}
+             */
+            requestedLanguage: "en" | "fr" | "es" | "yo";
             /**
              * @default PRIVATE
              * @enum {string}
@@ -2912,6 +2976,10 @@ export interface components {
         UpdateVerificationVisibilityDto: {
             /** @enum {string} */
             visibility: "PRIVATE" | "UNLISTED" | "PUBLIC";
+        };
+        ConfirmVerificationLanguageDto: {
+            /** @enum {string} */
+            sourceLanguage: "en" | "fr" | "es" | "yo";
         };
         CreatePromptVersionDto: Record<string, never>;
         PromptActionDto: Record<string, never>;
@@ -4904,6 +4972,46 @@ export interface operations {
             503: components["responses"]["ServiceUnavailable"];
         };
     };
+    VerificationsController_sourceLanguage: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
+            path: {
+                /** @description MongoDB ObjectId of the target resource. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        /** @description JSON payload validated as ConfirmVerificationLanguageDto. */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConfirmVerificationLanguageDto"];
+            };
+        };
+        responses: {
+            /** @description Request completed successfully. */
+            200: {
+                headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+            503: components["responses"]["ServiceUnavailable"];
+        };
+    };
     VerificationStreamController_stream: {
         parameters: {
             query?: {
@@ -5620,7 +5728,10 @@ export interface operations {
     };
     ReportsController_latest: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Value of the language query parameter. */
+                language?: "en" | "fr" | "es" | "yo";
+            };
             header?: {
                 /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
                 "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
@@ -5644,6 +5755,7 @@ export interface operations {
                     "application/json": components["schemas"]["ApiSuccessResponse"];
                 };
             };
+            400: components["responses"]["BadRequest"];
             401: components["responses"]["Unauthorized"];
             404: components["responses"]["NotFound"];
             429: components["responses"]["TooManyRequests"];
@@ -5750,7 +5862,10 @@ export interface operations {
     };
     ReportsController_get: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Value of the language query parameter. */
+                language?: "en" | "fr" | "es" | "yo";
+            };
             header?: {
                 /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
                 "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
@@ -5774,6 +5889,7 @@ export interface operations {
                     "application/json": components["schemas"]["ApiSuccessResponse"];
                 };
             };
+            400: components["responses"]["BadRequest"];
             401: components["responses"]["Unauthorized"];
             404: components["responses"]["NotFound"];
             429: components["responses"]["TooManyRequests"];
@@ -5803,6 +5919,75 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    ReportsController_localization: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
+            path: {
+                /** @description MongoDB ObjectId of the target resource. */
+                id: string;
+                /** @description Validated report presentation language */
+                language: "en" | "fr" | "es" | "yo";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Request completed successfully. */
+            200: {
+                headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            429: components["responses"]["TooManyRequests"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    ReportsController_retryLocalization: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
+                "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
+            };
+            path: {
+                /** @description MongoDB ObjectId of the target resource. */
+                id: string;
+                /** @description Value of the language path parameter. */
+                language: "en" | "fr" | "es" | "yo";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Resource created successfully. */
+            201: {
+                headers: {
+                    /** @description Effective request correlation identifier. */
+                    "X-Request-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiSuccessResponse"];
+                };
             };
             401: components["responses"]["Unauthorized"];
             404: components["responses"]["NotFound"];
@@ -5991,7 +6176,10 @@ export interface operations {
     };
     ReportsController_jsonExport: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Value of the language query parameter. */
+                language?: "en" | "fr" | "es" | "yo";
+            };
             header?: {
                 /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
                 "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
@@ -6019,6 +6207,7 @@ export interface operations {
                     };
                 };
             };
+            400: components["responses"]["BadRequest"];
             401: components["responses"]["Unauthorized"];
             404: components["responses"]["NotFound"];
             429: components["responses"]["TooManyRequests"];
@@ -6027,7 +6216,10 @@ export interface operations {
     };
     ReportsController_pdfExport: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Value of the language query parameter. */
+                language?: "en" | "fr" | "es" | "yo";
+            };
             header?: {
                 /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
                 "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
@@ -6053,6 +6245,7 @@ export interface operations {
                     "application/pdf": string;
                 };
             };
+            400: components["responses"]["BadRequest"];
             401: components["responses"]["Unauthorized"];
             404: components["responses"]["NotFound"];
             429: components["responses"]["TooManyRequests"];
@@ -6061,7 +6254,10 @@ export interface operations {
     };
     PublicReportsController_get: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Value of the language query parameter. */
+                language?: "en" | "fr" | "es" | "yo";
+            };
             header?: {
                 /** @description Optional 8–128 character correlation identifier. A generated value is used when omitted or invalid. */
                 "X-Request-Id"?: components["parameters"]["RequestIdHeader"];
@@ -6082,6 +6278,7 @@ export interface operations {
                     "application/json": components["schemas"]["ApiSuccessResponse"];
                 };
             };
+            400: components["responses"]["BadRequest"];
             404: components["responses"]["NotFound"];
             429: components["responses"]["TooManyRequests"];
             500: components["responses"]["InternalServerError"];

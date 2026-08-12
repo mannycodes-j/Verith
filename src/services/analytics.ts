@@ -8,7 +8,8 @@ export type ProductAnalyticsEvent =
   | "AUDIO_SUMMARY_USED"
   | "ACCESSIBILITY_FEATURE_USED"
   | "BADGE_CELEBRATION_VIEWED"
-  | "RANK_CELEBRATION_VIEWED";
+  | "RANK_CELEBRATION_VIEWED"
+  | "REPORT_LANGUAGE_CHANGED";
 
 export const analyticsService = {
   record: (
