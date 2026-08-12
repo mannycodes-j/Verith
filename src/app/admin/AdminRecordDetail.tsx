@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { adminService, type AdminRecord } from "@/services/admin";
 import { adminStyles as styles } from "./admin.styles";
+import AdminContentEditDialog from "./AdminContentEditDialog";
 
 type Kind =
   | "publishers"
@@ -161,7 +162,18 @@ export default function AdminRecordDetail({
           <span>{kind.replaceAll("_", " ")}: Detail</span>
           <h1>{heading}</h1>
         </div>
-        <Link href={collectionPath(kind)}>Back to records</Link>
+        <div className={styles.detailHeroActions}>
+          <Link href={collectionPath(kind)}>Back to records</Link>
+          {(["courses", "lessons", "quizzes", "challenges"] as Kind[]).includes(
+            kind,
+          ) && (
+            <AdminContentEditDialog
+              key={String(record.updatedAt ?? record._id)}
+              kind={kind as "courses" | "lessons" | "quizzes" | "challenges"}
+              record={record}
+            />
+          )}
+        </div>
       </header>
       <dl className={styles.dossier}>
         {entries.map(([key, value]) => (

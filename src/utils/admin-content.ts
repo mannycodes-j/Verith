@@ -1,4 +1,8 @@
-import type { CreatableContent, EditorialQuestion } from "@/types/admin-content";
+import type {
+  CreatableContent,
+  EditableContent,
+  EditorialQuestion,
+} from "@/types/admin-content";
 
 const lines = (value: FormDataEntryValue | null) =>
   String(value ?? "").split(/[,\n]/).map((item) => item.trim()).filter(Boolean);
@@ -34,7 +38,7 @@ export function createAdminContentPayload(
   }
   if (kind === "challenges") {
     validateQuestions(questions);
-    return { title: String(data.get("title")), slug: String(data.get("slug")), scenario: String(data.get("scenario")), content: String(data.get("content")), difficulty: String(data.get("difficulty")), maxAttempts: integer(data, "maxAttempts"), passingScore: integer(data, "passingScore"), publishAt: new Date(String(data.get("publishAt"))).toISOString(), expiresAt: new Date(String(data.get("expiresAt"))).toISOString(), rewardPolicy: { xp: integer(data, "xp"), truthPoints: integer(data, "truthPoints") }, questions, ...(String(data.get("mediaAssetId") ?? "").trim() ? { mediaAssetId: String(data.get("mediaAssetId")) } : {}) };
+    return { title: String(data.get("title")), slug: String(data.get("slug")), scenario: String(data.get("scenario")), content: String(data.get("content")), tags: lines(data.get("tags")), difficulty: String(data.get("difficulty")), maxAttempts: integer(data, "maxAttempts"), passingScore: integer(data, "passingScore"), publishAt: new Date(String(data.get("publishAt"))).toISOString(), expiresAt: new Date(String(data.get("expiresAt"))).toISOString(), rewardPolicy: { xp: integer(data, "xp"), truthPoints: integer(data, "truthPoints") }, questions, ...(String(data.get("mediaAssetId") ?? "").trim() ? { mediaAssetId: String(data.get("mediaAssetId")) } : {}) };
   }
   if (kind === "badges") {
     const criteriaType = String(data.get("criteriaType"));
@@ -64,4 +68,41 @@ export function createAdminContentPayload(
     };
   }
   return { key: String(data.get("key")), task: String(data.get("task")), systemPrompt: String(data.get("systemPrompt")), userPromptTemplate: String(data.get("userPromptTemplate")), supportedProviders: lines(data.get("supportedProviders")), supportedModels: lines(data.get("supportedModels")), outputSchemaVersion: String(data.get("outputSchemaVersion")), changeSummary: String(data.get("changeSummary")), reason: String(data.get("reason")) };
+}
+
+export function createAdminContentUpdatePayload(
+  kind: EditableContent,
+  data: FormData,
+  questions: EditorialQuestion[],
+): Record<string, unknown> {
+  const payload = createAdminContentPayload(kind, data, questions);
+  if (kind === "lessons") delete payload.courseId;
+  if (kind === "quizzes") {
+    delete payload.courseId;
+    delete payload.lessonId;
+  }
+  return payload;
+}
+
+export function editableQuestions(value: unknown): EditorialQuestion[] {
+  if (!Array.isArray(value)) return [];
+  return value.flatMap((item) => {
+    if (!item || typeof item !== "object") return [];
+    const question = item as Record<string, unknown>;
+    if (!Array.isArray(question.options)) return [];
+    return [{
+      id: String(question.id ?? ""),
+      type: question.type === "MULTIPLE_CHOICE" ? "MULTIPLE_CHOICE" : "SINGLE_CHOICE",
+      prompt: String(question.prompt ?? ""),
+      options: question.options.flatMap((option) => {
+        if (!option || typeof option !== "object") return [];
+        const record = option as Record<string, unknown>;
+        return [{ id: String(record.id ?? ""), text: String(record.text ?? "") }];
+      }),
+      correctOptionIds: Array.isArray(question.correctOptionIds)
+        ? question.correctOptionIds.map(String)
+        : [],
+      explanation: String(question.explanation ?? ""),
+    } satisfies EditorialQuestion];
+  });
 }

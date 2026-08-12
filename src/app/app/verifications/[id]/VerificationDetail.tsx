@@ -162,6 +162,9 @@ export default function VerificationDetail({ id }: { id: string }) {
 	const canRetry = record.status === "FAILED" && failurePresentation.retryable;
 	const canDelete = !["QUEUED", "PROCESSING", "CANCEL_REQUESTED", "DELETED"].includes(record.status);
 	const processing = !terminalStatuses.includes(record.status);
+	const railProgress = ["COMPLETED", "PARTIALLY_COMPLETED"].includes(record.status)
+		? 100
+		: Math.max(0, Math.min(100, record.progress));
 	const guided = record.mode === "GUIDED";
 	const guidedComplete = !guided || ["SUBMITTED", "FEEDBACK_READY"].includes(guidanceStatus);
 	const actionPending = cancel.isPending || retry.isPending || remove.isPending;
@@ -244,23 +247,25 @@ export default function VerificationDetail({ id }: { id: string }) {
 				<section className={styles.stagePanel}>
 					<div className={styles.panelHeader}>
 						<span>Processing rail</span>
-						<span>{processing ? (streamState === "live" ? "Live updates" : streamState === "connecting" ? "Connecting" : "Polling fallback") : record.status}</span>
 					</div>
-					<div className={styles.progress} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={record.progress} aria-label="Investigation progress">
-						<span style={{ width: `${record.progress}%` }} />
+					<div className={styles.stageTrack}>
+						<span className={styles.railStatus}>{processing ? (streamState === "live" ? "Live updates" : streamState === "connecting" ? "Connecting" : "Polling fallback") : record.status}</span>
+						<div className={styles.progress} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={railProgress} aria-label="Investigation progress">
+							<span style={{ width: `${railProgress}%` }} />
+						</div>
+						<ol className={styles.stageRail}>
+							{displayStages.map((stage, index) => {
+								const stageState = index < activeStage ? "complete" : index === activeStage ? "active" : "pending";
+								return (
+									<li data-state={stageState} key={stage.label}>
+										<span>{String(index + 1).padStart(2, "0")}</span>
+										<strong>{stage.label}</strong>
+										<small>{stageState}</small>
+									</li>
+								);
+							})}
+						</ol>
 					</div>
-					<ol className={styles.stageRail}>
-						{displayStages.map((stage, index) => {
-							const stageState = index < activeStage ? "complete" : index === activeStage ? "active" : "pending";
-							return (
-								<li data-state={stageState} key={stage.label}>
-									<span>{String(index + 1).padStart(2, "0")}</span>
-									<strong>{stage.label}</strong>
-									<small>{stageState}</small>
-								</li>
-							);
-						})}
-					</ol>
 				</section>
 
 				<aside className={styles.eventPanel}>

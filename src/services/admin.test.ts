@@ -83,4 +83,30 @@ describe("adminService contract adapters", () => {
       },
     ]);
   });
+
+  it("sends editorial updates to each protected content endpoint", async () => {
+    const calls: Array<{ body: unknown; endpoint: string }> = [];
+    apiClient.patch = (async (endpoint: string, body: unknown) => {
+      calls.push({ body, endpoint });
+      return { _id: "record-1" };
+    }) as typeof apiClient.patch;
+
+    await adminService.updateContent("courses", "course-1", {
+      title: "Updated course",
+    });
+    await adminService.updateContent("quizzes", "quiz-1", {
+      title: "Updated quiz",
+    });
+
+    assert.deepEqual(calls, [
+      {
+        body: { title: "Updated course" },
+        endpoint: "/admin/learning/courses/course-1",
+      },
+      {
+        body: { title: "Updated quiz" },
+        endpoint: "/admin/quizzes/quiz-1",
+      },
+    ]);
+  });
 });

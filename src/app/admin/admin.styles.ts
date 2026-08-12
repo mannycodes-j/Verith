@@ -34,7 +34,9 @@ export const adminStyles = {
   dialogClose:
     "absolute top-5 right-5 grid size-10 place-items-center !rounded-full border border-white/10 bg-white/[.04] !p-0 text-white/55 hover:bg-white/[.08] hover:text-white",
   detailHero:
-    `mb-8 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-8 py-2 max-[700px]:grid-cols-1 ${adminHeader} [&>a]:justify-self-end [&>a]:rounded-full [&>a]:border [&>a]:border-white/10 [&>a]:bg-white/[0.04] [&>a]:px-5 [&>a]:py-3 [&>a]:text-sm [&>a]:font-medium [&>a]:transition-colors [&>a:hover]:bg-white/[0.08] max-[700px]:[&>a]:justify-self-start`,
+    `mb-8 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-8 py-2 max-[700px]:grid-cols-1 ${adminHeader}`,
+  detailHeroActions:
+    "flex flex-wrap items-center justify-end gap-2 max-[700px]:justify-start [&>a]:inline-flex [&>a]:min-h-11 [&>a]:items-center [&>a]:justify-center [&>a]:rounded-full [&>a]:border [&>a]:border-white/10 [&>a]:bg-white/[0.04] [&>a]:px-5 [&>a]:py-3 [&>a]:text-sm [&>a]:font-medium [&>a]:transition-colors [&>a:hover]:bg-white/[0.08]",
   filters:
     "mb-5 grid grid-cols-[repeat(3,minmax(0,1fr))_auto] items-end gap-4 rounded-3xl border border-white/[0.06] bg-card/60 p-5 shadow-[0_24px_60px_-36px_rgba(0,0,0,0.9)] max-[900px]:grid-cols-2 max-[560px]:grid-cols-1 [&_label]:grid [&_label]:gap-2 [&_label]:text-xs [&_label]:font-medium [&_label]:text-white/45 [&_input]:min-h-11 [&_input]:w-full [&_input]:rounded-2xl [&_input]:border [&_input]:border-white/[0.055] [&_input]:bg-white/[0.025] [&_input]:px-4 [&_input]:outline-none [&_input]:transition-all [&_input:focus]:border-violet-400/40 [&_input:focus]:bg-white/[0.045] [&_select]:min-h-11 [&_select]:w-full [&_select]:rounded-2xl [&_select]:border [&_select]:border-white/[0.055] [&_select]:bg-white/[0.025] [&_select]:px-4 [&_select]:outline-none [&_select:focus]:border-violet-400/40 [&_button]:min-h-11 [&_button]:rounded-full [&_button]:border-0 [&_button]:bg-gradient-to-r [&_button]:from-[#C084FC] [&_button]:to-[#6366F1] [&_button]:px-5 [&_button]:text-sm [&_button]:font-medium [&_button]:text-white [&_button]:transition-all [&_button:not(:disabled):hover]:scale-[1.02]",
   tableLoading:

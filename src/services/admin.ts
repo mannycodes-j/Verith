@@ -355,6 +355,17 @@ export const adminService = {
         : `/admin/${resource}`;
     return apiClient.post<AdminRecord>(base, body);
   },
+  updateContent: (
+    resource: "courses" | "lessons" | "quizzes" | "challenges",
+    id: string,
+    body: Record<string, unknown>,
+  ) => {
+    const base =
+      resource === "courses" || resource === "lessons"
+        ? `/admin/learning/${resource}`
+        : `/admin/${resource}`;
+    return apiClient.patch<AdminRecord>(`${base}/${id}`, body);
+  },
   updateContentStatus: (
     resource: "courses" | "lessons" | "quizzes" | "challenges",
     id: string,

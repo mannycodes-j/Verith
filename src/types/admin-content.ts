@@ -6,6 +6,12 @@ export type CreatableContent =
   | "badges"
   | "prompts";
 
+export type EditableContent =
+  | "courses"
+  | "lessons"
+  | "quizzes"
+  | "challenges";
+
 export type AdminCollectionKind =
   | "publishers"
   | "feedback"

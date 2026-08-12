@@ -180,7 +180,11 @@ function CheckCard({ reportId }: { reportId: string }) {
     mutationFn: async () => {
       if (!cardRef.current) throw new Error("Card not ready");
       const { toPng } = await import("html-to-image");
-      return toPng(cardRef.current, { pixelRatio: 2, backgroundColor: "#070708" });
+      return toPng(cardRef.current, {
+        pixelRatio: 2,
+        backgroundColor: "#070708",
+        cacheBust: true,
+      });
     },
     onSuccess: (dataUrl) => {
       const anchor = document.createElement("a");
@@ -228,33 +232,66 @@ function CheckCard({ reportId }: { reportId: string }) {
           <small role="alert">{download.error.message}</small>
         )}
       </div>
-      <article ref={cardRef}>
-        <header>
-          <strong>Verith</strong>
-          <span>{friendlyVerdict(card.data.finding)}</span>
+      <article className={styles.checkCardCanvas} ref={cardRef}>
+        <div aria-hidden="true" className={styles.checkCardAura} />
+        <header className={styles.checkCardHeader}>
+          <div className={styles.checkCardBrand}>
+            <span aria-hidden="true">V</span>
+            <div>
+              <strong>Verith</strong>
+              <small>Evidence brief</small>
+            </div>
+          </div>
+          <div className={styles.checkCardMeta}>
+            <span>{formatDate(card.data.reportDate)}</span>
+            <small>Report v{card.data.reportVersion}</small>
+          </div>
         </header>
-        <dl>
-          <div>
-            <dt>Claim</dt>
-            <dd>{card.data.claim}</dd>
-          </div>
-          <div>
-            <dt>What we found</dt>
-            <dd>{friendlyReportText(card.data.summary)}</dd>
-          </div>
-          <div>
-            <dt>Check next</dt>
-            <dd>{card.data.recommendedCheck}</dd>
-          </div>
-          <div>
-            <dt>Important limitation</dt>
-            <dd>{card.data.limitation}</dd>
-          </div>
-        </dl>
-        <footer>
-          {card.data.shareState === "READY"
-            ? "Public report link included in the download"
-            : "Private card · make the report unlisted or public before sharing"}
+
+        <div className={styles.checkCardVerdict}>
+          <span>Evidence-led finding</span>
+          <strong>{friendlyVerdict(card.data.finding)}</strong>
+          <p>{friendlyReportText(card.data.summary)}</p>
+        </div>
+
+        <section className={styles.checkCardClaim}>
+          <span>The claim checked</span>
+          <blockquote>{card.data.claim}</blockquote>
+        </section>
+
+        {card.data.keyEvidence.length > 0 && (
+          <section className={styles.checkCardEvidence}>
+            <span>Evidence considered</span>
+            <div>
+              {card.data.keyEvidence.slice(0, 2).map((evidence) => (
+                <article key={`${evidence.sourceUrl}-${evidence.title}`}>
+                  <small>{humanize(evidence.relationship)}</small>
+                  <strong>{evidence.title}</strong>
+                  <p>{evidence.publisher || "Publisher not identified"}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <div className={styles.checkCardGuidance}>
+          <section>
+            <span>Best next check</span>
+            <p>{card.data.recommendedCheck}</p>
+          </section>
+          <section>
+            <span>Keep in mind</span>
+            <p>{card.data.limitation}</p>
+          </section>
+        </div>
+
+        <footer className={styles.checkCardFooter}>
+          <span>Evidence before confidence.</span>
+          <small>
+            {card.data.shareState === "READY"
+              ? "Public report link available"
+              : "Private report · share only when you are ready"}
+          </small>
         </footer>
       </article>
     </section>
