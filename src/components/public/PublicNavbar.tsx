@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import UnequalMenuBars from "@/components/UnequalMenuBars";
 import VerithLogo from "@/components/brand/VerithLogo";
+import LanguageSelector from "@/components/LanguageSelector";
 
 const publicLinks = [
 	{ href: "/how-it-works", label: "How it works" },
@@ -95,6 +96,7 @@ export default function PublicNavbar({ mainId = "main-content" }: { mainId?: str
 					</nav>
 
 					<div className="flex items-center gap-3">
+						<LanguageSelector variant="subtle" />
 						<Link className="hidden rounded-full px-4 py-2 text-sm font-medium text-white/70 transition hover:text-white md:block" href="/login">
 							Log in
 						</Link>

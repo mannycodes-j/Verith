@@ -23,6 +23,12 @@ export default function GrowthProfile() {
     <section className={styles.nextStep}><div><span>Recommended next activity</span><h2>{record.recommendedNextActivity.title}</h2><p>{record.recommendedNextActivity.description}</p></div><Link href={record.recommendedNextActivity.href}>Start guided practice</Link></section>
 
     <section className={styles.grid}>
+      {record.competencies.filter((item) => item.notEnoughEvidence).length > 0 && (
+        <p className={`${styles.pendingNotice} col-span-full`}>
+          <span>ℹ︎</span>
+          Skills marked <strong className="text-violet-300 font-semibold">Not enough evidence</strong> need more scored practice before a level can be established. Completing guided investigations, quizzes, or challenges with scoring counts — simply opening reports does not.
+        </p>
+      )}
       {record.competencies.map((item) => {
         const copy = COMPETENCY_DESCRIPTIONS[item.competency] ?? { label: item.competency.replaceAll("_", " "), description: "A measured media-literacy competency." };
         const progress = item.notEnoughEvidence ? Math.min(20, item.scoredEvidenceCount * 10) : COMPETENCY_LEVEL_PROGRESS[item.level];
@@ -31,7 +37,7 @@ export default function GrowthProfile() {
           <p>{copy.description}</p>
           <div className={styles.progress} role="progressbar" aria-label={`${copy.label}: ${item.notEnoughEvidence ? "not enough evidence" : item.level}`} aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress}><span style={{ width: `${progress}%` }} /></div>
           <dl><div><dt>Evidence</dt><dd>{item.evidenceCount}</dd></div><div><dt>Scored</dt><dd>{item.scoredEvidenceCount}</dd></div><div><dt>Average</dt><dd>{item.averageScore === undefined ? "Not established" : `${Math.round(item.averageScore * 100)}%`}</dd></div></dl>
-          {item.scoreHistory.length > 0 ? <details><summary>Evidence behind this level</summary><ol>{[...item.scoreHistory].reverse().map((entry) => <li key={`${entry.sourceType}-${entry.sourceActivityId}`}><span>{entry.sourceType.replaceAll("_", " ")}</span><strong>{Math.round(entry.score * 100)}%</strong><small>{new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(new Date(entry.occurredAt))}</small></li>)}</ol></details> : <small>Complete scored practice to establish a level. Simply opening reports does not count.</small>}
+          {item.scoreHistory.length > 0 ? <details><summary>Evidence behind this level</summary><ol>{[...item.scoreHistory].reverse().map((entry) => <li key={`${entry.sourceType}-${entry.sourceActivityId}`}><span>{entry.sourceType.replaceAll("_", " ")}</span><strong>{Math.round(entry.score * 100)}%</strong><small>{new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(new Date(entry.occurredAt))}</small></li>)}</ol></details> : null}
         </article>;
       })}
     </section>

@@ -15,6 +15,7 @@ import {
 import Link from "next/link";
 import type { FormEvent } from "react";
 import { accountService } from "@/services/account";
+import LanguageSelector from "@/components/LanguageSelector";
 import SettingsNav from "./SettingsNav";
 import { settingsStyles as styles } from "./settings.styles";
 
@@ -268,7 +269,8 @@ export default function SettingsOverview() {
                     <Languages aria-hidden="true" size={13} />
                     Preferred language
                   </span>
-                  <input
+                  <LanguageSelector
+                    variant="input"
                     defaultValue={record.preferredLanguage ?? "en"}
                     name="preferredLanguage"
                   />

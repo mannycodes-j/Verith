@@ -3,7 +3,7 @@ export const vectraStyles = {
   pageNarrow: "mx-auto max-w-5xl",
   pageMedium: "mx-auto max-w-6xl",
   pageHeader:
-    "mb-10 max-w-4xl py-2 [&>span]:inline-flex [&>span]:items-center [&>span]:gap-2 [&>span]:text-xs [&>span]:font-bold [&>span]:uppercase [&>span]:tracking-[0.18em] [&>span]:text-white/60 [&>span]:before:inline-flex [&>span]:before:size-1.5 [&>span]:before:rounded-full [&>span]:before:bg-white/60 [&_h1]:mt-4 [&_h1]:mb-0 [&_h1]:max-w-[18ch] [&_h1]:text-4xl [&_h1]:leading-[1.1] [&_h1]:font-semibold [&_h1]:tracking-tight md:[&_h1]:text-5xl [&>p]:mt-4 [&>p]:max-w-2xl [&>p]:text-base [&>p]:leading-relaxed [&>p]:text-white/70",
+    "mb-10 max-w-4xl py-2 [&>span]:inline-flex [&>span]:items-center [&>span]:gap-2 [&>span]:text-xs [&>span]:font-bold [&>span]:uppercase [&>span]:tracking-[0.18em] [&>span]:text-violet-400 [&>span]:before:inline-flex [&>span]:before:size-1.5 [&>span]:before:rounded-full [&>span]:before:bg-violet-400 [&_h1]:mt-4 [&_h1]:mb-0 [&_h1]:max-w-[18ch] [&_h1]:text-4xl [&_h1]:leading-[1.1] [&_h1]:font-semibold [&_h1]:tracking-tight md:[&_h1]:text-5xl [&>p]:mt-4 [&>p]:max-w-2xl [&>p]:text-base [&>p]:leading-relaxed [&>p]:text-white/70",
   card:
     "relative overflow-hidden rounded-3xl border border-white/10 bg-[#111] shadow-xl transition-all duration-300 hover:border-white/20 hover:shadow-2xl hover:-translate-y-1",
   nested:

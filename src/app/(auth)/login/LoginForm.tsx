@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import GoogleAuthButton from "@/components/auth/GoogleAuthButton";
+import LanguageSelector from "@/components/LanguageSelector";
 import { authStyles as styles } from "@/components/auth/auth.styles";
 import { ApiClientError } from "@/services/apiClient";
 import { authService } from "@/services/authService";
@@ -71,6 +72,9 @@ export default function LoginForm({
         <p>Log in to your account to continue.</p>
       </header>
       <GoogleAuthButton intent="LOGIN" />
+      <div className="flex justify-end mb-4 -mt-2">
+        <LanguageSelector id="language" name="language" variant="subtle" />
+      </div>
       <form className={styles.form} onSubmit={onSubmit} noValidate>
         {sessionExpired && (
           <div className={styles.notice} role="status">

@@ -490,7 +490,7 @@ export default function LandingPage() {
 							</div>
 						</MotionReveal>
 
-						<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+						<div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
 							{[
 								{
 									quote: "Verith has completely transformed how our newsroom verifies breaking information on social media. The traceable evidence maps save us hours.",
@@ -505,11 +505,11 @@ export default function LandingPage() {
 									author: "Emmanuel Oluwaferanmi",
 								},
 							].map((testimonial, i) => (
-								<MotionReveal delay={i * 0.1} key={i}>
-									<div className="rounded-3xl border border-white/10 bg-black/40 backdrop-blur-xl p-8 relative hover:border-white/20 transition-all duration-300">
+								<MotionReveal delay={i * 0.1} key={i} className="flex flex-col">
+									<div className="flex flex-col h-full rounded-3xl border border-white/10 bg-black/40 backdrop-blur-xl p-8 relative hover:border-white/20 transition-all duration-300">
 										<Quote className="text-violet-500/20 w-12 h-12 absolute top-6 right-6" />
 										<p className="text-white/70 leading-relaxed relative z-10">&ldquo;{testimonial.quote}&rdquo;</p>
-										<div className="mt-8 flex items-center gap-3">
+										<div className="mt-auto pt-8 flex items-center gap-3">
 											<div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#C084FC] to-[#6366F1] flex items-center justify-center text-white font-medium text-sm">
 												{testimonial.author.charAt(0)}
 											</div>

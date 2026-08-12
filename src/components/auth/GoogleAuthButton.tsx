@@ -38,7 +38,7 @@ interface GoogleIdentityState {
 
 declare global {
 	interface Window {
-		google?: { accounts: { id: GoogleIdentityApi } };
+		google?: { accounts?: { id: GoogleIdentityApi } };
 		__verithGoogleIdentity?: GoogleIdentityState;
 	}
 }
@@ -119,7 +119,7 @@ export default function GoogleAuthButton({ intent }: { intent: GoogleAuthIntent 
 
 	useEffect(() => {
 		const clientId = configuration.data?.clientId;
-		const google = window.google?.accounts.id;
+		const google = window.google?.accounts?.id;
 		const target = buttonRef.current;
 		if (!scriptReady || !clientId || !google || !target) return;
 
