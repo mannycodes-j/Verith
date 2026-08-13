@@ -44,13 +44,13 @@ export const USER_CAPABILITIES: LandingCapability[] = [
 	},
 	{
 		iconKey: "practice",
-		title: "Think through guided checks",
-		description: "Use guided investigations to practise your own reasoning before comparing it with Verith’s analysis.",
+		title: "Think first, then compare",
+		description: "Use Guided Investigation to practise your reasoning, then use the MIL Coach to turn a completed report into a focused next lesson.",
 	},
 	{
 		iconKey: "learning",
 		title: "Build practical skills",
-		description: "Learn through courses, lessons, quizzes, and daily challenges designed around real verification habits.",
+		description: "Learn through courses, lessons, quizzes, daily practice, and community missions built around real verification habits.",
 	},
 	{
 		iconKey: "achievements",

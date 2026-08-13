@@ -39,6 +39,8 @@
     "src/data/admin-content.ts",
     "src/data/supported-languages.ts",
     "src/utils/supported-languages.test.ts",
+    "src/utils/spoken-report-summary.ts",
+    "src/utils/spoken-report-summary.test.ts",
     "src/types/admin-content.ts"
   ]
 }

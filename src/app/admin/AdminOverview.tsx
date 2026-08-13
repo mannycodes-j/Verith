@@ -9,6 +9,11 @@ const percent = new Intl.NumberFormat(undefined, {
   maximumFractionDigits: 1,
   style: "percent",
 });
+const usd = new Intl.NumberFormat(undefined, {
+  style: "currency",
+  currency: "USD",
+  maximumFractionDigits: 4,
+});
 
 function duration(milliseconds: number | null) {
   if (milliseconds === null) return "Unavailable";
@@ -57,9 +62,9 @@ export default function AdminOverview() {
           <h1>System evidence, not decorative metrics.</h1>
         </div>
         <p>
-          This view contains operational aggregates from Verith.
-          Provider cost remains explicitly unavailable because the backend does
-          not store it.
+          This view contains operational aggregates from Verith. Provider cost
+          is an application estimate based on recorded tokens and configured
+          model prices; cloud invoices remain authoritative.
         </p>
       </header>
 
@@ -129,7 +134,12 @@ export default function AdminOverview() {
                     {percent.format(provider.successRate)} successful ·{" "}
                     {duration(provider.averageLatencyMs)}
                   </small>
-                  <em title={provider.cost.reason}>Cost unavailable</em>
+                  <em title={provider.cost.reason}>
+                    {provider.cost.state === "ESTIMATED"
+                      ? `${usd.format(provider.estimatedCostUsd)} estimated`
+                      : "Cost estimate unavailable"}{" "}
+                    · {percent.format(provider.fallbackRate)} fallback
+                  </em>
                 </li>
               ))}
             </ol>

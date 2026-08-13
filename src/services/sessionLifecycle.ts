@@ -28,6 +28,13 @@ export interface SessionIdentityChange {
   reason: SessionIdentityChangeReason;
 }
 
+export function sessionExitPath(reason: SessionIdentityChangeReason) {
+  if (reason === "AUTHENTICATED") return undefined;
+  return reason === "REFRESH_FAILED"
+    ? "/login?reason=session-expired"
+    : "/login?reason=signed-out";
+}
+
 type StorageAdapter = Pick<Storage, "getItem" | "setItem">;
 
 interface SessionLifecycleHost {

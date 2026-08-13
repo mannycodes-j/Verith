@@ -72,7 +72,7 @@ export default function PublicNavbar({ mainId = "main-content" }: { mainId?: str
 						<VerithLogo />
 					</Link>
 
-					<nav className="hidden items-center gap-1 md:flex" aria-label="Primary navigation">
+					<nav className="hidden items-center md:gap-1 lg:gap-6 md:flex" aria-label="Primary navigation">
 						{publicLinks.map((link) => {
 							const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
 							return (

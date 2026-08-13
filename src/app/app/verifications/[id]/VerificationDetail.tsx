@@ -78,7 +78,12 @@ export default function VerificationDetail({ id }: { id: string }) {
 	});
 	const confirmLanguage = useMutation({
 		mutationFn: async () => {
-			await verificationService.confirmSourceLanguage(id, confirmedLanguage);
+			const detectedLanguage = verification.data?.detectedLanguage;
+			const confirmed = await verificationService.confirmSourceLanguage(
+				id,
+				confirmedLanguage,
+			);
+			if (confirmedLanguage === detectedLanguage) return confirmed;
 			return verificationService.reprocess(id);
 		},
 		onSuccess: (record) => {
@@ -97,6 +102,9 @@ export default function VerificationDetail({ id }: { id: string }) {
 		},
 	});
 	const verificationStatus = verification.data?.status;
+	const sourceLanguageCorrection =
+		Boolean(verification.data?.detectedLanguage) &&
+		confirmedLanguage !== verification.data?.detectedLanguage;
 
 	useEffect(() => {
 		if (verificationStatus !== "COMPLETED") return;
@@ -275,8 +283,9 @@ export default function VerificationDetail({ id }: { id: string }) {
 						Verith estimated {record.detectedLanguage || "an unknown language"}
 						{typeof record.languageDetectionConfidence === "number"
 							? ` at ${Math.round(record.languageDetectionConfidence * 100)}% confidence`
-							: ""}. Choose the language used in the original content, then Verith will
-							run the investigation again using that confirmed language.
+								: ""}. Choose the language used in the original content. Confirming the
+							detected language will not rerun this investigation. Verith checks again
+							only if you correct it to a different language.
 					</p>
 					<form
 						onSubmit={(event) => {
@@ -300,7 +309,13 @@ export default function VerificationDetail({ id }: { id: string }) {
 							</select>
 						</label>
 						<button type="submit" disabled={confirmLanguage.isPending}>
-							{confirmLanguage.isPending ? "Confirming and restarting…" : "Confirm and check again"}
+								{confirmLanguage.isPending
+									? sourceLanguageCorrection
+										? "Correcting and checking again…"
+										: "Confirming…"
+									: sourceLanguageCorrection
+										? "Correct and check again"
+										: "Confirm language"}
 						</button>
 						{confirmLanguage.error && <small>{confirmLanguage.error.message}</small>}
 					</form>

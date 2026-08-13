@@ -393,7 +393,7 @@ export default function VerificationComposer({ initialSourceType = "TEXT" }: { i
 										{mediaFile
 											? `${mediaFile.name} · ${(mediaFile.size / (1024 * 1024)).toFixed(2)} MB`
 											: sourceType === "AUDIO"
-												? "MP3, WAV, M4A, OGG, WEBM, or FLAC"
+												? "MP3, WAV, M4A, OGG, WEBM, FLAC, or OPUS"
 												: sourceType === "VIDEO"
 													? "MP4 or WEBM · up to 12 MB and 60 seconds"
 													: "JPG, JPEG, PNG, WEBP, GIF, or AVIF"}
@@ -403,7 +403,7 @@ export default function VerificationComposer({ initialSourceType = "TEXT" }: { i
 										type="file"
 										accept={
 											sourceType === "AUDIO"
-												? ".mp3,.wav,.m4a,.ogg,.webm,.flac,audio/*"
+											? ".mp3,.wav,.m4a,.ogg,.webm,.flac,.opus,audio/*"
 												: sourceType === "VIDEO"
 													? ".mp4,.webm,video/mp4,video/webm"
 													: ".jpg,.jpeg,.png,.webp,.gif,.avif,image/*"

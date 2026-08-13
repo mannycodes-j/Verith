@@ -26,6 +26,11 @@ import LanguageSelector from "@/components/LanguageSelector";
 import type { SupportedLanguage } from "@/data/supported-languages";
 import { REPORT_LANGUAGE_COPY } from "@/data/report-language-copy";
 import { useReportLanguage } from "./useReportLanguage";
+import {
+  buildSpokenReportSummary,
+  selectSpeechVoice,
+  speechLocaleFor,
+} from "@/utils/spoken-report-summary";
 
 function humanize(value: string | undefined) {
   return friendlyLabel(value);
@@ -310,45 +315,68 @@ function CheckCard({ reportId }: { reportId: string }) {
 }
 
 function SpokenReportSummary({ report }: { report: VerificationReport }) {
-  const [speaking, setSpeaking] = useState(false);
+  const [speakingLanguage, setSpeakingLanguage] =
+    useState<SupportedLanguage>();
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const language = report.presentationLanguage ?? report.requestedLanguage;
+  const speaking = speakingLanguage === language;
   const supported =
     typeof window !== "undefined" &&
     "speechSynthesis" in window &&
     "SpeechSynthesisUtterance" in window;
+  const voice = useMemo(
+    () => selectSpeechVoice(voices, language),
+    [language, voices],
+  );
+
+  useEffect(() => {
+    if (!supported) return;
+    const synthesis = window.speechSynthesis;
+    const refreshVoices = () => setVoices(synthesis.getVoices());
+    refreshVoices();
+    synthesis.addEventListener("voiceschanged", refreshVoices);
+    return () =>
+      synthesis.removeEventListener("voiceschanged", refreshVoices);
+  }, [supported]);
+
   useEffect(
     () => () => {
       if (supported) window.speechSynthesis.cancel();
     },
     [supported],
   );
-  const play = () => {
+
+  useEffect(() => {
     if (!supported) return;
     window.speechSynthesis.cancel();
-    const text = [
-      `Main finding: ${friendlyVerdict(report.overallVerdict)}.`,
-      `Why: ${friendlyReportText(report.summary)}`,
-      `Important limitation: ${report.limitations[0] ?? "Open the complete report for context."}`,
-      `Recommended action: ${report.recommendedActions[0] ?? "Inspect the evidence before sharing."}`,
-    ].join(" ");
+  }, [language, supported]);
+
+  const play = () => {
+    if (!supported || !voice) return;
+    window.speechSynthesis.cancel();
+    const text = buildSpokenReportSummary(report, language);
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "en-NG";
+    utterance.voice = voice;
+    utterance.lang = voice.lang || speechLocaleFor(language);
     utterance.rate = 0.92;
-    utterance.onend = () => setSpeaking(false);
-    utterance.onerror = () => setSpeaking(false);
-    setSpeaking(true);
+    utterance.onend = () => setSpeakingLanguage(undefined);
+    utterance.onerror = () => setSpeakingLanguage(undefined);
+    setSpeakingLanguage(language);
     window.speechSynthesis.speak(utterance);
     if (report.id) {
       void analyticsService
         .record("AUDIO_SUMMARY_USED", {
           reportId: report.id,
           verificationId: report.verificationId,
+          mode: language,
+          feature: `BROWSER_VOICE_${utterance.lang}`,
         })
         .catch(() => undefined);
     }
   };
   const stop = () => {
     window.speechSynthesis.cancel();
-    setSpeaking(false);
+    setSpeakingLanguage(undefined);
   };
   return (
     <section className={styles.spokenSummary}>
@@ -359,13 +387,23 @@ function SpokenReportSummary({ report }: { report: VerificationReport }) {
         </strong>
       </div>
       {supported ? (
-        <button
-          aria-pressed={speaking}
-          onClick={speaking ? stop : play}
-          type="button"
-        >
-          {speaking ? "Stop summary" : "Play spoken summary"}
-        </button>
+        voice ? (
+          <button
+            aria-label={`Play spoken summary in ${language}`}
+            aria-pressed={speaking}
+            onClick={speaking ? stop : play}
+            type="button"
+          >
+            {speaking ? "Stop summary" : "Play spoken summary"}
+          </button>
+        ) : voices.length === 0 ? (
+          <small>Loading the voices available on this device…</small>
+        ) : (
+          <small>
+            This device does not have a {language.toUpperCase()} voice. The
+            written summary remains available.
+          </small>
+        )
       ) : (
         <small>Spoken summaries are not supported by this browser.</small>
       )}

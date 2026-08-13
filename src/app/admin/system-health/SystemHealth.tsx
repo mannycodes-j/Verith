@@ -51,7 +51,7 @@ function ProviderList({
 }
 
 export default function SystemHealth() {
-  const [dependencies, ai, search] = useQueries({
+  const [dependencies, ai, search, capacity] = useQueries({
     queries: [
       {
         queryFn: adminService.dependencyHealth,
@@ -68,10 +68,24 @@ export default function SystemHealth() {
         queryKey: ["admin", "health", "search"],
         retry: false,
       },
+      {
+        queryFn: adminService.aiCapacity,
+        queryKey: ["admin", "health", "ai-capacity"],
+        retry: false,
+      },
     ],
   });
-  const pending = dependencies.isPending || ai.isPending || search.isPending;
-  const errors = [dependencies.error, ai.error, search.error].filter(
+  const pending =
+    dependencies.isPending ||
+    ai.isPending ||
+    search.isPending ||
+    capacity.isPending;
+  const errors = [
+    dependencies.error,
+    ai.error,
+    search.error,
+    capacity.error,
+  ].filter(
     (error): error is Error => error instanceof Error,
   );
 
@@ -108,6 +122,7 @@ export default function SystemHealth() {
               void dependencies.refetch();
               void ai.refetch();
               void search.refetch();
+              void capacity.refetch();
             }}
           >
             Retry unavailable checks
@@ -144,6 +159,35 @@ export default function SystemHealth() {
       {ai.data && <ProviderList records={ai.data} title="AI providers" />}
       {search.data && (
         <ProviderList records={search.data} title="Evidence search providers" />
+      )}
+      {capacity.data && (
+        <section className={styles.dependencyRegion}>
+          <header>
+            <span>Review-period AI capacity</span>
+            <strong data-health={capacity.data.budget.mode}>
+              {capacity.data.budget.mode}
+            </strong>
+          </header>
+          <dl>
+            {capacity.data.budget.providers.map((provider) => (
+              <div key={provider.provider}>
+                <dt>{provider.provider}</dt>
+                <dd>{provider.mode}</dd>
+                <small>
+                  ${provider.spentUsd.toFixed(4)} estimated of ${provider.budgetUsd.toFixed(2)} · ${provider.remainingUsd.toFixed(2)} remaining
+                </small>
+              </div>
+            ))}
+            <div>
+              <dt>In-process queue</dt>
+              <dd>{capacity.data.concurrency.queued}</dd>
+              <small>
+                Provider and capability gates prevent ordinary bursts from
+                becoming simultaneous cloud calls.
+              </small>
+            </div>
+          </dl>
+        </section>
       )}
 
       <footer className={styles.healthNotice}>

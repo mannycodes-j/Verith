@@ -7,6 +7,7 @@ import {
 import { useEffect, useState, type ReactNode } from "react";
 import {
   clearSessionBoundQueryCache,
+  sessionExitPath,
   subscribeToSessionIdentityChanges,
 } from "@/services/sessionLifecycle";
 
@@ -37,8 +38,10 @@ export default function AppProviders({ children }: { children: ReactNode }) {
 
   useEffect(
     () =>
-      subscribeToSessionIdentityChanges(() => {
+      subscribeToSessionIdentityChanges((change) => {
         clearSessionBoundQueryCache(queryClient);
+        const exitPath = sessionExitPath(change.reason);
+        if (exitPath) window.location.replace(exitPath);
       }),
     [queryClient],
   );

@@ -22,8 +22,21 @@ export interface AdminAnalyticsOverview {
     averageLatencyMs: number | null;
     inputTokens: number;
     outputTokens: number;
-    cost: { state: "UNAVAILABLE"; reason: string };
+    estimatedCostUsd: number;
+    fallbackRate: number;
+    cost: { state: "ESTIMATED" | "UNAVAILABLE"; reason: string };
   }>;
+  aiEconomics: {
+    byInvestigationType: Array<{
+      sourceType: string;
+      investigations: number;
+      averageCostUsd: number;
+      averageProviderAttempts: number;
+      averageLatencyMs: number;
+    }>;
+    localization: { executions: number; averageCostUsd: number };
+    limitation: string;
+  };
 }
 
 export interface AdminPilotAnalytics {
@@ -180,6 +193,32 @@ export interface ProviderHealth {
   nextAvailableAt?: string;
 }
 
+export interface AiCapacity {
+  budget: {
+    enabled: boolean;
+    mode: "NORMAL" | "CONSERVE" | "CRITICAL" | "EXHAUSTED";
+    reviewPeriodStart: string;
+    spentUsd: number;
+    budgetUsd: number;
+    remainingUsd: number;
+    utilizationPercent: number;
+    providers: Array<{
+      provider: "VERTEX" | "BEDROCK";
+      spentUsd: number;
+      budgetUsd: number;
+      remainingUsd: number;
+      utilizationPercent: number;
+      mode: "NORMAL" | "CONSERVE" | "CRITICAL" | "EXHAUSTED";
+    }>;
+    calculatedAt: string;
+  };
+  concurrency: {
+    queued: number;
+    providers: Record<string, number>;
+    capabilities: Record<string, number>;
+  };
+}
+
 export interface DependencyHealth {
   status: "ok" | "error" | "shutting_down";
   info?: Record<string, { status: string; [key: string]: unknown }>;
@@ -273,6 +312,7 @@ export const adminService = {
   dependencyHealth: () => apiClient.get<DependencyHealth>("/health/ready"),
   aiHealth: () =>
     apiClient.get<ProviderHealth[]>("/integrations/ai/health"),
+  aiCapacity: () => apiClient.get<AiCapacity>("/integrations/ai/capacity"),
   searchHealth: () =>
     apiClient.get<ProviderHealth[]>("/integrations/search/health"),
   publishers: (cursor?: string) =>

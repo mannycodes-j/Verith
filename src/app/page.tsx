@@ -14,7 +14,6 @@ import {
 	Layers3,
 	MessageCircle,
 	Mic2,
-	Quote,
 	ScanSearch,
 	Search,
 	ShieldAlert,
@@ -35,6 +34,7 @@ import type { LandingIconKey } from "@/types/landing";
 const inputTypes = [
 	{ icon: MessageCircle, label: "Text" },
 	{ icon: ImageIcon, label: "Image" },
+	{ icon: ScanSearch, label: "Screenshot" },
 	{ icon: Mic2, label: "Voice note" },
 	{ icon: Video, label: "Video" },
 ] as const;
@@ -42,23 +42,23 @@ const inputTypes = [
 const productPillars = [
 	{
 		icon: ShieldCheck,
-		title: "Explainable Verification",
-		text: "Go beyond 'true' or 'false'. Understand exactly why a claim is disputed with clear, traceable evidence mapped directly to original sources.",
+		title: "See the reasons, not just a label",
+		text: "Verith explains why a claim appears supported, challenged, misleading, or still uncertain instead of stopping at a verdict.",
 	},
 	{
 		icon: Search,
-		title: "Deep Source Analysis",
-		text: "Automatically retrieve, cross-reference, and evaluate the credibility of sources across the web, identifying bias and missing context.",
+		title: "Open the sources yourself",
+		text: "See which sources were used, what each one says, and whether it supports, challenges, or simply adds context to the claim.",
 	},
 	{
 		icon: ShieldAlert,
-		title: "Calibrated Uncertainty",
-		text: "Never manufacture certainty. When evidence is inconclusive or missing, Verith clearly exposes the gaps so you can make informed decisions.",
+		title: "Know what is still uncertain",
+		text: "When reliable information is missing, conflicting, or unavailable, Verith shows the gap so you can pause instead of acting on false confidence.",
 	},
 	{
 		icon: BookOpen,
-		title: "Media Literacy Engine",
-		text: "Every investigation is a learning opportunity. Interactive challenges and evidence quizzes turn fact-checking into practical, reusable skills.",
+		title: "Learn skills you can reuse",
+		text: "Courses, lessons, quizzes, daily practice, and community missions help you recognise weak sources, manipulation, and missing context on your own.",
 	},
 ];
 
@@ -100,7 +100,7 @@ export default function LandingPage() {
 							<div className="flex items-center gap-3 mb-8">
 								<div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1">
 									<span className="flex size-2 rounded-full bg-emerald-500 animate-pulse" />
-									<span className="text-xs font-medium text-white/70">Evidence infrastructure</span>
+									<span className="text-xs font-medium text-white/70">Evidence you can inspect</span>
 								</div>
 								<div className="hidden sm:flex items-center gap-2.5 rounded-full border border-white/10 bg-black/50 px-3 py-1 shadow-inner shadow-white/5">
 									<span className="relative size-1.5">
@@ -108,19 +108,19 @@ export default function LandingPage() {
 										<span className="absolute inset-0 rounded-full bg-violet-500 blur-[2px]"></span>
 										<span className="relative block size-1.5 rounded-full bg-violet-300"></span>
 									</span>
-									<span className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/40">Verith.Engine_Active</span>
+									<span className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/40">Built for everyday decisions</span>
 								</div>
 							</div>
 
 							<h1 className="text-5xl md:text-7xl font-semibold tracking-tighter leading-[1.05] text-balance">
-								Turn information overload into{" "}
+								Check what you see before you{" "}
 								<span className="animate-text-shimmer bg-[linear-gradient(110deg,#a78bfa,45%,#fff,55%,#a78bfa)] bg-[length:200%_100%] bg-clip-text text-transparent">
-									informed action.
+									believe or share it.
 								</span>
 							</h1>
 
 							<p className="mt-6 text-lg text-white/50 leading-relaxed max-w-xl">
-								Verith is an explainable verification platform that transforms claims, articles, screenshots, and voice notes into transparent evidence maps you can trust.
+								Paste a claim or upload an image, screenshot, voice note, or short video. Verith finds the checkable claims, compares relevant sources, and explains what is known, disputed, or still missing.
 							</p>
 
 							<div className="mt-10 flex flex-wrap items-center gap-6">
@@ -129,7 +129,7 @@ export default function LandingPage() {
 									href="/login"
 								>
 									<span className="relative z-10 flex items-center gap-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
-										Start Investigating
+										Check something now
 										<ArrowRight size={16} className="opacity-70 group-hover:translate-x-1 transition-transform" />
 									</span>
 								</Link>
@@ -137,7 +137,7 @@ export default function LandingPage() {
 									className="inline-flex h-14 items-center justify-center rounded-full border border-white/10 bg-white/5 px-8 text-sm font-bold text-white/70 transition-all hover:bg-white/10 hover:text-white"
 									href="#how-it-works"
 								>
-									Explore Product
+									See how it works
 								</a>
 							</div>
 						</div>
@@ -148,8 +148,8 @@ export default function LandingPage() {
 									<div className="rounded-[1.25rem] border border-white/[0.04] bg-[#0B0C0E] p-6 md:p-8">
 										<div className="flex flex-wrap items-center justify-between gap-4">
 											<div>
-												<p className="text-sm font-semibold">Start an evidence-led investigation</p>
-												<p className="mt-1 text-xs text-muted-foreground">Bring the content. Verith orchestrates the verification workflow.</p>
+												<p className="text-sm font-semibold">What would you like to check?</p>
+												<p className="mt-1 text-xs text-muted-foreground">Bring the original content and ask one clear question.</p>
 											</div>
 											<span className="rounded-full bg-emerald-400/10 px-3 py-1.5 text-xs font-medium text-emerald-300">Private by default</span>
 										</div>
@@ -168,12 +168,11 @@ export default function LandingPage() {
 										</div>
 										<div className="mt-5 min-h-48 rounded-2xl bg-white/[0.035] p-5 text-left">
 											<p className="text-sm leading-7 text-muted-foreground">
-												Submit the claim, headline, forwarded message, or article excerpt you need to assess. Add a focused question to shape the
-												investigation around the decision you need to make.
+											Paste the message or claim you received, or upload the clearest version of the media. Keep names, dates, captions, and surrounding context so Verith can examine the right thing.
 											</p>
 										</div>
 										<div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-											<p className="text-xs text-muted">Source provenance is preserved throughout the investigation.</p>
+										<p className="text-xs text-muted">Your investigation starts private. You choose whether to share it later.</p>
 											<span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#C084FC] to-[#6366F1] px-5 py-3 text-xs font-semibold text-white">
 												Investigate
 												<ArrowRight size={14} />
@@ -193,7 +192,7 @@ export default function LandingPage() {
 					<div className="flex w-max animate-marquee whitespace-nowrap text-sm text-white/40">
 						{[...Array(2)].map((_, i) => (
 							<div key={i} aria-hidden={i !== 0} className="flex items-center">
-								{["Explainable AI", "Traceable Evidence", "Deep Source Analysis", "Calibrated Uncertainty", "Media Literacy Engine", "Honest by Construction"].map((text) => (
+								{["Check claims", "Inspect sources", "See limitations", "Understand context", "Practise daily", "Build confidence"].map((text) => (
 									<span key={text} className="flex items-center">
 										<span className="mx-8 font-medium tracking-wide">{text}</span>
 										<span className="opacity-40">•</span>
@@ -210,10 +209,10 @@ export default function LandingPage() {
 						<MotionReveal>
 							<div className="mb-16 max-w-2xl">
 								<span className="inline-flex rounded-full bg-violet-500/10 px-3 py-1.5 text-xs font-semibold text-violet-300 mb-4 border border-violet-500/20">
-									The Verith product thesis
+									Why Verith is different
 								</span>
 								<h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
-									Verification should create informed people, <span className="text-white/40">not dependent users.</span>
+									A useful answer should help you understand, <span className="text-white/40">not ask you to trust blindly.</span>
 								</h2>
 							</div>
 						</MotionReveal>
@@ -241,12 +240,12 @@ export default function LandingPage() {
 						<MotionReveal>
 							<div className="max-w-2xl mb-16">
 								<h2 className="text-3xl md:text-4xl font-medium tracking-tight">
-									Powerful enough for investigation.
+									Everything you need to check carefully.
 									<br />
-									<span className="text-white/40">Clear enough for everyone.</span>
+									<span className="text-white/40">Explained in words you can use.</span>
 								</h2>
 								<p className="mt-4 text-base text-white/50 leading-relaxed">
-									Verith brings evidence retrieval, source comparison, and media literacy into one coherent experience—without asking people to become professional fact-checkers.
+									You do not need to be a journalist or researcher. Verith helps you move from “I am not sure” to a decision you can explain.
 								</p>
 							</div>
 						</MotionReveal>
@@ -260,9 +259,9 @@ export default function LandingPage() {
 										<div className="size-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white mb-6 group-hover:text-violet-300 group-hover:bg-violet-500/20 transition-colors">
 											<FileSearch size={20} />
 										</div>
-										<h3 className="text-xl font-medium text-white">Claim-level intelligence</h3>
+										<h3 className="text-xl font-medium text-white">Find the claims that can actually be checked</h3>
 										<p className="mt-2 text-sm text-white/50 max-w-md leading-relaxed group-hover:text-white/70 transition-colors">
-											Verith decomposes complex media into verifiable claims, separating fact, opinion, framing, and rhetoric before analysis begins.
+											A post may mix facts, opinions, emotion, and persuasion. Verith separates the factual parts so the investigation stays focused.
 										</p>
 									</div>
 									<div className="absolute right-0 bottom-0 w-2/3 h-2/3 bg-gradient-to-tl from-[#C084FC]/10 to-transparent blur-2xl group-hover:bg-violet-500/30 transition-colors duration-500" />
@@ -276,9 +275,9 @@ export default function LandingPage() {
 										<div className="size-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white mb-6 group-hover:text-indigo-300 group-hover:bg-indigo-500/20 transition-colors">
 											<Search size={20} />
 										</div>
-										<h3 className="text-xl font-medium text-white">Traceable evidence</h3>
+										<h3 className="text-xl font-medium text-white">Evidence you can open</h3>
 										<p className="mt-2 text-sm text-white/50 leading-relaxed group-hover:text-white/70 transition-colors">
-											Every conclusion remains connected to the source material that supports, challenges, or contextualises it.
+											Every important explanation stays connected to the source that supports, challenges, or adds context to it.
 										</p>
 									</div>
 								</SpotlightCard>
@@ -291,9 +290,9 @@ export default function LandingPage() {
 										<div className="size-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white mb-6 group-hover:text-fuchsia-300 group-hover:bg-fuchsia-500/20 transition-colors">
 											<ShieldCheck size={20} />
 										</div>
-										<h3 className="text-xl font-medium text-white">Calibrated uncertainty</h3>
+										<h3 className="text-xl font-medium text-white">Honest limits</h3>
 										<p className="mt-2 text-sm text-white/50 leading-relaxed group-hover:text-white/70 transition-colors">
-											Verith exposes evidence gaps and missing context instead of manufacturing certainty where none exists.
+											If a page cannot be read or good evidence cannot be found, Verith tells you instead of pretending the answer is certain.
 										</p>
 									</div>
 								</SpotlightCard>
@@ -305,19 +304,18 @@ export default function LandingPage() {
 									<div className="relative z-10 h-full flex flex-col justify-between">
 										<div>
 											<h3 className="text-xl font-medium text-white group-hover:text-violet-300 transition-colors">
-												Verification that builds lasting media literacy.
+											Every check can make your next check better.
 											</h3>
 											<p className="mt-2 text-sm text-white/50 max-w-md leading-relaxed group-hover:text-white/70 transition-colors">
-												Lessons, quizzes, and evidence challenges turn each investigation into practical skills people can reuse across platforms and
-												communities.
+											Guided investigations, lessons, quizzes, daily practice, and community missions help you build habits you can use on any platform.
 											</p>
 										</div>
 										<div className="flex gap-4">
 											<div className="flex items-center gap-2 text-xs font-medium text-white/40 group-hover:text-white/70 transition-colors">
-												<Check size={14} className="text-emerald-500" /> No invented citations
+											<Check size={14} className="text-emerald-500" /> Sources stay visible
 											</div>
 											<div className="flex items-center gap-2 text-xs font-medium text-white/40 group-hover:text-white/70 transition-colors">
-												<Check size={14} className="text-emerald-500" /> No hidden uncertainty
+											<Check size={14} className="text-emerald-500" /> Limits stay visible
 											</div>
 										</div>
 									</div>
@@ -333,13 +331,12 @@ export default function LandingPage() {
 						<div>
 							<div className="sticky top-32">
 								<h2 className="text-3xl md:text-4xl font-medium tracking-tight">
-									One input.
+									One piece of content.
 									<br />
-									<span className="text-white/40">A complete chain of reasoning.</span>
+									<span className="text-white/40">Three understandable steps.</span>
 								</h2>
 								<p className="mt-6 text-base text-white/50 leading-relaxed max-w-md">
-									The product turns an ambiguous piece of content into a structured investigation: claims, evidence relationships, source quality, context, limitations, and
-									practical next steps.
+									Verith keeps the process visible so you know what is happening, what was found, and what you should still check for yourself.
 								</p>
 							</div>
 						</div>
@@ -353,9 +350,9 @@ export default function LandingPage() {
 									<div className="w-px h-full bg-white/10 my-4 group-hover:bg-violet-500/50 transition-colors" />
 								</div>
 								<div className="pb-8">
-									<h3 className="text-xl font-medium text-white">Capture the source</h3>
+									<h3 className="text-xl font-medium text-white">Bring the original content</h3>
 									<p className="mt-2 text-sm text-white/50 leading-relaxed">
-										Submit text, an image, screenshot, voice note, or short video while preserving the original material and its context.
+										Paste the full message or upload a clear image, screenshot, voice note, or short video. Add one focused question.
 									</p>
 								</div>
 							</div>
@@ -368,9 +365,9 @@ export default function LandingPage() {
 									<div className="w-px h-full bg-white/10 my-4 group-hover:bg-violet-500/50 transition-colors" />
 								</div>
 								<div className="pb-8">
-									<h3 className="text-xl font-medium text-white">Build the evidence map</h3>
+									<h3 className="text-xl font-medium text-white">Verith checks the claims</h3>
 									<p className="mt-2 text-sm text-white/50 leading-relaxed">
-										Verith extracts factual claims, retrieves relevant sources, compares competing evidence, and surfaces missing context.
+										It identifies factual claims, looks for useful sources, compares what they say, and points out missing context.
 									</p>
 								</div>
 							</div>
@@ -382,9 +379,9 @@ export default function LandingPage() {
 									</div>
 								</div>
 								<div className="pb-8">
-									<h3 className="text-xl font-medium text-white">Act with confidence</h3>
+									<h3 className="text-xl font-medium text-white">You inspect the answer</h3>
 									<p className="mt-2 text-sm text-white/50 leading-relaxed">
-										Explore an explainable report, inspect every source, understand uncertainty, and make a more informed sharing decision.
+										Read the simple finding, open the evidence, see the limitations, and decide whether to share, wait, correct, or learn more.
 									</p>
 								</div>
 							</div>
@@ -478,14 +475,14 @@ export default function LandingPage() {
 					</div>
 				</section>
 
-				{/* TESTIMONIALS SECTION */}
-				<section className="py-24 px-6 relative z-10" id="testimonials">
+				{/* EVERYDAY USE CASES */}
+				<section className="py-24 px-6 relative z-10" id="everyday-use">
 					<div className="mx-auto max-w-6xl">
 						<MotionReveal>
 							<div className="text-center max-w-2xl mx-auto mb-16">
-									<h2 className="text-3xl md:text-4xl font-medium tracking-tight">Don&apos;t just take our word for it.</h2>
+								<h2 className="text-3xl md:text-4xl font-medium tracking-tight">Use Verith in the moments that make you pause.</h2>
 								<p className="mt-4 text-base text-white/50 leading-relaxed">
-									Join thousands of journalists, researchers, and everyday people building a healthier information ecosystem.
+									You do not need a perfect investigation topic. Start with the everyday content that asks for your trust, attention, money, or action.
 								</p>
 							</div>
 						</MotionReveal>
@@ -493,30 +490,26 @@ export default function LandingPage() {
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
 							{[
 								{
-									quote: "Verith has completely transformed how our newsroom verifies breaking information on social media. The traceable evidence maps save us hours.",
-									author: "Adesugba Samuel",
+									title: "An urgent forwarded message",
+									text: "A message says you must pay, register, or act today. Check who made the announcement, whether an official source confirms it, and what details may be missing.",
+									icon: MessageCircle,
 								},
 								{
-									quote: "Finally, a tool that treats people like adults. Instead of just telling me what's fake, it actually shows me the underlying sources and bias.",
-									author: "Zion Obadina",
+									title: "A screenshot without a source",
+									text: "A screenshot looks convincing but leaves out the page, date, or account. Investigate the visible claim and use the limitations to decide whether more context is needed.",
+									icon: ScanSearch,
 								},
 								{
-									quote: "The media literacy engine is brilliant. I started using it to check forwarded rumors, and now I actually understand how to spot missing context.",
-									author: "Emmanuel Oluwaferanmi",
+									title: "A clip making a big claim",
+									text: "A voice note or short video makes a health, political, financial, or public-safety claim. Check the exact statement, then compare it with the sources Verith finds.",
+									icon: Video,
 								},
-							].map((testimonial, i) => (
+							].map(({ icon: Icon, text, title }, i) => (
 								<MotionReveal delay={i * 0.1} key={i} className="flex flex-col">
-									<div className="flex flex-col h-full rounded-3xl border border-white/10 bg-black/40 backdrop-blur-xl p-8 relative hover:border-white/20 transition-all duration-300">
-										<Quote className="text-violet-500/20 w-12 h-12 absolute top-6 right-6" />
-										<p className="text-white/70 leading-relaxed relative z-10">&ldquo;{testimonial.quote}&rdquo;</p>
-										<div className="mt-auto pt-8 flex items-center gap-3">
-											<div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#C084FC] to-[#6366F1] flex items-center justify-center text-white font-medium text-sm">
-												{testimonial.author.charAt(0)}
-											</div>
-											<div>
-												<div className="text-sm font-medium text-white/90">{testimonial.author}</div>
-											</div>
-										</div>
+									<div className="flex flex-col h-full rounded-3xl border border-white/10 bg-black/40 backdrop-blur-xl p-8 hover:-translate-y-1 hover:border-violet-300/25 transition-all duration-300">
+										<span className="grid size-12 place-items-center rounded-2xl bg-violet-400/10 text-violet-200"><Icon aria-hidden="true" size={22} /></span>
+										<h3 className="mt-6 text-xl font-medium text-white">{title}</h3>
+										<p className="mt-3 text-sm leading-7 text-white/55">{text}</p>
 									</div>
 								</MotionReveal>
 							))}
@@ -536,20 +529,44 @@ export default function LandingPage() {
 						<div className="flex flex-col gap-4">
 							{[
 								{
-									q: "How does Verith verify claims?",
-									a: "Verith uses advanced AI to extract factual claims from your input, then actively searches across the web for credible primary sources, news reports, and academic journals to cross-reference the claims. It builds an evidence map that you can inspect.",
+									q: "What is Verith?",
+									a: "Verith is an investigation and learning tool. It helps you check uncertain digital content, inspect relevant sources, understand limitations, and practise the skills needed to make better information decisions.",
+								},
+								{
+									q: "What can I investigate?",
+									a: "You can submit text, an image, a screenshot, a voice note, or a short video. Direct link investigation is unavailable for now, so paste the important claim or upload the original media instead.",
+								},
+								{
+									q: "What happens after I submit something?",
+									a: "Verith identifies the factual claims, searches for relevant sources, compares what those sources say, and builds a report. You can follow the stages while it works and inspect the final sources yourself.",
 								},
 								{
 									q: "Is Verith always right?",
-									a: "No AI is always right, which is why Verith is designed to be explainable. We never manufacture certainty. If evidence is missing, contradictory, or inconclusive, the platform will explicitly tell you so.",
+									a: "No. Verith can make mistakes or encounter incomplete information. That is why it keeps sources, uncertainty, and limitations visible. Use the report to support your judgement, not replace it.",
 								},
 								{
-									q: "What types of media can I verify?",
-									a: "You can submit text claims, screenshots, images, voice notes, or short video clips. Direct link submission is temporarily unavailable while Verith improves source retrieval reliability.",
+									q: "What is Guided Investigation?",
+									a: "It is a step-by-step activity that asks you to examine the main claim, source, date, context, and warning signs. You think first, then compare your reasoning with Verith’s report.",
 								},
 								{
-									q: "Do I need to be a fact-checker to use it?",
-									a: "Not at all. Verith is built for everyone. While powerful enough for journalists, the interface is designed to be clear and accessible, helping everyday people build media literacy skills along the way.",
+									q: "How can I build my skills?",
+									a: "Take courses and lessons, answer quizzes, practise daily questions, and complete community missions. Verith records completed work and shows your progress, achievements, streaks, XP, and ranks.",
+								},
+								{
+									q: "Which languages does Verith support?",
+									a: "Verith supports English, French, Spanish, and Yorùbá for the investigation experience and report presentation. Original content remains available so you can compare it with the explanation.",
+								},
+								{
+									q: "Are my investigations public?",
+									a: "Investigations are private by default. You control visibility and sharing. Review a report carefully before choosing to make it public.",
+								},
+								{
+									q: "How do daily investigation allowances work?",
+									a: "Your workspace shows the allowance you have left before you submit. Some media investigations may use more allowance than a text check, and Verith should show that cost before you continue. A failed attempt should not be presented as a completed investigation.",
+								},
+								{
+									q: "What if Verith cannot find enough evidence?",
+									a: "The report should say that clearly and show the limitation. An incomplete result is a reason to pause, look for the original source, or check again when better information is available.",
 								},
 							].map((faq, i) => (
 								<MotionReveal delay={i * 0.1} key={i}>
@@ -571,12 +588,12 @@ export default function LandingPage() {
 					<div className="mx-auto max-w-4xl text-center relative z-10">
 						<MotionReveal>
 							<h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance leading-tight">
-								Verification should create informed people,
+								The goal is not to make every decision for you.
 								<br />
-								<span className="text-white/40">not dependent users.</span>
+								<span className="text-white/40">It is to help you make better ones.</span>
 							</h2>
 							<p className="mt-6 text-base md:text-lg text-white/50 leading-relaxed mx-auto max-w-2xl text-balance">
-								Verith combines explainable AI, inspectable evidence, accessible distribution, and practical media literacy into one continuous intervention against misinformation.
+								Check the content in front of you, understand the evidence behind the finding, and build habits that make the next uncertain message easier to handle.
 							</p>
 							<div className="mt-10 flex items-center justify-center gap-6">
 								<Link
@@ -601,7 +618,7 @@ export default function LandingPage() {
 						<div className="lg:col-span-6">
 							<Brand />
 							<p className="mt-6 max-w-sm text-sm text-white/50 leading-relaxed">
-								Explainable verification and media literacy infrastructure for healthier digital communities. Stop guessing, start investigating.
+								Check uncertain content, understand the evidence, and build practical media-literacy skills for everyday digital life.
 							</p>
 							<div className="mt-8 flex gap-4">
 								<Link
@@ -652,9 +669,9 @@ export default function LandingPage() {
 					</div>
 
 					<div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-						<p className="text-xs text-white/40 font-medium">© {new Date().getFullYear()} Verith Inc. All rights reserved.</p>
+						<p className="text-xs text-white/40 font-medium">© {new Date().getFullYear()} Verith. All rights reserved.</p>
 						<div className="flex items-center gap-6 text-xs font-medium text-white/30">
-							<span>Made with ❤️ for the truth.</span>
+							<span>Follow the evidence. Keep your judgement.</span>
 						</div>
 					</div>
 				</div>

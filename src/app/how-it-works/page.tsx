@@ -1,116 +1,176 @@
-import { BookOpen, Eye, FileSearch, Library, MessageSquareText, Settings2 } from "lucide-react";
+import {
+	BadgeCheck,
+	BookOpen,
+	Brain,
+	FileSearch,
+	GraduationCap,
+	History,
+	Languages,
+	ScanSearch,
+	ShieldCheck,
+	Sparkles,
+} from "lucide-react";
+import Link from "next/link";
 import type { Metadata } from "next";
 import PublicEditorial from "@/components/public/PublicEditorial";
 
 export const metadata: Metadata = {
-	title: "How verification works | Verith",
+	title: "How to use Verith | Verith",
+	description:
+		"Learn how to investigate uncertain content, understand evidence, and build practical media-literacy skills with Verith.",
 };
 
-const roleJourneys = [
+const investigationSteps = [
 	{
-		description: "Explore Verith’s evidence method, published learning material, and reports that their owners intentionally made public. Sign in before starting private work.",
-		icon: Eye,
-		outcome: "Learn and inspect",
-		role: "Public visitor",
-	},
-	{
-		description: "Submit supported text, images, screenshots, audio, or short video; follow real processing stages; inspect claims, sources, uncertainty, limitations, and recommended actions; then control personal history, sharing, learning, privacy, sessions, and notifications.",
 		icon: FileSearch,
-		outcome: "Investigate uncertain content",
-		role: "Member",
+		title: "Bring the content you are unsure about",
+		text: "Paste a message or claim, or upload a clear image, screenshot, voice note, or short video. Keep names, dates, captions, and surrounding details visible whenever possible.",
 	},
 	{
-		description: "Keep the complete member workspace and add a focused queue for reviewing report feedback, recording a reasoned resolution, and closing or dismissing the case.",
-		icon: MessageSquareText,
-		outcome: "Resolve report feedback",
-		role: "Moderator",
+		icon: Brain,
+		title: "Tell Verith what you need to know",
+		text: "Ask one clear question, such as “Did this happen this week?” or “Is this health advice supported by reliable sources?” A focused question produces a more useful investigation.",
 	},
 	{
-		description: "Keep the member workspace and govern the publication lifecycle for courses, lessons, quizzes, and daily challenges without gaining access to verification operations or AI infrastructure.",
+		icon: ScanSearch,
+		title: "Follow the investigation",
+		text: "Verith identifies the claims that can be checked, looks for relevant sources, compares what those sources say, and shows the progress while the work is happening.",
+	},
+	{
+		icon: ShieldCheck,
+		title: "Read the reasons before you decide",
+		text: "Start with the simple finding, then open the evidence. See what supports the claim, what challenges it, what adds context, and what Verith could not confirm before you share or act.",
+	},
+] as const;
+
+const learningTools = [
+	{
+		icon: GraduationCap,
+		title: "Courses and lessons",
+		text: "Follow organised learning paths or take a short lesson when you want to understand one skill, such as checking a source or spotting missing context.",
+	},
+	{
 		icon: BookOpen,
-		outcome: "Govern learning material",
-		role: "Content editor",
+		title: "Quizzes and daily practice",
+		text: "Check what you understood, read the explanation for each answer, and practise with a fresh set of questions that strengthens everyday verification habits.",
 	},
 	{
-		description: "Add moderation and editorial access, safe user and verification operations, failed-job retries, publisher credibility review, badge governance, analytics, and system health monitoring.",
-		icon: Library,
-		outcome: "Operate the platform safely",
-		role: "Administrator",
+		icon: Sparkles,
+		title: "Community missions",
+		text: "Apply your skills to realistic situations, reflect on your decision, and complete follow-up activities that show how your judgement is improving.",
 	},
 	{
-		description: "Add role assignment, append-only audit records, AI-provider configuration, and versioned prompt publication or rollback—the controls that can affect authorization and platform-wide verification behavior.",
-		icon: Settings2,
-		outcome: "Govern high-impact controls",
-		role: "Super administrator",
+		icon: BadgeCheck,
+		title: "Progress and achievements",
+		text: "See completed learning, investigation milestones, streaks, XP, ranks, and badges. These rewards recognise consistent practice; they do not replace evidence or careful judgement.",
+	},
+	{
+		icon: History,
+		title: "Your investigation history",
+		text: "Return to earlier reports, compare what you learned, and revisit a decision when better information becomes available.",
+	},
+	{
+		icon: Languages,
+		title: "Four supported languages",
+		text: "Use Verith in English, French, Spanish, or Yorùbá. The original content stays available while the report can be presented in your selected supported language.",
 	},
 ] as const;
 
 export default function HowItWorksPage() {
 	return (
 		<PublicEditorial
-			eyebrow="Verification workflow"
-			introduction="Verith processes submitted material through stages. A stage describes completed work; it is not converted into a fabricated percentage when the backend supplies no finer measurement."
+			eyebrow="How to use Verith"
+			introduction="Verith helps you slow down, check uncertain information, understand the evidence, and practise skills you can use long after one investigation is finished."
 			sections={[
 				{
-					label: "Receive",
-					title: "Preserve the submitted material.",
-					content: <p>Text, supported images, screenshots, audio, and short video are validated before processing. Media uses owner-bound signed uploads and is confirmed against the provider before attachment.</p>,
-				},
-				{
-					label: "Extract",
-					title: "Identify claims and searchable questions.",
-					content: <p>Verith prepares content, detects language where available, transcribes or extracts visible text when applicable, then creates claim records and evidence-search queries.</p>,
-				},
-				{
-					label: "Compare",
-					title: "Retrieve and relate evidence.",
-					content: <p>Retrieved sources are normalized and mapped as supporting, contradicting, or contextual evidence. Unavailable sources and unknown credibility remain explicit limitations.</p>,
-				},
-				{
-					label: "Explain",
-					title: "Assemble an inspectable report.",
-					content: (
-						<p>
-							The report separates evidence, inference, confidence, manipulation indicators, missing context, source assessment, and limitations. AI-generation indicators are never presented as
-							proof.
-						</p>
-					),
-				},
-				{
-					label: "Role pathways",
-					title: "One evidence system. Clear responsibilities.",
+					label: "Start well",
+					title: "A clear question gives you a clearer result.",
 					content: (
 						<div>
 							<p>
-								Every signed-in account receives a private investigation workspace. Elevated roles add narrowly scoped moderation, editorial, operational, or governance responsibilities.
-								Every protected request is authorized by the backend; navigation visibility is never treated as permission.
+								Use the most complete version of the content you have. An uncropped screenshot is better than a small fragment, a clear recording is better than a noisy one,
+								and a full message is better than one sentence without context.
 							</p>
-							<div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-6">
-								{roleJourneys.map(({ description, icon: Icon, outcome, role }, index) => (
-									<article
-										className="group relative rounded-3xl border border-white/5 bg-[#0e0e0e] p-8 transition-all hover:bg-[#111] hover:border-white/10 overflow-hidden"
-										key={role}
-									>
-										<div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-										<div className="relative flex items-center justify-between mb-8">
-											<span className="flex size-12 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white shadow-sm">
-												<Icon aria-hidden="true" size={20} strokeWidth={2.5} />
-											</span>
-											<span className="text-xs font-bold uppercase tracking-[0.15em] text-white/50">
-												0{index + 1}
-											</span>
-										</div>
-										<h3 className="relative text-2xl font-bold tracking-tight text-white mb-2">{outcome}</h3>
-										<span className="relative inline-block mb-3 text-sm font-bold text-white/70">{role}</span>
-										<p className="relative text-base font-medium leading-relaxed text-white/60">{description}</p>
-									</article>
-								))}
+							<div className="mt-8 rounded-3xl border border-violet-300/15 bg-violet-400/[0.06] p-6">
+								<p className="!mb-2 text-sm font-bold uppercase tracking-[0.14em] text-violet-200">A useful question</p>
+								<p className="!mb-0 text-base text-white/65">“This message says all Nigerian bank accounts must be verified by Friday. Was this announced by the bank or government?”</p>
+							</div>
+						</div>
+					),
+				},
+				{
+					label: "Investigate",
+					title: "From uncertain content to a decision you can explain.",
+					content: (
+						<div className="grid gap-5 sm:grid-cols-2">
+							{investigationSteps.map(({ icon: Icon, text, title }, index) => (
+								<article className="rounded-3xl border border-white/10 bg-white/[0.035] p-6" key={title}>
+									<div className="flex items-center justify-between gap-4">
+										<span className="grid size-11 place-items-center rounded-2xl bg-violet-400/10 text-violet-200"><Icon aria-hidden="true" size={20} /></span>
+										<span className="text-xs font-bold text-white/35">0{index + 1}</span>
+									</div>
+									<h3 className="mt-5 text-lg font-bold text-white">{title}</h3>
+									<p className="!mb-0 mt-3 !text-sm !leading-6 text-white/55">{text}</p>
+								</article>
+							))}
+						</div>
+					),
+				},
+				{
+					label: "Understand",
+					title: "Choose the report view that feels right for you.",
+					content: (
+						<div>
+							<p><strong className="text-white">Simple</strong> gives you the main finding, the most important reason, what is missing, and a sensible next step.</p>
+							<p><strong className="text-white">Evidence</strong> lets you inspect each claim and open the sources that support, challenge, or add context to it.</p>
+							<p><strong className="text-white">Learn</strong> explains the habits and warning signs behind the investigation so you can recognise them elsewhere.</p>
+							<p className="!mb-0">A result is not an order about what to believe. Check the sources and limitations, then make your own informed decision.</p>
+						</div>
+					),
+				},
+				{
+					label: "Build your skills",
+					title: "Do more than check one message.",
+					content: (
+						<div className="grid gap-5 sm:grid-cols-2">
+							{learningTools.map(({ icon: Icon, text, title }) => (
+								<article className="rounded-3xl border border-white/10 bg-[#0e0e0e] p-6" key={title}>
+									<span className="grid size-11 place-items-center rounded-2xl bg-white/[0.05] text-violet-200"><Icon aria-hidden="true" size={20} /></span>
+									<h3 className="mt-5 text-lg font-bold text-white">{title}</h3>
+									<p className="!mb-0 mt-3 !text-sm !leading-6 text-white/55">{text}</p>
+								</article>
+							))}
+						</div>
+					),
+				},
+				{
+					label: "Use it wisely",
+					title: "Five habits for effective investigations.",
+					content: (
+						<ol className="list-decimal pl-6">
+							<li>Check one main claim at a time.</li>
+							<li>Keep the original source, date, account name, and surrounding context.</li>
+							<li>Use Guided Investigation when you want to think through the content before seeing the final report.</li>
+							<li>Open the strongest sources and read the limitations—not only the verdict.</li>
+							<li>If the evidence is weak or unavailable, pause before sharing and check again later.</li>
+						</ol>
+					),
+				},
+				{
+					label: "Get started",
+					title: "Bring one uncertain claim. Leave with a better question.",
+					content: (
+						<div>
+							<p>Your account keeps investigations, learning progress, privacy choices, and achievements together in one workspace.</p>
+							<div className="flex flex-wrap gap-3">
+								<Link className="inline-flex rounded-full bg-white px-6 py-3 text-sm font-bold !text-black !no-underline transition-transform hover:scale-105" href="/login">Start an investigation</Link>
+								<Link className="inline-flex rounded-full border border-white/15 px-6 py-3 text-sm font-bold !no-underline transition-colors hover:bg-white/5" href="/learning">Explore learning</Link>
 							</div>
 						</div>
 					),
 				},
 			]}
-			title="From source material to inspectable evidence."
+			title="Check information carefully. Build skills that stay with you."
 		/>
 	);
 }
