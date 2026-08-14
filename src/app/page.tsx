@@ -129,7 +129,7 @@ export default function LandingPage() {
 									href="/login"
 								>
 									<span className="relative z-10 flex items-center gap-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
-										Check something now
+										Try now
 										<ArrowRight size={16} className="opacity-70 group-hover:translate-x-1 transition-transform" />
 									</span>
 								</Link>
